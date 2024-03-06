@@ -47,16 +47,45 @@ import { HiOutlineUser } from "react-icons/hi2";
 import { SlLocationPin } from "react-icons/sl";
 const HomePage = () => {
   const dispatch = useDispatch();
-  const getData = useSelector((state) => state.elders.eldersData);
-  const isLoading = useSelector((state) => state.elders.isLoading);
-  const error = useSelector((state) => state.elders.error);
-
-  const getDataOne = useSelector((state) => state.elders.eldersOne);
-
+  const [location, setLocation] = useState(null);
   useEffect(() => {
-    dispatch(getElders());
-    dispatch(getEldersById());
-  }, [dispatch]);
+    // Check if geolocation is supported by the browser
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          try {
+            // Fetch address using reverse geocoding with language set to Arabic
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=ar`);
+            const data = await response.json();
+            // Extract city and country from the address
+            const city = data.address.city || data.address.town || data.address.village || data.address.hamlet || data.address.county;
+            const country = data.address.country;
+            setLocation(`${city}, ${country}`);
+          } catch (error) {
+            console.error("Error getting location:", error);
+            setLocation('Location not found');
+          }
+        },
+        (error) => {
+          console.error("Error getting geolocation:", error);
+          setLocation('Location not found');
+        }
+      );
+    } else {
+      setLocation('Geolocation is not supported by your browser');
+    }
+  }, []);
+  // const getData = useSelector((state) => state.elders.eldersData);
+  // const isLoading = useSelector((state) => state.elders.isLoading);
+  // const error = useSelector((state) => state.elders.error);
+
+  // const getDataOne = useSelector((state) => state.elders.eldersOne);
+
+  // useEffect(() => {
+  //   dispatch(getElders());
+  //   dispatch(getEldersById());
+  // }, [dispatch]);
   const navbarStyle = {
     backgroundImage: `url(${backgroundImageee})`,
     backgroundSize: "cover", // You can adjust this property based on your image and design preferences
@@ -146,7 +175,7 @@ const HomePage = () => {
               >
               <SlLocationPin style={{ marginLeft: "5px" , fontSize:'20px'}}/>
               
-                مصر, القاهره{" "}
+               {location || ""}{" "}
               </Button>
 
               {/* 

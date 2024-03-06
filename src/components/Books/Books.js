@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Book.css'
 import NavBar from '../Navbar/NavBar';
 import { Accordion, Col, Container, Form, FormControl, NavDropdown, Row } from 'react-bootstrap';
@@ -14,8 +14,43 @@ import cardBook1 from "../../images/card-book1.png";
 import cardBook2 from "../../images/card-book2.png";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
+import { useSelector,useDispatch } from "react-redux";
+import { getBookMainCategory, getBooks } from '../../features/books/booksSlice';
 
 const Books = () => {
+  const dispatch = useDispatch();
+  const getAll = useSelector((state) => state.books.booksData);
+  const isLoading = useSelector((state) => state.books.isLoading);
+  const error = useSelector((state) => state.books.error);
+
+
+  const getMainCategory = useSelector((state) => state.books.booksMainCategory);
+
+
+
+  const getSubCategory = useSelector((state) => state.books.booksMainSubCategory);
+
+
+  const dummyData = [
+    { category: "كتب اسلامية" },
+    { category: "كتب علميه" },
+    { category: "قصص وروايات" },
+    { category: "أحاديث اسلامية" },
+    { category: "كتب اسلامية" }
+  ];
+  
+  // You can use this dummy data array to map over and generate your JSX elements dynamically
+  
+
+  useEffect(() => {
+    dispatch(getBooks());
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(getBookMainCategory());
+  }, [dispatch]);
+
+
+
     //to change icon
     const [isClicked, setIsClicked] = useState(false);
 
@@ -38,48 +73,38 @@ const Books = () => {
      
       <Container className='d-flex justify-content-center align-items-center' >
       <Row className="m-3">
-        <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px' , display:'flex', justifyContent:'center', alignItems:'center'}}>
+        {
+          dummyData.length <=0 ?( <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px' , display:'flex', justifyContent:'center', alignItems:'center',width:'100%'}}>
     
-         <div style={{border :'none' , borderRadius:'23px' , width:'124px' , height:'33.74px' , 
-            background:'linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)' , boxShadow:'0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)',}}>
-            <p style={{color:'#FFFFFF', fontWeight:'bold'}}>الكل</p>
-          </div>
-        </Col>
-
-        <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px'  , display:'flex', justifyContent:'center', alignItems:'center'}}>
-        <div style={{border :'1.38px solid rgba(232, 232, 232, 1)' , borderRadius:'23px' , width:'124px' , height:'33.74px' , 
-            background:'linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)' }}>
-                <h6 style={{  color:'rgba(5, 20, 39, 1)' , fontSize:'15px', marginTop:'5px'}}>كتب اسلامية</h6>
+          <div style={{border :'none' , borderRadius:'23px' , width:'124px' , height:'33.74px' , 
+             background:'linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)' , boxShadow:'0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)',}}>
+             <p style={{color:'#FFFFFF', fontWeight:'bold'}}>الكل</p>
+           </div>
+         </Col>):(
+           <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px' , display:'flex', justifyContent:'center', alignItems:'center'}}>
+    
+           <div style={{border :'none' , borderRadius:'23px' , width:'124px' , height:'33.74px' , 
+              background:'linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)' , boxShadow:'0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)',}}>
+              <p style={{color:'#FFFFFF', fontWeight:'bold'}}>الكل</p>
             </div>
-        </Col>
+          </Col>
+         )
+        }
+       
 
-        <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px'  , display:'flex', justifyContent:'center', alignItems:'center'}}>
-           <div style={{border :'1.38px solid rgba(232, 232, 232, 1)' , borderRadius:'23px' , width:'124px' , height:'33.74px' , 
-               background:'linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)' }}>
-                <h6 style={{  color:'rgba(5, 20, 39, 1)' , fontSize:'15px', marginTop:'5px'}}>كتب علميه  </h6>
-            </div>
-        </Col>
+        {
+  dummyData.map((item) => (
+    <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ border: '1.38px solid rgba(232, 232, 232, 1)', borderRadius: '23px', width: '124px', height: '33.74px', background: 'linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)' }}>
+        <h6 style={{ color: 'rgba(5, 20, 39, 1)', fontSize: '15px', marginTop: '5px' }}>{item.category}</h6>
+      </div>
+    </Col>
+  ))
+}
 
-        <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px' , display:'flex', justifyContent:'center', alignItems:'center' }}>
-          <div style={{border :'1.38px solid rgba(232, 232, 232, 1)' , borderRadius:'23px' , width:'124px' , height:'33.74px' , 
-              background:'linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)' }}>
-                <h6 style={{  color:'rgba(5, 20, 39, 1)' , fontSize:'15px', marginTop:'5px'}}> قصص وروايات  </h6>
-          </div>
-        </Col>
+        
 
-        <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px'  , display:'flex', justifyContent:'center', alignItems:'center'}}>
-          <div style={{border :'1.38px solid rgba(232, 232, 232, 1)' , borderRadius:'23px' , width:'124px' , height:'33.74px' , 
-              background:'linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)' }}>
-                <h6 style={{  color:'rgba(5, 20, 39, 1)' , fontSize:'15px', marginTop:'5px'}}>  أحاديث اسلامية </h6>
-            </div>
-        </Col>
-
-        <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px'  , display:'flex', justifyContent:'center', alignItems:'center'}}>
-          <div style={{border :'1.38px solid rgba(232, 232, 232, 1)' , borderRadius:'23px' , width:'124px' , height:'33.74px' , 
-              background:'linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)' }}>
-                <h6 style={{  color:'rgba(5, 20, 39, 1)' , fontSize:'15px', marginTop:'5px'}}>كتب اسلامية</h6>
-          </div>
-        </Col>
+        
       </Row>
       </Container>
 
@@ -97,56 +122,35 @@ const Books = () => {
                         <p style={{color: "rgba(122, 128, 138, 1)"}} >مسح الكل</p>
                      </div>
 
-                     <Accordion>
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header >الفقه</Accordion.Header>
-                            <Accordion.Body>
-                           <p style={{display:'flex'}}>الفقه الاسلامي</p>
-                          <div style={{display:'flex' , flexDirection:'column'}} >
-                          
-                                <label class="form-check-label d-flex" > <input style={{margin:'5px'}} type='checkbox' />الكل  </label>
-                                <label class="form-check-label d-flex " > <input style={{margin:'5px'}} type='checkbox' />الفقه الشافعي  </label> 
-                                <label class="form-check-label d-flex" > <input style={{margin:'5px'}} type='checkbox' />الفقه الحنفي  </label> 
-                          </div>
-                       
-                            </Accordion.Body>
-                        </Accordion.Item>
-      
-                      </Accordion>
+                     {
+  getMainCategory ? (
+    getMainCategory.map((item, index) => {
+      return (
+        <Accordion key={index}>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>{item.title}</Accordion.Header>
+            <Accordion.Body>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {item.sub_categories ? (
+                  item.sub_categories.map((data, index) => {
+                    return (
+                      <label className="form-check-label d-flex" key={index}>
+                        <input style={{ margin: '5px' }} type='checkbox' />
+                        {data.title} {/* Render the title property */}
+                      </label>
+                    )
+                  })
+                ) : null}
+              </div>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+      )
+    })
+  ) : null
+}
 
-                      <Accordion>
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header >الشريعه</Accordion.Header>
-                            <Accordion.Body>
-                           <p style={{display:'flex'}}>  الاسلاميه الشريعه</p>
-                          <div style={{display:'flex' , flexDirection:'column'}} >
-                          
-                                <label class="form-check-label d-flex" > <input style={{margin:'5px'}} type='checkbox' />الكل  </label>
-                                <label class="form-check-label d-flex " > <input style={{margin:'5px'}} type='checkbox' />الفقه الشافعي  </label> 
-                                <label class="form-check-label d-flex" > <input style={{margin:'5px'}} type='checkbox' />الفقه الحنفي  </label> 
-                          </div>
-                       
-                            </Accordion.Body>
-                        </Accordion.Item>
-      
-                      </Accordion>
-
-                      <Accordion>
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header >قصص الانبياء</Accordion.Header>
-                            <Accordion.Body>
-                           <p style={{display:'flex'}}>  الاسلاميه الشريعه</p>
-                          <div style={{display:'flex' , flexDirection:'column'}} >
-                          
-                                <label class="form-check-label d-flex" > <input style={{margin:'5px'}} type='checkbox' />الكل  </label>
-                                <label class="form-check-label d-flex " > <input style={{margin:'5px'}} type='checkbox' />الفقه الشافعي  </label> 
-                                <label class="form-check-label d-flex" > <input style={{margin:'5px'}} type='checkbox' />الفقه الحنفي  </label> 
-                          </div>
-                       
-                            </Accordion.Body>
-                           </Accordion.Item>
-                             <p style={{color:'rgba(209, 155, 111, 1)' ,  display:'flex' , marginRight:'25px'}}>عرض المزيد</p>
-                      </Accordion> 
+                      
                 </div>
             </Col>
 
@@ -206,195 +210,35 @@ const Books = () => {
             </div>
 
              <Row>
-                 <Col xs="12" md="12" lg="6" className='mb-3'   >   
-                     <div style={{ display:'flex' , justifyContent:'space-between' , border:'2px solid rgba(236, 236, 236, 1)' , borderRadius:'15px' , width:'auto'}}>
-            
-                       <div style={{display:'flex' , justifyContent:'center' }}  >
-                         <img src={cardBook} alt='' />
-                
-                       <div style={{display:'flex' , justifyContent:'center',flexDirection:'column' , padding:'20px' }} >
-                         <h5>الارتقاء بالكتابه  </h5>
-                         <p style={{ color:'rgba(130, 130, 130, 1)'}}>20  صفحه</p>
+             {!isLoading
+            ? getAll && getAll.length > 0
+              ? getAll.map((item) => {
+                  return (
+                    <Col xs="12" md="12" lg="6" className='mb-3' key={item.id}>
+                    <div style={{ display:'flex', justifyContent:'space-between', border:'2px solid rgba(236, 236, 236, 1)', borderRadius:'15px', width:'auto'}}>
+                      <div style={{ display:'flex', justifyContent:'center' }}>
+                        <div style={{ position: 'relative', cursor: 'pointer' }} onClick={() => window.open(`https://docs.google.com/viewer?url=${encodeURIComponent(item.Book)}&embedded=true`)}>
+                          <img src={item.image} alt='' height={164} width={134} />
+                          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#fff', padding: '10px', borderRadius: '5px' }}>
+                            Click to view book
+                          </div>
+                        </div>
+                        <div style={{ display:'flex', justifyContent:'center', flexDirection:'column', padding:'20px' }}>
+                          <h5 style={{ color:'black' }}>{item.name}</h5>
+                          <p style={{ color:'rgba(130, 130, 130, 1)'}}>20 صفحه</p>
+                        </div>
                       </div>
+                      <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', marginLeft:'60px', gap:'20px' }}>
+                        <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px', marginRight:'-30px' }} />
                       </div>
- 
-                     <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px'}}>
-                     <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'-30px'}} />
                     </div>
+                  </Col>
+                  
+);
+})
+: null
+: null}
 
-                    </div>
-                 </Col>
-
-                 <Col xs="12" md="12" lg="6" className='mb-3'   >   
-                    <div style={{ display:'flex' , justifyContent:'space-between' , border:'2px solid rgba(236, 236, 236, 1)' , borderRadius:'15px' , width:'auto'}}>
-            
-                     <div style={{display:'flex' , justifyContent:'center' }}  >
-                       <img src={cardBook1} alt='' />
-                
-                    <div style={{display:'flex' , justifyContent:'center',flexDirection:'column' , padding:'20px' }} >
-                        <h5>  حياه محمد</h5>
-                        <p style={{ color:'rgba(130, 130, 130, 1)'}} >20 صفحه </p>
-                    </div>
-                
-                     </div>
-
-                    <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px'}}>
-                    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'-30px'}} />
-                    </div>
-                   </div>
-                 </Col>
-
-                 <Col xs="12" md="12" lg="6" className='mb-3'   >   
-                    <div style={{ display:'flex' , justifyContent:'space-between' , border:'2px solid rgba(236, 236, 236, 1)' , borderRadius:'15px' , width:'auto'}}>
-            
-                     <div style={{display:'flex' , justifyContent:'center' }}  >
-                       <img src={cardBook2} alt='' />
-                
-                    <div style={{display:'flex' , justifyContent:'center',flexDirection:'column' , padding:'20px' }} >
-                        <h5>   لا تحزن</h5>
-                        <p style={{ color:'rgba(130, 130, 130, 1)'}} >20 صفحه </p>
-                    </div>
-                
-                     </div>
-
-                    <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px'}}>
-                    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'-30px'}} />
-                    </div>
-                   </div>
-                 </Col>
-
-                 <Col xs="12" md="12" lg="6" className='mb-3'   >   
-                     <div style={{ display:'flex' , justifyContent:'space-between' , border:'2px solid rgba(236, 236, 236, 1)' , borderRadius:'15px' , width:'auto'}}>
-            
-                       <div style={{display:'flex' , justifyContent:'center' }}  >
-                         <img src={cardBook} alt='' />
-                
-                       <div style={{display:'flex' , justifyContent:'center',flexDirection:'column' , padding:'20px' }} >
-                         <h5>الارتقاء بالكتابه  </h5>
-                         <p style={{ color:'rgba(130, 130, 130, 1)'}}>20  صفحه</p>
-                      </div>
-                      </div>
-
-                     <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px'}}>
-                     <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'-30px'}} />
-                    </div>
-
-                    </div>
-                 </Col>
-
-                 <Col xs="12" md="12" lg="6" className='mb-3'   >   
-                    <div style={{ display:'flex' , justifyContent:'space-between' , border:'2px solid rgba(236, 236, 236, 1)' , borderRadius:'15px' , width:'auto'}}>
-            
-                     <div style={{display:'flex' , justifyContent:'center' }}  >
-                       <img src={cardBook1} alt='' />
-                
-                    <div style={{display:'flex' , justifyContent:'center',flexDirection:'column' , padding:'20px' }} >
-                        <h5>  حياه محمد</h5>
-                        <p style={{ color:'rgba(130, 130, 130, 1)'}} >20 صفحه </p>
-                    </div>
-                
-                     </div>
-
-                    <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px'}}>
-                    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'-30px'}} />
-                    </div>
-                   </div>
-                 </Col>
-
-                 <Col xs="12" md="12" lg="6" className='mb-3'   >   
-                    <div style={{ display:'flex' , justifyContent:'space-between' , border:'2px solid rgba(236, 236, 236, 1)' , borderRadius:'15px' , width:'auto'}}>
-            
-                     <div style={{display:'flex' , justifyContent:'center' }}  >
-                       <img src={cardBook2} alt='' />
-                
-                    <div style={{display:'flex' , justifyContent:'center',flexDirection:'column' , padding:'20px' }} >
-                        <h5>   لا تحزن</h5>
-                        <p style={{ color:'rgba(130, 130, 130, 1)'}} >20 صفحه </p>
-                    </div>
-                
-                     </div>
-
-                    <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px'}}>
-                    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'-30px'}} />
-                    </div>
-                   </div>
-                 </Col>
-
-                 <Col xs="12" md="12" lg="6" className='mb-3'   >   
-                    <div style={{ display:'flex' , justifyContent:'space-between' , border:'2px solid rgba(236, 236, 236, 1)' , borderRadius:'15px' , width:'auto'}}>
-            
-                     <div style={{display:'flex' , justifyContent:'center' }}  >
-                       <img src={cardBook2} alt='' />
-                
-                    <div style={{display:'flex' , justifyContent:'center',flexDirection:'column' , padding:'20px' }} >
-                        <h5>   لا تحزن</h5>
-                        <p style={{ color:'rgba(130, 130, 130, 1)'}} >20 صفحه </p>
-                    </div>
-                
-                     </div>
-
-                    <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px'}}>
-                    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'-30px'}} />
-                    </div>
-                   </div>
-                 </Col>
-
-                 <Col xs="12" md="12" lg="6" className='mb-3'   >   
-                     <div style={{ display:'flex' , justifyContent:'space-between' , border:'2px solid rgba(236, 236, 236, 1)' , borderRadius:'15px' , width:'auto'}}>
-            
-                       <div style={{display:'flex' , justifyContent:'center' }}  >
-                         <img src={cardBook} alt='' />
-                
-                       <div style={{display:'flex' , justifyContent:'center',flexDirection:'column' , padding:'20px' }} >
-                         <h5>الارتقاء بالكتابه  </h5>
-                         <p style={{ color:'rgba(130, 130, 130, 1)'}}>20  صفحه</p>
-                      </div>
-                      </div>
-
-                     <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px'}}>
-                     <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'-30px'}} />
-                    </div>
-
-                    </div>
-                 </Col>
-
-                 <Col xs="12" md="12" lg="6" className='mb-3'   >   
-                    <div style={{ display:'flex' , justifyContent:'space-between' , border:'2px solid rgba(236, 236, 236, 1)' , borderRadius:'15px' , width:'auto'}}>
-            
-                     <div style={{display:'flex' , justifyContent:'center' }}  >
-                       <img src={cardBook1} alt='' />
-                
-                    <div style={{display:'flex' , justifyContent:'center',flexDirection:'column' , padding:'20px' }} >
-                        <h5>  حياه محمد</h5>
-                        <p style={{ color:'rgba(130, 130, 130, 1)'}} >20 صفحه </p>
-                    </div>
-                
-                     </div>
-
-                    <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px'}}>
-                    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'-30px'}} />
-                    </div>
-                   </div>
-                 </Col>
-
-                 <Col xs="12" md="12" lg="6" className='mb-3'   >   
-                    <div style={{ display:'flex' , justifyContent:'space-between' , border:'2px solid rgba(236, 236, 236, 1)' , borderRadius:'15px' , width:'auto'}}>
-            
-                     <div style={{display:'flex' , justifyContent:'center' }}  >
-                       <img src={cardBook2} alt='' />
-                
-                    <div style={{display:'flex' , justifyContent:'center',flexDirection:'column' , padding:'20px' }} >
-                        <h5>   لا تحزن</h5>
-                        <p style={{ color:'rgba(130, 130, 130, 1)'}} >20 صفحه </p>
-                    </div>
-                
-                     </div>
-
-                    <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px'}}>
-                    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'-30px'}} />
-                    </div>
-                   </div>
-                 </Col>
               </Row>
             </Col>
         </Row>

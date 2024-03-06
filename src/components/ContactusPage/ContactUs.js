@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './contact.css'
 import { Button, Col, Container, Form, FormControl, Nav, Navbar, Row } from 'react-bootstrap';
 import contact from "../../images/contact.png";
@@ -12,8 +12,45 @@ import instagram from "../../images/instrgram.png";
 import NavBar from '../Navbar/NavBar';
 import { FaRegUser } from 'react-icons/fa6';
 import { MdOutlineMail, MdOutlinePhoneIphone } from 'react-icons/md';
+import { useDispatch,useSelector } from 'react-redux';
+import { createContactUs } from '../../features/contactUs/contactSlice';
 
 const ContactUs = () => {
+  const dispatch=useDispatch();
+  
+  const res = useSelector((state) => state.contact.data);
+
+  const isLoading = useSelector((state) => state.contact.isLoading);
+  const error = useSelector((state) => state.contact.error);
+
+
+  const [state, setState] = useState({
+   
+    subject: '',
+      first_name: '',
+      phone: '',
+      email: ''
+   
+  });
+
+  // Destructure state object for easier access
+  const { subject,first_name,phone,email} = state;
+
+  // Function to handle input changes
+  const handleInputChange = (fieldName) => (e) => {
+    setState(prevState => ({ ...prevState, [fieldName]: e.target.value}));
+};
+
+  const OnSubmit = async(e) =>{
+    e.preventDefault();
+    const contactData = {
+      subject,first_name,phone,email
+    };
+    
+ await dispatch(createContactUs(contactData));
+
+ 
+ } 
 
     return <> 
     <NavBar />
@@ -50,7 +87,7 @@ const ContactUs = () => {
 
                
                  <Form.Control type="text" placeholder="محمد خالد" style={{  background:'rgba(245, 245, 245, 1)' ,borderRadius: '10px', 
-                        padding:'15px 35px 15px 15px', width:'85%' }}  />
+                        padding:'15px 35px 15px 15px', width:'85%' }} onChange={handleInputChange('first_name')} value={first_name} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -58,7 +95,7 @@ const ContactUs = () => {
                  <MdOutlinePhoneIphone  style={{color:'gray' , position:'absolute' , display:'flex' , marginTop:'12px' , paddingRight:'9px' , fontSize:'35px' }} />
 
                     <Form.Control type="text" placeholder=" 789 456 123" style={{  background:'rgba(245, 245, 245, 1)' ,borderRadius: '10px', 
-                         padding:'15px 35px 15px 15px', width:'85%' }}  />
+                         padding:'15px 35px 15px 15px', width:'85%' }} onChange={handleInputChange('phone')} value={phone} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -68,20 +105,20 @@ const ContactUs = () => {
 
                      <Form.Control type="text"
                          placeholder="username@mail.com" style={{  background:'rgba(245, 245, 245, 1)' ,borderRadius: '10px', 
-                         padding:'15px 38px 15px 15px', width:'85%' }}  />
+                         padding:'15px 38px 15px 15px', width:'85%' }}  onChange={handleInputChange('email')} value={email}  />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label style={{fontWeight: '600' , display:'flex' }}>ملاحظاتك  </Form.Label>
                         <Form.Control as="textarea" placeholder="اكتب ملاحظاتك هنا" style={{ height: '150px' ,background:'rgba(245, 245, 245, 1)' ,borderRadius: '10px', 
-                          padding:'15px', width:'85%' }}
+                          padding:'15px', width:'85%' }}  onChange={handleInputChange('subject')} value={subject} 
                         />
                 </Form.Group>
 
 
              <div className='d-flex justify-content-center align-items-center'>
                 <button className=" background-button "  style={{ borderRadius:'25px',
-                color:' rgba(255, 255, 255, 1)' , fontWeight:'700' , fontSize :'25px'}}  >ارسال</button>
+                color:' rgba(255, 255, 255, 1)' , fontWeight:'700' , fontSize :'25px'}}  onClick={(e) => OnSubmit(e)}>ارسال</button>
             </div>
 
            

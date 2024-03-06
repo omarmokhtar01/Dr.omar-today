@@ -17,8 +17,7 @@ import group1 from "../../images/Group-1-1.png";
 import group2 from "../../images/Group2.png";
 import group22 from "../../images/Group-2-2.png";
 import sortIcon from "../../images/sort-icon.png";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { getAudioCategory, getAudios } from "../../features/audios/audioSlice";
 import { Link } from "react-router-dom";
 import NavBar from "../Navbar/NavBar";
@@ -245,7 +244,6 @@ const Audios = () => {
           {!isLoading
             ? getAll && getAll.length > 0
               ? getAll.map((item) => {
-                {console.log(getAll)}
                   return (
                     <Col xs="12" md="12" lg="6" className="mb-3">
                       <div
@@ -272,7 +270,7 @@ const Audios = () => {
                             }}
                           >
                             <h5>{item.name}</h5>
-                            <p>عدد المقاطع الصوتية {item.count_audios}</p>
+                            <p>عدد المقاطع الصوتية {item.count_audios || 0}</p>
                           </div>
                         </div>
 
