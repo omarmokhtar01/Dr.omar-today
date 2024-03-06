@@ -873,7 +873,7 @@ const HomePage = () => {
               {/* <img src={card5} alt="" style={{ width: "100%" }} /> */}
               <Col md={12} sm={12} style={{display:'flex',justifyContent:'center'}}>
               <div style={{backgroundColor:'rgb(128 128 128 / 15%)',borderRadius:'40px',boxShadow:'5px 10px 8px #888888'}} id="mobile-responsive">
-                <img src={image3} alt="pic" width={300} height={280} style={{marginTop:'20px',borderRadius:'40px'}} id="img-mobile-responsive"/>
+                <img src={"https://i1.sndcdn.com/artworks-jA2OFYdUrideAlyu-AeHsrA-t500x500.jpg"} alt="pic" width={300} height={280} style={{marginTop:'20px',borderRadius:'40px'}} id="img-mobile-responsive"/>
 <Col className="mt-4">
 <h4>فضل شهر رمضان</h4>
 <span style={{color:'gray'}}>محمد صالح المنجد</span>
