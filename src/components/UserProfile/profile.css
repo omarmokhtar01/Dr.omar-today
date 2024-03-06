@@ -1,0 +1,67 @@
+.background-button{
+  background-image: url('../../images/groundbutton.png');
+  background-size: cover;
+  background-size: 100%;
+  width: 250px !important;
+  border: 2px solid #FFFFFF ;
+  margin: 10px;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  background-color: 'red';
+}
+
+@media
+ (max-width: 768px) {
+  .background-button{
+    background-image: none;
+    background-color: rgba(199, 140, 92, 1);
+    font-size: 5px;
+    border: 5px solid #d0cccc ;
+      }
+}
+
+.profileButton{
+background-image: url('../../images/groundbutton.png');
+background-repeat: no-repeat;
+font-size: 20px;
+padding: 15px;
+margin: 5px;
+width: 100%;
+border-radius: 25px;
+background-size: cover;
+background-size: 100%;
+}
+.deleteButton{
+  border: 2px solid rgba(229, 25, 55, 0.09);
+  background-color: rgba(229, 25, 55, 0.09);
+  padding: 15px;
+  margin: 20px 5px;
+  width: 100%;
+  border-radius: 10px;
+}
+.deleteButton:hover{
+  background-color: rgba(229, 25, 55, 0.09) !important;
+  border-color: red;
+}
+
+
+@media (max-width: 576px) { 
+  .personal-box{
+   width: 130px !important;
+  font-size: 10px !important;
+    
+  }
+ }
+@media (max-width: 576px) { 
+  .active-button{
+  margin-right: 50px !important;
+    
+  }
+ }
+@media (max-width: 576px) { 
+  .personal-box{
+   width: 130px !important;
+  font-size: 10px !important;
+    
+  }
+ }

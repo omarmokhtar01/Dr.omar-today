@@ -1,0 +1,26 @@
+@media (max-width: 576px) { 
+    .img-card-download{
+     width: 153px !important;
+     height: 153 px !important;
+     
+      
+    }
+   }
+@media (max-width: 576px) { 
+    .icon-del{
+   margin-right: 50px !important;
+    }
+ }
+  
+@media (max-width: 576px) { 
+    .book-download{
+ width: 160px;
+ height: 247px;
+    }
+ }
+@media (max-width: 576px) { 
+    .icon-delt{
+margin-right: 10px !important;
+    }
+ }
+  

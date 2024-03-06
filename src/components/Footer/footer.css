@@ -1,0 +1,26 @@
+
+.d-flex-menu  a {
+   margin-top: 5px;
+   padding: 15px;
+    color: rgb(127 119 119) !important ;
+    text-decoration: none;
+    
+  }
+@media (max-width: 768px) {
+    .d-flex-menu a {
+      font-size: 10px;
+    }
+  }
+
+  @media (max-width: 576px) { 
+    .d-flex-menu{
+   margin-left: -20px;
+      
+    }
+   }
+
+  @media (max-width: 576px) { 
+    .d-flex-menu a {
+      font-size: 8px;
+    }
+   }

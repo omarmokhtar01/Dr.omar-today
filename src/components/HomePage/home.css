@@ -1,0 +1,116 @@
+@media (max-width: 768px) {
+    .responsive-image {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nav-responsive {
+     margin-top: 15px !important;
+    }
+   .responsive-ground{ 
+      margin-top: 5px  !important ;
+    }
+    .navbarStyle{
+  height: auto !important;
+    }
+  }
+
+  @media (max-width: 992px) { 
+    .responsive-image{
+      display: none;
+    }
+  #quran-img{
+    position: relative;
+    bottom: 25px;
+    left: 150px;
+  }
+  }
+
+   @media (max-width: 768px) { 
+    .responsive-image{
+      display: none;
+    }
+    #quran-img{
+      position: relative;
+      bottom: 50px;
+      left: 100px;
+    }
+   }
+   @media (max-width: 992px) { 
+    .responsive-ground {
+      margin-top: -10px !important;
+    }}
+
+   @media (max-width: 992px) { 
+     .navbarStyle{
+      margin-top: -35px;
+      height: auto !important;
+    }
+    .nav-responsive{
+      margin-top: 50px !important;
+      height: auto !important;
+    }
+    #login-home-button{
+     position: relative;
+     left: 5px;
+    }
+  }
+
+  @media (max-width: 575.98px) {
+  .responsive-span-home{
+position: relative;
+right: 15px;
+margin-bottom: 10px;
+  }
+  .responsive-sounds{
+    position: relative;
+    right: 20px;
+    margin-bottom: 15px;
+  }
+#dr-responsive{
+  margin-left: 0px !important;
+}
+
+  }
+
+  .box-Aritcle , .box-Book , .box-Audio , .box-Pic{ 
+    border: 2px solid #F5ECD9;
+    border-radius: 15px;
+    margin-top: 15px;
+  }
+  .box-Aritcle:hover{
+   
+  border: 2px solid #9f9fe7;
+  background-color:#85eaff21 ;
+  transition: .5s;
+  }
+  .box-Book:hover{
+    border: 2px solid green;
+    background-color:#85eaff21 ;
+    transition: .5s;
+  }
+  .box-Audio:hover{
+    border: 2px solid rgb(0, 107, 128);
+    background-color:#85eaff21 ;
+    transition: .5s;
+  }
+  .box-Pic:hover{
+    border: 2px solid rgb(75, 130, 120);
+    background-color:#85eaff21 ;
+    transition: .5s;
+  }
+
+  @media (max-width: 576px) { 
+    .img-mobile{
+   width: 80% !important;
+    }
+ }
+  
+  @media (max-width: 576px) { 
+     .google-img{
+   width: 120% !important;
+     }
+ }
+  
+  

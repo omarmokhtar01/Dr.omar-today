@@ -1,0 +1,8 @@
+@media (max-width: 576px) { 
+    .section-col {
+        flex: 0 0 50%;
+        max-width: 50%;
+       
+    }
+    
+}

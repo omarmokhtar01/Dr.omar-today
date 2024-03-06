@@ -1,0 +1,38 @@
+
+@media (max-width: 768px) {
+    .navbarStyle{
+   height: auto !important;
+    }
+  }
+.no-arrow::after {
+  display: none !important;
+}
+.no-arrow::before {
+  display: none !important;
+}
+
+.dropdown-menu{
+  left: 50% !important;
+}
+
+@media (min-width: 1200px) {  .nav-menu {
+ margin-right: auto;
+ margin-right: auto;
+ display: flex;
+ } }
+
+  @media (max-width: 576px) {.nav-menu {
+    display: flex;
+    justify-content: center;
+  }}
+
+  @media (max-width: 992px) { .nav-menu {
+    display: flex;
+    justify-content: center;
+  } }
+
+
+ 
+
+  
+ 

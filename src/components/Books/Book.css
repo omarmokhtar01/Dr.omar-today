@@ -1,0 +1,62 @@
+.accordion-body{
+    background-color: rgba(244, 245, 247, 1) !important;
+    color:rgba(209, 155, 111, 1)  !important;
+}
+.accordion-button{
+    background-color: rgba(244, 245, 247, 1) !important;
+    color:rgba(209, 155, 111, 1)  !important;
+}
+.accordion-item{
+    border: none;
+}
+
+.accordion-button::after {
+    /* Hide the default arrow icon */
+    display: none;
+}
+.accordion-button::before {
+    /* Add the @ symbol */
+    content: '+';
+    /* Add additional styling as needed */
+    font-size: 1.25rem;
+    color: #000;
+    margin-right: 0.5rem;
+}
+.accordion-button:not(.collapsed)::before {
+    content: '-';
+    font-size: 1.25rem;
+    color: #000;
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .search-book{
+        width: 150px !important;
+    }
+    .search-icon{
+        position:'relative' ; margin-Top:'-30px' ; margin-Right:'50px';
+        right:  30%;
+    }
+    /* #box-books{
+        width: 80px !important;
+    } */
+ }
+
+
+ @media (max-width: 576px) { 
+    .search-book{
+        width: 120px !important;
+    }
+    .search-icon{
+        position:'relative' ; margin-Top:'-30px' ; margin-Right:'50px';
+        right:  10%;
+    }
+}
+
+
+@media (max-width: 768px) { 
+    .row{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+    }
+}
