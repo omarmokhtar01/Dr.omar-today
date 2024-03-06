@@ -14,7 +14,7 @@ const initialState = {
  const login = createAsyncThunk('auth/login', async (formData, thunkAPI) => {
   try {
     const response = await baseUrl.post(
-      'Elders/Get',formData);
+      'Auth/Login',formData);
       
     return response.data;
   } catch (error) {
@@ -25,7 +25,7 @@ const initialState = {
 const register = createAsyncThunk('auth/register', async (formData, thunkAPI) => {
     try {
       const response = await baseUrl.post(
-        'Auth/Login',formData);
+        'Auth/Register',formData);
         console.log(response.data);
       return response.data;
     } catch (error) {
