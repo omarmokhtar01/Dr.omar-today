@@ -1,5 +1,3 @@
-// booksSlice.js
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import baseUrl from "../../Api/baseURL";
@@ -9,13 +7,13 @@ const initialState = {
   userRegister:{},
   isLoading: false,
   error: null,
-};
+}; 
 
- const login = createAsyncThunk('auth/login', async (formData, thunkAPI) => {
+ const createLoginUser = createAsyncThunk('auth/login', async (formData, thunkAPI) => {
   try {
     const response = await baseUrl.post(
       'Auth/Login',formData);
-      
+    console.log(response.data);
     return response.data;
   } catch (error) {
     return error
@@ -43,16 +41,16 @@ const authSlice = createSlice({
     builder
 
 
-      .addCase(login.pending, (state) => {
+      .addCase(createLoginUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(createLoginUser.fulfilled, (state, action) => {
         state.userLogin = action.payload;
         state.isLoading = false;
         state.error = null;
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(createLoginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
@@ -73,6 +71,6 @@ const authSlice = createSlice({
 	  
 	  }}
       );
-export { login,register };
+export { createLoginUser , register};
 
 export default authSlice.reducer;

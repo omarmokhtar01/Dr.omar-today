@@ -7,6 +7,7 @@ import articleReducer from "../features/articles/articlesSlich";
 import audioReducer from "../features/audios/audioSlice";
 import downloadReducer from "../features/allDownload/allDownloadSlice";
 import favoriteReducer from "../features/allFavorites/allFavoritesSlice";
+import authReducer from "../features/auth/authSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,7 +19,7 @@ const store = configureStore({
     audio:audioReducer,
     download:downloadReducer,
     favorite:favoriteReducer,
-
+    auth:authReducer
   },
 });
 

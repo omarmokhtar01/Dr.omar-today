@@ -31,38 +31,51 @@ import { LuArrowUpDown } from "react-icons/lu";
 import { getEldersByIdAudios } from "../../features/elders/eldersSlice";
 const AudioCard = () => {
 
-  const audioRef = useRef(null);
-  const [duration, setDuration] = useState(0);
+  const audioRefs = useRef([]);
+  const [durations, setDurations] = useState([]);
   const [durationFormatted, setDurationFormatted] = useState('0:00');
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState([]);
 
   useEffect(() => {
-    if (duration > 0) {
-      const minutes = Math.floor(duration / 60);
-      const seconds = Math.floor(duration % 60);
+    audioRefs.current = audioRefs.current.slice(0, durations.length);
+    setIsPlaying(new Array(durations.length).fill(false));
+  }, [durations]);
+
+  useEffect(() => {
+    if (durationFormatted > 0) {
+      const minutes = Math.floor(durationFormatted / 60);
+      const seconds = Math.floor(durationFormatted % 60);
       setDurationFormatted(`${minutes}:${seconds.toString().padStart(2, '0')}`);
     }
-  }, [duration]);
+  }, [durationFormatted]);
 
-
-  const handlePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
+  const handlePlay = (index) => {
+    const newIsPlaying = [...isPlaying];
+    newIsPlaying[index] = !isPlaying[index];
+    setIsPlaying(newIsPlaying);
+    const audioElement = audioRefs.current[index];
+    if (audioElement) {
+      if (newIsPlaying[index]) {
+        // Check if the audio is not already playing before calling play()
+        if (audioElement.paused) {
+          audioElement.play().catch(error => console.error('Error playing audio:', error));
+        }
       } else {
-        audioRef.current.play();
+        // Check if the audio is playing before calling pause()
+        if (!audioElement.paused) {
+          audioElement.pause();
+        }
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
-  <FaCirclePlay />
-  const handleLoadedMetadata = () => {
-    if (audioRef.current) {
-      setDuration(audioRef.current.duration);
-    }
+  const handleLoadedMetadata = (index) => {
+    return (e) => {
+      const newDurations = [...durations];
+      newDurations[index] = e.target.duration;
+      setDurations(newDurations);
+    };
   };
-  
   const params = useParams();
 
   // Now you can access the parameters using the keys defined in your route
@@ -77,6 +90,7 @@ const AudioCard = () => {
   useEffect(() => {
     dispatch(getEldersByIdAudios(id));
   }, [dispatch,id]);
+  console.log(getDataOne);
     return <>
      <NavBar />
 
@@ -184,37 +198,34 @@ const AudioCard = () => {
             getDataOne.data ? (
               getDataOne.data.Audio ? (
 
-              getDataOne.data.Audio.map((item)=>{
+              getDataOne.data.Audio.map((item,index)=>{
                 return(
               <>
        <Row className='me-auto'  md={4} key={item.id}>
-        <Col key={item.id} > 
+        <Col  > 
           <div style={{display:'flex'}}>
           <img  src={item.image} alt="" style={{}} width='61px' height='61px' />
           <p style={{color:'rgba(17, 32, 34, 1)' , fontWeight:'bold' , display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px'}}> {item.title} </p>
           </div> 
          </Col>
      
-        <Col  key={item.id} xs={6}><p style={{color:'rgba(130, 130, 130, 1)' , display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px'}}  > {item.name} </p></Col>
+        <Col   xs={6}><p style={{color:'rgba(130, 130, 130, 1)' , display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px'}}  > {item.name} </p></Col>
 
-        <Col  key={item.id} xs={6} > <p style={{color:'rgba(130, 130, 130, 1)' , display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px' }}  >
+        <Col   xs={6} > <p style={{color:'rgba(130, 130, 130, 1)' , display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px' }}  >
         {durationFormatted} دقيقة</p>
          </Col>
 
 
-        <Col  key={item.id}>
-        <div style={{display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px' ,  gap:'15px'}}>
-                 <MdDownloadForOffline style={{ color: 'rgb(209, 155, 111)', fontSize: '30px' ,  cursor: "pointer"}}  />
-                 <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' ,  cursor: "pointer"}} />
-                 <button onClick={handlePlay} style={{border:'none', background:'#FFFFFF'}}>
-        {isPlaying ? <FaCirclePause style={{ color: 'rgb(209, 155, 111)', fontSize: '26px' }}/> : <FaCirclePlay style={{ color: 'rgb(209, 155, 111)', fontSize: '26px' }}/>}
-      </button>
-      <audio ref={audioRef} src={item.audio} controls hidden onLoadedMetadata={handleLoadedMetadata} />
-
-               </div>
-               
-               
-               </Col>
+         <Col >
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '15px', gap: '15px' }}>
+            <MdDownloadForOffline style={{ color: 'rgb(209, 155, 111)', fontSize: '30px', cursor: "pointer" }} />
+            <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px', cursor: "pointer" }} />
+            <button onClick={() => handlePlay(index)} style={{ border: 'none', background: '#FFFFFF' }}>
+              {isPlaying[index] ? <FaCirclePause style={{ color: 'rgb(209, 155, 111)', fontSize: '26px' }} /> : <FaCirclePlay style={{ color: 'rgb(209, 155, 111)', fontSize: '26px' }} />}
+            </button>
+            <audio ref={(el) => (audioRefs.current[index] = el)} src={item.audio} controls hidden onLoadedMetadata={handleLoadedMetadata(index)} />
+          </div>
+        </Col>
        </Row>
         <div style={{marginLeft:'-55px', marginBottom: '15px', borderBottom:'1.5px solid #EEEEEE ', width:'100%' }}></div>
         </>

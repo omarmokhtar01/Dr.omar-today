@@ -7,10 +7,46 @@ import gmail from "../../images/gamil.png";
 import apple from "../../images/apple.png";
 import ForgetPasswordPage from './ForgetPasswordPage';
 import RegisterPage from './RegisterPage';
-
+import { useDispatch,useSelector } from 'react-redux';
+import { createLoginUser } from '../../features/auth/authSlice';
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  const [state, setState] = useState({
+   
+    email: '',
+   
+    password:'',
+   
+  });
 
+  // Destructure state object for easier access
+  const {  email ,password} = state;
+
+  // Function to handle input changes
+  const handleInputChange = (fieldName) => (e) => {
+    setState(prevState => ({ ...prevState, [fieldName]: e.target.value}));
+};
+  const res = useSelector((state) => state.auth.userLogin);
+
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const error = useSelector((state) => state.auth.error);
+
+
+
+
+//save data
+const OnSubmit = async(e) =>{
+   e.preventDefault();
+
+await dispatch(createLoginUser({
+  email,
+     password,
+    
+  })); 
+
+} 
   //to make modal
      const [show, setShow] = useState(false);
      const [showReg, setShowRwg] = useState(false);
@@ -30,19 +66,19 @@ const LoginPage = () => {
          <h4 style={{fontWeight:'700' ,  color:'rgba(209, 155, 111, 1)'}}>    تسجيل الدخول    </h4>
      <Form>
        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label style={{fontWeight: '600' , display:'flex' }}>رقم الموبيل</Form.Label>
+          <Form.Label style={{fontWeight: '600' , display:'flex' }}> الأيميل</Form.Label>
          
          <img  className='icon-input' src={phone} alt="" style={{position:'absolute' , display:'flex' , marginTop:'17px',paddingRight:'9px' }} />
           
-         <Form.Control type="text" placeholder=" 789 456 123" style={{  background:'#FFFFFF' ,borderRadius: '10px', 
-                  padding:'15px 35px 15px 15px' }}  /> 
+         <Form.Control type="email" placeholder=" user@email.com" style={{  background:'#FFFFFF' ,borderRadius: '10px', 
+                  padding:'15px 35px 15px 15px' }}  onChange={handleInputChange('email')} value={email}/> 
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label style={{fontWeight: '600' , display:'flex' }}> كلمه المرور  </Form.Label>
             
             <Form.Control type="password"  style={{  background:'#FFFFFF' ,borderRadius: '10px', 
-                    padding:'15px' }}  />
+                    padding:'15px' }} onChange={handleInputChange('password')} value={password} />
          </Form.Group>
 
 
@@ -56,7 +92,7 @@ const LoginPage = () => {
       </div>
 
        <div  className='d-flex justify-content-center align-items-center' style={{borderRadius:'30px' }} >
-              <button style={{ color:' rgba(255, 255, 255, 1)' , fontWeight:'700' , fontSize :'25px' , border:'none' , paddingTop:'5px'}} className='profileButton' >دخول</button>
+              <button onClick={(e) => OnSubmit(e)} style={{ color:' rgba(255, 255, 255, 1)' , fontWeight:'700' , fontSize :'25px' , border:'none' , paddingTop:'5px'}} className='profileButton' >دخول</button>
        </div>
 
         <div style={{display:'flex' , justifyContent:'center'}}> <p>  لا تمتلك حساب ؟  </p>

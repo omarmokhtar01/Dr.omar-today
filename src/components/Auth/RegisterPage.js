@@ -38,11 +38,7 @@ const RegisterPage = () => {
     const handleInputChange = (fieldName) => (e) => {
       setState(prevState => ({ ...prevState, [fieldName]: e.target.value}));
   };
-console.log("name"+name);
-console.log("email"+email);
-console.log("phonenumber"+phonenumber);
-console.log("password"+password);
-console.log("confirm_password"+confirm_password);
+
 
   const submitRegister =async (e) => {
     e.preventDefault();
