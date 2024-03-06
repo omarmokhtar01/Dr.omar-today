@@ -270,7 +270,7 @@ const Audios = () => {
                             }}
                           >
                             <h5>{item.name}</h5>
-                            <p>عدد المقاطع الصوتية {item.count_audios || 0}</p>
+                            <p>عدد المقاطع الصوتية {item.count_audios }</p>
                           </div>
                         </div>
 
