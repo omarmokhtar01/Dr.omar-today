@@ -188,21 +188,21 @@ const AudioCard = () => {
                 return(
               <>
        <Row className='me-auto'  md={4} key={item.id}>
-        <Col > 
+        <Col key={item.id} > 
           <div style={{display:'flex'}}>
           <img  src={item.image} alt="" style={{}} width='61px' height='61px' />
           <p style={{color:'rgba(17, 32, 34, 1)' , fontWeight:'bold' , display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px'}}> {item.title} </p>
           </div> 
          </Col>
      
-        <Col xs={6}><p style={{color:'rgba(130, 130, 130, 1)' , display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px'}}  > {item.name} </p></Col>
+        <Col  key={item.id} xs={6}><p style={{color:'rgba(130, 130, 130, 1)' , display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px'}}  > {item.name} </p></Col>
 
-        <Col xs={6} > <p style={{color:'rgba(130, 130, 130, 1)' , display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px' }}  >
+        <Col  key={item.id} xs={6} > <p style={{color:'rgba(130, 130, 130, 1)' , display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px' }}  >
         {durationFormatted} دقيقة</p>
          </Col>
 
 
-        <Col>
+        <Col  key={item.id}>
         <div style={{display:'flex' , justifyContent:'center' , alignItems:'center' , padding:'15px' ,  gap:'15px'}}>
                  <MdDownloadForOffline style={{ color: 'rgb(209, 155, 111)', fontSize: '30px' ,  cursor: "pointer"}}  />
                  <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' ,  cursor: "pointer"}} />
