@@ -205,15 +205,19 @@ const BooksSort = () => {
             ? getAll && getAll.length > 0
               ? getAll.map((item) => {
                   return (
-                <Col xs={6} md={4} lg={3} key={item.id}>
+                <Col xs={6} md={4} lg={3} key={item.id} >
                 <div class="p-3">
-                    <div >
-                      <img src={bookSort} alt=''  />
-                        <div style={{position:'absolute' , marginTop:'-238px' , marginRight:'25px' , display:'flex' , gap:'10px'}}  >
-                        <IoHeartCircleSharp style={{ color: '#FFFFFF', fontSize: '30px' }} />
+                    <div style={{border:'1px solid gray',borderRadius:'10px'}}>
+                    <div style={{ position: 'relative', cursor: 'pointer' }} onClick={() => window.open(`https://docs.google.com/viewer?url=${encodeURIComponent(item.Book)}&embedded=true`)}>
+                          <img src={item.image} alt=''  height={246} width={169} />
+                          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(0, 0, 0, 0.5)', color: '#fff', padding: '10px', borderRadius: '5px' }}>
+                            Click to view book
+                          </div>
+                        </div>                        <div style={{position:'absolute' , marginTop:'-238px' , marginRight:'25px' , display:'flex' , gap:'10px'}}  >
+                        <Link to={"/favBook"}>   <IoHeartCircleSharp style={{ color: 'gray', fontSize: '30px' }} /></Link>
                         </div>
 
-                        <h5> الارتقاء بالكتابه </h5>
+                        <h5> {item.name}</h5>
                         <p style={{marginTop:'-5px'}} >20 صفحه</p>      
                      </div>
                     </div>

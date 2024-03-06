@@ -16,7 +16,10 @@ import './download.css'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux';
 import { getPicturesDownload } from '../../features/allDownload/allDownloadSlice';
+import Cookies from 'js-cookie';
+
 const DownloadPictures = () => {
+  const token = Cookies.get('token');
 
   
   const dispatch = useDispatch();
@@ -27,10 +30,13 @@ const DownloadPictures = () => {
   const isLoading = useSelector((state) => state.download.isLoading);
   const error = useSelector((state) => state.articles.error);
 
-
   useEffect(() => {
-    dispatch(getPicturesDownload());
-  }, [dispatch]); 
+    if (!token) {
+      navigate('/');
+    } else {
+    dispatch(getPicturesDownload(token));
+  }
+}, [token, navigate, dispatch]);
 
   console.log(getData);
   console.log(getData.message);

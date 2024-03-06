@@ -11,7 +11,10 @@ import './download.css'
 import { getBooksDownload } from '../../features/allDownload/allDownloadSlice';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+
 const DownloadBooks = () => {
+  const token = Cookies.get('token');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,10 +24,13 @@ const DownloadBooks = () => {
   const isLoading = useSelector((state) => state.download.isLoading);
   const error = useSelector((state) => state.articles.error);
 
-
   useEffect(() => {
-    dispatch(getBooksDownload());
-  }, [dispatch]); 
+    if (!token) {
+      navigate('/');
+    } else {
+    dispatch(getBooksDownload(token));
+  }
+}, [token, navigate, dispatch]);
 
   console.log(getData);
   console.log(getData.message);

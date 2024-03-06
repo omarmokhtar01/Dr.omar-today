@@ -9,6 +9,7 @@ import play from "../../images/play.png";
 import heart from "../../images/heart.png";
 import deleteicon from "../../images/deleteicon.png";
 import NavBar from '../Navbar/NavBar';
+import Cookies from 'js-cookie';
 
 const DownloadAudioCard = () => {
 

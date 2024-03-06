@@ -94,7 +94,7 @@ console.log(getDataOne);
     getDataOne.elder ? (
         <Col xs={12} md={4} sm={4} >
        
-          <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '35px' , cursor: "pointer" ,margin:'15px 10px 10px -170px' }} />
+       <Link to={"/favArtivles"}>  <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '35px' , cursor: "pointer" ,margin:'15px 10px 10px -170px' }} /></Link>
           <div style={{display:'flex', border:'3px solid rgba(236, 236, 236, 1)' ,borderRadius:'15px' , width:'90%' , padding:'10px'}}>
              <div>
                 <img src={getDataOne.image} width={50} height={50} />

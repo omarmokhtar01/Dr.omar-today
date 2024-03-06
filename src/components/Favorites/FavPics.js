@@ -14,7 +14,10 @@ import NavBar from '../Navbar/NavBar';
 import { getPicturesFavorite } from '../../features/allFavorites/allFavoritesSlice';
 import { useDispatch,useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
+
 const FavPics = () => {
+  const token = Cookies.get('token');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,9 +29,12 @@ const FavPics = () => {
 
 
   useEffect(() => {
-    dispatch(getPicturesFavorite());
-  }, [dispatch]); 
-
+    if (!token) {
+      navigate('/');
+    } else {
+    dispatch(getPicturesFavorite(token));
+  }
+}, [token, navigate, dispatch]);
   console.log(getData);
   console.log(getData.message);
 

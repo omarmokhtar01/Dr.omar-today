@@ -51,22 +51,55 @@ const RegisterPage = () => {
 
   const submitRegister =async (e) => {
     e.preventDefault();
-    // Perform form validation here if necessary
-    if (name.trim() === '' || email.trim() === '' || phonenumber.trim() === '' || password.trim() === '' || confirm_password.trim() === '') {
-      // Handle empty fields or any other validation errors
-      console.log('Please fill in all fields');
-      return;
+    if (!name.trim()) {
+    return  notify("اسم المستخدم مطلوب", "error");
+    } else if (name.trim().length < 2) {
+      return  notify("يجب أن يكون طول كلمة المرور على الأقل 2 أحرف", "error");
     }
-  
-    if (password !== confirm_password) {
-      // Handle password mismatch error
-      console.log('Passwords do not match');
-      return;
+        // Check if phonenumber is empty or has incorrect format
+        if (!phonenumber.trim()) {
+          return  notify("رقم الهاتف مطلوب", "error");
+        } else if (!isValidPhoneNumber(phonenumber)) {
+          return  notify("الرجاء إدخال رقم هاتف صحيح", "error");
+        }
+    
+    // Check if email is empty or has incorrect format
+    if (!email.trim()) {
+      return  notify("أيميل المستخدم مطلوب", "error");
+    } else if (!isValidEmail(email)) {
+      return  notify("الرجاء إدخال بريد إلكتروني صحيح", "error");
     }
-  
-    // If form data is valid, proceed with form submission
-    console.log('Submitting form...');
-    // Here you can proceed with any further actions like making an API call, etc.
+    
+
+    
+    // Check if password is empty or less than 8 characters long
+    if (!password.trim()) {
+      return  notify("باسورد المستخدم مطلوب", "error");
+    } else if (password.trim().length < 8) {
+      return  notify("يجب أن يكون طول كلمة المرور على الأقل 8 أحرف", "error");
+    }
+    
+    // Check if confirm_password matches password
+    if (confirm_password !== password) {
+      return  notify("كلمة المرور التأكيدية غير متطابقة", "error");
+    }
+    
+    // Function to validate email format
+    function isValidEmail(email) {
+      // Regular expression for email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+    
+    // Function to validate phone number format
+    function isValidPhoneNumber(phonenumber) {
+      // Regular expression for phone number validation
+      const phoneNumberRegex = /^\d{10}$/;
+      return phoneNumberRegex.test(phonenumber);
+    }
+
+
+
     const formData = {
       name,
       email,
@@ -113,9 +146,7 @@ const RegisterPage = () => {
         }
         if (res.message === "Request failed with status code 422"){
           notify("   هناك خطأ في تسجيل الحساب", "error");
-          setTimeout(() => {
-            navigate("/error-page");
-        }, 1500);
+
         }
       }
     }

@@ -229,7 +229,7 @@ const Books = () => {
                         </div>
                       </div>
                       <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', marginLeft:'60px', gap:'20px' }}>
-                        <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px', marginRight:'-30px' }} />
+                      <Link to={"/favBook"}>    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px', marginRight:'-30px' }} /></Link>
                       </div>
                     </div>
                   </Col>

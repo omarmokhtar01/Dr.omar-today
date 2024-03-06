@@ -14,10 +14,25 @@ const initialState = {
   
   
   
-  const getAllEldersDownload = createAsyncThunk('get/AllEldersDownload', async (_, thunkAPI) => {
+  const getAllEldersDownload = createAsyncThunk('get/AllEldersDownload', async (token, thunkAPI) => {
+    try {
+      const response = await baseUrl.get(
+        'download/getElder',
+        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  });
+
+  const getPicturesDownload = createAsyncThunk('get/AllPicturesDownload', async (token, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          'download/getElder');
+          'download/getImage',
+          { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+
+          );
         return response.data;
       } catch (error) {
         return error
@@ -25,10 +40,12 @@ const initialState = {
     });
 
 
-  const getPicturesDownload = createAsyncThunk('get/AllPicturesDownload', async (_, thunkAPI) => {
+  const getBooksDownload = createAsyncThunk('get/AllBooksDownload', async (token, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          'download/getImage');
+          'download/getBook',
+          { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          );
         return response.data;
       } catch (error) {
         return error
@@ -36,21 +53,11 @@ const initialState = {
     });
 
 
-  const getBooksDownload = createAsyncThunk('get/AllBooksDownload', async (_, thunkAPI) => {
+  const getAudiosDownload = createAsyncThunk('get/AllAudiosDownload', async (token, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          'download/getBook');
-        return response.data;
-      } catch (error) {
-        return error
-      }
-    });
-
-
-  const getAudiosDownload = createAsyncThunk('get/AllAudiosDownload', async (_, thunkAPI) => {
-      try {
-        const response = await baseUrl.get(
-          'download/getAudioData');
+          'download/getAudioData',        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          );
         return response.data;
       } catch (error) {
         return error

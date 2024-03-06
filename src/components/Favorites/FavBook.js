@@ -11,8 +11,10 @@ import bookSort2 from "../../images/book-sort2.png";
 import { useDispatch,useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { getBooksFavorite } from '../../features/allFavorites/allFavoritesSlice';
+import Cookies from 'js-cookie';
 
 const FavBook = () => {
+  const token = Cookies.get('token');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,9 +26,12 @@ const FavBook = () => {
 
 
   useEffect(() => {
-    dispatch(getBooksFavorite());
-  }, [dispatch]); 
-
+    if (!token) {
+      navigate('/');
+    } else {
+    dispatch(getBooksFavorite(token));
+  }
+}, [token, navigate, dispatch]);
   console.log(getData);
   console.log(getData.message);
 

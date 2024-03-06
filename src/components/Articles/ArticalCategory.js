@@ -12,6 +12,7 @@ import heart1 from "../../images/heart1.png";
 import { Link,useParams  } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { getArticleCategory, getArticleCategoryById, getArticles } from '../../features/articles/articlesSlich';
+import { IoHeartCircleSharp } from 'react-icons/io5';
 
 const ArticalCategory = () => {
 
@@ -135,7 +136,7 @@ console.log(getDataById);
       <>
         {getDataById.map((item) => ( // Added missing parentheses for map function
           <Col key={item.id}> {/* Ensure each mapped element has a unique key */}
-            <img src={heart1} style={{ position: 'absolute', zIndex: '2', margin: '10px', display: 'flex' }} alt="" /> {/* Added alt attribute for accessibility */}
+         <Link to={"/favArtivles"}>   <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '35px' , cursor: "pointer" ,margin:'15px 10px 10px -170px' }} /> </Link>
             <Link to={`/articleCard/${item.id}`} style={{ textDecoration: 'none' }}>
               <Card style={{ width: '100%', borderRadius: '15px' }}>
                 <Card.Img variant="top" height={300} src={item.image} /> {/* Changed src attribute to use item.imgArticle */}

@@ -284,7 +284,7 @@ const Audios = () => {
                           }}
                           id="sounds-icons"
                         >
-                            <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '40px' ,  cursor: "pointer"}} />
+                          <Link to={"/favAudios"}>  <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '40px' ,  cursor: "pointer"}} /></Link> 
                            <MdDownloadForOffline  style={{ color: 'rgb(219 176 134)', fontSize: '42px' ,paddingLeft:'5px' }}/>
                         </div>
                       </div>

@@ -130,7 +130,7 @@ console.log(getData);
       <>
         {getData.map((item) => ( // Added missing parentheses for map function
           <Col key={item.id}> {/* Ensure each mapped element has a unique key */}
-          <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '35px' , cursor: "pointer", position: 'absolute', zIndex: '2', margin: '10px', display: 'flex' }} />
+       <Link to={"/favArtivles"}>  <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '35px' , cursor: "pointer", position: 'absolute', zIndex: '2', margin: '10px', display: 'flex' }} /></Link> 
          
             <Link to={`/articleCard/${item.id}`} style={{ textDecoration: 'none' }}>
               <Card style={{ width: '100%', borderRadius: '15px' }}>

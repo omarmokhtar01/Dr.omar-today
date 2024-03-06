@@ -30,36 +30,55 @@ import { PiShareFatFill } from "react-icons/pi";
 import { LuArrowUpDown } from "react-icons/lu";
 import { getEldersByIdAudios} from "../../features/elders/eldersSlice"
 const AudioCard = () => {
-
-  const audioRef = useRef(null);
-  const [duration, setDuration] = useState(0);
+  const audioRefs = useRef([]);
+  const [durations, setDurations] = useState([]);
   const [durationFormatted, setDurationFormatted] = useState('0:00');
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState([]);
 
   useEffect(() => {
-    if (duration > 0) {
-      const minutes = Math.floor(duration / 60);
-      const seconds = Math.floor(duration % 60);
-      setDurationFormatted(`${minutes}:${seconds.toString().padStart(2, '0')}`);
-    }
-  }, [duration]);
+    audioRefs.current = audioRefs.current.slice(0, durations.length);
+    setIsPlaying(new Array(durations.length).fill(false));
+  }, [durations]);
 
-  const handlePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
+  useEffect(() => {
+    if (durations.length > 0) {
+      const totalDuration = durations.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+      const hours = Math.floor(totalDuration / 3600);
+      const minutes = Math.floor((totalDuration % 3600) / 60);
+      const seconds = Math.floor(totalDuration % 60);
+      setDurationFormatted(`${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+    } else {
+      setDurationFormatted('0:00:00'); // Reset to initial state if there's no duration
+    }
+  }, [durations]);
+  
+
+  const handlePlay = (index) => {
+    const newIsPlaying = [...isPlaying];
+    newIsPlaying[index] = !isPlaying[index];
+    setIsPlaying(newIsPlaying);
+    const audioElement = audioRefs.current[index];
+    if (audioElement) {
+      if (newIsPlaying[index]) {
+        // Check if the audio is not already playing before calling play()
+        if (audioElement.paused) {
+          audioElement.play().catch(error => console.error('Error playing audio:', error));
+        }
       } else {
-        audioRef.current.play();
+        // Check if the audio is playing before calling pause()
+        if (!audioElement.paused) {
+          audioElement.pause();
+        }
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
-
-  const handleLoadedMetadata = () => {
-    if (audioRef.current) {
-      setDuration(audioRef.current.duration);
-    }
+  const handleLoadedMetadata = (index) => {
+    return (e) => {
+      const newDurations = [...durations];
+      newDurations[index] = e.target.duration;
+      setDurations(newDurations);
+    };
   };
   const params = useParams();
 
@@ -183,7 +202,7 @@ const AudioCard = () => {
             getDataOne.data ? (
               getDataOne.data.Audio ? (
 
-              getDataOne.data.Audio.map((item)=>{
+              getDataOne.data.Audio.map((item,index)=>{
                 return(
                   <>
 
@@ -209,7 +228,7 @@ const AudioCard = () => {
                             <button onClick={handlePlay} style={{border:'none', background:'#FFFFFF'}}>
                    {isPlaying ? <FaCirclePause style={{ color: 'rgb(209, 155, 111)', fontSize: '26px' }}/> : <FaCirclePlay style={{ color: 'rgb(209, 155, 111)', fontSize: '26px' }}/>}
                  </button>
-                 <audio ref={audioRef} src={item.audio} controls hidden onLoadedMetadata={handleLoadedMetadata} />
+                 <audio ref={(el) => (audioRefs.current[index] = el)} src={item.audio} controls hidden onLoadedMetadata={handleLoadedMetadata(index)} />
            
                           </div>
                           

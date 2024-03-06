@@ -14,10 +14,10 @@ const initialState = {
   
   
   
-  const getAllEldersFavorite = createAsyncThunk('get/AllEldersFavorite', async (_, thunkAPI) => {
+  const getAllEldersFavorite = createAsyncThunk('get/AllEldersFavorite', async (token, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          'Favorite/Get_Favorite_Elder');
+          'Favorite/Get_Favorite_Elder', { headers: { Authorization: `Bearer ${token}` } });
         return response.data;
       } catch (error) {
         return error
@@ -25,10 +25,10 @@ const initialState = {
     });
 
 
-  const getPicturesFavorite = createAsyncThunk('get/AllPicturesFavorite', async (_, thunkAPI) => {
+  const getPicturesFavorite = createAsyncThunk('get/AllPicturesFavorite', async (token, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          'Favorite/Get_Favorite_image');
+          'Favorite/Get_Favorite_image', { headers: { Authorization: `Bearer ${token}` } });
         return response.data;
       } catch (error) {
         return error
@@ -36,10 +36,10 @@ const initialState = {
     });
 
 
-  const getBooksFavorite = createAsyncThunk('get/AllBooksFavorite', async (_, thunkAPI) => {
+  const getBooksFavorite = createAsyncThunk('get/AllBooksFavorite', async (token, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          'Favorite/Get_Favorite_Books');
+          'Favorite/Get_Favorite_Books', { headers: { Authorization: `Bearer ${token}` } });
         return response.data;
       } catch (error) {
         return error
@@ -47,10 +47,10 @@ const initialState = {
     });
 
 
-  const getAudiosFavorite = createAsyncThunk('get/AllAudiosFavorite', async (_, thunkAPI) => {
+  const getAudiosFavorite = createAsyncThunk('get/AllAudiosFavorite', async (token, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          'Favorite/Get_Favorite_Audios');
+          'Favorite/Get_Favorite_Audios', { headers: { Authorization: `Bearer ${token}` } });
         return response.data;
       } catch (error) {
         return error

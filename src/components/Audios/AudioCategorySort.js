@@ -14,6 +14,7 @@ import group1 from "../../images/Group-1-1.png";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getAudioCategory, getAudioCategoryById, getAudios } from '../../features/audios/audioSlice';
+import { IoHeartCircleSharp } from 'react-icons/io5';
 const AudioCategorySort = () => {
     const params = useParams();
 
@@ -156,7 +157,7 @@ return(
                 <div key={item.id}>
                   <img src={item.image} alt='pic' width={200} height={200} />
                     <div style={{position:'absolute' , marginTop:'-40px' , marginRight:'55px' , display:'flex' , gap:'10px'}}  >
-                         <img src={heart1} alt=''  />
+                    <Link to={"/favAudios"}>  <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '40px' ,  cursor: "pointer"}} /></Link> 
                         <img src={down} alt=''  />
                     </div>
 

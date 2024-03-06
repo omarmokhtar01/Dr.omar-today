@@ -9,7 +9,10 @@ import download from "../../images/download.png";
 import { getAudiosFavorite } from '../../features/allFavorites/allFavoritesSlice';
 import { useDispatch,useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
+
 const FavAudios = () => {
+  const token = Cookies.get('token');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,9 +24,12 @@ const FavAudios = () => {
 
 
   useEffect(() => {
-    dispatch(getAudiosFavorite());
-  }, [dispatch]); 
-
+    if (!token) {
+      navigate('/');
+    } else {
+    dispatch(getAudiosFavorite(token));
+  }
+}, [token, navigate, dispatch]);
   console.log(getData);
   console.log(getData.message);
 

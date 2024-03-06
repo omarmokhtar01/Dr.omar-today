@@ -48,6 +48,47 @@ console.log(res.message)
 
   const OnSubmit = async(e) =>{
     e.preventDefault();
+    if (!first_name.trim()) {
+      return  notify("اسم المستخدم مطلوب", "error");
+      } else if (first_name.trim().length < 2) {
+        return  notify("يجب أن يكون طول كلمة المرور على الأقل 2 أحرف", "error");
+      }
+      if (!phone.trim()) {
+        return  notify("رقم الهاتف مطلوب", "error");
+      } else if (!isValidPhoneNumber(phone)) {
+        return  notify("الرجاء إدخال رقم هاتف صحيح", "error");
+      }
+      
+      // Check if email is empty or has incorrect format
+      if (!email.trim()) {
+        return  notify("أيميل المستخدم مطلوب", "error");
+      } else if (!isValidEmail(email)) {
+        return  notify("الرجاء إدخال بريد إلكتروني صحيح", "error");
+      }
+      
+  
+      
+      // Check if password is empty or less than 8 characters long
+      if (!subject.trim()) {
+        return  notify("برجاء كتابة الملاحظات المطلوبة", "error");
+      } else if (subject.trim().length < 2) {
+        return  notify("برجاء كتابة الملاحظات المطلوبة", "error");
+      }
+      
+
+      // Function to validate email format
+      function isValidEmail(email) {
+        // Regular expression for email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+      
+      // Function to validate phone number format
+      function isValidPhoneNumber(phonenumber) {
+        // Regular expression for phone number validation
+        const phoneNumberRegex = /^\d{10}$/;
+        return phoneNumberRegex.test(phonenumber);
+      }
     const contactData = {
       subject,first_name,phone,email
     };

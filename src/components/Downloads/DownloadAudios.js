@@ -12,7 +12,10 @@ import { FaCirclePause, FaCirclePlay, FaPause } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux';
 import { getAudiosDownload } from '../../features/allDownload/allDownloadSlice';
+import Cookies from 'js-cookie';
+
 const DownloadAudios = () => {
+  const token = Cookies.get('token');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,9 +27,12 @@ const DownloadAudios = () => {
 
 
   useEffect(() => {
-    dispatch(getAudiosDownload());
-  }, [dispatch]); 
-
+    if (!token) {
+      navigate('/');
+    } else {
+    dispatch(getAudiosDownload(token));
+  }
+}, [token, navigate, dispatch]);
   console.log(getData);
   console.log(getData.message);
 

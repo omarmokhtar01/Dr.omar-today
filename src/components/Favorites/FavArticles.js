@@ -8,8 +8,11 @@ import imgArticle3 from "../../images/img-article3.png";
 import icon1 from "../../images/article-icon.png";
 import icon2 from "../../images/article-icon2.png";
 import heart1 from "../../images/redhearticon.png"
+import Cookies from 'js-cookie';
 
 const FavArticles = () => {
+  const token = Cookies.get('token');
+
   return <>
   <NavBar />
 

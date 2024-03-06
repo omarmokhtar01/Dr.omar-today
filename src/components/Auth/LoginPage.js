@@ -49,7 +49,23 @@ if(res && res.data){
 //save data
 const OnSubmit = async(e) =>{
    e.preventDefault();
-
+   function isValidEmail(email) {
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+   if (!email.trim()) {
+    notify("أيميل المستخدم مطلوب", "error");
+  } else if (!isValidEmail(email)) {
+    notify("الرجاء إدخال بريد إلكتروني صحيح", "error");
+  }
+  
+  // Check if password is empty or less than 8 characters long
+  if (!password.trim()) {
+    notify("باسورد المستخدم مطلوب", "error");
+  } else if (password.trim().length < 8) {
+    notify("يجب أن يكون طول كلمة المرور على الأقل 8 أحرف", "error");
+  }
 await dispatch(createLoginUser({
     email,
      password,
@@ -74,16 +90,14 @@ useEffect(() => {
         Cookies.remove("token");
       }
       if (res.message === "register successfully") {
-        notify("تم تسجيل الدخول ", "success");
+        notify("تم تسجيل الدخول بنجاح", "success");
         setTimeout(() => {
           navigate("/personaLinformation");
       }, 1500);
       }
-      if (res.message === "Request failed with status code 422"){
+      if (res.error === "unauthorised"){
         notify("   هناك خطأ في تسجيل الدخول", "error");
-        setTimeout(() => {
-          navigate("/error-page");
-      }, 1500);
+
       }
     }
   }

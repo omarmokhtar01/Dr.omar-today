@@ -9,10 +9,14 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { useDispatch,useSelector } from 'react-redux';
 import { getAllEldersDownload } from '../../features/allDownload/allDownloadSlice';
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
+
 const DownloadScientists = () => {
+  const navigate = useNavigate(); 
+  const token = Cookies.get('token');
+
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
  
   const getData = useSelector((state) => state.download.allEldersDownload);
 
@@ -21,8 +25,12 @@ const DownloadScientists = () => {
 
 
   useEffect(() => {
-    dispatch(getAllEldersDownload());
-  }, [dispatch]); 
+    if (!token) {
+      navigate('/');
+    } else {
+      dispatch(getAllEldersDownload(token));
+    }
+  }, [token, navigate, dispatch]);
 
   console.log(getData);
   console.log(getData.message);

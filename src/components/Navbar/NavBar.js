@@ -40,6 +40,7 @@ const NavBar = () => {
       };
 
  return <>
+ {}
     <Navbar expand="lg" style={navbarStyle}  >
       <Container style={{marginBottom:'50px '}} >
         <Navbar.Brand >

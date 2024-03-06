@@ -216,7 +216,7 @@ const ImgCategory = () => {
         {imageGroup.image.map((image, imgIndex) => (
           <Col key={imgIndex} xl={3} lg={4} md={6} sm={12}>
             {/* Placeholder for heartImg */}
-            {heartImg}
+            <Link to={"/favpictures"}>   {heartImg} </Link>
             <div>
               <img
                 src={image.image}
@@ -242,7 +242,7 @@ const ImgCategory = () => {
               {/* Your icons */}
               <img src={iconM3} alt="icon" style={{ paddingLeft: "15px" }} />
               <img src={iconM2} alt="icon" style={{ paddingLeft: "15px" }} />
-              <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px'}} />
+              <Link to={"/favpictures"}>  <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px'}} /></Link>
             </div>
           </div>
         </Modal>

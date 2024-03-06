@@ -23,6 +23,7 @@ import { IoHeartCircleSharp } from 'react-icons/io5';
 import { MdDownloadForOffline, MdOutlineFavoriteBorder } from "react-icons/md";
 import { FaShare } from "react-icons/fa6";
 import { FaShareFromSquare } from "react-icons/fa6";
+import { saveAs } from 'file-saver';
 
 const images = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8,pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8,pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8]; // Assuming you have imported these images
 const heartImg = <img src={heart1} style={{ position: 'absolute', zIndex: '2', margin: '15px' }} alt="heart" />; // Assuming you have imported heart1
@@ -55,6 +56,8 @@ const handleShow = (image) => {
   
   console.log('data is: ', getAllImgData);
 
+ 
+  
     return <>
      <NavBar />
 
@@ -117,7 +120,7 @@ const handleShow = (image) => {
       <Col key={index} xl={3} lg={4} md={6} sm={12}>
         {/* Placeholder for heartImg */}
         <div style={{display:'flex' , flexDirection:'column' , justifyContent:'center' , marginLeft:'60px', gap:'20px', position:'absolute'}}>
-                     <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'35px', marginTop:'10px'}} />
+        <Link to={"/favpictures"}>  <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px' , marginRight:'35px', marginTop:'10px'}} /></Link>
                     </div>
         <img
           src={image.image}
@@ -139,12 +142,12 @@ const handleShow = (image) => {
           {/* Display the selected image */}
           <img src={selectedImage} alt="modal" style={{ width: '400px' }} />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div>
+            <div style={{width:'180px',justifyContent:'space-between',display:'flex'}}>
               {/* Your icons */}
-              <FaShareFromSquare style={{ color: '#878787bd', fontSize: '35px' , marginTop:'15px',marginLeft:'15px'}}/>
-              <MdDownloadForOffline  style={{ color: 'rgb(219 176 134)', fontSize: '50px'  }}/>
+              <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px' , marginTop:'12px',cursor:'pointer'}}/>
+              <MdDownloadForOffline  style={{ color: 'rgb(219 176 134)', fontSize: '50px' ,cursor:'pointer' }} />
            
-             <IoHeartCircleSharp  style={{ color: '#878787bd', fontSize: '45px' , marginTop:'15px',marginRight:'15px'}} />
+              <Link to={"/favpictures"}>    <IoHeartCircleSharp  style={{ color: '#878787bd', fontSize: '45px' , marginTop:'10px',cursor:'pointer'}} /></Link>
                    
             </div>
           </div>

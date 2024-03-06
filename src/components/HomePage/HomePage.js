@@ -46,9 +46,26 @@ import { IoHeartCircleSharp } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi2";
 import { SlLocationPin } from "react-icons/sl";
 import { TbArrowsExchange2, TbPlayerTrackNextFilled,TbPlayerTrackPrevFilled } from "react-icons/tb";
-
+import { ToastContainer } from 'react-toastify'
+import notify from '../UseNotifications/useNotification'
 const HomePage = () => {
   const dispatch = useDispatch();
+  const [isPressed, setIsPressed] = useState(false);
+  let timeoutId;
+
+  const handleMouseDown = () => {
+    timeoutId = setTimeout(() => {
+      setIsPressed(true);
+      notify("الوضع الخاص", "success");
+
+    }, 2000);
+  };
+
+  const handleMouseUp = () => {
+    clearTimeout(timeoutId); 
+    setIsPressed(false);
+  };
+
   const [location, setLocation] = useState(null);
   useEffect(() => {
     // Check if geolocation is supported by the browser
@@ -269,7 +286,7 @@ const HomePage = () => {
                 className="d-flex align-items-center justify-content-center   "
                 style={{ marginBottom: "-80px", marginLeft: "-220px" }}
               >
-                <img src={quran} alt="" id="quran-img" />
+<img src={quran} alt="" id="quran-img" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} />
                 <img src={vector2} alt="" className="responsive-image " />
               </div>
             </div>
@@ -854,14 +871,14 @@ const HomePage = () => {
                 متابعه الاستماع
               </h2>
               {/* <img src={card5} alt="" style={{ width: "100%" }} /> */}
-              <Col md={12} sm={12}>
+              <Col md={12} sm={12} style={{display:'flex',justifyContent:'center'}}>
               <div style={{backgroundColor:'rgb(128 128 128 / 15%)',borderRadius:'40px',boxShadow:'5px 10px 8px #888888'}} id="mobile-responsive">
                 <img src={image3} alt="pic" width={300} height={280} style={{marginTop:'20px',borderRadius:'40px'}} id="img-mobile-responsive"/>
 <Col className="mt-4">
 <h4>فضل شهر رمضان</h4>
 <span style={{color:'gray'}}>محمد صالح المنجد</span>
 </Col>
-<Col className="mt-5">
+<Col className="mt-5" style={{display:'flex',alignItems:'center',justifyContent:'space-around'}}>
 
 <TbArrowsExchange2 size={30} color="gray" style={{cursor:'pointer'}}/>
 
@@ -945,6 +962,7 @@ const HomePage = () => {
             />
           </div>
         </Row>
+        <ToastContainer/>
       </Container>
     </>
   );

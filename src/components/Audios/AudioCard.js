@@ -42,12 +42,17 @@ const AudioCard = () => {
   }, [durations]);
 
   useEffect(() => {
-    if (durationFormatted > 0) {
-      const minutes = Math.floor(durationFormatted / 60);
-      const seconds = Math.floor(durationFormatted % 60);
-      setDurationFormatted(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+    if (durations.length > 0) {
+      const totalDuration = durations.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+      const hours = Math.floor(totalDuration / 3600);
+      const minutes = Math.floor((totalDuration % 3600) / 60);
+      const seconds = Math.floor(totalDuration % 60);
+      setDurationFormatted(`${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+    } else {
+      setDurationFormatted('0:00:00'); // Reset to initial state if there's no duration
     }
-  }, [durationFormatted]);
+  }, [durations]);
+  
 
   const handlePlay = (index) => {
     const newIsPlaying = [...isPlaying];
@@ -219,7 +224,7 @@ const AudioCard = () => {
          <Col >
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '15px', gap: '15px' }}>
             <MdDownloadForOffline style={{ color: 'rgb(209, 155, 111)', fontSize: '30px', cursor: "pointer" }} />
-            <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px', cursor: "pointer" }} />
+          <Link to={"/favAudios"}> <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px', cursor: "pointer" }} /></Link> 
             <button onClick={() => handlePlay(index)} style={{ border: 'none', background: '#FFFFFF' }}>
               {isPlaying[index] ? <FaCirclePause style={{ color: 'rgb(209, 155, 111)', fontSize: '26px' }} /> : <FaCirclePlay style={{ color: 'rgb(209, 155, 111)', fontSize: '26px' }} />}
             </button>
