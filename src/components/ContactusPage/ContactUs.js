@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './contact.css'
 import { Button, Col, Container, Form, FormControl, Nav, Navbar, Row } from 'react-bootstrap';
 import contact from "../../images/contact.png";
@@ -14,15 +14,20 @@ import { FaRegUser } from 'react-icons/fa6';
 import { MdOutlineMail, MdOutlinePhoneIphone } from 'react-icons/md';
 import { useDispatch,useSelector } from 'react-redux';
 import { createContactUs } from '../../features/contactUs/contactSlice';
+import { ToastContainer } from 'react-toastify'
+import notify from '../UseNotifications/useNotification'
+import { useNavigate } from 'react-router-dom'
 
 const ContactUs = () => {
   const dispatch=useDispatch();
-  
+  const navigate = useNavigate(); 
   const res = useSelector((state) => state.contact.data);
 
   const isLoading = useSelector((state) => state.contact.isLoading);
   const error = useSelector((state) => state.contact.error);
 
+console.log(res)
+console.log(res.message)
 
   const [state, setState] = useState({
    
@@ -48,9 +53,29 @@ const ContactUs = () => {
     };
     
  await dispatch(createContactUs(contactData));
-
- 
  } 
+
+ useEffect(() => {
+  if (isLoading === false) {
+    if (res) {
+      console.log(res);
+     
+      if (res.message === "The message has added  successfully") {
+        notify("تم ارسال الرساله بنجاح   ", "success");
+        setTimeout(() => {
+          window.location.reload() // to reload page after send msg
+      }, 1500);
+      }
+      if (res.message === "Request failed with status code 422"){
+        notify("  هناك خطأ في ارسال الرساله ", "error");
+        
+      }
+    }
+  }
+}, [isLoading]);
+
+
+
 
     return <> 
     <NavBar />
@@ -113,7 +138,7 @@ const ContactUs = () => {
                         <Form.Control as="textarea" placeholder="اكتب ملاحظاتك هنا" style={{ height: '150px' ,background:'rgba(245, 245, 245, 1)' ,borderRadius: '10px', 
                           padding:'15px', width:'85%' }}  onChange={handleInputChange('subject')} value={subject} 
                         />
-                </Form.Group>
+                </Form.Group> 
 
 
              <div className='d-flex justify-content-center align-items-center'>
@@ -127,11 +152,11 @@ const ContactUs = () => {
          </div>
         </Col>
     </Row>
+    <ToastContainer />
    </Container>
  </>;
 }
 export default ContactUs;
-
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Auth.css'
 import phone from "../../images/phone.png";
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
@@ -9,14 +9,18 @@ import ForgetPasswordPage from './ForgetPasswordPage';
 import RegisterPage from './RegisterPage';
 import { useDispatch,useSelector } from 'react-redux';
 import { createLoginUser } from '../../features/auth/authSlice';
+import { MdOutlineMail } from 'react-icons/md';
+import { ToastContainer } from 'react-toastify'
+import notify from '../UseNotifications/useNotification'
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+   const navigate = useNavigate();
   const [state, setState] = useState({
    
     email: '',
-   
     password:'',
    
   });
@@ -28,12 +32,18 @@ const LoginPage = () => {
   const handleInputChange = (fieldName) => (e) => {
     setState(prevState => ({ ...prevState, [fieldName]: e.target.value}));
 };
-  const res = useSelector((state) => state.auth.userLogin);
+const res = useSelector((state) => state.auth.userLogin);
 
-  const isLoading = useSelector((state) => state.auth.isLoading);
-  const error = useSelector((state) => state.auth.error);
+const isLoading = useSelector((state) => state.auth.isLoading);
+const error = useSelector((state) => state.auth.error);
 
-
+console.log(res)
+//  console.log(res.data.token)
+if(res && res.data){
+  console.log(res.data.token)
+}
+ console.log(res.message)
+ console.log(res.success)
 
 
 //save data
@@ -41,12 +51,45 @@ const OnSubmit = async(e) =>{
    e.preventDefault();
 
 await dispatch(createLoginUser({
-  email,
+    email,
      password,
     
   })); 
 
 } 
+
+
+
+useEffect(() => {
+  if (isLoading === false) {
+    if (res) {
+      console.log(res);
+     
+      if (res.data && res.data.token) {
+     
+        Cookies.set("token", res.data.token); 
+        
+      } else {
+        // Remove token and user info if login is not successful
+        Cookies.remove("token");
+      }
+      if (res.message === "register successfully") {
+        notify("تم تسجيل الدخول ", "success");
+        setTimeout(() => {
+          navigate("/personaLinformation");
+      }, 1500);
+      }
+      if (res.message === "Request failed with status code 422"){
+        notify("   هناك خطأ في تسجيل الدخول", "error");
+        setTimeout(() => {
+          navigate("/error-page");
+      }, 1500);
+      }
+    }
+  }
+}, [isLoading]);
+
+
   //to make modal
      const [show, setShow] = useState(false);
      const [showReg, setShowRwg] = useState(false);
@@ -68,7 +111,7 @@ await dispatch(createLoginUser({
        <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label style={{fontWeight: '600' , display:'flex' }}> الأيميل</Form.Label>
          
-         <img  className='icon-input' src={phone} alt="" style={{position:'absolute' , display:'flex' , marginTop:'17px',paddingRight:'9px' }} />
+          <MdOutlineMail  style={{color:'gray' , position:'absolute' , display:'flex' , marginTop:'12px' , paddingRight:'9px' , fontSize:'35px' }}  />
           
          <Form.Control type="email" placeholder=" user@email.com" style={{  background:'#FFFFFF' ,borderRadius: '10px', 
                   padding:'15px 35px 15px 15px' }}  onChange={handleInputChange('email')} value={email}/> 
@@ -122,6 +165,7 @@ await dispatch(createLoginUser({
         </div>
         </Col>
       </Row>
+      <ToastContainer />
     </Container> 
     </>;
 }

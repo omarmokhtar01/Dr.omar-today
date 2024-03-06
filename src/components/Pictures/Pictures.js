@@ -20,6 +20,10 @@ import { getAllPicuture } from '../../features/allPictres/allPicturesSlice';
 import { Link } from 'react-router-dom';
 import { getAllImgCategory } from '../../features/imgCategory/imgCategorySlice';
 import { IoHeartCircleSharp } from 'react-icons/io5';
+import { MdDownloadForOffline, MdOutlineFavoriteBorder } from "react-icons/md";
+import { FaShare } from "react-icons/fa6";
+import { FaShareFromSquare } from "react-icons/fa6";
+
 const images = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8,pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8,pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8]; // Assuming you have imported these images
 const heartImg = <img src={heart1} style={{ position: 'absolute', zIndex: '2', margin: '15px' }} alt="heart" />; // Assuming you have imported heart1
 
@@ -137,10 +141,10 @@ const handleShow = (image) => {
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div>
               {/* Your icons */}
-              <img src={iconM3} alt="icon" style={{ paddingLeft: '15px' }} />
-              <img src={iconM2} alt="icon" style={{ paddingLeft: '15px' }} />
+              <FaShareFromSquare style={{ color: '#878787bd', fontSize: '35px' , marginTop:'15px',marginLeft:'15px'}}/>
+              <MdDownloadForOffline  style={{ color: 'rgb(219 176 134)', fontSize: '50px'  }}/>
            
-             <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px' , marginTop:'15px'}} />
+             <IoHeartCircleSharp  style={{ color: '#878787bd', fontSize: '45px' , marginTop:'15px',marginRight:'15px'}} />
                    
             </div>
           </div>

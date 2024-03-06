@@ -38,13 +38,15 @@ import { useDispatch, useSelector } from "react-redux";
 import LoginPage from "../Auth/LoginPage";
 import { getElders, getEldersById } from "../../features/elders/eldersSlice";
 import { FaCirclePause, FaCirclePlay, FaPause } from "react-icons/fa6";
-import { MdFavoriteBorder } from "react-icons/md";
+import { MdDownloadForOffline, MdFavoriteBorder, MdFileDownload } from "react-icons/md";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { MdAudiotrack } from "react-icons/md";
 import { Carousel } from "react-bootstrap";
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi2";
 import { SlLocationPin } from "react-icons/sl";
+import { TbArrowsExchange2, TbPlayerTrackNextFilled,TbPlayerTrackPrevFilled } from "react-icons/tb";
+
 const HomePage = () => {
   const dispatch = useDispatch();
   const [location, setLocation] = useState(null);
@@ -851,7 +853,29 @@ const HomePage = () => {
               >
                 متابعه الاستماع
               </h2>
-              <img src={card5} alt="" style={{ width: "100%" }} />
+              {/* <img src={card5} alt="" style={{ width: "100%" }} /> */}
+              <Col md={12} sm={12}>
+              <div style={{backgroundColor:'rgb(128 128 128 / 15%)',borderRadius:'40px',boxShadow:'5px 10px 8px #888888'}} id="mobile-responsive">
+                <img src={image3} alt="pic" width={300} height={280} style={{marginTop:'20px',borderRadius:'40px'}} id="img-mobile-responsive"/>
+<Col className="mt-4">
+<h4>فضل شهر رمضان</h4>
+<span style={{color:'gray'}}>محمد صالح المنجد</span>
+</Col>
+<Col className="mt-5">
+
+<TbArrowsExchange2 size={30} color="gray" style={{cursor:'pointer'}}/>
+
+<TbPlayerTrackNextFilled size={20} style={{cursor:'pointer'}}/>
+
+<FaCirclePlay size={50} color="rgb(209, 155, 111)" style={{cursor:'pointer'}}/>
+<TbPlayerTrackPrevFilled size={20} style={{cursor:'pointer'}}/>
+
+<MdFileDownload size={30}  color="rgb(209, 155, 111)" style={{cursor:'pointer'}}/>
+
+</Col>
+              </div>
+              </Col>
+
             </div>
           </Col>
         </Row>

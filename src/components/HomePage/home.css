@@ -113,4 +113,29 @@ margin-bottom: 10px;
      }
  }
   
-  
+ @media (min-width: 1199.98px) { 
+  #mobile-responsive{
+    width:350px;height:562px
+    }
+  }
+
+ @media (min-width: 992px) and (max-width: 1199.98px) { 
+  #mobile-responsive{
+  width: 280 !important;
+  height: 450px !important;
+  }
+  #img-mobile-responsive{
+    width: 250px;
+    height: 200px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+  #mobile-responsive{
+    width: 280 !important;
+    height: 450px !important;
+    }
+    #img-mobile-responsive{
+      width: 180px;
+      height: 200px;
+    }
+ }

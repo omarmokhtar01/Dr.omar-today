@@ -14,9 +14,24 @@ import { IoHeartCircleSharp } from 'react-icons/io5';
 import { MdCircleNotifications } from "react-icons/md";
 import { MdDownloadForOffline } from "react-icons/md";
 import { IoPersonCircleOutline } from 'react-icons/io5';
-
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
+import notify from '../UseNotifications/useNotification';
+import { ToastContainer } from 'react-toastify'
 
 const NavBar = () => {
+
+  const navigate = useNavigate(); 
+
+  const logOut = () =>{
+ 
+    Cookies.remove("token");
+     setTimeout(() => {
+            navigate("/");
+        }, 1500);
+
+        notify("تم تسجيل الخروج بنجاح   ", "success");
+   }
 
     const navbarStyle = {
         backgroundImage: `url(${backgroundImage})`,
@@ -63,11 +78,14 @@ const NavBar = () => {
         <NavDropdown title={ <IoPersonCircleOutline style={{ color: '#FFFFFF', fontSize: '30px' }} /> } className='pp'    >
             <NavDropdown.Item    href='/personaLinformation'>الملف الشخصي</NavDropdown.Item>
             <NavDropdown.Item   href='/conditionandroles'>الشروط والاحكام </NavDropdown.Item>
-            <NavDropdown.Item style={{color:'rgba(255, 53, 53, 1)' }} eventKey="4.3">  تسجيل الخروج</NavDropdown.Item>
+            <NavDropdown.Item 
+             onClick={logOut}
+            style={{color:'rgba(255, 53, 53, 1)' }} eventKey="4.3">  تسجيل الخروج</NavDropdown.Item>
           </NavDropdown> 
           </div>
         </Navbar.Collapse>
       </Container>
+      <ToastContainer />
     </Navbar>
     </>;
 }

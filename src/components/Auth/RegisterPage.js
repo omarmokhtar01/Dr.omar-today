@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import './Auth.css'
 import phone from "../../images/phone.png";
 import emailImg from "../../images/email.png";
@@ -8,10 +8,19 @@ import ForgetPass4 from './ForgetPass4';
 import { Link } from 'react-router-dom';
 import arrowForm from "../../images/Arroww.png";
 import LoginPage from './LoginPage';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import {register} from "../../features/auth/authSlice"
+import { ToastContainer } from 'react-toastify'
+import notify from '../UseNotifications/useNotification'
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom'
+import { FaRegUser } from 'react-icons/fa6';
+import { MdOutlineMail, MdOutlinePhoneIphone } from 'react-icons/md';
+
 const RegisterPage = () => {
+
   const dispatch=useDispatch()
+  const navigate = useNavigate(); 
   //to make modal
     const [showw, setShoww] = useState(false);
 
@@ -68,6 +77,52 @@ const RegisterPage = () => {
    await dispatch(register(formData))
   };
 
+  const res = useSelector((state) => state.auth.userRegister);
+
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const error = useSelector((state) => state.auth.error);
+
+  console.log(res)
+  //  console.log(res.data.token)
+  if(res && res.data){
+    console.log(res.data.token)
+  }
+   console.log(res.message)
+   console.log(res.success)
+   
+  
+  
+   useEffect(() => {
+    if (isLoading === false) {
+      if (res) {
+        console.log(res);
+       
+        if (res.data && res.data.token) {
+       
+          Cookies.set("token", res.data.token); 
+          
+        } else {
+          // Remove token and user info if login is not successful
+          Cookies.remove("token");
+        }
+        if (res.message === "register successfully") {
+          notify("تم تسجيل الحساب بنجاح", "success");
+          // setTimeout(() => {
+          //     navigate("/login");
+          // }, 1500);
+        }
+        if (res.message === "Request failed with status code 422"){
+          notify("   هناك خطأ في تسجيل الحساب", "error");
+          setTimeout(() => {
+            navigate("/error-page");
+        }, 1500);
+        }
+      }
+    }
+  }, [isLoading]);
+
+
+
   return <>
     <Container>
      <Row  >
@@ -87,7 +142,7 @@ const RegisterPage = () => {
   
       <Form.Group className="mb-1" >
           <Form.Label style={{fontWeight: '600' , display:'flex' }}>الاسم بالكامل</Form.Label>
-          <img className='icon-input' src={nameImg} alt="" style={{position:'absolute' , display:'flex' , marginTop:'17px' , paddingRight:'9px' }} />
+          <FaRegUser style={{color:'gray' , position:'absolute' , display:'flex' , marginTop:'17px' , paddingRight:'9px' , fontSize:'25px' }} />
           <Form.Control onChange={handleInputChange('name')} value={name} type="text" placeholder="محمد خالد" style={{  background:'rgba(245, 245, 245, 1)' ,borderRadius: '10px', 
                 padding:'15px 35px 15px 15px' }}  />
         </Form.Group>
@@ -95,7 +150,7 @@ const RegisterPage = () => {
         <Form.Group className="mb-1">
           <Form.Label style={{fontWeight: '600' , display:'flex' }}>رقم الموبيل</Form.Label>
             <div>
-               <img  className='icon-input' src={phone} alt="" style={{position:'absolute' , display:'flex' , marginTop:'17px',paddingRight:'9px' }} />
+            <MdOutlinePhoneIphone  style={{color:'gray' , position:'absolute' , display:'flex' , marginTop:'12px' , paddingRight:'9px' , fontSize:'35px' }} />
              
               {/* <Button style={{position:'absolute', margin:'13px 60px 13px 13px' , borderRadius:'15px' 
                , background:'linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)' , border:'none', padding:'3px 20px',
@@ -115,7 +170,7 @@ const RegisterPage = () => {
 
         <Form.Group className="mb-1" >
                       <Form.Label style={{fontWeight: '600' , display:'flex' }}>البريد الالكتروني </Form.Label>
-                      <img className='icon-input' src={emailImg} alt="" style={{position:'absolute' , display:'flex' , marginTop:'20px',paddingRight:'9px' }} />
+                      <MdOutlineMail  style={{color:'gray' , position:'absolute' , display:'flex' , marginTop:'12px' , paddingRight:'9px' , fontSize:'35px' }}  />
                         <Form.Control type="email"
                         onChange={handleInputChange('email')} value={email}
                             placeholder="username@mail.com" style={{  background:'rgba(245, 245, 245, 1)' ,borderRadius: '10px', 
@@ -158,6 +213,7 @@ const RegisterPage = () => {
 
       </Col>
     </Row>
+    <ToastContainer />
   </Container>
   </>;
 }
