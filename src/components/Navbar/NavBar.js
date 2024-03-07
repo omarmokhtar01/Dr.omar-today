@@ -3,7 +3,7 @@ import './navbar.css'
 import { Container, Nav, NavDropdown, Navbar, Modal, Col, Button } from 'react-bootstrap';
 import logo from "../../images/logo 1.png";
 import backgroundImage from '../../images/back-header.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { IoHeartCircleSharp } from 'react-icons/io5';
 import { MdCircleNotifications } from "react-icons/md";
 import { MdDownloadForOffline } from "react-icons/md";
@@ -19,6 +19,17 @@ import backgroundImageee from "../../images/ground-home.png";
 const NavBar = () => {
   const [hasToken, setHasToken] = useState(false);
   const [location, setLocation] = useState(null);
+  const [activeLink, setActiveLink] = useState(null);
+  const locationNav = useLocation();
+
+  // Update activeLink when the location changes
+  React.useEffect(() => {
+      setActiveLink(locationNav.pathname);
+  }, [locationNav]);
+
+  const handleClick = (link) => {
+      setActiveLink(link);
+  };
   useEffect(() => {
     // Check if geolocation is supported by the browser
     if ("geolocation" in navigator) {
@@ -96,13 +107,49 @@ const NavBar = () => {
               </Link></Navbar.Brand>
         <Navbar.Toggle  aria-controls="basic-navbar-nav" style={{ backgroundColor: '#fff', border: 'none' }}/>
         <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mx-5" >
-        <Nav.Link style={{ color: '#D19B6F' , marginLeft :'20px'}} href='/'>الرئيسيه</Nav.Link>
-            <Nav.Link  style={{ color: '#FFFFFF' , marginLeft :'20px' }} href='/audios'>صوتيات</Nav.Link>
-            <Nav.Link style={{ color: '#FFFFFF' , marginLeft :'20px' }} href="/Books">كتب</Nav.Link>
-            <Nav.Link style={{ color: '#FFFFFF' , marginLeft :'20px'}} href="/articles">مقالات</Nav.Link>
-            <Nav.Link style={{ color: '#FFFFFF' , marginLeft :'20px'}} href="/pictures">صور</Nav.Link>
-            <Nav.Link style={{ color: '#FFFFFF' , marginLeft :'20px'}} href="/contact-us">تواصل معنا</Nav.Link>
+        <Nav className="mx-5">
+            <Nav.Link
+                as={Link}
+                to="/"
+                style={{ color: activeLink === '/' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
+            >
+                الرئيسيه
+            </Nav.Link>
+            <Nav.Link
+                as={Link}
+                to="/audios"
+                style={{ color: activeLink === '/audios' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
+            >
+                صوتيات
+            </Nav.Link>
+            <Nav.Link
+                as={Link}
+                to="/Books"
+                style={{ color: activeLink === '/Books' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
+            >
+                كتب
+            </Nav.Link>
+            <Nav.Link
+                as={Link}
+                to="/articles"
+                style={{ color: activeLink === '/articles' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
+            >
+                مقالات
+            </Nav.Link>
+            <Nav.Link
+                as={Link}
+                to="/pictures"
+                style={{ color: activeLink === '/pictures' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
+            >
+                صور
+            </Nav.Link>
+            <Nav.Link
+                as={Link}
+                to="/contact-us"
+                style={{ color: activeLink === '/contact-us' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
+            >
+                تواصل معنا
+            </Nav.Link>
         </Nav>
 
          <div  className=" nav-menu  d-flex">
@@ -173,44 +220,50 @@ const NavBar = () => {
           style={{ backgroundColor: "#fff", border: "none" }}
         />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mx-5">
+        <Nav className="mx-5">
             <Nav.Link
-              style={{ color: "#D19B6F", marginLeft: "20px" }}
-              href="/"
+                as={Link}
+                to="/"
+                style={{ color: activeLink === '/' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-              الرئيسيه
+                الرئيسيه
             </Nav.Link>
             <Nav.Link
-              style={{ color: "#FFFFFF", marginLeft: "20px" }}
-              href="/audios"
+                as={Link}
+                to="/audios"
+                style={{ color: activeLink === '/audios' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-              صوتيات
+                صوتيات
             </Nav.Link>
             <Nav.Link
-              style={{ color: "#FFFFFF", marginLeft: "20px" }}
-              href="/Books"
+                as={Link}
+                to="/Books"
+                style={{ color: activeLink === '/Books' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-              كتب
+                كتب
             </Nav.Link>
             <Nav.Link
-              style={{ color: "#FFFFFF", marginLeft: "20px" }}
-              href="/articles"
+                as={Link}
+                to="/articles"
+                style={{ color: activeLink === '/articles' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-              مقالات
+                مقالات
             </Nav.Link>
             <Nav.Link
-              style={{ color: "#FFFFFF", marginLeft: "20px" }}
-              href="/pictures"
+                as={Link}
+                to="/pictures"
+                style={{ color: activeLink === '/pictures' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-              صور
+                صور
             </Nav.Link>
             <Nav.Link
-              style={{ color: "#FFFFFF", marginLeft: "20px" }}
-              href="/contact-us"
+                as={Link}
+                to="/contact-us"
+                style={{ color: activeLink === '/contact-us' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-              تواصل معنا
+                تواصل معنا
             </Nav.Link>
-          </Nav>
+        </Nav>
 
           <Col
             xs="auto"
