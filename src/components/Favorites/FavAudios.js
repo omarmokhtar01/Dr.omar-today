@@ -24,7 +24,7 @@ const FavAudios = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/");
+      navigate("/login");
     } else {
       dispatch(getAudiosFavorite(token));
     }

@@ -11,6 +11,8 @@ import { getAllPicuture } from "../../features/allPictres/allPicturesSlice";
 import { Link, useParams } from "react-router-dom";
 import { getOneImgCategory } from "../../features/imgCategory/imgCategorySlice";
 import { IoHeartCircleSharp } from "react-icons/io5";
+import { MdDownloadForOffline, MdOutlineFavoriteBorder } from "react-icons/md";
+import { FaShareFromSquare } from "react-icons/fa6";
 
 const heartImg = (
   <div
@@ -230,13 +232,9 @@ const ImgCategory = () => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <div>
               {/* Your icons */}
-              <img src={iconM3} alt="icon" style={{ paddingLeft: "15px" }} />
-              <img src={iconM2} alt="icon" style={{ paddingLeft: "15px" }} />
-              <Link to={"/favpictures"}>
-                <IoHeartCircleSharp
-                  style={{ color: "#878787bd", fontSize: "45px" }}
-                />
-              </Link>
+              <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
+        <Link to={"/login"}>   <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }}/></Link>
+        <Link to={"/favpictures"}>    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} /></Link>
             </div>
           </div>
         </Modal>

@@ -339,6 +339,8 @@ const Audios = () => {
                                                 }}
                                             />
                                         </Link>
+                                        <Link to={"/login"}>
+
                                         <MdDownloadForOffline
                                             style={{
                                                 color: "rgb(219 176 134)",
@@ -346,6 +348,7 @@ const Audios = () => {
                                                 paddingLeft: "5px",
                                             }}
                                         />
+                                        </Link>
                                     </div>
                                 </div>
                             </Col>
@@ -428,13 +431,16 @@ const Audios = () => {
                                                 }}
                                             />
                                         </Link>
+                                        <Link to={"/login"}>
                                         <MdDownloadForOffline
                                             style={{
                                                 color: "rgb(219 176 134)",
                                                 fontSize: "42px",
                                                 paddingLeft: "5px",
                                             }}
+                                            
                                         />
+                                        </Link>
                                     </div>
                                 </div>
                             </Col>

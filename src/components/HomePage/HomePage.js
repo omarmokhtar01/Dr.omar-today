@@ -762,12 +762,14 @@ const HomePage = () => {
                       size={20}
                       style={{ cursor: "pointer" }}
                     />
+                                        <Link to={"/login"}>
 
                     <MdFileDownload
                       size={30}
                       color="rgb(209, 155, 111)"
                       style={{ cursor: "pointer" }}
                     />
+                    </Link>
                   </Col>
                 </div>
               </Col>

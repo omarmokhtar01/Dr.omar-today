@@ -140,7 +140,7 @@ const downloadImage=()=>{
       <div style={{ width: '180px', justifyContent: 'space-between', display: 'flex' }}>
         {/* Your icons */}
         <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
-        <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={downloadImage}/>
+        <Link to={"/login"}>   <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={downloadImage}/></Link>
         <Link to={"/favpictures"}>    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} /></Link>
       </div>
     </div>
