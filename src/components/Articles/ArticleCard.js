@@ -1,3 +1,5 @@
+import "./artical.css";
+
 import React, { useEffect } from "react";
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
@@ -47,11 +49,11 @@ const ArticleCard = () => {
                   style={{
                     maxWidth: "100%",
                     position: "relative",
-                    marginTop: "-55px",
                     width: "95%",
                     borderRadius:'15px'
                   }}
-                  alt=""
+                  alt="img"
+                  id="artical-img"
                 />
               ) : null
             ) : null}
