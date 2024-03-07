@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import NavBar from "../Navbar/NavBar";
 import {
   Card,
@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getArticleCategory,
+  getArticleCategoryById,
   getArticles,
 } from "../../features/articles/articlesSlich";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
@@ -22,6 +23,8 @@ import { FaClock } from "react-icons/fa";
 import { IoEye } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 const Articles = () => {
+  const [id,setId]=useState(null)
+
   const dispatch = useDispatch();
 
   const getData = useSelector((state) => state.articles.articles);
@@ -33,6 +36,8 @@ const Articles = () => {
     (state) => state.articles.articleCategory
   );
 
+  const getDataById = useSelector((state) => state.articles.articleCategoryId);
+
   useEffect(() => {
     dispatch(getArticles());
   }, [dispatch]);
@@ -41,7 +46,9 @@ const Articles = () => {
     dispatch(getArticleCategory());
   }, [dispatch]);
 
-  console.log(getData);
+  useEffect(() => {
+    dispatch(getArticleCategoryById(id));
+  }, [dispatch, id]);
   return (
     <>
       <NavBar />
@@ -74,25 +81,29 @@ const Articles = () => {
             xs="6"
             md="4"
             lg="2"
-            style={{ textAlign: "center", marginBottom: "10px" }}
+            style={{ textAlign: "center", marginBottom: "10px" ,cursor:'pointer'}}
+            onClick={()=>setId(null)}
           >
             <div
-              style={{
-                border: "none",
-                borderRadius: "23px",
-                width: "124px",
-                height: "33.74px",
-                background:
-                  "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)",
-                boxShadow:
-                  "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)",
-              }}
+             style={{
+              border: "none",
+              borderRadius: "23px",
+              width: "124px",
+              height: "33.74px",
+              background:
+                id === null
+                  ? "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)"
+                  : "linear-gradient(0deg, rgb(232, 232, 232), rgb(232, 232, 232)), linear-gradient(0deg, rgb(245, 245, 245), rgb(245, 245, 245))",
+              boxShadow:
+              id === null
+              ? "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)": "none"
+            }}
             >
-              <p style={{ color: "#FFFFFF", fontWeight: "bold" }}>الكل</p>
+  <p style={{color: id === null ? 'white' :  'black', fontWeight: "bold" }}>الكل</p>
             </div>
           </Col>
 
-          {!isLoading ? (
+          {
             getDataCategory ? (
               <>
                 {getDataCategory.map((img, index) => (
@@ -101,34 +112,38 @@ const Articles = () => {
                     xs="6"
                     md="4"
                     lg="2"
-                    style={{ textAlign: "center", marginBottom: "10px" }}
+                    style={{ textAlign: "center", marginBottom: "10px",cursor:'pointer' }}
+                    onClick={() => {
+                      if (id !== img.id) { 
+                        setId(img.id);
+                      }
+                    }}
                   >
-                    <Link
-                      style={{
-                        color: "rgba(5, 20, 39, 1)",
-                        fontSize: "15px",
-                        marginTop: "5px",
-                        textDecoration: "none",
-                      }}
-                      to={`/articles/${img.id}`}
-                    >
+
                       <div
                         style={{
                           border: "1.38px solid rgba(232, 232, 232, 1)",
                           borderRadius: "23px",
                           width: "124px",
                           height: "33.74px",
-                          background:
-                            "linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)",
+                          background: id === img.id ? 'linear-gradient(331.41deg, rgb(209, 155, 111) 6.78%, rgb(246, 229, 195) 204.87%)' :  "linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)",
+                          boxShadow: id === img.id ? "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)" : 'none'
                         }}
                       >
-                        <h6 style={{ marginTop: "5px" }}>{img.title}</h6>
+                         <h6
+              style={{
+                color: id === img.id ? "white" : "black",
+                fontSize: "15px",
+                marginTop: "5px",
+              }}
+            >
+              {img.title}
+            </h6>
                       </div>
-                    </Link>
                   </Col>
                 ))}
               </>
-            ) : null
+           
           ) : null}
         </Row>
       </Container>
@@ -211,102 +226,181 @@ const Articles = () => {
       </Container>
 
       <Container>
-        <Row xs={1} md={2} className="g-4  me-auto mb-5">
-          {!isLoading ? (
-            getData ? (
-              <>
-                {getData.map(
-                  (
-                    item // Added missing parentheses for map function
-                  ) => (
-                    <Col key={item.id}>
-                      {" "}
-                      {/* Ensure each mapped element has a unique key */}
-                      <Link to={"/favArtivles"}>
-                        {" "}
-                        <IoHeartCircleSharp
-                          style={{
-                            color: "#878787bd",
-                            fontSize: "35px",
-                            cursor: "pointer",
-                            position: "absolute",
-                            zIndex: "2",
-                            margin: "10px",
-                            display: "flex",
-                          }}
-                        />
-                      </Link>
-                      <Link
-                        to={`/articleCard/${item.id}`}
-                        style={{ textDecoration: "none" }}
+  <Row xs={1} md={2} className="g-4 me-auto mb-5">
+    {id == null ? (
+      !isLoading ? (
+        getData && getData.length > 0 ? (
+          <>
+            {getData.map((item) => (
+              <Col key={item.id}>
+                {/* Ensure each mapped element has a unique key */}
+                <Link to={"/favArtivles"}>
+                  <IoHeartCircleSharp
+                    style={{
+                      color: "#878787bd",
+                      fontSize: "35px",
+                      cursor: "pointer",
+                      position: "absolute",
+                      zIndex: "2",
+                      margin: "10px",
+                      display: "flex",
+                    }}
+                  />
+                </Link>
+                <Link
+                  to={`/articleCard/${item.id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Card style={{ width: "100%", borderRadius: "15px" }}>
+                    <Card.Img
+                      variant="top"
+                      src={item.image}
+                      width={100}
+                      height={300}
+                    />
+                    <Card.Body>
+                      <Card.Title style={{ display: "flex" }}>
+                        {item.title}
+                      </Card.Title>
+                      <Card.Text
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
                       >
-                        <Card style={{ width: "100%", borderRadius: "15px" }}>
-                          <Card.Img
-                            variant="top"
-                            src={item.image}
-                            width={100}
-                            height={300}
-                          />{" "}
-                          {/* Changed src attribute to use item.imgArticle */}
-                          <Card.Body>
-                            <Card.Title style={{ display: "flex" }}>
-                              {item.title}
-                            </Card.Title>
-                            <Card.Text
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                              }}
-                            >
-                              <p
-                                style={{
-                                  color: "rgba(130, 130, 130, 1)",
-                                  fontSize: "14px",
-                                }}
-                              >
-                                <FaClock
-                                  style={{
-                                    marginLeft: "8px",
-                                    color: "rgb(209, 155, 111)",
-                                    fontSize: "17px",
-                                  }}
-                                />
-                                منذ ساعة
-                              </p>
-                              <p
-                                style={{
-                                  color: "rgba(130, 130, 130, 1)",
-                                  fontSize: "14px",
-                                }}
-                              >
-                                <IoEye
-                                  style={{
-                                    marginLeft: "8px",
-                                    color: "rgb(209, 155, 111)",
-                                    fontSize: "20px",
-                                  }}
-                                />
-                                23 مشاهدة
-                              </p>
-                            </Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </Link>
-                    </Col>
-                  )
-                )}
-              </>
-            ) : (
-              <div style={{ height: "140px" }}></div>
-            )
-          ) : (
-            <div style={{ height: "200px" }}>
-              {" "}
-              <Spinner animation="border" variant="primary" />
-            </div>
-          )}
-        </Row>
-      </Container>
+                        <p
+                          style={{
+                            color: "rgba(130, 130, 130, 1)",
+                            fontSize: "14px",
+                          }}
+                        >
+                          <FaClock
+                            style={{
+                              marginLeft: "8px",
+                              color: "rgb(209, 155, 111)",
+                              fontSize: "17px",
+                            }}
+                          />
+                          منذ ساعة
+                        </p>
+                        <p
+                          style={{
+                            color: "rgba(130, 130, 130, 1)",
+                            fontSize: "14px",
+                          }}
+                        >
+                          <IoEye
+                            style={{
+                              marginLeft: "8px",
+                              color: "rgb(209, 155, 111)",
+                              fontSize: "20px",
+                            }}
+                          />
+                          23 مشاهدة
+                        </p>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Link>
+              </Col>
+            ))}
+          </>
+        ) : (
+          <div style={{ height: "140px" }}></div>
+        )
+      ) : (
+        <div style={{ height: "140px" }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      )
+    ) : !isLoading ? (
+        getDataById && getDataById.length > 0 ? (
+          <>
+            {getDataById.map((item) => (
+              <Col key={item.id}>
+                {/* Ensure each mapped element has a unique key */}
+                <Link to={"/favArtivles"}>
+                  <IoHeartCircleSharp
+                    style={{
+                      color: "#878787bd",
+                      fontSize: "35px",
+                      cursor: "pointer",
+                      position: "absolute",
+                      zIndex: "2",
+                      margin: "10px",
+                      display: "flex",
+                    }}
+                  />
+                </Link>
+                <Link
+                  to={`/articleCard/${item.id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Card style={{ width: "100%", borderRadius: "15px" }}>
+                    <Card.Img
+                      variant="top"
+                      src={item.image}
+                      width={100}
+                      height={300}
+                    />
+                    <Card.Body>
+                      <Card.Title style={{ display: "flex" }}>
+                        {item.title}
+                      </Card.Title>
+                      <Card.Text
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <p
+                          style={{
+                            color: "rgba(130, 130, 130, 1)",
+                            fontSize: "14px",
+                          }}
+                        >
+                          <FaClock
+                            style={{
+                              marginLeft: "8px",
+                              color: "rgb(209, 155, 111)",
+                              fontSize: "17px",
+                            }}
+                          />
+                          منذ ساعة
+                        </p>
+                        <p
+                          style={{
+                            color: "rgba(130, 130, 130, 1)",
+                            fontSize: "14px",
+                          }}
+                        >
+                          <IoEye
+                            style={{
+                              marginLeft: "8px",
+                              color: "rgb(209, 155, 111)",
+                              fontSize: "20px",
+                            }}
+                          />
+                          23 مشاهدة
+                        </p>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Link>
+              </Col>
+            ))}
+          </>
+        ) : (
+          <div style={{ height: "140px" }}></div>
+        )
+      ) : (
+        <div style={{ height: "140px" }}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+      )}
+  </Row>
+</Container>
+
     </>
   );
 };

@@ -19,7 +19,7 @@ import group from "../../images/Group.png";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import { useSelector, useDispatch } from "react-redux";
-import { getBookMainCategory, getBooks } from "../../features/books/booksSlice";
+import { getAllBooksCategory, getBookMainCategory, getBooks } from "../../features/books/booksSlice";
 
 const Books = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,16 @@ const Books = () => {
   const getSubCategory = useSelector(
     (state) => state.books.booksMainSubCategory
   );
+  const getDataBooksCategory = useSelector((state) => state.books.allBooksCategory);
+  const isLoadingAllBooksCategory = useSelector((state) => state.books.isLoading);
+  const errorAllBooksCategory = useSelector((state) => state.books.error);
 
+
+  useEffect(() => {
+    dispatch(getAllBooksCategory());
+  }, [dispatch]);
+
+ console.log(getDataBooksCategory)
   const dummyData = [
     { category: "كتب اسلامية" },
     { category: "كتب علميه" },
@@ -84,101 +93,67 @@ const Books = () => {
       </Container>
 
       <Container className="d-flex justify-content-center align-items-center">
-        <Row className="m-3">
-          {dummyData.length <= 0 ? (
-            <Col
-              xs="6"
-              md="4"
-              lg="2"
+        <Row className="m-3 d-flex" style={{ justifyContent: "space-between" }}>
+          <Col
+            xs="6"
+            md="4"
+            lg="2"
+            style={{ textAlign: "center", marginBottom: "10px" }}
+          >
+            <div
               style={{
-                textAlign: "center",
-                marginBottom: "10px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
+                border: "none",
+                borderRadius: "23px",
+                width: "124px",
+                height: "33.74px",
+                background:
+                  "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)",
+                boxShadow:
+                  "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)",
               }}
             >
-              <div
-                style={{
-                  border: "none",
-                  borderRadius: "23px",
-                  width: "124px",
-                  height: "33.74px",
-                  background:
-                    "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)",
-                  boxShadow:
-                    "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)",
-                }}
-              >
-                <p style={{ color: "#FFFFFF", fontWeight: "bold" }}>الكل</p>
-              </div>
-            </Col>
-          ) : (
-            <Col
-              xs="6"
-              md="4"
-              lg="2"
-              style={{
-                textAlign: "center",
-                marginBottom: "10px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  border: "none",
-                  borderRadius: "23px",
-                  width: "124px",
-                  height: "33.74px",
-                  background:
-                    "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)",
-                  boxShadow:
-                    "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)",
-                }}
-              >
-                <p style={{ color: "#FFFFFF", fontWeight: "bold" }}>الكل</p>
-              </div>
-            </Col>
-          )}
+              <p style={{ color: "#FFFFFF", fontWeight: "bold" }}>الكل</p>
+            </div>
+          </Col>
 
-          {dummyData.map((item) => (
-            <Col
-              xs="6"
-              md="4"
-              lg="2"
-              style={{
-                textAlign: "center",
-                marginBottom: "10px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  border: "1.38px solid rgba(232, 232, 232, 1)",
-                  borderRadius: "23px",
-                  width: "124px",
-                  height: "33.74px",
-                  background:
-                    "linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)",
-                }}
-              >
-                <h6
-                  style={{
-                    color: "rgba(5, 20, 39, 1)",
-                    fontSize: "15px",
-                    marginTop: "5px",
-                  }}
-                >
-                  {item.category}
-                </h6>
-              </div>
-            </Col>
-          ))}
+          {!isLoading ? (
+            getDataBooksCategory ? (
+              <>
+                {getDataBooksCategory.map((item, index) => (
+                  <Col
+                    key={index}
+                    xs="6"
+                    md="4"
+                    lg="2"
+                    style={{ textAlign: "center", marginBottom: "10px" }}
+                  >
+                    <Link
+                      style={{
+                        color: "rgba(5, 20, 39, 1)",
+                        fontSize: "15px",
+                        marginTop: "5px",
+                        textDecoration: "none",
+                      }}
+                      to={`/books/${item.id}`}
+                    >
+                      <div
+                        style={{
+                          border: "1.38px solid rgba(232, 232, 232, 1)",
+                          borderRadius: "23px",
+                          width: "124px",
+                          height: "33.74px",
+                          background:
+                            "linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)",
+                        }}
+                      >
+                        <h6 style={{ marginTop: "5px" }}>{item.title}</h6>
+                      </div>
+                    </Link>
+                  </Col>
+                ))}
+              </>
+            ) : null
+          ) : null}
         </Row>
       </Container>
 

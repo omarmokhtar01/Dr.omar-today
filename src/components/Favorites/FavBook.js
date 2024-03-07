@@ -26,7 +26,7 @@ const FavBook = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/");
+      navigate("/login");
     } else {
       dispatch(getBooksFavorite(token));
     }

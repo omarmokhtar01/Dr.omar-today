@@ -30,7 +30,7 @@ const DownloadPictures = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/");
+      navigate("/login");
     } else {
       dispatch(getPicturesDownload(token));
     }

@@ -47,12 +47,15 @@ function App() {
           <Route path="/audios" element={<Audios />} />
           <Route path="/audiosSort" element={<AudiosSort />} />
 
-          <Route path="/audiosCategory/:id" element={<AudioCategory />} />
-          <Route path="/audiosCategorySort/:id" element={<AudioCategorySort />} />
+          {/* <Route path="/audiosCategory/:id" element={<AudioCategory />} />
+          <Route path="/audiosCategorySort/:id" element={<AudioCategorySort />} /> */}
           <Route path="/audioCardCategory/:id" element={<AudioCardCategory />} />
 
 
           <Route path="/audioCard/:id" element={<AudioCard />} />
+
+
+
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/articles" element={<Articles />} />
 

@@ -8,7 +8,7 @@ const initialState = {
   booksData: [],
   booksMainCategory: [],
   booksMainSubCategory: [],
-
+  allBooksCategory:[],
   isLoading: false,
   error: null,
 };
@@ -47,6 +47,18 @@ const getBookSubCategory = createAsyncThunk('get/books/sub', async (id, thunkAPI
   }
 });
 
+
+
+const getAllBooksCategory = createAsyncThunk('get/books/category', async (_, thunkAPI) => {
+  try {
+    const response = await baseUrl.get(
+      `/Categories-Books/Get-Category`);
+      
+    return response.data;
+  } catch (error) {
+    return error
+  }
+});
 
 const booksSlice = createSlice({
   name: 'booksSlice',
@@ -99,10 +111,22 @@ const booksSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-	  
+      .addCase(getAllBooksCategory.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getAllBooksCategory.fulfilled, (state, action) => {
+        state.allBooksCategory = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getAllBooksCategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { getBooks,getBookMainCategory,getBookSubCategory };
+export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory};
 
 export default booksSlice.reducer;

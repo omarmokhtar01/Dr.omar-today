@@ -25,7 +25,7 @@ const DownloadBooks = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/");
+      navigate("/login");
     } else {
       dispatch(getBooksDownload(token));
     }

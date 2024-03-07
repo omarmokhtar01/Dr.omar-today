@@ -49,6 +49,7 @@ const ArticleCard = () => {
                     position: "relative",
                     marginTop: "-55px",
                     width: "95%",
+                    borderRadius:'15px'
                   }}
                   alt=""
                 />

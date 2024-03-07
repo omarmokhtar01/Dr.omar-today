@@ -25,7 +25,7 @@ const DownloadAudios = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/");
+      navigate("/login");
     } else {
       dispatch(getAudiosDownload(token));
     }

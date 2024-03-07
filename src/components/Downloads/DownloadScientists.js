@@ -23,7 +23,7 @@ const DownloadScientists = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/");
+      navigate("/login");
     } else {
       dispatch(getAllEldersDownload(token));
     }

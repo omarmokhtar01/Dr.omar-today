@@ -508,14 +508,14 @@ const HomePage = () => {
 
               <Col sm="4" className="responsive-sounds">
                 <div className="d-flex justify-content-center align-items-center  ">
-                  <IoHeartCircleSharp
+                <Link to={"/favAudios"}>  <IoHeartCircleSharp
                     style={{
                       color: "#878787bd",
                       fontSize: "35px",
                       cursor: "pointer",
                     }}
                   />
-
+</Link>
                   <FaCirclePlay
                     size={50}
                     style={{
@@ -586,13 +586,14 @@ const HomePage = () => {
 
               <Col sm="4" className="responsive-sounds">
                 <div className="d-flex justify-content-center align-items-center  ">
-                  <IoHeartCircleSharp
+                                  <Link to={"/favAudios"}>  <IoHeartCircleSharp
                     style={{
                       color: "#878787bd",
                       fontSize: "35px",
                       cursor: "pointer",
                     }}
                   />
+</Link>
                   <FaCirclePlay
                     size={50}
                     style={{
@@ -663,13 +664,14 @@ const HomePage = () => {
 
               <Col sm="4" className="responsive-sounds">
                 <div className="d-flex justify-content-center align-items-center  ">
-                  <IoHeartCircleSharp
+                                  <Link to={"/favAudios"}>  <IoHeartCircleSharp
                     style={{
                       color: "#878787bd",
                       fontSize: "35px",
                       cursor: "pointer",
                     }}
                   />
+</Link>
                   <FaCirclePlay
                     size={50}
                     style={{
@@ -711,9 +713,10 @@ const HomePage = () => {
               >
                 <div
                   style={{
-                    backgroundColor: "rgb(128 128 128 / 15%)",
+                    backgroundColor: "#FFFFFFCC",
                     borderRadius: "40px",
-                    boxShadow: "5px 10px 8px #888888",
+                    boxShadow: "4px 7px 22.200000762939453px 6px #0000000D",
+                    border:'1.5px solid #DBDBDB'
                   }}
                   id="mobile-responsive"
                 >
@@ -724,9 +727,9 @@ const HomePage = () => {
                     alt="pic"
                     width={300}
                     height={280}
-                    style={{ marginTop: "20px", borderRadius: "40px" }}
+                    style={{ marginTop: "20px", borderRadius: "40px" , boxShadow:'0px 20px 60px 0px #00000026'}}
                     id="img-mobile-responsive"
-                  />
+    />
                   <Col className="mt-4">
                     <h4>فضل شهر رمضان</h4>
                     <span style={{ color: "gray" }}>محمد صالح المنجد</span>

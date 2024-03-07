@@ -39,7 +39,9 @@ const handleShow = (image) => {
   setSelectedImage(image); // Set the selected image
   setShow(true); // Open the modal
 }
-
+const downloadImage=()=>{
+  saveAs(selectedImage,'img')
+}
   const dispatch = useDispatch()
   const getAllPicturesData = useSelector(state => state.pictures.allPicturesData);
   const isLoadingAllPictures = useSelector(state => state.pictures.isLoading);
@@ -138,7 +140,7 @@ const handleShow = (image) => {
       <div style={{ width: '180px', justifyContent: 'space-between', display: 'flex' }}>
         {/* Your icons */}
         <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
-        <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} />
+        <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={downloadImage}/>
         <Link to={"/favpictures"}>    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} /></Link>
       </div>
     </div>

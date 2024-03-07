@@ -38,7 +38,7 @@ const FavAudios = () => {
         console.log(getData);
         if (getData.message === "Request failed with status code 401") {
           setTimeout(() => {
-            navigate("/");
+            navigate("/login");
           }, 1500);
         }
       }

@@ -29,7 +29,7 @@ const FavPics = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/");
+      navigate("/login");
     } else {
       dispatch(getPicturesFavorite(token));
     }
