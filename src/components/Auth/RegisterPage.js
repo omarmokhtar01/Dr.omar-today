@@ -53,7 +53,7 @@ const RegisterPage = () => {
     if (!phonenumber.trim()) {
       return notify("رقم الهاتف مطلوب", "error");
     } else if (!isValidPhoneNumber(phonenumber)) {
-      return notify("الرجاء إدخال رقم هاتف صحيح", "error");
+      return notify("الرجاء إدخال رقم هاتف صحيح المكون من 10 ارقام", "error");
     }
 
     // Check if email is empty or has incorrect format
