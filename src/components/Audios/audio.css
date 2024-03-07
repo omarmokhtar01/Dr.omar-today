@@ -1,105 +1,112 @@
 .background-image-card{
-    background-image: url('../../images/ground-card.png');
-    height: 179px;
-    background-size: cover;
-  }
+  background-image: url('../../images/ground-card.png');
+  height: 179px;
+  background-size: cover;
+}
 
 .background-image {
-    background-image: url('../../images/Vector\ \(4\).png');
-    background-size: cover;
-  }
+  background-image: url('../../images/Vector\ \(4\).png');
+  background-size: cover;
+}
 
-  @media (min-width: 992px) and (max-width: 1199.98px) {
+@media (min-width: 992px) and (max-width: 1199.98px) {
 #audioInfo{
-    width: 130%;
-  } 
-   }
+  width: 130%;
+} 
+ }
 
-  @media (max-width: 768px){
-    .icons {
-    
-      margin-right: 150px;
-      margin-top: -105px;
-    }
-  }
-  @media (max-width: 768px){
-    .text-info-card {
-    padding-right: 35px !important;
-    }
-  }
-  @media (max-width: 768px){
-    .icons-card {
-    
-      margin-right: 150px;
-    
-    }
-  }
+@media (max-width: 768px){
+  .icons {
   
-  @media (max-width: 575.98px) {
+    margin-right: 150px;
+    margin-top: -105px;
+  }
+}
+@media (max-width: 768px){
+  .text-info-card {
+  padding-right: 35px !important;
+  }
+}
+@media (max-width: 768px){
+  .icons-card {
+  
+    margin-right: 150px;
+  
+  }
+}
+
+@media (max-width: 575.98px) {
 #sounds-icons{
 position: relative;
 left: 10px;
 }
 .search-audio{
-  width: 120px !important;
-  position: relative;
+width: 120px !important;
+position: relative;
 }
 .img-search{
-  position: relative;
-  right: 8%;
+position: relative;
+right: 8%;
 
 }
 #img-audio-sort{
-  width: 100%
+width: 100%
 }
-  }
+}
 
-  @media (max-width: 576px) { 
-    #sounds-icons{
-   
-      /* margin-right: -50px; */
-    }
-   }
-
-  @media (max-width: 576px) { 
-    #img-card-audio{
-   max-height: 100%;
-   width: 150px;
-      
-    }
-   }
-  @media (max-width: 576px) { 
-    .audio-section{
-     margin-left: 25px;
-      
-    }
-   }
-
-  @media (max-width: 576px) { 
-    .icons-card{
-  
-    font-size: 20px;
-      
-    }
-   }
-  @media (max-width: 576px) { 
-    .icons{
-  
-    font-size: 20px;
-      
-    }
-   }
-  @media (max-width: 576px) { 
-    .icons-div{
-   
-    font-size: 20px;
-      
-    }
-   }
-  @media (max-width: 576px) { 
-    .icon-audio-card{
+@media (max-width: 576px) { 
+  #sounds-icons{
  
-    font-size: 30px !important;
-      
-    }
-   }
+    /* margin-right: -50px; */
+  }
+ }
+
+@media (max-width: 576px) { 
+  #img-card-audio{
+ max-height: 100%;
+ width: 150px;
+    
+  }
+ }
+@media (max-width: 576px) { 
+  .audio-section{
+   margin-left: 25px;
+    
+  }
+ }
+
+@media (max-width: 576px) { 
+  .icons-card{
+
+  font-size: 20px;
+    
+  }
+ }
+@media (max-width: 576px) { 
+  .icons{
+
+  font-size: 20px;
+    
+  }
+ }
+@media (max-width: 576px) { 
+  .icons-div{
+ 
+  font-size: 20px;
+    
+  }
+ }
+@media (max-width: 576px) { 
+  .icon-audio-card{
+
+  font-size: 30px !important;
+    
+  }
+ }
+@media (max-width: 576px) { 
+  .icons-cat-sort{
+
+ margin-right: 20px !important;
+    
+  }
+ }

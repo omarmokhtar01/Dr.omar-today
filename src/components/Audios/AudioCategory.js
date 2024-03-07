@@ -7,55 +7,53 @@ import {
   FormControl,
   NavDropdown,
   Row,
+  Spinner,
 } from "react-bootstrap";
-import heart1 from "../../images/heart1.png";
-import down from "../../images/down.png";
-import profile1 from "../../images/pro1.png";
-import search from "../../images/search.png";
+
 import group from "../../images/Group.png";
-import group1 from "../../images/Group-1-1.png";
 import group2 from "../../images/Group2.png";
 import group22 from "../../images/Group-2-2.png";
-import sortIcon from "../../images/sort-icon.png";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { Link,useParams  } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
 import NavBar from "../Navbar/NavBar";
-
-import { getAudioCategory, getAudioCategoryById } from '../../features/audios/audioSlice';
+import { MdDownloadForOffline } from "react-icons/md";
+import {
+  getAudioCategory,
+  getAudioCategoryById,
+} from "../../features/audios/audioSlice";
+import { LuArrowUpDown } from "react-icons/lu";
+import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 
 const AudioCategory = () => {
-    const params = useParams();
+  const params = useParams();
 
-    // Now you can access the parameters using the keys defined in your route
-    const { id } = params;
-    const dispatch = useDispatch()
-   
-    const audioCategory = useSelector(state => state.audio.audioCategory);
-    const audioCategoryLoading = useSelector(state => state.audio.isLoading);
-  
-    const getAudioCategoryData = useSelector(state => state.audio.audioCategoryId);
-    const getAudioCategoryLoading = useSelector(state => state.audio.isLoading);
-  
-    
-    useEffect(()=>{
-      dispatch(getAudioCategory())
-          },[dispatch])
-          
-      
-    
-    useEffect(() => {
-        dispatch(getAudioCategoryById(id));
-    }, [dispatch,id]);
-  
-  
-    
-      //to change icon
-      const [isClicked, setIsClicked] = useState(false);
-  
-      const handleClick = () => {
-        setIsClicked(!isClicked);
-      };
+  // Now you can access the parameters using the keys defined in your route
+  const { id } = params;
+  const dispatch = useDispatch();
+
+  const audioCategory = useSelector((state) => state.audio.audioCategory);
+  const audioCategoryLoading = useSelector((state) => state.audio.isLoading);
+
+  const getAudioCategoryData = useSelector(
+    (state) => state.audio.audioCategoryId
+  );
+  const getAudioCategoryLoading = useSelector((state) => state.audio.isLoading);
+
+  useEffect(() => {
+    dispatch(getAudioCategory());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getAudioCategoryById(id));
+  }, [dispatch, id]);
+
+  //to change icon
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
   return (
     <>
       <NavBar />
@@ -90,47 +88,80 @@ const AudioCategory = () => {
             lg="2"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
-            <Link to={'/audios'} style={{ color: "rgba(5, 20, 39, 1)",
-                        fontSize: "15px",
-                        marginTop: "5px",
-                        textDecoration: "none",}}>
-            <div
+            <Link
+              to={"/audios"}
               style={{
-                border: "none",
-                borderRadius: "23px",
-                width: "124px",
-                height: "33.74px",
-                background:
-                  "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)",
-                boxShadow:
-                  "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)",
+                color: "rgba(5, 20, 39, 1)",
+                fontSize: "15px",
+                marginTop: "5px",
+                textDecoration: "none",
               }}
             >
-              <p style={{ color: "black", fontWeight: "bold" }}>الكل</p>
-            </div>
+              <div
+                style={{
+                  border: "none",
+                  borderRadius: "23px",
+                  width: "124px",
+                  height: "33.74px",
+                  background:
+                    "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)",
+                  boxShadow:
+                    "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)",
+                }}
+              >
+                <p style={{ color: "black", fontWeight: "bold" }}>الكل</p>
+              </div>
             </Link>
           </Col>
 
-          {
-  !audioCategoryLoading ? (
-    audioCategory ? (
-     <>
-        {audioCategory.map((item, index) => (
-        <Col key={item.id} xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px' }}>
-                <Link style={{ color: 'rgba(5, 20, 39, 1)', fontSize: '15px', marginTop: '5px', textDecoration: 'none' }} to={`/audiosCategory/${item.id}`}>
-
-        <div style={{border :'1.38px solid rgba(232, 232, 232, 1)' , borderRadius:'23px' , width:'124px' , height:'33.74px' , 
-            background: item.id == id ? 'linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)' : 'linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)' }}>
-                <h6 style={{  color:item.id == id ?'white':'black' , fontSize:'15px', marginTop:'5px'}}>{item.title}</h6>
-            </div>
-            </Link>
-        </Col>
-))}
-
-</>
-) : null
-) : null
-}
+          {!audioCategoryLoading ? (
+            audioCategory ? (
+              <>
+                {audioCategory.map((item, index) => (
+                  <Col
+                    key={item.id}
+                    xs="6"
+                    md="4"
+                    lg="2"
+                    style={{ textAlign: "center", marginBottom: "10px" }}
+                  >
+                    <Link
+                      style={{
+                        color: "rgba(5, 20, 39, 1)",
+                        fontSize: "15px",
+                        marginTop: "5px",
+                        textDecoration: "none",
+                      }}
+                      to={`/audiosCategory/${item.id}`}
+                    >
+                      <div
+                        style={{
+                          border: "1.38px solid rgba(232, 232, 232, 1)",
+                          borderRadius: "23px",
+                          width: "124px",
+                          height: "33.74px",
+                          background:
+                            item.id == id
+                              ? "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)"
+                              : "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)",
+                        }}
+                      >
+                        <h6
+                          style={{
+                            color: item.id == id ? "white" : "black",
+                            fontSize: "15px",
+                            marginTop: "5px",
+                          }}
+                        >
+                          {item.title}
+                        </h6>
+                      </div>
+                    </Link>
+                  </Col>
+                ))}
+              </>
+            ) : null
+          ) : null}
         </Row>
       </Container>
 
@@ -150,33 +181,35 @@ const AudioCategory = () => {
                 <FormControl
                   type="search"
                   placeholder="ابحث..."
-                  className="me-2 w-100 search-audio "
+                  className="me-2 w-100  search-audio"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
                 />
-                <img
-                  src={search}
-                  alt=""
+
+                <IoSearch
                   width="20px"
                   height="20px"
                   style={{
                     position: "absolute",
                     marginTop: "-30px",
                     marginRight: "70px",
+                    fontSize: "25px",
+                    color: "#00000082",
                   }}
+                  className="img-search"
                 />
               </Form>
 
-              <div style={{ display: "flex", gap: "10px" }}>
-                <img
-                  src={sortIcon}
-                  alt=""
-                  width="15px"
-                  height="15px"
+              <div
+                className="audio-section"
+                style={{ display: "flex", gap: "5px", marginLeft: "5px" }}
+              >
+                <LuArrowUpDown
                   style={{
                     marginRight: "5px",
                     position: "absolute",
                     marginTop: "10px",
+                    color: "rgb(219, 176, 134)",
                   }}
                 />
 
@@ -191,6 +224,7 @@ const AudioCategory = () => {
                     padding: "5px 25px 5px 10px",
                     color: "rgba(209, 155, 111, 1)",
                     fontWeight: "bold",
+                    fontSize: "13px",
                   }}
                 >
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -207,15 +241,15 @@ const AudioCategory = () => {
                 </NavDropdown>
 
                 <Link to={`/audiosCategorySort/${id}`}>
-                  <img src={group} alt="" width="35px" height="35px" />
+                  <img src={group} alt="" width="30px" height="30px" />
                 </Link>
 
                 <Link to={`/audiosCategory/${id}`}>
                   {" "}
                   <img
                     src={isClicked ? group2 : group22}
-                    width="35px"
-                    height="35px"
+                    width="30px"
+                    height="30px"
                     onClick={handleClick}
                   />
                 </Link>
@@ -227,59 +261,94 @@ const AudioCategory = () => {
 
       <Container>
         <Row className="m-auto">
-        {
-      !getAudioCategoryLoading?(
-  getAudioCategoryData && getAudioCategoryData.length > 0 ? (
-    getAudioCategoryData.map((item)=>{
-return(
-    <Col xs="12" md="6" lg="6" className="mb-3">
-        {console.log(item)}
+          {!getAudioCategoryLoading ? (
+            getAudioCategoryData && getAudioCategoryData.length > 0 ? (
+              getAudioCategoryData.map((item) => {
+                return (
+                  <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
+                    {console.log(item)}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        border: "2px solid rgba(236, 236, 236, 1)",
+                        borderRadius: "15px",
+                        width: "auto",
+                      }}
+                    >
                       <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          border: "2px solid rgba(236, 236, 236, 1)",
-                          borderRadius: "15px",
-                          width: "auto",
-                        }}
+                        style={{ display: "flex", justifyContent: "center" }}
                       >
-                        <div
-                          style={{ display: "flex", justifyContent: "center" }}
-                        >
-                          <Link to={`/audioCardCategory/${item.id}`}>
-                            <img src={item.image } alt="img" width={200} height={200}/>
-                          </Link>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              flexDirection: "column",
-                              padding: "20px",
-                            }}
-                          >
-                            <h5>{item.name}</h5>
-                            <p>عدد المقاطع الصوتية {item.count_audios}</p>
-                          </div>
-                        </div>
-
+                        <Link to={`/audioCardCategory/${item.id}`}>
+                          <img
+                            src={item.image}
+                            alt="img"
+                            width={200}
+                            height={200}
+                            id="img-card-audio"
+                          />
+                        </Link>
                         <div
                           style={{
                             display: "flex",
-                            flexDirection: "column",
                             justifyContent: "center",
-                            marginLeft: "60px",
-                            gap: "20px",
+                            flexDirection: "column",
+                            padding: "20px",
                           }}
                         >
-                          <img src={heart1} alt="" width="35px" height="35px" />
-                          <img src={down} alt="" width="35px" height="35px" />
+                          <h5>{item.name}</h5>
+                          <p
+                            style={{
+                              color: "rgb(130, 130, 130)",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {item.count_audios} مقطع صوتي
+                          </p>
                         </div>
                       </div>
-                    </Col>
-        )
-      })
-          ) : null):null
-      }
+
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          marginLeft: "60px",
+                          gap: "20px",
+                        }}
+                        id="sounds-icons"
+                      >
+                        <Link to={"/favAudios"}>
+                          {" "}
+                          <IoHeartCircleSharp
+                            style={{
+                              color: "#878787bd",
+                              fontSize: "40px",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </Link>
+                        <MdDownloadForOffline
+                          style={{
+                            color: "rgb(219 176 134)",
+                            fontSize: "42px",
+                            paddingLeft: "5px",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </Col>
+                );
+              })
+            ) : (
+              <div style={{ height: "140px" }}></div>
+            )
+          ) : (
+            <div style={{ height: "140px" }}>
+              {" "}
+              <Spinner animation="border" variant="primary" />
+            </div>
+          )}
         </Row>
       </Container>
     </>

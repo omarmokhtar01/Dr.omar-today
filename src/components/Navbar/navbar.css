@@ -31,8 +31,19 @@
     justify-content: center;
   } }
 
+  @media (min-width: 992px){
+.navbar-expand-lg .navbar-collapse {
+width: 820px;
+}}
 
- 
+  @media (min-width: 992px) and (max-width: 1036px) { 
+	
+    .nav-menu{
+ position: relative;
+ left: 40px;
+    }
+  
+   }
 
   
  

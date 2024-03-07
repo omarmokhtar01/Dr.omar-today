@@ -58,3 +58,9 @@
   --bs-btn-bg: none !important;
   --bs-btn-hover-bg: none !important;
  }
+
+ @media (max-width: 576px) { 
+  .card-mod{
+      margin-left: -20px !important;
+}
+}

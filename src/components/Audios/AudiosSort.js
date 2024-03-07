@@ -8,23 +8,17 @@ import {
   NavDropdown,
   Row,
 } from "react-bootstrap";
-import search from "../../images/search.png";
 import group from "../../images/Group.png";
 import group2 from "../../images/Group2.png";
-import sortIcon from "../../images/sort-icon.png";
-import img1 from "../../images/img1.png";
-import heart1 from "../../images/heart1.png";
-import down from "../../images/down.png";
-import { Link, useParams } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 import NavBar from "../Navbar/NavBar";
 import group1 from "../../images/Group-1-1.png";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import {
-  getAudioCategory,
-  getAudioCategoryById,
-  getAudios,
-} from "../../features/audios/audioSlice";
+import { getAudioCategory, getAudios } from "../../features/audios/audioSlice";
+import { LuArrowUpDown } from "react-icons/lu";
+import { IoSearch } from "react-icons/io5";
 const AudiosSort = () => {
   const dispatch = useDispatch();
 
@@ -113,52 +107,48 @@ const AudiosSort = () => {
             </Link>
           </Col>
 
-          {!audioCategoryLoading ? (
-            audioCategory ? (
-              <>
-                {audioCategory.map((item, index) => (
-                  <Col
-                    key={item.id}
-                    xs="6"
-                    md="4"
-                    lg="2"
-                    style={{ textAlign: "center", marginBottom: "10px" }}
+          {!audioCategoryLoading && audioCategory
+            ? audioCategory.map((item, index) => (
+                <Col
+                  key={item.id}
+                  xs="6"
+                  md="4"
+                  lg="2"
+                  style={{ textAlign: "center", marginBottom: "10px" }}
+                >
+                  <Link
+                    style={{
+                      color: "rgba(5, 20, 39, 1)",
+                      fontSize: "15px",
+                      marginTop: "5px",
+                      textDecoration: "none",
+                    }}
+                    to={`/audiosCategory/${item.id}`}
                   >
-                    <Link
+                    <div
                       style={{
-                        color: "rgba(5, 20, 39, 1)",
-                        fontSize: "15px",
-                        marginTop: "5px",
-                        textDecoration: "none",
+                        border: "1.38px solid rgba(232, 232, 232, 1)",
+                        borderRadius: "23px",
+                        width: "124px",
+                        height: "33.74px",
+                        background:
+                          "linear-gradient(0deg, rgb(232, 232, 232), rgb(232, 232, 232)), linear-gradient(0deg, rgb(245, 245, 245), rgb(245, 245, 245))",
                       }}
-                      to={`/audiosCategory/${item.id}`}
                     >
-                      <div
+                      <h6
                         style={{
-                          border: "1.38px solid rgba(232, 232, 232, 1)",
-                          borderRadius: "23px",
-                          width: "124px",
-                          height: "33.74px",
-                          background:
-                            "linear-gradient(0deg, rgb(232, 232, 232), rgb(232, 232, 232)), linear-gradient(0deg, rgb(245, 245, 245), rgb(245, 245, 245))",
+                          color: "black",
+                          fontSize: "15px",
+                          marginTop: "5px",
                         }}
                       >
-                        <h6
-                          style={{
-                            color: "black",
-                            fontSize: "15px",
-                            marginTop: "5px",
-                          }}
-                        >
-                          {item.title}
-                        </h6>
-                      </div>
-                    </Link>
-                  </Col>
-                ))}
-              </>
-            ) : null
-          ) : null}
+                        {item.title}
+                      </h6>
+                    </div>
+                  </Link>
+                </Col>
+              ))
+            : null}
         </Row>
       </Container>
 
@@ -182,30 +172,30 @@ const AudiosSort = () => {
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
                 />
-                <img
-                  src={search}
-                  className="img-search"
-                  alt=""
+                <IoSearch
                   width="20px"
                   height="20px"
                   style={{
                     position: "absolute",
                     marginTop: "-30px",
                     marginRight: "70px",
+                    fontSize: "25px",
+                    color: "#00000082",
                   }}
+                  className="img-search"
                 />
               </Form>
 
-              <div style={{ display: "flex", gap: "10px" }}>
-                <img
-                  src={sortIcon}
-                  alt=""
-                  width="15px"
-                  height="15px"
+              <div
+                className="audio-section"
+                style={{ display: "flex", gap: "5px", marginLeft: "5px" }}
+              >
+                <LuArrowUpDown
                   style={{
                     marginRight: "5px",
                     position: "absolute",
                     marginTop: "10px",
+                    color: "rgb(219, 176, 134)",
                   }}
                 />
 
@@ -220,6 +210,7 @@ const AudiosSort = () => {
                     padding: "5px 25px 5px 10px",
                     color: "rgba(209, 155, 111, 1)",
                     fontWeight: "bold",
+                    fontSize: "13px",
                   }}
                 >
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -238,15 +229,15 @@ const AudiosSort = () => {
                 <Link to="/audiosSort">
                   <img
                     src={isClicked ? group : group1}
-                    width="35px"
-                    height="35px"
+                    width="30px"
+                    height="30px"
                     onClick={handleClick}
+                    alt=""
                   />
                 </Link>
 
                 <Link to="/audios">
-                  {" "}
-                  <img src={group2} alt="" width="35px" height="35px" />
+                  <img src={group2} alt="" width="30px" height="30px" />
                 </Link>
               </div>
             </div>
@@ -255,33 +246,55 @@ const AudiosSort = () => {
       </Container>
 
       <div class="container text-center">
-    <div class="row row-cols-2 row-cols-lg-5 g-lg-3" style={{ width: "100%" }}>
-        {!isLoading
+        <div
+          class="row row-cols-2 row-cols-lg-5 g-lg-3"
+          style={{ width: "100%" }}
+        >
+          {!isLoading
             ? getAll && getAll.length > 0
-                ? getAll.map((item) => {
-                    return (
-                        <Link to={`audioCard/${item.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                            <div className="col-lg-12 col-md-12 col-sm-12">
-                                <div className="row-lg-12">
-                                    <div className="col-lg-12 col-md-12 col-sm-12">
-                                        <img src={item.image} alt="pic" width={160} height={200} />
-                                    </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
-                                        <h5 className="text-center text-lg-center p-2">{item.name}</h5>
-                                    </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12">
-                                        <p className="text-center text-lg-center" style={{ marginTop: '-5px' }}>عدد المقاطع الصوتية {item.count_audios}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-                    );
+              ? getAll.map((item) => {
+                  return (
+                    <Link
+                      to={`/audioCard/${item.id}`}
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      <div className="col-lg-12 col-md-12 col-sm-12">
+                        <div className="row-lg-12">
+                          <div className="col-lg-12 col-md-12 col-sm-12">
+                            <img
+                              src={item.image}
+                              alt="pic"
+                              width={160}
+                              height={200}
+                            />
+                          </div>
+                          <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
+                            <h5 className="text-center text-lg-center p-2">
+                              {item.name}
+                            </h5>
+                          </div>
+                          <div className="col-lg-12 col-md-12 col-sm-12">
+                            <p
+                              className="text-center text-lg-center"
+                              style={{
+                                marginTop: "-5px",
+                                color: "rgb(130, 130, 130)",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {" "}
+                              {item.count_audios} مقطع صوتي
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  );
                 })
-                : null
+              : null
             : null}
-    </div>
-</div>
-
+        </div>
+      </div>
     </>
   );
 };

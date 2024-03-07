@@ -10,7 +10,6 @@ const ErrorPage = () => {
                 <Col>
                     <img src={errorImg} alt='' width='350px' />
                     <h2 style={{fontWeight:'bold' , color:'#4f3281' , marginTop:'20px'}}  >هذه الصفحه غير متاحه  </h2>
-
                     <Link to='/'>
                     <button style={{
                         padding:'5px 30px 10px' ,border:'1px solid rgb(26 22 81) ',fontSize:'20px',fontWeight:'bold',color:'rgb(26 22 81)',marginTop:'15px', borderRadius:'25px'

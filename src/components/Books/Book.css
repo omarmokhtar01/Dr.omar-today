@@ -60,3 +60,15 @@
        align-items: center;
     }
 }
+@media (max-width: 576px) { 
+    .card-book-sort{
+
+      width: 150px !important;
+    }
+}
+
+@media (max-width: 576px) { 
+    .card-book-img{
+        width: 146px !important;
+    }
+}

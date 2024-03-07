@@ -5,24 +5,19 @@ import {
   Container,
   Form,
   FormControl,
-  NavDropdown, 
+  NavDropdown,
   Row,
+  Spinner,
 } from "react-bootstrap";
-import heart1 from "../../images/heart1.png";
-import down from "../../images/down.png";
-import profile1 from "../../images/pro1.png";
-import search from "../../images/search.png";
+
 import group from "../../images/Group.png";
-import group1 from "../../images/Group-1-1.png";
 import group2 from "../../images/Group2.png";
 import group22 from "../../images/Group-2-2.png";
-import sortIcon from "../../images/sort-icon.png";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getAudioCategory, getAudios } from "../../features/audios/audioSlice";
 import { Link } from "react-router-dom";
 import NavBar from "../Navbar/NavBar";
-import { MdDownloadForOffline, MdOutlineFavoriteBorder } from "react-icons/md";
-import { MdFileDownload } from "react-icons/md";
+import { MdDownloadForOffline } from "react-icons/md";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 const Audios = () => {
@@ -30,8 +25,6 @@ const Audios = () => {
   const getAll = useSelector((state) => state.audio.audios);
   const isLoading = useSelector((state) => state.audio.isLoading);
   const error = useSelector((state) => state.audio.error);
- 
-
 
   const audioCategory = useSelector((state) => state.audio.audioCategory);
   const audioCategoryLoading = useSelector((state) => state.audio.isLoading);
@@ -86,7 +79,6 @@ const Audios = () => {
             lg="2"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
-           
             <div
               style={{
                 border: "none",
@@ -103,38 +95,52 @@ const Audios = () => {
             </div>
           </Col>
 
-          {
-  !audioCategoryLoading ? (
-    audioCategory ? (
-     <>
-        {audioCategory.map((item, index) => (
-        <Col key={item.id} xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px' }}>
-                <Link style={{ color: 'rgba(5, 20, 39, 1)', fontSize: '15px', marginTop: '5px', textDecoration: 'none' }} to={`/audiosCategory/${item.id}`}>
-
-        <div  style={{
+          {!audioCategoryLoading ? (
+            audioCategory ? (
+              <>
+                {audioCategory.map((item, index) => (
+                  <Col
+                    key={item.id}
+                    xs="6"
+                    md="4"
+                    lg="2"
+                    style={{ textAlign: "center", marginBottom: "10px" }}
+                  >
+                    <Link
+                      style={{
+                        color: "rgba(5, 20, 39, 1)",
+                        fontSize: "15px",
+                        marginTop: "5px",
+                        textDecoration: "none",
+                      }}
+                      to={`/audiosCategory/${item.id}`}
+                    >
+                      <div
+                        style={{
                           border: "1.38px solid rgba(232, 232, 232, 1)",
                           borderRadius: "23px",
                           width: "124px",
                           height: "33.74px",
                           background:
                             "linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)",
-                        }}>
-                <h6
+                        }}
+                      >
+                        <h6
                           style={{
                             color: "rgba(5, 20, 39, 1)",
                             fontSize: "15px",
                             marginTop: "5px",
                           }}
-                        >{item.title}</h6>
-            </div>
-            </Link>
-        </Col>
-))}
-
-</>
-) : null
-) : null
-}
+                        >
+                          {item.title}
+                        </h6>
+                      </div>
+                    </Link>
+                  </Col>
+                ))}
+              </>
+            ) : null
+          ) : null}
         </Row>
       </Container>
 
@@ -158,21 +164,25 @@ const Audios = () => {
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
                 />
-              
 
-            <IoSearch   width="20px"
+                <IoSearch
+                  width="20px"
                   height="20px"
                   style={{
                     position: "absolute",
                     marginTop: "-30px",
                     marginRight: "70px",
-                    fontSize:'25px',
-                    color:'#00000082'
+                    fontSize: "25px",
+                    color: "#00000082",
                   }}
-                  className="img-search" />
+                  className="img-search"
+                />
               </Form>
 
-              <div className="audio-section" style={{ display: "flex", gap:'5px' , marginLeft:'5px'}}>
+              <div
+                className="audio-section"
+                style={{ display: "flex", gap: "5px", marginLeft: "5px" }}
+              >
                 {/* <img
                   src={sortIcon}
                   alt=""
@@ -182,16 +192,17 @@ const Audios = () => {
                     marginRight: "5px",
                     position: "absolute",
                     marginTop: "10px",
-                  }}
+                  }} 
                 /> */}
 
-                <LuArrowUpDown  style={{
+                <LuArrowUpDown
+                  style={{
                     marginRight: "5px",
                     position: "absolute",
                     marginTop: "10px",
-                    color:'rgb(219, 176, 134)'
-                  
-                  }}/>
+                    color: "rgb(219, 176, 134)",
+                  }}
+                />
 
                 <NavDropdown
                   title="الترتيب حسب"
@@ -204,7 +215,7 @@ const Audios = () => {
                     padding: "5px 25px 5px 10px",
                     color: "rgba(209, 155, 111, 1)",
                     fontWeight: "bold",
-                    fontSize:'13px'
+                    fontSize: "13px",
                   }}
                 >
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -241,58 +252,94 @@ const Audios = () => {
 
       <Container>
         <Row className="m-auto">
-          {!isLoading
-            ? getAll && getAll.length > 0
-              ? getAll.map((item) => {
-                  return (
-                    <Col xs="12" md="12" lg="6" className="mb-3">
+          {!isLoading ? (
+            getAll && getAll.length > 0 ? (
+              getAll.map((item) => {
+                return (
+                  <Col xs="12" md="12" lg="6" className="mb-3">
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        border: "2px solid rgba(236, 236, 236, 1)",
+                        borderRadius: "15px",
+                        width: "auto",
+                      }}
+                    >
                       <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          border: "2px solid rgba(236, 236, 236, 1)",
-                          borderRadius: "15px",
-                          width: "auto",
-                        }}
+                        style={{ display: "flex", justifyContent: "center" }}
                       >
-                        <div
-                          style={{ display: "flex", justifyContent: "center" }}
-                        >
-                          <Link to={`/audioCard/${item.id}`}>
-                            <img src={item.image } alt="img" width={200} height={200} id="img-card-audio" />
-                          </Link>
-                          <div  
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              flexDirection: "column",
-                              padding: "20px",
-                            }}
-                          >
-                            <h5>{item.name}</h5>
-                            <p>عدد المقاطع الصوتية {item.count_audios }</p>
-                          </div>
-                        </div>
-
+                        <Link to={`/audioCard/${item.id}`}>
+                          <img
+                            src={item.image}
+                            alt="img"
+                            width={200}
+                            height={200}
+                            id="img-card-audio"
+                          />
+                        </Link>
                         <div
                           style={{
                             display: "flex",
-                            flexDirection: "column",
                             justifyContent: "center",
-                            marginLeft: "60px",
-                            gap: "20px",
+                            flexDirection: "column",
+                            padding: "20px",
                           }}
-                          id="sounds-icons"
                         >
-                          <Link to={"/favAudios"}>  <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '40px' ,  cursor: "pointer"}} /></Link> 
-                           <MdDownloadForOffline  style={{ color: 'rgb(219 176 134)', fontSize: '42px' ,paddingLeft:'5px' }}/>
+                          <h5>{item.name}</h5>
+                          <p
+                            style={{
+                              color: "rgb(130, 130, 130)",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {" "}
+                            {item.count_audios} مقطع صوتي
+                          </p>
                         </div>
                       </div>
-                    </Col>
-                  );
-                })
-              : null
-            : null}
+
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          marginLeft: "60px",
+                          gap: "20px",
+                        }}
+                        id="sounds-icons"
+                      >
+                        <Link to={"/favAudios"}>
+                          {" "}
+                          <IoHeartCircleSharp
+                            style={{
+                              color: "#878787bd",
+                              fontSize: "40px",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </Link>
+                        <MdDownloadForOffline
+                          style={{
+                            color: "rgb(219 176 134)",
+                            fontSize: "42px",
+                            paddingLeft: "5px",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </Col>
+                );
+              })
+            ) : (
+              <div style={{ height: "140px" }}></div>
+            )
+          ) : (
+            <div style={{ height: "140px" }}>
+              {" "}
+              <Spinner animation="border" variant="primary" />
+            </div>
+          )}
         </Row>
       </Container>
     </>
