@@ -51,7 +51,7 @@ const ContactUs = () => {
     if (!phone.trim()) {
       return notify("رقم الهاتف مطلوب", "error");
     } else if (!isValidPhoneNumber(phone)) {
-      return notify("الرجاء إدخال رقم هاتف صحيح", "error");
+      return notify("الرجاء إدخال رقم هاتف صحيح من 10 ارقام", "error");
     }
 
     // Check if email is empty or has incorrect format

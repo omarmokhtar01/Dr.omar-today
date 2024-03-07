@@ -158,12 +158,12 @@ const ImgCategory = () => {
                           width: "124px",
                           height: "33.74px",
                           background:
-                            img.id === id
+                            img.id == id
                               ? "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)"
                               : "linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)",
                         }}
                       >
-                        <h6 style={{ marginTop: "5px" }}>{img.title}</h6>
+                        <h6 style={{ marginTop: "5px",color:img.id == id ?"white":'black' }}>{img.title}</h6>
                       </div>
                     </Link>
                   </Col>
