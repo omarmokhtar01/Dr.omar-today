@@ -116,7 +116,7 @@ const Books = () => {
             </div>
           </Col>
 
-          {!isLoading ? (
+          {/* {!isLoading ? (
             getDataBooksCategory ? (
               <>
                 {getDataBooksCategory.map((item, index) => (
@@ -153,7 +153,7 @@ const Books = () => {
                 ))}
               </>
             ) : null
-          ) : null}
+          ) : null} */}
         </Row>
       </Container>
 
@@ -190,43 +190,7 @@ const Books = () => {
                 <p style={{ color: "rgba(122, 128, 138, 1)" }}>مسح الكل</p>
               </div>
 
-              {getMainCategory
-                ? getMainCategory.map((item, index) => {
-                    return (
-                      <Accordion key={index}>
-                        <Accordion.Item eventKey="0">
-                          <Accordion.Header>{item.title}</Accordion.Header>
-                          <Accordion.Body>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                              }}
-                            >
-                              {item.sub_categories
-                                ? item.sub_categories.map((data, index) => {
-                                    return (
-                                      <label
-                                        className="form-check-label d-flex"
-                                        key={index}
-                                      >
-                                        <input
-                                          style={{ margin: "5px" }}
-                                          type="checkbox"
-                                        />
-                                        {data.title}{" "}
-                                        {/* Render the title property */}
-                                      </label>
-                                    );
-                                  })
-                                : null}
-                            </div>
-                          </Accordion.Body>
-                        </Accordion.Item>
-                      </Accordion>
-                    );
-                  })
-                : null}
+             
             </div>
           </Col>
 
@@ -290,9 +254,9 @@ const Books = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
 
-                <Link to="/bookSort">
+                {/* <Link to="/bookSort">
                   <img src={group} alt="" width="30px" height="30px" />
-                </Link>
+                </Link> */}
 
                 <Link to="/Books">
                   {" "}
