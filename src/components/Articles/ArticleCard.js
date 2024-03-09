@@ -59,12 +59,11 @@ const ArticleCard = () => {
               getDataOne ? (
                 <img
                   src={getDataOne.image}
-                  width={50}
-                  height={200}
+                 
                   style={{
                     maxWidth: "95%",
                     position: "relative",
-                    width: "95%",
+                    maxHeight:'200px',
                     borderRadius:'15px'
                   }}
                   alt="img"
