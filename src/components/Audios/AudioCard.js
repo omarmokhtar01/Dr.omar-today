@@ -20,23 +20,58 @@ import { MdDownloadForOffline } from "react-icons/md";
 import { PiShareFatFill } from "react-icons/pi";
 import { LuArrowUpDown } from "react-icons/lu";
 import { getEldersByIdAudios } from "../../features/elders/eldersSlice";
+import { favOneAudio } from "../../features/audios/audioSlice";
+
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 
 import notify from "../UseNotifications/useNotification";
 const AudioCard = () => {
-  const handleCheckLogin = () => {
-    const token = Cookies.get("token");
+  let token = Cookies.get("token");
 
+  
+
+  const downloadAudio = (audioUrl) => {
+    fetch(audioUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'audio_file.mp3'); // Set the desired filename with the correct extension
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch(error => {
+        console.error('Error downloading audio:', error);
+        notify("حدثت مشكلة أثناء تحميل الصوت", "error");
+      });
+  };
+  
+  const handleCheckLogin = (audioUrl) => {
+    let token = Cookies.get("token");
+  
     if (token) {
-      // Token exists, perform the download action
-      // Add your download logic here
-      notify("تم التحميل", "success");
+      // Token exists, perform the download action if the URL is valid
+      if (audioUrl) {
+        notify("تم التحميل", "success");
+        downloadAudio(audioUrl);
+      } else {
+        notify("عذرًا، الصوت غير متاح حاليًا", "error");
+      }
     } else {
-      // Token doesn't exist, notify the user
-      notify("من فضلك قم بتسجيل الدخول اولا", "error");
+      // Token doesn't exist, notify the user to log in
+      notify("من فضلك قم بتسجيل الدخول أولاً", "error");
     }
   };
+  
+  
   const audioRefs = useRef([]);
   const [durations, setDurations] = useState([]);
   const [durationFormatted, setDurationFormatted] = useState("0:00");
@@ -106,10 +141,33 @@ const AudioCard = () => {
   const isLoading = useSelector((state) => state.elders.isLoading);
   const error = useSelector((state) => state.elders.error);
 
+
+
   useEffect(() => {
     dispatch(getEldersByIdAudios(id));
   }, [dispatch, id]);
-  console.log(getDataOne);
+
+  const checkAddToFav = useSelector((state) => state.audio.favAudio);
+
+  const handelAddtoFav = (audioId) => {
+    const formData = {
+        audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
+        // other formData properties if any
+    };
+    dispatch(favOneAudio({ formData, token }))
+        .then((response) => {
+            if (response.payload && response.payload.status === 200) {
+                // Notify "تم الاضافة بنجاح"
+                console.log("تم الاضافة بنجاح");
+            } else {
+                // Handle other statuses or errors if needed
+                console.log("An error occurred:", response.error);
+            }
+        })
+        .catch((error) => {
+            console.log("An error occurred:", error);
+        });
+};
   return (
     <>
       <NavBar />
@@ -385,19 +443,19 @@ const AudioCard = () => {
                                 cursor: "pointer",
                               }}
                               onClick={handleCheckLogin}
-
+                              download="audio_file"
                             />
                            
                               {" "}
                               <IoHeartCircleSharp
-                                style={{
-                                  color: "#878787bd",
-                                  fontSize: "30px",
-                                  cursor: "pointer",
-                                }}
-                                onClick={handleCheckLogin}
+    style={{
+        color: "#878787bd",
+        fontSize: "30px",
+        cursor: "pointer",
+    }}
+    onClick={() => handelAddtoFav(item.id)} // Assuming 'audioId' is accessible in this scope
+/>
 
-                              />
                             
                             <button
                               onClick={() => handlePlay(index)}

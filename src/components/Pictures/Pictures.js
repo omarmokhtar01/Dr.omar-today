@@ -54,7 +54,7 @@ const downloadImage=()=>{
   const isLoadingAllImgCategory = useSelector(state => state.imgCategory.isLoading);
   const errorAllImgCategory = useSelector(state => state.imgCategory.error);
   
-
+console.log(getAllPicturesData);
 
 
   const getOneData = useSelector((state) => state.imgCategory.OneImgsData);

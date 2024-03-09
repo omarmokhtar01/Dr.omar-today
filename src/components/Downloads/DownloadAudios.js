@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../Navbar/NavBar";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import audioProfile from "../../images/audio-profile.png";
 
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { IoHeartCircleSharp } from "react-icons/io5";
-import { FaCirclePlay } from "react-icons/fa6";
+import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAudiosDownload } from "../../features/allDownload/allDownloadSlice";
@@ -46,7 +46,64 @@ const DownloadAudios = () => {
     }
   }, [isLoading]);
 
+  const audioRefs = useRef([]);
+  const [durations, setDurations] = useState([]);
+  const [durationFormatted, setDurationFormatted] = useState("0:00");
+  const [isPlaying, setIsPlaying] = useState([]);
 
+  useEffect(() => {
+    audioRefs.current = audioRefs.current.slice(0, durations.length);
+    setIsPlaying(new Array(durations.length).fill(false));
+  }, [durations]);
+
+  useEffect(() => {
+    if (durations.length > 0) {
+      const totalDuration = durations.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      );
+      const hours = Math.floor(totalDuration / 3600);
+      const minutes = Math.floor((totalDuration % 3600) / 60);
+      const seconds = Math.floor(totalDuration % 60);
+      setDurationFormatted(
+        `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
+          .toString()
+          .padStart(2, "0")}`
+      );
+    } else {
+      setDurationFormatted("0:00:00"); // Reset to initial state if there's no duration
+    }
+  }, [durations]);
+
+  const handlePlay = (index) => {
+    const newIsPlaying = [...isPlaying];
+    newIsPlaying[index] = !isPlaying[index];
+    setIsPlaying(newIsPlaying);
+    const audioElement = audioRefs.current[index];
+    if (audioElement) {
+      if (newIsPlaying[index]) {
+        // Check if the audio is not already playing before calling play()
+        if (audioElement.paused) {
+          audioElement
+            .play()
+            .catch((error) => console.error("Error playing audio:", error));
+        }
+      } else {
+        // Check if the audio is playing before calling pause()
+        if (!audioElement.paused) {
+          audioElement.pause();
+        }
+      }
+    }
+  };
+
+  const handleLoadedMetadata = (index) => {
+    return (e) => {
+      const newDurations = [...durations];
+      newDurations[index] = e.target.duration;
+      setDurations(newDurations);
+    };
+  };
   return (
     <>
       <NavBar />
@@ -226,93 +283,133 @@ const DownloadAudios = () => {
       </Container>
 
       <Container>
-        <Row className="me-auto" md={4}>
-          <Col>
-            <div style={{ display: "flex" }}>
-              <img
-                src={audioProfile}
-                alt=""
-                style={{}}
-                width="61px"
-                height="61px"
-              />
+      {!isLoading ? (
+  getData ? (
+    getData.map((item, index) => {
+      return (
+        <>
+          <Row className="me-auto" md={4} key={item.id}>
+            <Col>
+              <div style={{ display: "flex" }}>
+                <img
+                  src={item.image}
+                  alt=""
+                  style={{}}
+                  width="61px"
+                  height="61px"
+                />
+                <p
+                  style={{
+                    color: "rgba(17, 32, 34, 1)",
+                    fontWeight: "bold",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "15px",
+                  }}
+                >
+                 {item.title}
+                </p>
+              </div>
+            </Col>
+
+            <Col xs={6}>
               <p
                 style={{
-                  color: "rgba(17, 32, 34, 1)",
-                  fontWeight: "bold",
+                  color: "rgba(130, 130, 130, 1)",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   padding: "15px",
                 }}
               >
-                فضل شهر رمضان
+                محمد صالح المنجد
               </p>
-            </div>
-          </Col>
+            </Col>
 
-          <Col xs={6}>
-            <p
-              style={{
-                color: "rgba(130, 130, 130, 1)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "15px",
-              }}
-            >
-              محمد صالح المنجد
-            </p>
-          </Col>
-
-          <Col xs={6}>
-            {" "}
-            <p
-              style={{
-                color: "rgba(130, 130, 130, 1)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "15px",
-              }}
-            >
-              3:40 دقيقة
-            </p>
-          </Col>
-
-          <Col>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "15px",
-                gap: "5px",
-              }}
-            >
-              {/* <RiDeleteBin5Line style={{ fontSize: "25px", color: "gray" }} /> */}
-
-              <IoHeartCircleSharp
+            <Col xs={6}>
+              {" "}
+              <p
                 style={{
-                  color: "#878787bd",
-                  fontSize: "35px",
-                  cursor: "pointer",
+                  color: "rgba(130, 130, 130, 1)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "15px",
                 }}
-              />
-              <FaCirclePlay
-                style={{ color: "rgb(209, 155, 111)", fontSize: "35px" }}
-              />
-            </div>
-          </Col>
-        </Row>
-        <div
-          style={{
-            marginLeft: "-55px",
-            marginBottom: "15px",
-            borderBottom: "1.5px solid #EEEEEE ",
-            width: "100%",
-          }}
-        ></div>
+              >
+                            {durationFormatted} دقيقة
+              </p>
+            </Col>
+
+            <Col>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "15px",
+                  gap: "5px",
+                }}
+              >
+                {/* <RiDeleteBin5Line style={{ fontSize: "25px", color: "gray" }} /> */}
+
+                <IoHeartCircleSharp
+                  style={{
+                    color: "#878787bd",
+                    fontSize: "35px",
+                    cursor: "pointer",
+                  }}
+                />
+                <button
+                              onClick={() => handlePlay(index)}
+                              style={{ border: "none", background: "#FFFFFF" }}
+                            >
+                              {isPlaying[index] ? (
+                                <FaCirclePause
+                                  style={{
+                                    color: "rgb(209, 155, 111)",
+                                    fontSize: "26px",
+                                  }}
+                                />
+                              ) : (
+                                <FaCirclePlay
+                                  style={{
+                                    color: "rgb(209, 155, 111)",
+                                    fontSize: "26px",
+                                  }}
+                                />
+                              )}
+                            </button>
+                            <audio
+                              key={index}
+                              ref={(el) => (audioRefs.current[index] = el)}
+                              src={item.audio}
+                              controls
+                              hidden
+                              onLoadedMetadata={handleLoadedMetadata(index)}
+                            />
+              </div>
+            </Col>
+          </Row>
+          <div
+            style={{
+              marginLeft: "-55px",
+              marginBottom: "15px",
+              borderBottom: "1.5px solid #EEEEEE ",
+              width: "100%",
+            }}
+          ></div>
+        </>
+      );
+    })
+  ) : (
+    <div style={{ height: "220px" }}>
+      {" "}
+      <Spinner animation="border" variant="primary" />
+    </div>
+  )
+) : null}
 
     
 

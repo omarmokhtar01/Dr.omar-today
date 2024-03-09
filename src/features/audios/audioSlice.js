@@ -7,7 +7,8 @@ const initialState = {
     audioCategory: [],
     audioCategoryId:[],
     publicAudio:[],
-    
+    downAudio:{},
+    favAudio:{},
     isLoading: false,
     error: null,
   };
@@ -66,6 +67,39 @@ const initialState = {
           return error
         }
       });
+
+
+        // to get audio details
+    const downloadOneAudio = createAsyncThunk('down/audio-public', async ({formData,token}, thunkAPI) => {
+      try {
+        const response = await baseUrl.post(
+          `download/Donwload-Audio`);
+          console.log(response.data);
+        return response.data;
+      } catch (error) {
+        return error
+      }
+    });
+
+            // to get audio details
+            const favOneAudio = createAsyncThunk('fav/audio-public', async ({ formData, token }, thunkAPI) => {
+              try {
+                  const response = await baseUrl.post(
+                      `/Favorite/Favorite-Audio`,
+                      formData, // Include formData in the request
+                      {
+                          headers: {
+                              Authorization: `Bearer ${token}` // Include token in the request headers
+                          }
+                      }
+                  );
+                  console.log(response.data);
+                  return response.data;
+              } catch (error) {
+                  return error;
+              }
+          });
+          
 
     const audioSlice = createSlice({
         name: 'audio',
@@ -139,12 +173,46 @@ const initialState = {
             })
 
 
+
+
+
+            .addCase(downloadOneAudio.pending, (state) => {
+              state.isLoading = true;
+              state.error = null;
+            })
+            .addCase(downloadOneAudio.fulfilled, (state, action) => {
+              state.downAudio = action.payload;
+              state.isLoading = false;
+              state.error = null;
+            })
+            .addCase(downloadOneAudio.rejected, (state, action) => {
+              state.isLoading = false;
+              state.error = action.payload;
+            })
+
+
+
+
+            .addCase(favOneAudio.pending, (state) => {
+              state.isLoading = true;
+              state.error = null;
+            })
+            .addCase(favOneAudio.fulfilled, (state, action) => {
+              state.favAudio = action.payload;
+              state.isLoading = false;
+              state.error = null;
+            })
+            .addCase(favOneAudio.rejected, (state, action) => {
+              state.isLoading = false;
+              state.error = action.payload;
+            })
+
             }}
             );
       export {
          getAudios,
         getAudioCategory,getAudioCategoryById,
-        getAudioPublic
+        getAudioPublic,downloadOneAudio,favOneAudio
     };
       
       export default audioSlice.reducer;
