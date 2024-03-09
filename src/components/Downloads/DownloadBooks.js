@@ -238,13 +238,17 @@ const DownloadBooks = () => {
       </Container>
 
       <div class="container text-center">
-        <div
-          class="row row-cols-2 row-cols-lg-5  g-lg-3"
+      <div
+          class="row row-cols-3 row-cols-lg-5  g-lg-3  row-section"
           style={{ width: "100%" }}
         >
-          <div class="col">
+          
+          {getData ? (
+            <>
+              {getData.map((item, index) => (
+                <div class="col">
             <div>
-              <img src={bookSort} alt="" className="book-download" />
+              <img src={item.image} alt="" className="book-download" height='247px' width='169'   />
 
               <div
                 style={{
@@ -268,165 +272,15 @@ const DownloadBooks = () => {
                 />
               </div>
 
-              <h5> الارتقاء بالكتابه</h5>
+              <h5> {item.name} </h5>
               <p style={{ marginTop: "-5px" }}>20 صفحه </p>
             </div>
           </div>
-
-          <div class="col">
-            <div>
-              <img src={bookSort1} alt="" className="book-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-240px",
-                  marginRight: "40px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-delt"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-              <h5> الارتقاء بالكتابه</h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={bookSort2} alt="" className="book-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-240px",
-                  marginRight: "40px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-delt"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5> عبقريه عمر </h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={bookSort1} alt="" className="book-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-240px",
-                  marginRight: "40px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-delt"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5> عبقريه عمر </h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={bookSort} alt="" className="book-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-240px",
-                  marginRight: "40px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-delt"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5> عبقريه عمر </h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={bookSort1} alt="" className="book-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-240px",
-                  marginRight: "40px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-delt"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-              <h5> عبقريه عمر </h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
-            </div>
-          </div>
-
-          <div class="col">
+              ))}
+            </>
+          ) : null}
+       
+          {/* <div class="col">
             <div>
               <img src={bookSort2} alt="" className="book-download" />
               <div
@@ -455,99 +309,9 @@ const DownloadBooks = () => {
               <h5> حياه محمد </h5>
               <p style={{ marginTop: "-5px" }}>20 صفحه </p>
             </div>
-          </div>
+          </div> */}
 
-          <div class="col">
-            <div>
-              <img src={bookSort} alt="" className="book-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-240px",
-                  marginRight: "40px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-delt"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-              <h5> حياه محمد </h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={bookSort1} alt="" className="book-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-240px",
-                  marginRight: "40px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-delt"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5> حياه محمد </h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={bookSort2} alt="" className="book-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-240px",
-                  marginRight: "40px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-delt"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5> حياه محمد </h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
-            </div>
-          </div>
+      
         </div>
       </div>
     </>

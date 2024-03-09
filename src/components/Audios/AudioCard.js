@@ -26,33 +26,94 @@ import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 
 import notify from "../UseNotifications/useNotification";
+
+import JSZip from 'jszip';
+
 const AudioCard = () => {
-  let token = Cookies.get("token");
-
+  function downloadAudiosAsZip(audioData) {
+    const zip = new JSZip();
   
-
-  const downloadAudio = (audioUrl) => {
-    fetch(audioUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.blob();
-      })
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
+    // Add each audio file to the zip archive
+    audioData.forEach(audio => {
+      fetch(audio.audio)
+        .then(response => response.blob())
+        .then(blob => {
+          zip.file(`${audio.title}.mp3`, blob);
+        })
+        .catch(error => console.error('Error downloading audio:', error));
+    });
+  
+    // Generate the .zip archive
+    zip.generateAsync({ type: 'blob' })
+      .then(zipBlob => {
+        const url = window.URL.createObjectURL(new Blob([zipBlob]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'audio_file.mp3'); // Set the desired filename with the correct extension
+        link.setAttribute('download', 'audios.zip');
         document.body.appendChild(link);
         link.click();
         link.parentNode.removeChild(link);
       })
-      .catch(error => {
-        console.error('Error downloading audio:', error);
-        notify("حدثت مشكلة أثناء تحميل الصوت", "error");
-      });
+      .catch(error => console.error('Error generating .zip file:', error));
+  }
+  const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
+
+  // Event handler for sorting by latest addition
+  const handleSortByLatest = () => {
+    setSortBy('latest');
+    // Call function to sort articles by latest addition
   };
+
+  // Event handler for sorting alphabetically
+  const handleSortAlphabetically = () => {
+    setSortBy('alphabetical');
+    // Call function to sort articles alphabetically
+  };
+
+  // Sort function based on the selected option
+  const sortFunction = (a, b) => {
+    if (sortBy === 'alphabetical') {
+      return a.title.localeCompare(b.title);
+    } else {
+      // Add sorting logic for other options, e.g., sorting by latest addition
+      return 0; // Placeholder, modify as per your actual logic
+    }
+  };
+  let token = Cookies.get("token");
+  const formatDuration = (duration) => {
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.floor((duration % 3600) / 60);
+    const seconds = Math.floor(duration % 60);
+    return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
+  
+  
+
+  const downloadAudio = async (audioUrl) => {
+    try {
+      const response = await fetch(audioUrl);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      
+      const blob = await response.blob();
+      
+      // Create a temporary link element
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'audio_file.mp3'; // Set the desired filename with the correct extension
+      
+      // Append the link to the body, trigger the click event, and remove the link afterward
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading audio:', error);
+      notify("حدثت مشكلة أثناء تحميل الصوت", "error");
+    }
+  };
+  
+  
   
   const handleCheckLogin = (audioUrl) => {
     let token = Cookies.get("token");
@@ -130,6 +191,7 @@ const AudioCard = () => {
       setDurations(newDurations);
     };
   };
+  
   const params = useParams();
 
   // Now you can access the parameters using the keys defined in your route
@@ -218,117 +280,120 @@ const AudioCard = () => {
       <NavBar />
 
       <Container>
-        {!isLoading ? (
-          getDataOne ? (
-            getDataOne.data ? (
+      {!isLoading ? (
+  getDataOne ? (
+    getDataOne.data ? (
+      <Row>
+        <Col>
+          <div style={{ position: "relative", marginTop: "-35px" }}>
+            <div
+              style={{
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "500",
+                paddingBottom: "25px",
+                paddingTop: "15px",
+                borderRadius: "25px",
+              }}
+              className=" background-image-card"
+            >
               <Row>
-                <Col>
-                  <div style={{ position: "relative", marginTop: "-35px" }}>
-                    <div
+                <Col
+                  sm="6"
+                  xs="6"
+                  className=" d-flex "
+                  style={{ marginTop: "-35px" }}
+                >
+                  <img
+                    src={getDataOne.data.image}
+                    width={200}
+                    height={180}
+                    alt=""
+                    style={{ marginTop: "20px", borderRadius: "10px" }}
+                  />
+                </Col>
+
+                <Col
+                  sm="3"
+                  xs="6"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  className="text-info-card"
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      marginRight: "-40px",
+                      marginTop: "-20px",
+                    }}
+                  >
+                    <h5
                       style={{
-                        color: "rgba(255, 255, 255, 1)",
-                        fontWeight: "500",
-                        paddingBottom: "25px",
-                        paddingTop: "15px",
-                        borderRadius: "25px",
+                        color: "rgba(5, 20, 39, 1)",
+                        fontWeight: "bold",
                       }}
-                      className=" background-image-card"
                     >
-                      <Row>
-                        <Col
-                          sm="6"
-                          xs="6"
-                          className=" d-flex "
-                          style={{ marginTop: "-35px" }}
-                        >
-                          <img
-                            src={getDataOne.data.image}
-                            width={200}
-                            height={180}
-                            alt=""
-                            style={{ marginTop: "20px", borderRadius: "10px" }}
-                          />
-                        </Col>
+                      {" "}
+                      {getDataOne.data.name}
+                    </h5>
+                    <p>{getDataOne.data.count_audios} مقطع صوتي</p>
+                  </div>
+                </Col>
 
-                        <Col
-                          sm="3"
-                          xs="6"
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                          className="text-info-card"
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              marginRight: "-40px",
-                              marginTop: "-20px",
-                            }}
-                          >
-                            <h5
-                              style={{
-                                color: "rgba(5, 20, 39, 1)",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {" "}
-                              {getDataOne.data.name}
-                            </h5>
-                            <p>{getDataOne.data.count_audios} مقطع صوتي</p>
-                          </div>
-                        </Col>
+                <Col sm="3" xs="6" className="icons">
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      marginTop: "50px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    className="icons-div"
+                  >
+                    {/* Add the download functionality here */}
+                    <MdDownloadForOffline
+                      style={{
+                        color: "rgb(209, 155, 111)",
+                        fontSize: "45px",
+                        cursor: "pointer",
+                      }}
+                      className="icon-audio-card"
+                      onClick={() => downloadAudiosAsZip(getDataOne.data.Audio)}
 
-                        <Col sm="3" xs="6" className="icons">
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "10px",
-                              marginTop: "50px",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
-                            className="icons-div"
-                          >
-                            <MdDownloadForOffline
-                              style={{
-                                color: "rgb(209, 155, 111)",
-                                fontSize: "45px",
-                                cursor: "pointer",
-                              }}
-                              className="icon-audio-card"
-                              onClick={handleCheckLogin}
-                            />
-                            <IoHeartCircleSharp
-                              style={{
-                                color: "#878787bd",
-                                fontSize: "45px",
-                                cursor: "pointer",
-                              }}
-                              className="icon-audio-card"
-                              onClick={()=>handelAddtoFavElder(getDataOne.data.id)}
-
-                            />
-                            <PiShareFatFill
-                              style={{
-                                color: "#FFFFFF",
-                                fontSize: "45px",
-                                cursor: "pointer",
-                              }}
-                              className="icon-audio-card"
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
+                    />
+                    {/* End of download functionality */}
+                    <IoHeartCircleSharp
+                      style={{
+                        color: "#878787bd",
+                        fontSize: "45px",
+                        cursor: "pointer",
+                      }}
+                      className="icon-audio-card"
+                      onClick={() => handelAddtoFavElder(getDataOne.data.id)}
+                    />
+                    <PiShareFatFill
+                      style={{
+                        color: "#FFFFFF",
+                        fontSize: "45px",
+                        cursor: "pointer",
+                      }}
+                      className="icon-audio-card"
+                    />
                   </div>
                 </Col>
               </Row>
-            ) : null
-          ) : null
-        ) : null}
+            </div>
+          </div>
+        </Col>
+      </Row>
+    ) : null
+  ) : null
+) : null}
+
       </Container>
 
       <Container>
@@ -375,32 +440,27 @@ const AudioCard = () => {
                   }}
                 />
 
-                <NavDropdown
-                  title="الترتيب حسب"
-                  id="collapsible-nav-dropdown"
-                  style={{
-                    background:
-                      "linear-gradient(0deg, rgba(209, 155, 111, 0.15), rgba(209, 155, 111, 0.15)),linear-gradient(0deg, rgba(209, 155, 111, 0.1), rgba(209, 155, 111, 0.1))",
-                    border: "1.5px solid rgba(209, 155, 111, 0.1)",
-                    borderRadius: "25px",
-                    padding: "5px 25px 5px 10px",
-                    color: "rgba(209, 155, 111, 1)",
-                    fontWeight: "bold",
-                    fontSize: "13px",
-                  }}
-                >
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                  </NavDropdown.Item>
-                </NavDropdown>
+<NavDropdown
+        title="الترتيب حسب"
+        id="collapsible-nav-dropdown"
+        style={{
+          background:
+            "linear-gradient(0deg, rgba(209, 155, 111, 0.15), rgba(209, 155, 111, 0.15)),linear-gradient(0deg, rgba(209, 155, 111, 0.1), rgba(209, 155, 111, 0.1))",
+          border: "1.5px solid rgba(209, 155, 111, 0.1)",
+          borderRadius: "25px",
+          padding: "5px 25px 5px 10px",
+          color: "rgba(209, 155, 111, 1)",
+          fontWeight: "bold",
+          fontSize: "13px",
+        }}
+      >
+        <NavDropdown.Item onClick={handleSortByLatest}>
+          الأحدث اضافة
+        </NavDropdown.Item>
+        <NavDropdown.Item onClick={handleSortAlphabetically}>
+          الابجدية
+        </NavDropdown.Item>
+      </NavDropdown>
               </div>
             </div>
           </Col>
@@ -408,157 +468,171 @@ const AudioCard = () => {
       </Container>
 
       <Container>
-        {!isLoading ? (
-          getDataOne ? (
-            getDataOne.data ? (
-              getDataOne.data.Audio ? (
-                getDataOne.data.Audio.map((item, index) => {
-                  return (
-                    <>
-                      <Row className="me-auto" md={4} key={index}>
-                        <Col>
-                          <div style={{ display: "flex" }}>
-                            <img
-                              src={item.image}
-                              alt=""
-                              style={{}}
-                              width="61px"
-                              height="61px"
-                            />
-                            <p
-                              style={{
-                                color: "rgba(17, 32, 34, 1)",
-                                fontWeight: "bold",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                padding: "15px",
-                              }}
-                            >
-                              {" "}
-                              {item.title}{" "}
-                            </p>
-                          </div>
-                        </Col>
+      {!isLoading ? (
+  getDataOne ? (
+    getDataOne.data ? (
+      getDataOne.data.Audio ? (
+        [...getDataOne.data.Audio].sort(sortFunction).map((item, index) => {
+          return (
+            <React.Fragment key={index}>
+              <Row className="me-auto" md={4}>
+                <Col>
+                  <div style={{ display: "flex" }}>
+                    <img
+                      src={item.image}
+                      alt=""
+                      style={{}}
+                      width="61px"
+                      height="61px"
+                    />
+                    <p
+                      style={{
+                        color: "rgba(17, 32, 34, 1)",
+                        fontWeight: "bold",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "15px",
+                      }}
+                    >
+                      {" "}
+                      {item.title}{" "}
+                    </p>
+                  </div>
+                </Col>
 
-                        <Col xs={6}>
-                          <p
-                            style={{
-                              color: "rgba(130, 130, 130, 1)",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              padding: "15px",
-                            }}
-                          >
-                            {" "}
-                            {item.name}{" "}
-                          </p>
-                        </Col>
+                <Col xs={6}>
+                  <p
+                    style={{
+                      color: "rgba(130, 130, 130, 1)",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: "15px",
+                    }}
+                  >
+                    {" "}
+                    {item.name}{" "}
+                  </p>
+                </Col>
 
-                        <Col xs={6}>
-                          {" "}
-                          <p
-                            style={{
-                              color: "rgba(130, 130, 130, 1)",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              padding: "15px",
-                            }}
-                          >
-                            {durationFormatted} دقيقة
-                          </p>
-                        </Col>
+                <Col xs={6}>
+                  {" "}
+                  <p
+  style={{
+    color: "rgba(130, 130, 130, 1)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "15px",
+  }}
+>
+  {durations[index] ? formatDuration(durations[index]) : 'Loading...'}
+</p>
 
-                        <Col>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              padding: "15px",
-                              gap: "15px",
-                            }}
-                          >
-                            <MdDownloadForOffline
-                              style={{
-                                color: "rgb(209, 155, 111)",
-                                fontSize: "30px",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleCheckLogin}
-                              download="audio_file"
-                            />
-                           
-                              {" "}
-                              <IoHeartCircleSharp
-    style={{
-        color: "#878787bd",
-        fontSize: "30px",
-        cursor: "pointer",
-    }}
-    onClick={() => handelAddtoFav(item.id)} // Assuming 'audioId' is accessible in this scope
-/>
+                </Col>
 
-                            
-                            <button
-                              onClick={() => handlePlay(index)}
-                              style={{ border: "none", background: "#FFFFFF" }}
-                            >
-                              {isPlaying[index] ? (
-                                <FaCirclePause
-                                  style={{
-                                    color: "rgb(209, 155, 111)",
-                                    fontSize: "26px",
-                                  }}
-                                />
-                              ) : (
-                                <FaCirclePlay
-                                  style={{
-                                    color: "rgb(209, 155, 111)",
-                                    fontSize: "26px",
-                                  }}
-                                />
-                              )}
-                            </button>
-                            <audio
-                              key={index}
-                              ref={(el) => (audioRefs.current[index] = el)}
-                              src={item.audio}
-                              controls
-                              hidden
-                              onLoadedMetadata={handleLoadedMetadata(index)}
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                      <div
+                <Col>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: "15px",
+                      gap: "15px",
+                    }}
+                  >
+                    {token ? (
+                      <a href={`${item.audio}?download=true`} target="_blank">
+                        <MdDownloadForOffline
+                          style={{
+                            color: "rgb(209, 155, 111)",
+                            fontSize: "30px",
+                            cursor: "pointer",
+                          }}
+                          onClick={handleCheckLogin}
+                          download="audio_file"
+                        />
+                      </a>
+                    ) : (
+                      <MdDownloadForOffline
                         style={{
-                          marginLeft: "-55px",
-                          marginBottom: "15px",
-                          borderBottom: "1.5px solid #EEEEEE ",
-                          width: "100%",
+                          color: "rgb(209, 155, 111)",
+                          fontSize: "30px",
+                          cursor: "pointer",
                         }}
-                      ></div>
-                    </>
-                  );
-                })
-              ) : (
-                <div style={{ height: "140px" }}></div>
-              )
-            ) : (
-              <div style={{ height: "140px" }}></div>
-            )
-          ) : (
-            <div style={{ height: "140px" }}></div>
-          )
-        ) : (
-          <div style={{ height: "220px" }}>
-            {" "}
-            <Spinner animation="border" variant="primary" />
-          </div>
-        )}
+                        onClick={handleCheckLogin}
+                        download="audio_file"
+                      />
+                    )}
+
+                    <IoHeartCircleSharp
+                      style={{
+                        color: "#878787bd",
+                        fontSize: "30px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => handelAddtoFav(item.id)} // Assuming 'audioId' is accessible in this scope
+                    />
+
+                    <button
+                      onClick={() => handlePlay(index)}
+                      style={{ border: "none", background: "#FFFFFF" }}
+                    >
+                      {isPlaying[index] ? (
+                        <FaCirclePause
+                          style={{
+                            color: "rgb(209, 155, 111)",
+                            fontSize: "26px",
+                          }}
+                        />
+                      ) : (
+                        <FaCirclePlay
+                          style={{
+                            color: "rgb(209, 155, 111)",
+                            fontSize: "26px",
+                          }}
+                        />
+                      )}
+                    </button>
+                    <audio
+                      key={index}
+                      ref={(el) => (audioRefs.current[index] = el)}
+                      src={item.audio}
+                      controls
+                      hidden
+                      onLoadedMetadata={handleLoadedMetadata(index)}
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <div
+                style={{
+                  marginLeft: "-55px",
+                  marginBottom: "15px",
+                  borderBottom: "1.5px solid #EEEEEE ",
+                  width: "100%",
+                }}
+              ></div>
+            </React.Fragment>
+          );
+        })
+      ) : (
+        <div style={{ height: "140px" }}></div>
+      )
+    ) : (
+      <div style={{ height: "140px" }}></div>
+    )
+  ) : (
+    <div style={{ height: "140px" }}></div>
+  )
+) : (
+  <div style={{ height: "220px" }}>
+    {" "}
+    <Spinner animation="border" variant="primary" />
+  </div>
+)}
+
       </Container>
       <ToastContainer/>
     </>

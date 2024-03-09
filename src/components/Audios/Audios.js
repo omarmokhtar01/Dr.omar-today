@@ -47,6 +47,11 @@ const Audios = () => {
 
   // Sort function based on the selected option
   const sortFunction = (a, b) => {
+    if (!a.title || !b.title) {
+      // Handle cases where either 'a' or 'b' does not have a 'title' property
+      return 0; // Or you can prioritize the one with a 'title' property if needed
+    }
+  
     if (sortBy === 'alphabetical') {
       return a.title.localeCompare(b.title);
     } else {
@@ -54,7 +59,7 @@ const Audios = () => {
       return 0; // Placeholder, modify as per your actual logic
     }
   };
-
+  
   let token = Cookies.get("token");
 
   const [id, setId] = useState(null);
@@ -87,7 +92,7 @@ const Audios = () => {
     if (token) {
       // Token exists, perform the download action
       // Add your download logic here
-      notify("تم التحميل", "success");
+      // notify("تم التحميل", "success");
     } else {
       // Token doesn't exist, notify the user
       notify("من فضلك قم بتسجيل الدخول اولا", "error");

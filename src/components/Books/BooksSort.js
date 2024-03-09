@@ -43,6 +43,11 @@ const BooksSort = () => {
 
   // Sort function based on the selected option
   const sortFunction = (a, b) => {
+    if (!a.title || !b.title) {
+      // Handle cases where either 'a' or 'b' does not have a 'title' property
+      return 0; // Or you can prioritize the one with a 'title' property if needed
+    }
+  
     if (sortBy === 'alphabetical') {
       return a.title.localeCompare(b.title);
     } else {
@@ -50,6 +55,7 @@ const BooksSort = () => {
       return 0; // Placeholder, modify as per your actual logic
     }
   };
+  
 
   const [id,setId]=useState(null)
 
@@ -261,10 +267,19 @@ const BooksSort = () => {
                                     className="form-check-label d-flex"
                                     key={index}
                                   >
-                                    <input
-                                      style={{ margin: "5px" }}
-                                      type="checkbox"
-                                    />
+                                   <input
+    style={{ margin: "5px" }}
+    type="checkbox"
+    checked={id === data.id} // Optional: if you want the checkbox to reflect the current selection
+    onChange={(event) => {
+        if (event.target.checked) {
+            setId(data.id);
+        } else {
+            setId(null);
+        }
+    }}
+/>
+
                                     {data.title}
                                   </label>
                                 ))

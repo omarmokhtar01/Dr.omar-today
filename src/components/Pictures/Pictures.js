@@ -57,6 +57,31 @@ const handleShow = (image) => {
   
 console.log(getAllPicturesData);
 
+const handleDownload = () => {
+  fetch(selectedImage)
+    .then(response => response.blob())
+    .then(blob => {
+      // Create a temporary URL for the blob
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      
+      // Create a temporary anchor element
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.setAttribute('download', 'image');
+      
+      // Append the anchor element to the body
+      document.body.appendChild(downloadLink);
+      
+      // Trigger a click event on the anchor element
+      downloadLink.click();
+      
+      // Clean up: remove the anchor element from the body and revoke the URL
+      downloadLink.remove();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch(error => console.error('Error downloading image:', error));
+}
+
 
   const getOneData = useSelector((state) => state.imgCategory.OneImgsData);
   const isLoadingOneImgCategory = useSelector(
@@ -268,22 +293,19 @@ console.log(getAllPicturesData);
 
   </Row>
   <Modal show={show} onHide={handleClose}>
-    {/* Display the selected image */}
-    <img src={selectedImage} alt="modal" style={{ width: '400px' }} />
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '180px', justifyContent: 'space-between', display: 'flex' }}>
-        {/* Your icons */}
-        <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
-       
-        <MdDownloadForOffline
-            
-            style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }}
-        />           
-                
-                      <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }}  onClick={handleCheckLogin} />
-      </div>
+  {/* Display the selected image */}
+  <img src={selectedImage} alt="modal" style={{ width: '400px' }} />
+  <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ width: '180px', justifyContent: 'space-between', display: 'flex' }}>
+      {/* Your icons */}
+      <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
+      <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={handleDownload} />        
+      <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} onClick={handleCheckLogin} />
     </div>
-  </Modal>
+  </div>
+</Modal>
+
+
   <ToastContainer/>
 </Container>
 

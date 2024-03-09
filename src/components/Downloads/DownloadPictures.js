@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import NavBar from "../Navbar/NavBar";
+import '../Favorites/fav.css'
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import pic1 from "../../images/pic1.png";
@@ -235,7 +236,12 @@ const DownloadPictures = () => {
           class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3"
           style={{ margin: "35px" }}
         >
-          <Col>
+          
+
+          {getData ? (
+            <>
+              {getData.map((item, index) => (
+                <Col  xl={6} lg={12} md={12} sm={12} xs={12} >
             {/* <div style={{position:'absolute' , marginRight:'40px' , display:'flex' , gap:'10px',
                       border:'1px solid #FFFFFF', background:'red', borderRadius:'25px' , marginTop:'10px'}} className='icon-delt' >
                       <RiDeleteBin5Line style={{ fontSize:'35px', color:'red', padding:'5px',position:'absolute' , zIndex:'2' , margin:'15px'}}/>
@@ -255,27 +261,17 @@ const DownloadPictures = () => {
                 background: "#FFFFFF",
               }}
             />
-            <img src={pic1} alt="" style={{ marginBottom: "20px" }} />
+            <img className="img-fav-card"
+            src={item.image} alt="" style={{ marginBottom: "20px",maxHeight:'350px',maxWidth:'450px' }} />
 
-            <div>
-              <RiDeleteBin5Line
-                style={{
-                  fontSize: "35px",
-                  color: "gray",
-                  padding: "5px",
-                  position: "absolute",
-                  zIndex: "2",
-                  margin: "15px",
-                  border: "1px solid #FFFFFF",
-                  borderRadius: "25px",
-                  background: "#FFFFFF",
-                }}
-              />
-              <img src={pic2} alt="" style={{ marginBottom: "20px" }} />
-            </div>
+   
           </Col>
+              ))}
+            </>
+          ) : null}
 
-          <Col>
+
+          {/* <Col>
             <RiDeleteBin5Line
               style={{
                 fontSize: "35px",
@@ -343,43 +339,9 @@ const DownloadPictures = () => {
               />
               <img src={pic4} alt="" style={{ marginBottom: "20px" }} />
             </div>
-          </Col>
+          </Col> */}
 
-          <Col>
-            <div>
-              <RiDeleteBin5Line
-                style={{
-                  fontSize: "35px",
-                  color: "gray",
-                  padding: "5px",
-                  position: "absolute",
-                  zIndex: "2",
-                  margin: "15px",
-                  border: "1px solid #FFFFFF",
-                  borderRadius: "25px",
-                  background: "#FFFFFF",
-                }}
-              />
-              <img src={pic7} alt="" style={{ marginBottom: "20px" }} />
-            </div>
-
-            <div>
-              <RiDeleteBin5Line
-                style={{
-                  fontSize: "35px",
-                  color: "gray",
-                  padding: "5px",
-                  position: "absolute",
-                  zIndex: "2",
-                  margin: "15px",
-                  border: "1px solid #FFFFFF",
-                  borderRadius: "25px",
-                  background: "#FFFFFF",
-                }}
-              />
-              <img src={pic8} alt="" style={{ marginBottom: "20px" }} />
-            </div>
-          </Col>
+          
         </Row>
       </Container>
     </>

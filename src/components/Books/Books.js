@@ -43,6 +43,11 @@ const Books = () => {
 
   // Sort function based on the selected option
   const sortFunction = (a, b) => {
+    if (!a.title || !b.title) {
+      // Handle cases where either 'a' or 'b' does not have a 'title' property
+      return 0; // Or you can prioritize the one with a 'title' property if needed
+    }
+  
     if (sortBy === 'alphabetical') {
       return a.title.localeCompare(b.title);
     } else {
@@ -50,9 +55,24 @@ const Books = () => {
       return 0; // Placeholder, modify as per your actual logic
     }
   };
+  
 
   const [id,setId]=useState(null)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   const dispatch = useDispatch();
   const getAll = useSelector((state) => state.books.booksData);
   const isLoading = useSelector((state) => state.books.isLoading);
@@ -101,7 +121,7 @@ const Books = () => {
     if (token) {
       // Token exists, perform the download action
       // Add your download logic here
-      notify("تم التحميل", "success");
+      notify("تم الاضافة للمفضلة", "success");
     } else {
       // Token doesn't exist, notify the user
       notify("من فضلك قم بتسجيل الدخول اولا", "error");
@@ -257,10 +277,19 @@ const Books = () => {
                                     className="form-check-label d-flex"
                                     key={index}
                                   >
-                                    <input
-                                      style={{ margin: "5px" }}
-                                      type="checkbox"
-                                    />
+                                   <input
+    style={{ margin: "5px" }}
+    type="checkbox"
+    checked={id === data.id} // Optional: if you want the checkbox to reflect the current selection
+    onChange={(event) => {
+        if (event.target.checked) {
+            setId(data.id);
+        } else {
+            setId(null);
+        }
+    }}
+/>
+
                                     {data.title}
                                   </label>
                                 ))

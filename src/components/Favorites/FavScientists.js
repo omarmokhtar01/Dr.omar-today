@@ -8,10 +8,11 @@ import { getAllEldersFavorite } from "../../features/allFavorites/allFavoritesSl
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { IoIosHeart } from "react-icons/io";
 
 const FavScientists = () => {
   const token = Cookies.get("token");
-
+ 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -73,7 +74,7 @@ const FavScientists = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
@@ -108,7 +109,7 @@ const FavScientists = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -139,7 +140,7 @@ const FavScientists = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -167,7 +168,7 @@ const FavScientists = () => {
             </div>
           </Col>
 
-          <Col
+          {/* <Col
             xs="6"
             md="4"
             lg="2"
@@ -196,12 +197,12 @@ const FavScientists = () => {
                 </h6>
               </Link>
             </div>
-          </Col>
+          </Col> */}
 
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -231,12 +232,12 @@ const FavScientists = () => {
         </Row>
       </Container>
 
-      <div class="container text-center">
+      <div class="container fluid text-center">
         <div
-          class="row row-cols-2 row-cols-lg-5  g-lg-3"
+          class="row row-cols-2 row-cols-lg-4  g-lg-4"
           style={{ width: "100%" }}
         >
-          <div class="col">
+          {/* <div class="col">
             <div>
               <Link to="/audioCardfav" style={{ textDecoration: "none" }}>
                 <img src={img1} alt="" />
@@ -256,11 +257,16 @@ const FavScientists = () => {
               <h5>محمد صالح المنجد</h5>
               <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
             </div>
-          </div>
+          </div> */}
 
-          <div class="col">
+          {getData ? (
+            <>
+              {getData.map((item, index) => (
+                <div class="col">
             <div>
-              <img src={img1} alt="" />
+              <Link to="/audioCardfav" style={{ textDecoration: "none" }}>
+                <img src={item.image} alt=""  style={{width:'245px', height:'180px'}}/>
+              </Link>
               <div
                 style={{
                   position: "absolute",
@@ -270,173 +276,25 @@ const FavScientists = () => {
                   gap: "10px",
                 }}
               >
-                <img src={heart1} alt="" />
+               <IoIosHeart 
+                  style={{
+                    color: "red",
+                    fontSize: "35px",
+                    cursor: "pointer",
+                    borderRadius:'25px',
+                    background:'#f3e9e9'
+                    ,padding:'5px'
+                  }} />
               </div>
 
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
+              <h5>  {item.name}</h5>
+              <p style={{ marginTop: "-5px" }}>{item.count_audios} مقطع صوتي</p>
             </div>
           </div>
+              ))}
+            </>
+          ) : null}
 
-          <div class="col">
-            <div>
-              <img src={img1} alt="" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-40px",
-                  marginRight: "90px",
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <img src={heart1} alt="" />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-40px",
-                  marginRight: "90px",
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <img src={heart1} alt="" />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-40px",
-                  marginRight: "90px",
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <img src={heart1} alt="" />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-40px",
-                  marginRight: "90px",
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <img src={heart1} alt="" />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-40px",
-                  marginRight: "90px",
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <img src={heart1} alt="" />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-40px",
-                  marginRight: "90px",
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <img src={heart1} alt="" />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-40px",
-                  marginRight: "90px",
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <img src={heart1} alt="" />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-40px",
-                  marginRight: "90px",
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <img src={heart1} alt="" />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
         </div>
       </div>
     </>

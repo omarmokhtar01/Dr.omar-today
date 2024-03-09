@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getBooksFavorite } from "../../features/allFavorites/allFavoritesSlice";
 import Cookies from "js-cookie";
+import { IoIosHeart } from "react-icons/io";
 
 const FavBook = () => {
   const token = Cookies.get("token");
@@ -77,7 +78,7 @@ const FavBook = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
@@ -112,7 +113,7 @@ const FavBook = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -143,7 +144,7 @@ const FavBook = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -171,7 +172,7 @@ const FavBook = () => {
             </div>
           </Col>
 
-          <Col
+          {/* <Col
             xs="6"
             md="4"
             lg="2"
@@ -200,12 +201,12 @@ const FavBook = () => {
                 </h6>
               </Link>
             </div>
-          </Col>
+          </Col> */}
 
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -240,9 +241,16 @@ const FavBook = () => {
           class="row row-cols-3 row-cols-lg-5  g-lg-3  row-section"
           style={{ width: "100%" }}
         >
-          <div class="col  section-col">
+       
+          
+
+          
+      {getData ? (
+            <>
+              {getData.map((item, index) => (
+                <div class="col section-col ">
             <div>
-              <img src={bookSort} alt="" />
+              <img src={item.image} alt="" height='247px' width='169' />
               <div
                 style={{
                   position: "absolute",
@@ -252,36 +260,29 @@ const FavBook = () => {
                   gap: "10px",
                 }}
               >
-                <img src={heart1} alt="" />
+                <IoIosHeart 
+                  style={{
+                    color: "red",
+                    fontSize: "35px",
+                    cursor: "pointer",
+                    borderRadius:'25px',
+                    background:'#f3e9e9'
+                    ,padding:'5px'
+                  }}
+                />
               </div>
 
-              <h5> الارتقاء بالكتابه</h5>
+              <h5> {item.name} </h5>
               <p style={{ marginTop: "-5px" }}>20 صفحه </p>
             </div>
           </div>
-
+              ))}
+            </>
+          ) : null}
+      
+{/* 
           <div class="col section-col ">
             <div>
-              <img src={bookSort1} alt="" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-240px",
-                  marginRight: "40px",
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <img src={heart1} alt="" />
-              </div>
-
-              <h5> الارتقاء بالكتابه</h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
-            </div>
-          </div>
-
-          <div class="col section-col ">
-            <div>
               <img src={bookSort2} alt="" />
               <div
                 style={{
@@ -438,7 +439,7 @@ const FavBook = () => {
               <h5> حياه محمد </h5>
               <p style={{ marginTop: "-5px" }}>20 صفحه </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

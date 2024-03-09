@@ -225,7 +225,8 @@ const DownloadScientists = () => {
 
       <div class="container text-center">
         <div class="row row-cols-2 row-cols-lg-5  g-lg-3">
-          <div class="col">
+
+          {/* <div class="col">
             <div>
               <Link to="/audioCardDownload">
                 <img src={img1} alt="" className="img-card-download" />
@@ -257,9 +258,47 @@ const DownloadScientists = () => {
               <h5>محمد صالح المنجد</h5>
               <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
             </div>
-          </div>
+          </div> */}
+     {getData ? (
+            <>
+              {getData.map((item, index) => (
+                 <div class="col">
+            <div>
+              {/* <Link to="/audioCardDownload"> */}
+                <img src={item.image} alt="" className="img-card-download"  style={{width:'245px', height:'180px'}}/>
+              {/* </Link> */}
 
-          <div class="col">
+              <div
+                style={{
+                  position: "absolute",
+                  marginTop: "-45px",
+                  marginRight: "100px",
+                  display: "flex",
+                  gap: "10px",
+                  border: "1px solid #FFFFFF",
+                  background: "#FFFFFF",
+                  borderRadius: "25px",
+                }}
+                className="icon-del"
+              >
+                <RiDeleteBin5Line
+                  style={{
+                    paddingLeft: "10px",
+                    fontSize: "35px",
+                    color: "gray",
+                    padding: "5px",
+                  }}
+                />
+              </div>
+
+              <h5>{item.name}  </h5>
+              <p style={{ marginTop: "-5px" }}>{item.count_audios}  مقطع صوتي</p>
+            </div>
+          </div>
+              ))}
+            </>
+          ) : null}
+          {/* <div class="col">
             <div>
               <img src={img1} alt="" className="img-card-download" />
               <div
@@ -320,223 +359,10 @@ const DownloadScientists = () => {
               <h5>محمد صالح المنجد</h5>
               <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
             </div>
-          </div>
+          </div> */}
 
-          <div class="col">
-            <div>
-              <img src={img1} alt="" className="img-card-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-45px",
-                  marginRight: "100px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-del"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" className="img-card-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-45px",
-                  marginRight: "100px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-del"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" className="img-card-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-45px",
-                  marginRight: "100px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-del"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" className="img-card-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-45px",
-                  marginRight: "100px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-del"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" className="img-card-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-45px",
-                  marginRight: "100px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-del"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" className="img-card-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-45px",
-                  marginRight: "100px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-del"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
-
-          <div class="col">
-            <div>
-              <img src={img1} alt="" className="img-card-download" />
-              <div
-                style={{
-                  position: "absolute",
-                  marginTop: "-45px",
-                  marginRight: "100px",
-                  display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
-                }}
-                className="icon-del"
-              >
-                <RiDeleteBin5Line
-                  style={{
-                    paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                  }}
-                />
-              </div>
-
-              <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
-            </div>
-          </div>
+    
+       
         </div>
       </div>
     </>

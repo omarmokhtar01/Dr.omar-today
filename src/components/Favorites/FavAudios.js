@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import NavBar from "../Navbar/NavBar";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import audioProfile from "../../images/audio-profile.png";
 import play from "../../images/play.png";
@@ -10,6 +10,9 @@ import { getAudiosFavorite } from "../../features/allFavorites/allFavoritesSlice
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { IoIosHeart } from "react-icons/io";
+import { FaCirclePlay } from "react-icons/fa6";
+import { MdDownloadForOffline } from "react-icons/md";
 
 const FavAudios = () => {
   const token = Cookies.get("token");
@@ -29,8 +32,12 @@ const FavAudios = () => {
       dispatch(getAudiosFavorite(token));
     }
   }, [token, navigate, dispatch]);
+
   console.log(getData);
-  console.log(getData.message);
+//   if(getData){
+//  console.log(getData.title)
+//   }
+  
 
   useEffect(() => {
     if (isLoading === false) {
@@ -76,7 +83,7 @@ const FavAudios = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
@@ -111,7 +118,7 @@ const FavAudios = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -142,7 +149,7 @@ const FavAudios = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -170,7 +177,7 @@ const FavAudios = () => {
             </div>
           </Col>
 
-          <Col
+          {/* <Col
             xs="6"
             md="4"
             lg="2"
@@ -199,12 +206,12 @@ const FavAudios = () => {
                 </h6>
               </Link>
             </div>
-          </Col>
+          </Col> */}
 
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -235,7 +242,104 @@ const FavAudios = () => {
       </Container>
 
       <Container>
-        <Row className="me-auto" md={4}>
+
+      {getData ? (
+            <>
+              {getData.map((item, index) => (
+                <Row className="me-auto" md={4}>
+          <Col>
+            <div style={{ display: "flex" }}>
+              <img
+                src={item.image}
+                alt=""
+                style={{}}
+                width="61px"
+                height="61px"
+              />
+              <p
+                style={{
+                  color: "rgba(17, 32, 34, 1)",
+                  fontWeight: "bold",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "15px",
+                }}
+              >
+              {item.title}
+              </p>
+            </div>
+          </Col>
+
+          <Col xs={6}>
+            <p
+              style={{
+                color: "rgba(130, 130, 130, 1)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "15px",
+              }}
+            >
+              محمد صالح المنجد
+            </p>
+          </Col>
+
+          <Col xs={6}>
+            {" "}
+            <p
+              style={{
+                color: "rgba(130, 130, 130, 1)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "15px",
+              }}
+            >
+              3:40 دقيقة
+            </p>
+          </Col>
+
+          <Col>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "15px",
+                gap: "15px",
+              }}
+            >
+             <MdDownloadForOffline style={{color: "rgb(219 176 134)", fontSize: "32px",paddingLeft: "5px",cursor: "pointer",
+                            }} />
+              <IoIosHeart 
+                  style={{
+                    color: "red",
+                    fontSize: "25px",
+                    cursor: "pointer",
+                  }}
+                />
+            <FaCirclePlay
+                 style={{color: "rgb(209, 155, 111)",fontSize: "25px", }} />
+            </div>
+          </Col>
+        </Row>
+              ))}
+            </>
+          ) : null}
+      
+
+
+        <div
+          style={{
+            marginLeft: "-55px",
+            marginBottom: "15px",
+            borderBottom: "1.5px solid #EEEEEE ",
+            width: "100%",
+          }}
+        ></div>
+
+        {/* <Row className="me-auto" md={4}>
           <Col>
             <div style={{ display: "flex" }}>
               <img
@@ -541,87 +645,10 @@ const FavAudios = () => {
               <img src={play} alt="" width="45px" height="45px" />
             </div>
           </Col>
-        </Row>
-        <div
-          style={{
-            marginLeft: "-55px",
-            marginBottom: "15px",
-            borderBottom: "1.5px solid #EEEEEE ",
-            width: "100%",
-          }}
-        ></div>
-
-        <Row className="me-auto" md={4}>
-          <Col>
-            <div style={{ display: "flex" }}>
-              <img
-                src={audioProfile}
-                alt=""
-                style={{}}
-                width="61px"
-                height="61px"
-              />
-              <p
-                style={{
-                  color: "rgba(17, 32, 34, 1)",
-                  fontWeight: "bold",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: "15px",
-                }}
-              >
-                فضل شهر رمضان
-              </p>
-            </div>
-          </Col>
-
-          <Col xs={6}>
-            <p
-              style={{
-                color: "rgba(130, 130, 130, 1)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "15px",
-              }}
-            >
-              محمد صالح المنجد
-            </p>
-          </Col>
-
-          <Col xs={6}>
-            {" "}
-            <p
-              style={{
-                color: "rgba(130, 130, 130, 1)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "15px",
-              }}
-            >
-              3:40 دقيقة
-            </p>
-          </Col>
-
-          <Col>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "15px",
-                gap: "15px",
-              }}
-            >
-              <img src={download} alt="" />
-              <img src={heart} alt="" />
-              <img src={play} alt="" width="45px" height="45px" />
-            </div>
-          </Col>
-        </Row>
+        </Row> */}
       </Container>
+
+
     </>
   );
 };

@@ -6,3 +6,9 @@
     }
     
 }
+@media (max-width: 576px) { 
+    .img-fav-card {      
+        max-width: 100% !important;      
+    }
+    
+}

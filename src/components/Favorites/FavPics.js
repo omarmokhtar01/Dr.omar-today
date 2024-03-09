@@ -15,7 +15,8 @@ import { getPicturesFavorite } from "../../features/allFavorites/allFavoritesSli
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-
+import { IoIosHeart } from "react-icons/io";
+ 
 const FavPics = () => {
   const token = Cookies.get("token");
 
@@ -34,6 +35,7 @@ const FavPics = () => {
       dispatch(getPicturesFavorite(token));
     }
   }, [token, navigate, dispatch]);
+
   console.log(getData);
   console.log(getData.message);
 
@@ -81,7 +83,7 @@ const FavPics = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
@@ -116,7 +118,7 @@ const FavPics = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -147,7 +149,7 @@ const FavPics = () => {
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -175,7 +177,7 @@ const FavPics = () => {
             </div>
           </Col>
 
-          <Col
+          {/* <Col
             xs="6"
             md="4"
             lg="2"
@@ -204,12 +206,12 @@ const FavPics = () => {
                 </h6>
               </Link>
             </div>
-          </Col>
+          </Col> */}
 
           <Col
             xs="6"
             md="4"
-            lg="2"
+            lg="3"
             style={{ textAlign: "center", marginBottom: "10px" }}
           >
             <div
@@ -244,7 +246,7 @@ const FavPics = () => {
           class="row row-cols-3 row-cols-lg-4 g-2 g-lg-3"
           style={{ margin: "35px" }}
         >
-          <Col>
+          {/* <Col>
             <img
               src={heart1}
               style={{ position: "absolute", zIndex: "2", margin: "15px" }}
@@ -258,25 +260,36 @@ const FavPics = () => {
               />
               <img src={pic2} alt="" style={{ marginBottom: "20px" }} />
             </div>
-          </Col>
+          </Col>       */}
 
-          <Col>
-            <img
-              src={heart1}
-              style={{ position: "absolute", zIndex: "2", margin: "15px" }}
-            />
-            <img src={pic5} alt="" style={{ marginBottom: "20px" }} />
+          {getData ? (
+            <>
+              {getData.map((item, index) => (
+                <Col xl={6} lg={12} md={12} sm={12} xs={12} >
+                <IoIosHeart 
+                  style={{
+                    color: "red",
+                    fontSize: "35px",
+                    cursor: "pointer",
+                    borderRadius:'25px',
+                    background:'#f3e9e9'
+                    ,padding:'5px'
+                  }}/>
+            <img className="img-fav-card"
+            src={item.image} alt="" style={{ marginBottom: "20px", borderRadius: '15px', cursor: 'pointer',maxHeight:'350px',maxWidth:'450px' }} />
 
-            <div>
+            {/* <div>
               <img
                 src={heart1}
                 style={{ position: "absolute", zIndex: "2", margin: "15px" }}
               />
-              <img src={pic6} alt="" style={{ marginBottom: "20px" }} />
-            </div>
-          </Col>
-
-          <Col>
+              <img src={pic2} alt="" style={{ marginBottom: "20px" }} />
+            </div> */}
+                </Col> 
+              ))}
+            </>
+          ) : null}
+          {/* <Col>
             <div>
               <img
                 src={heart1}
@@ -310,7 +323,7 @@ const FavPics = () => {
               />
               <img src={pic8} alt="" style={{ marginBottom: "20px" }} />
             </div>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </>

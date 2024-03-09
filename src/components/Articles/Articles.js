@@ -43,6 +43,11 @@ const Articles = () => {
 
   // Sort function based on the selected option
   const sortFunction = (a, b) => {
+    if (!a.title || !b.title) {
+      // Handle cases where either 'a' or 'b' does not have a 'title' property
+      return 0; // Or you can prioritize the one with a 'title' property if needed
+    }
+  
     if (sortBy === 'alphabetical') {
       return a.title.localeCompare(b.title);
     } else {
@@ -50,6 +55,7 @@ const Articles = () => {
       return 0; // Placeholder, modify as per your actual logic
     }
   };
+  
 
   const handleCheckLogin = () => {
     const token = Cookies.get("token");
