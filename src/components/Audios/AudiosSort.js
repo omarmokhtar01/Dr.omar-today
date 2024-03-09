@@ -20,6 +20,30 @@ import { getAudioCategory, getAudioCategoryById, getAudios } from "../../feature
 import { LuArrowUpDown } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
 const AudiosSort = () => {
+  const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
+
+  // Event handler for sorting by latest addition
+  const handleSortByLatest = () => {
+    setSortBy('latest');
+    // Call function to sort articles by latest addition
+  };
+
+  // Event handler for sorting alphabetically
+  const handleSortAlphabetically = () => {
+    setSortBy('alphabetical');
+    // Call function to sort articles alphabetically
+  };
+
+  // Sort function based on the selected option
+  const sortFunction = (a, b) => {
+    if (sortBy === 'alphabetical') {
+      return a.title.localeCompare(b.title);
+    } else {
+      // Add sorting logic for other options, e.g., sorting by latest addition
+      return 0; // Placeholder, modify as per your actual logic
+    }
+  };
+
   const [id,setId]=useState(null)
   const dispatch = useDispatch();
 
@@ -213,32 +237,27 @@ console.log(getAudioCategoryData);
                   }}
                 />
 
-                <NavDropdown
-                  title="الترتيب حسب"
-                  id="collapsible-nav-dropdown"
-                  style={{
-                    background:
-                      "linear-gradient(0deg, rgba(209, 155, 111, 0.15), rgba(209, 155, 111, 0.15)),linear-gradient(0deg, rgba(209, 155, 111, 0.1), rgba(209, 155, 111, 0.1))",
-                    border: "1.5px solid rgba(209, 155, 111, 0.1)",
-                    borderRadius: "25px",
-                    padding: "5px 25px 5px 10px",
-                    color: "rgba(209, 155, 111, 1)",
-                    fontWeight: "bold",
-                    fontSize: "13px",
-                  }}
-                >
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                  </NavDropdown.Item>
-                </NavDropdown>
+<NavDropdown
+        title="الترتيب حسب"
+        id="collapsible-nav-dropdown"
+        style={{
+          background:
+            "linear-gradient(0deg, rgba(209, 155, 111, 0.15), rgba(209, 155, 111, 0.15)),linear-gradient(0deg, rgba(209, 155, 111, 0.1), rgba(209, 155, 111, 0.1))",
+          border: "1.5px solid rgba(209, 155, 111, 0.1)",
+          borderRadius: "25px",
+          padding: "5px 25px 5px 10px",
+          color: "rgba(209, 155, 111, 1)",
+          fontWeight: "bold",
+          fontSize: "13px",
+        }}
+      >
+        <NavDropdown.Item onClick={handleSortByLatest}>
+          الأحدث اضافة
+        </NavDropdown.Item>
+        <NavDropdown.Item onClick={handleSortAlphabetically}>
+          الابجدية
+        </NavDropdown.Item>
+      </NavDropdown>
 
                 <Link to="/audiosSort">
                   <img
@@ -265,7 +284,7 @@ console.log(getAudioCategoryData);
   id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? (
-        getAll.map((item) => (
+        [...getAll].sort(sortFunction).map((item) => (
           <Link to={`/audioCard/${item.id}`} style={{ textDecoration: "none", color: "black" }} key={item.id}>
             <div className="col-lg-12 col-md-12 col-sm-12">
               <div className="row-lg-12">
@@ -295,7 +314,7 @@ console.log(getAudioCategoryData);
   ) : (
     !getAudioCategoryLoading ? (
       getAudioCategoryData && Array.isArray(getAudioCategoryData) && getAudioCategoryData.length > 0 ? (
-        getAudioCategoryData.map((item) => (
+        [...getAudioCategoryData].sort(sortFunction).map((item) => (
           <Link to={`/audioCard/${item.id}`} style={{ textDecoration: "none", color: "black" }} key={item.id}>
             <div className="col-lg-12 col-md-12 col-sm-12">
               <div className="row-lg-12">

@@ -44,9 +44,8 @@ const handleShow = (image) => {
   setSelectedImage(image); // Set the selected image
   setShow(true); // Open the modal
 }
-const downloadImage=()=>{
-  saveAs(selectedImage,'img')
-}
+
+
   const dispatch = useDispatch()
   const getAllPicturesData = useSelector(state => state.pictures.allPicturesData);
   const isLoadingAllPictures = useSelector(state => state.pictures.isLoading);
@@ -105,7 +104,7 @@ console.log(getAllPicturesData);
       }
 
       }
-        }, [isLoadingFavPic]);
+        }, [isLoadingFavPic,checkAddToFavPic]);
   
     return <>
      <NavBar />
@@ -277,7 +276,7 @@ console.log(getAllPicturesData);
         <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
        
         <MdDownloadForOffline
-            onClick={handleCheckLogin}
+            
             style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }}
         />           
                 

@@ -27,6 +27,30 @@ import { ToastContainer } from "react-toastify";
 
 import notify from "../UseNotifications/useNotification";
 const BooksSort = () => {
+  const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
+
+  // Event handler for sorting by latest addition
+  const handleSortByLatest = () => {
+    setSortBy('latest');
+    // Call function to sort articles by latest addition
+  };
+
+  // Event handler for sorting alphabetically
+  const handleSortAlphabetically = () => {
+    setSortBy('alphabetical');
+    // Call function to sort articles alphabetically
+  };
+
+  // Sort function based on the selected option
+  const sortFunction = (a, b) => {
+    if (sortBy === 'alphabetical') {
+      return a.title.localeCompare(b.title);
+    } else {
+      // Add sorting logic for other options, e.g., sorting by latest addition
+      return 0; // Placeholder, modify as per your actual logic
+    }
+  };
+
   const [id,setId]=useState(null)
 
   const dispatch = useDispatch();
@@ -285,32 +309,27 @@ const BooksSort = () => {
                     color: "rgb(219, 176, 134)",
                   }}
                 />
-                <NavDropdown
-                  title="الترتيب حسب"
-                  id="collapsible-nav-dropdown"
-                  style={{
-                    background:
-                      "linear-gradient(0deg, rgba(209, 155, 111, 0.15), rgba(209, 155, 111, 0.15)),linear-gradient(0deg, rgba(209, 155, 111, 0.1), rgba(209, 155, 111, 0.1))",
-                    border: "1.5px solid rgba(209, 155, 111, 0.1)",
-                    borderRadius: "25px",
-                    padding: "5px 25px 5px 10px",
-                    color: "rgba(209, 155, 111, 1)",
-                    fontWeight: "bold",
-                    fontSize: "13px",
-                  }}
-                >
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Another action
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                  </NavDropdown.Item>
-                </NavDropdown>
+                     <NavDropdown
+        title="الترتيب حسب"
+        id="collapsible-nav-dropdown"
+        style={{
+          background:
+            "linear-gradient(0deg, rgba(209, 155, 111, 0.15), rgba(209, 155, 111, 0.15)),linear-gradient(0deg, rgba(209, 155, 111, 0.1), rgba(209, 155, 111, 0.1))",
+          border: "1.5px solid rgba(209, 155, 111, 0.1)",
+          borderRadius: "25px",
+          padding: "5px 25px 5px 10px",
+          color: "rgba(209, 155, 111, 1)",
+          fontWeight: "bold",
+          fontSize: "13px",
+        }}
+      >
+        <NavDropdown.Item onClick={handleSortByLatest}>
+          الأحدث اضافة
+        </NavDropdown.Item>
+        <NavDropdown.Item onClick={handleSortAlphabetically}>
+          الابجدية
+        </NavDropdown.Item>
+      </NavDropdown>
                 <Link to="/bookSort">
                   <img
                     src={isClicked ? group : group1}
@@ -328,7 +347,7 @@ const BooksSort = () => {
   {id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? (
-        getAll.map((item) => (
+        [...getAll].sort(sortFunction).map((item) => (
           <Col xs={6} md={4} lg={3} key={item.id}>
             <div className="p-2">
               <div
@@ -409,7 +428,7 @@ const BooksSort = () => {
     )
   ) : !isLoading ? (
     booksMainSubCategory && booksMainSubCategory.length > 0 ? (
-      booksMainSubCategory.map((item) => (
+      [...booksMainSubCategory].sort(sortFunction).map((item) => (
         <Col xs={6} md={4} lg={3} key={item.id}>
           <div className="p-2">
             <div
