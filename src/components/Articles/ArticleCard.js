@@ -62,7 +62,7 @@ const ArticleCard = () => {
                   width={50}
                   height={200}
                   style={{
-                    maxWidth: "100%",
+                    maxWidth: "95%",
                     position: "relative",
                     width: "95%",
                     borderRadius:'15px'

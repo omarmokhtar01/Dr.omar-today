@@ -86,33 +86,97 @@ const downloadImage=()=>{
         </Row>
     </Container>
 
-    <Container className='d-flex justify-content-center align-items-center'>
-  <Row className="m-3 d-flex" style={{ justifyContent: 'space-between' }}>
-    <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px' }} onClick={()=>setId(null)}>
-      <Link style={{ color: 'rgba(5, 20, 39, 1)', fontSize: '15px', marginTop: '5px', textDecoration: 'none' }} to={'/pictures'}>
-        <div style={{ border: 'none', borderRadius: '23px', width: '124px', height: '33.74px', background: 'linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)', boxShadow: '0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)' }}>
-          <p style={{ color: '#FFFFFF', fontWeight: 'bold' }}>الكل</p>
-        </div>
-      </Link>
-    </Col>
+    <Container className="d-flex justify-content-center align-items-center">
+        <Row className="m-3 d-flex" style={{ justifyContent: "space-between" }}>
+          <Col
+            xs="6"
+            md="4"
+            lg="2"
+            style={{
+              textAlign: "center",
+              marginBottom: "10px",
+              cursor: "pointer",
+            }}
+            onClick={() => setId(null)}
+          >
+            <div
+              style={{
+                border: "none",
+                borderRadius: "23px",
+                width: "124px",
+                height: "33.74px",
+                background:
+                  id === null
+                    ? "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)"
+                    : "linear-gradient(0deg, rgb(232, 232, 232), rgb(232, 232, 232)), linear-gradient(0deg, rgb(245, 245, 245), rgb(245, 245, 245))",
+                boxShadow:
+                  id === null
+                    ? "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)"
+                    : "none",
+              }}
+            >
+              <p
+                style={{
+                  color: id === null ? "white" : "black",
+                  fontWeight: "bold",
+                }}
+              >
+                الكل
+              </p>
+            </div>
+          </Col>
 
-    {
-      getAllImgData ? (
-        <>
-          {getAllImgData.map((img, index) => (
-            <Col key={img.id} xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px',cursor:'pointer' }} onClick={()=>setId(img.id)}>
-                <div style={{ border: '1.38px solid rgba(232, 232, 232, 1)', borderRadius: '23px', width: '124px', height: '33.74px', background: 'linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)' }}>
-                  <h6 style={{ marginTop: '5px' }}>{img.title}</h6>
-                </div>
-            </Col>
-          ))}
-        </>
-      ) : null
-  }
-
-  </Row>
-
-</Container>
+          {getAllImgData ? (
+            <>
+              {getAllImgData.map((item, index) => (
+                <Col
+                  key={item.id}
+                  xs="6"
+                  md="4"
+                  lg="2"
+                  style={{
+                    textAlign: "center",
+                    marginBottom: "10px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    if (id !== item.id) {
+                      setId(item.id);
+                    }
+                  }}
+                >
+                  <div
+                    style={{
+                      border: "1.38px solid rgba(232, 232, 232, 1)",
+                      borderRadius: "23px",
+                      width: "124px",
+                      height: "33.74px",
+                      background:
+                        id === item.id
+                          ? "linear-gradient(331.41deg, rgb(209, 155, 111) 6.78%, rgb(246, 229, 195) 204.87%)"
+                          : "linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)",
+                      boxShadow:
+                        id === item.id
+                          ? "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)"
+                          : "none",
+                    }}
+                  >
+                    <h6
+                      style={{
+                        color: id === item.id ? "white" : "black",
+                        fontSize: "15px",
+                        marginTop: "5px",
+                      }}
+                    >
+                      {item.title}
+                    </h6>
+                  </div>
+                </Col>
+              ))}
+            </>
+          ) : null}
+        </Row>
+      </Container>
 
 
      <Container> 
@@ -125,18 +189,17 @@ const downloadImage=()=>{
     !isLoadingAllPictures ? (
       getAllPicturesData.length > 0 ? (
         getAllPicturesData.map((image, index) => (
-          <Col key={index} xl={3} lg={4} md={6} sm={12}>
+          <Col key={index} xl={6} lg={6} md={12} sm={12}>
             {/* Placeholder for heartImg */}
-            <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '1' }}>
+            <div style={{ position: 'relative', top: '10px', right: '10px', zIndex: '1' }}>
               <IoHeartCircleSharp onClick={handleCheckLogin} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
             </div>
             {image && image.image && (
               <img
                 src={image.image}
-                width={250}
-                height={350}
+               
                 alt={`pic${index + 1}`}
-                style={{ marginBottom: '35px', borderRadius: '15px', cursor: 'pointer' }}
+                style={{ marginBottom: '35px', borderRadius: '15px', cursor: 'pointer',maxHeight:'350px',maxWidth:'450px' }}
                 onClick={() => handleShow(image.image)}
                 id='img-responsive-pic'
               />
@@ -150,7 +213,7 @@ const downloadImage=()=>{
       getOneData[0]?.image?.map((image, index) => (
         <Col key={image.id} xl={3} lg={4} md={6} sm={12}>
           {/* Placeholder for heartImg */}
-          <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '1' }}>
+          <div style={{ position: 'relative', top: '10px', right: '10px', zIndex: '1' }}>
             <IoHeartCircleSharp onClick={handleCheckLogin} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
           {image && (
