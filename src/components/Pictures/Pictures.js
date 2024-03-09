@@ -5,7 +5,7 @@ import { Button, Col, Container, Modal, Row, Spinner } from 'react-bootstrap';
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getAllPicuture } from '../../features/allPictres/allPicturesSlice';
+import { favOnePic, getAllPicuture } from '../../features/allPictres/allPicturesSlice';
 import { Link } from 'react-router-dom';
 import { getAllImgCategory, getOneImgCategory } from '../../features/imgCategory/imgCategorySlice';
 import { IoHeartCircleSharp } from 'react-icons/io5';
@@ -19,6 +19,8 @@ import { ToastContainer } from "react-toastify";
 import notify from "../UseNotifications/useNotification";
 
 const Pictures = () => {
+  let token = Cookies.get("token");
+
   const handleCheckLogin = () => {
     const token = Cookies.get("token");
 
@@ -71,7 +73,39 @@ console.log(getAllPicturesData);
     dispatch(getOneImgCategory(id));
   }, [dispatch, id]);
 
- console.log(getOneData[0]);
+  const checkAddToFavPic = useSelector((state) => state.pictures.favPic);
+  const isLoadingFavPic = useSelector((state) => state.pictures.isLoadingFavPic);
+
+  const handelAddtoFavPic = (picId) => {
+    const formData = {
+      image_id: picId, // Replace 'your_audio_id_here' with the actual audio ID value
+        // other formData properties if any
+    };
+    if (!token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
+
+    dispatch(favOnePic({ formData, token }))
+           
+        }
+
+
+        useEffect(() => {
+          if (isLoadingFavPic === false) {
+            if(checkAddToFavPic && checkAddToFavPic.success) {
+          if (checkAddToFavPic.success === true) {
+            // Notify "تم الاضافة بنجاح"
+            notify(" تم الأضافة للمفضلة بنجاح", "success");
+          } else {
+            // Handle other statuses or errors if needed
+            notify("حدث مشكلة في الاضافة", "error");
+        }
+      }
+
+      }
+        }, [isLoadingFavPic]);
   
     return <>
      <NavBar />
@@ -192,7 +226,7 @@ console.log(getAllPicturesData);
           <Col key={index} xl={6} lg={6} md={12} sm={12}>
             {/* Placeholder for heartImg */}
             <div style={{ position: 'relative', top: '10px', right: '10px', zIndex: '1' }}>
-              <IoHeartCircleSharp onClick={handleCheckLogin} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+              <IoHeartCircleSharp onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
             </div>
             {image && image.image && (
               <img
@@ -211,21 +245,20 @@ console.log(getAllPicturesData);
   ) : (
     !isLoadingOneImgCategory ? (
       getOneData[0]?.image?.map((image, index) => (
-        <Col key={image.id} xl={3} lg={4} md={6} sm={12}>
-          {/* Placeholder for heartImg */}
+        <Col key={index} xl={6} lg={6} md={12} sm={12}>
+        {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '10px', right: '10px', zIndex: '1' }}>
-            <IoHeartCircleSharp onClick={handleCheckLogin} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+            <IoHeartCircleSharp onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
           {image && (
             <img
-              src={image.image}
-              width={250}
-              height={350}
-              alt={`pic${index + 1}`}
-              style={{ marginBottom: '35px', borderRadius: '15px', cursor: 'pointer' }}
-              onClick={() => handleShow(image.image)}
-              id='img-responsive-pic'
-            />
+            src={image.image}
+           
+            alt={`pic${index + 1}`}
+            style={{ marginBottom: '35px', borderRadius: '15px', cursor: 'pointer',maxHeight:'350px',maxWidth:'450px' }}
+            onClick={() => handleShow(image.image)}
+            id='img-responsive-pic'
+          />
           )}
         </Col>
       ))

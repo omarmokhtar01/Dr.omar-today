@@ -7,6 +7,8 @@ const initialState = {
   eldersData: [],
  eldersOne:{},
  elderAudioOne:{},
+ favElder:{},
+ isLoadingFavElder: false,
   isLoading: false,
   error: null,
 };
@@ -45,6 +47,26 @@ const getEldersByIdAudios = createAsyncThunk('post/elders/id/audio', async (id, 
     return error
   }
 });
+
+
+            // to get audio details
+            const favOneElder = createAsyncThunk('fav/add-elder', async ({ formData, token }, thunkAPI) => {
+              try {
+                  const response = await baseUrl.post(
+                      `Favorite/Favorite-Elder`,
+                      formData, // Include formData in the request
+                      {
+                          headers: {
+                              Authorization: `Bearer ${token}` // Include token in the request headers
+                          }
+                      }
+                  );
+                  console.log(response.data);
+                  return response.data;
+              } catch (error) {
+                  return error;
+              }
+          });
 
 
 const eldersSlice = createSlice({
@@ -97,9 +119,23 @@ const eldersSlice = createSlice({
         state.error = action.payload;
       })
 	  
+
+      .addCase(favOneElder.pending, (state) => {
+        state.isLoadingFavElder = true;
+        state.error = null;
+      })
+      .addCase(favOneElder.fulfilled, (state, action) => {
+        state.favElder = action.payload;
+        state.isLoadingFavElder = false;
+        state.error = null;
+      })
+      .addCase(favOneElder.rejected, (state, action) => {
+        state.isLoadingFavElder = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { getElders,getEldersById,getEldersByIdAudios };
+export { getElders,getEldersById,getEldersByIdAudios,favOneElder };
 
 export default eldersSlice.reducer;

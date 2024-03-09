@@ -28,8 +28,11 @@ import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 
 import notify from "../UseNotifications/useNotification";
+import { favOneElder } from "../../features/elders/eldersSlice";
 
 const Audios = () => {
+  let token = Cookies.get("token");
+
   const [id, setId] = useState(null);
   const dispatch = useDispatch();
   const getAll = useSelector((state) => state.audio.audios);
@@ -67,7 +70,6 @@ const Audios = () => {
     }
   };
 
-  console.log(getAudioCategoryId);
   //to change icon
   const [isClicked, setIsClicked] = useState(false);
 
@@ -75,6 +77,41 @@ const Audios = () => {
     setIsClicked(!isClicked);
   };
 
+
+
+  const checkAddToFavElder = useSelector((state) => state.elders.favElder);
+  const isLoadingFavElder = useSelector((state) => state.elders.isLoadingFavElder);
+
+  const handelAddtoFavElder = (elderId) => {
+    const formData = {
+      elder_id: elderId, // Replace 'your_audio_id_here' with the actual audio ID value
+        // other formData properties if any
+    };
+    if (!token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
+
+    dispatch(favOneElder({ formData, token }))
+           
+        }
+
+
+        useEffect(() => {
+          if (isLoadingFavElder === false) {
+            if(checkAddToFavElder && checkAddToFavElder.success) {
+          if (checkAddToFavElder.success === true) {
+            // Notify "تم الاضافة بنجاح"
+            notify(" تم الأضافة للمفضلة بنجاح", "success");
+          } else {
+            // Handle other statuses or errors if needed
+            notify("حدث مشكلة في الاضافة", "error");
+        }
+      }
+
+      }
+        }, [isLoadingFavElder]);
   return (
     <>
       <NavBar />
@@ -366,7 +403,7 @@ const Audios = () => {
                               fontSize: "40px",
                               cursor: "pointer",
                             }}
-                            onClick={handleCheckLogin}
+                            onClick={()=>handelAddtoFavElder(item.id)}
                           />
                           <MdDownloadForOffline
                             style={{

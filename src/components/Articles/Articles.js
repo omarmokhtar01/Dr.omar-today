@@ -250,7 +250,7 @@ const Articles = () => {
             {getData.map((item) => (
               <Col key={item.id}>
                 {/* Ensure each mapped element has a unique key */}
-                  <IoHeartCircleSharp
+                  {/* <IoHeartCircleSharp
                     style={{
                       color: "#878787bd",
                       fontSize: "35px",
@@ -261,7 +261,7 @@ const Articles = () => {
                       display: "flex",
                     }}
                     onClick={handleCheckLogin}
-                  />
+                  /> */}
                 <Link
                   to={`/articleCard/${item.id}`}
                   style={{ textDecoration: "none" }}
@@ -335,7 +335,7 @@ const Articles = () => {
               <Col key={item.id}>
                 {/* Ensure each mapped element has a unique key */}
                
-                  <IoHeartCircleSharp
+                  {/* <IoHeartCircleSharp
                     style={{
                       color: "#878787bd",
                       fontSize: "35px",
@@ -346,7 +346,7 @@ const Articles = () => {
                       display: "flex",
                     }}
                     onClick={handleCheckLogin}
-                  />
+                  /> */}
                 
                 <Link
                   to={`/articleCard/${item.id}`}

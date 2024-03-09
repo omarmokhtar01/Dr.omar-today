@@ -145,7 +145,7 @@ const ArticleCard = () => {
               getDataOne.elder ? (
                 <Col xs={12} md={4} sm={4}>
                     {" "}
-                    <IoHeartCircleSharp
+                    {/* <IoHeartCircleSharp
                       style={{
                         color: "#878787bd",
                         fontSize: "35px",
@@ -153,7 +153,7 @@ const ArticleCard = () => {
                         margin: "15px 10px 10px -170px",
                       }}
                       onClick={handleCheckLogin}
-                    />
+                    /> */}
                   
                   <div
                     style={{

@@ -19,7 +19,7 @@ import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { MdDownloadForOffline } from "react-icons/md";
 import { PiShareFatFill } from "react-icons/pi";
 import { LuArrowUpDown } from "react-icons/lu";
-import { getEldersByIdAudios } from "../../features/elders/eldersSlice";
+import { favOneElder, getEldersByIdAudios } from "../../features/elders/eldersSlice";
 import { favOneAudio } from "../../features/audios/audioSlice";
 
 import Cookies from "js-cookie";
@@ -148,26 +148,71 @@ const AudioCard = () => {
   }, [dispatch, id]);
 
   const checkAddToFav = useSelector((state) => state.audio.favAudio);
+  const isLoadingFav = useSelector((state) => state.audio.isLoadingFav);
 
   const handelAddtoFav = (audioId) => {
     const formData = {
         audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
         // other formData properties if any
     };
+    if (!token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
     dispatch(favOneAudio({ formData, token }))
-        .then((response) => {
-            if (response.payload && response.payload.status === 200) {
-                // Notify "تم الاضافة بنجاح"
-                console.log("تم الاضافة بنجاح");
-            } else {
-                // Handle other statuses or errors if needed
-                console.log("An error occurred:", response.error);
+           
+        }
+
+
+        useEffect(() => {
+          if (isLoadingFav === false) {
+            if(checkAddToFav && checkAddToFav.success) {
+          if (checkAddToFav.success === true) {
+            // Notify "تم الاضافة بنجاح"
+            notify("تم الأضافة للمفضلة بنجاح", "success");
+          } else {
+            // Handle other statuses or errors if needed
+            notify("حدث مشكلة في الاضافة", "error");
+        }
+      }
+
+      }
+        }, [isLoadingFav]);
+
+
+        const checkAddToFavElder = useSelector((state) => state.elders.favElder);
+        const isLoadingFavElder = useSelector((state) => state.elders.isLoadingFavElder);
+
+        const handelAddtoFavElder = (elderId) => {
+          const formData = {
+            elder_id: elderId, // Replace 'your_audio_id_here' with the actual audio ID value
+              // other formData properties if any
+          };
+          if (!token) {
+            // Token exists, perform the download action
+            // Add your download logic here
+           return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+          }
+          dispatch(favOneElder({ formData, token }))
+                 
+              }
+
+
+              useEffect(() => {
+                if (isLoadingFavElder === false) {
+                  if(checkAddToFavElder && checkAddToFavElder.success) {
+                if (checkAddToFavElder.success === true) {
+                  // Notify "تم الاضافة بنجاح"
+                  notify(" تم الأضافة للمفضلة بنجاح", "success");
+                } else {
+                  // Handle other statuses or errors if needed
+                  notify("حدث مشكلة في الاضافة", "error");
+              }
             }
-        })
-        .catch((error) => {
-            console.log("An error occurred:", error);
-        });
-};
+      
+            }
+              }, [isLoadingFavElder]);
   return (
     <>
       <NavBar />
@@ -263,7 +308,7 @@ const AudioCard = () => {
                                 cursor: "pointer",
                               }}
                               className="icon-audio-card"
-                              onClick={handleCheckLogin}
+                              onClick={()=>handelAddtoFavElder(getDataOne.data.id)}
 
                             />
                             <PiShareFatFill

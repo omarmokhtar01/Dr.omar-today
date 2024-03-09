@@ -10,6 +10,7 @@ const initialState = {
     downAudio:{},
     favAudio:{},
     isLoading: false,
+    isLoadingFav: false,
     error: null,
   };
   
@@ -194,16 +195,16 @@ const initialState = {
 
 
             .addCase(favOneAudio.pending, (state) => {
-              state.isLoading = true;
+              state.isLoadingFav = true;
               state.error = null;
             })
             .addCase(favOneAudio.fulfilled, (state, action) => {
               state.favAudio = action.payload;
-              state.isLoading = false;
+              state.isLoadingFav = false;
               state.error = null;
             })
             .addCase(favOneAudio.rejected, (state, action) => {
-              state.isLoading = false;
+              state.isLoadingFav = false;
               state.error = action.payload;
             })
 
