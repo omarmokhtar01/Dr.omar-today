@@ -13,8 +13,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { getArticleCategoryOne } from "../../features/articles/articlesSlich";
 import { IoEye, IoHeartCircleSharp } from "react-icons/io5";
 import { FaClock } from "react-icons/fa6";
+import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
 
+import notify from "../UseNotifications/useNotification";
 const ArticleCard = () => {
+  const handleCheckLogin = () => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+      notify("تم التحميل", "success");
+    } else {
+      // Token doesn't exist, notify the user
+      notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
+  };
   const params = useParams();
 
   // Now you can access the parameters using the keys defined in your route
@@ -130,7 +145,6 @@ const ArticleCard = () => {
             getDataOne ? (
               getDataOne.elder ? (
                 <Col xs={12} md={4} sm={4}>
-                  <Link to={"/favArtivles"}>
                     {" "}
                     <IoHeartCircleSharp
                       style={{
@@ -139,8 +153,9 @@ const ArticleCard = () => {
                         cursor: "pointer",
                         margin: "15px 10px 10px -170px",
                       }}
+                      onClick={handleCheckLogin}
                     />
-                  </Link>
+                  
                   <div
                     style={{
                       display: "flex",
@@ -232,6 +247,7 @@ const ArticleCard = () => {
           )}
         </Row>
       </Container>
+      <ToastContainer/>
     </>
   );
 };

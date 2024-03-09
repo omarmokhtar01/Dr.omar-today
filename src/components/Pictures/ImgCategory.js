@@ -13,7 +13,10 @@ import { getOneImgCategory } from "../../features/imgCategory/imgCategorySlice";
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { MdDownloadForOffline, MdOutlineFavoriteBorder } from "react-icons/md";
 import { FaShareFromSquare } from "react-icons/fa6";
+import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
 
+import notify from "../UseNotifications/useNotification";
 const heartImg = (
   <div
     style={{
@@ -37,6 +40,19 @@ const heartImg = (
 ); // Assuming you have imported heart1
 
 const ImgCategory = () => {
+  const handleCheckLogin = () => {
+    const token = Cookies.get("token");
+
+    if (token) {
+        // Token exists, perform the download action
+        // Add your download logic here
+        notify("تم التحميل", "success");
+
+    } else {
+        // Token doesn't exist, notify the user
+        notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
+};
   const params = useParams();
 
   // Now you can access the parameters using the keys defined in your route
@@ -197,7 +213,7 @@ const ImgCategory = () => {
                   {imageGroup.image.map((image, imgIndex) => (
                     <Col key={imgIndex} xl={3} lg={4} md={6} sm={12}>
                       {/* Placeholder for heartImg */}
-                      <Link to={"/favpictures"}>{heartImg}</Link>
+                      <IoHeartCircleSharp  onClick={handleCheckLogin} style={{ color: '#878787bd', fontSize: '30px', marginRight: '35px', marginTop: '10px' ,cursor:'pointer'}} />
                       <div>
                         <img
                           src={image.image}
@@ -233,11 +249,12 @@ const ImgCategory = () => {
             <div>
               {/* Your icons */}
               <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
-        <Link to={"/login"}>   <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }}/></Link>
-        <Link to={"/favpictures"}>    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} /></Link>
+          <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={handleCheckLogin}/>
+           <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }}  onClick={handleCheckLogin}/>
             </div>
           </div>
         </Modal>
+        <ToastContainer/>
       </Container>
     </>
   );

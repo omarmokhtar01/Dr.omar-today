@@ -20,7 +20,23 @@ import { MdDownloadForOffline } from "react-icons/md";
 import { PiShareFatFill } from "react-icons/pi";
 import { LuArrowUpDown } from "react-icons/lu";
 import { getEldersByIdAudios } from "../../features/elders/eldersSlice";
+import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
+
+import notify from "../UseNotifications/useNotification";
 const AudioCard = () => {
+  const handleCheckLogin = () => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+      notify("تم التحميل", "success");
+    } else {
+      // Token doesn't exist, notify the user
+      notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
+  };
   const audioRefs = useRef([]);
   const [durations, setDurations] = useState([]);
   const [durationFormatted, setDurationFormatted] = useState("0:00");
@@ -180,6 +196,7 @@ const AudioCard = () => {
                                 cursor: "pointer",
                               }}
                               className="icon-audio-card"
+                              onClick={handleCheckLogin}
                             />
                             <IoHeartCircleSharp
                               style={{
@@ -188,6 +205,8 @@ const AudioCard = () => {
                                 cursor: "pointer",
                               }}
                               className="icon-audio-card"
+                              onClick={handleCheckLogin}
+
                             />
                             <PiShareFatFill
                               style={{
@@ -365,8 +384,10 @@ const AudioCard = () => {
                                 fontSize: "30px",
                                 cursor: "pointer",
                               }}
+                              onClick={handleCheckLogin}
+
                             />
-                            <Link to={"/favAudios"}>
+                           
                               {" "}
                               <IoHeartCircleSharp
                                 style={{
@@ -374,8 +395,10 @@ const AudioCard = () => {
                                   fontSize: "30px",
                                   cursor: "pointer",
                                 }}
+                                onClick={handleCheckLogin}
+
                               />
-                            </Link>
+                            
                             <button
                               onClick={() => handlePlay(index)}
                               style={{ border: "none", background: "#FFFFFF" }}
@@ -434,6 +457,7 @@ const AudioCard = () => {
           </div>
         )}
       </Container>
+      <ToastContainer/>
     </>
   );
 };

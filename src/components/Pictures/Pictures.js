@@ -2,18 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NavBar from '../Navbar/NavBar';
 import './pic.css'
 import { Button, Col, Container, Modal, Row, Spinner } from 'react-bootstrap';
-import heart1 from "../../images/heart1.png";
-import pic1 from "../../images/pic1.png";
-import pic2 from "../../images/pic2.png";
-import pic3 from "../../images/pic3.png";
-import pic4 from "../../images/pic4.png";
-import pic5 from "../../images/pic5.png";
-import pic6 from "../../images/pic6.png";
-import pic7 from "../../images/pic7.png"; 
-import pic8 from "../../images/pic8.png";
-import iconM from "../../images/iconM-1.png";
-import iconM2 from "../../images/iconM-2.png";
-import iconM3 from "../../images/iconM-3.png"; 
+
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getAllPicuture } from '../../features/allPictres/allPicturesSlice';
@@ -24,10 +13,26 @@ import { MdDownloadForOffline, MdOutlineFavoriteBorder } from "react-icons/md";
 import { FaShare } from "react-icons/fa6";
 import { FaShareFromSquare } from "react-icons/fa6";
 import { saveAs } from 'file-saver';
+import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
+
+import notify from "../UseNotifications/useNotification";
 
 const Pictures = () => {
-  const [id,setId]=useState(null)
+  const handleCheckLogin = () => {
+    const token = Cookies.get("token");
 
+    if (token) {
+        // Token exists, perform the download action
+        // Add your download logic here
+        notify("تم التحميل", "success");
+
+    } else {
+        // Token doesn't exist, notify the user
+        notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
+};
+  const [id,setId]=useState(null)
 //to make modal
 const [show, setShow] = useState(false);
 const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image
@@ -66,7 +71,7 @@ const downloadImage=()=>{
     dispatch(getOneImgCategory(id));
   }, [dispatch, id]);
 
- 
+ console.log(getOneData[0]);
   
     return <>
      <NavBar />
@@ -95,12 +100,10 @@ const downloadImage=()=>{
       getAllImgData ? (
         <>
           {getAllImgData.map((img, index) => (
-            <Col key={index} xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px' }}>
-              <Link style={{ color: 'rgba(5, 20, 39, 1)', fontSize: '15px', marginTop: '5px', textDecoration: 'none' }} to={`/pictures/${img.id}`}>
+            <Col key={img.id} xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px',cursor:'pointer' }} onClick={()=>setId(img.id)}>
                 <div style={{ border: '1.38px solid rgba(232, 232, 232, 1)', borderRadius: '23px', width: '124px', height: '33.74px', background: 'linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)' }}>
                   <h6 style={{ marginTop: '5px' }}>{img.title}</h6>
                 </div>
-              </Link>
             </Col>
           ))}
         </>
@@ -118,54 +121,56 @@ const downloadImage=()=>{
 
      <Container>
   <Row className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3" style={{ margin: '35px' }}>
-    {
-    id == null ? (
+  { id == null ? (
     !isLoadingAllPictures ? (
       getAllPicturesData.length > 0 ? (
         getAllPicturesData.map((image, index) => (
           <Col key={index} xl={3} lg={4} md={6} sm={12}>
             {/* Placeholder for heartImg */}
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '60px', gap: '20px', position: 'absolute' }}>
-              <Link to={"/favpictures"}>  <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px', marginRight: '35px', marginTop: '10px' }} /></Link>
+            <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '1' }}>
+              <IoHeartCircleSharp onClick={handleCheckLogin} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
             </div>
-            <img
-              src={image.image}
-              width={250}
-              height={350}
-              alt={`pic${index + 1}`}
-              style={{ marginBottom: '35px', borderRadius: '15px' }}
-              onClick={() => handleShow(image.image)}
-              id='img-responsive-pic'
-            />
+            {image && image.image && (
+              <img
+                src={image.image}
+                width={250}
+                height={350}
+                alt={`pic${index + 1}`}
+                style={{ marginBottom: '35px', borderRadius: '15px', cursor: 'pointer' }}
+                onClick={() => handleShow(image.image)}
+                id='img-responsive-pic'
+              />
+            )}
           </Col>
         ))
-      ) : <div style={{height:'240px'}}></div>
-    ) :<div style={{height:'240px'}}> <Spinner animation="border" variant="primary" /></div>
-    ) :
+      ) : <div style={{ height: '240px' }}></div>
+    ) : <div style={{ height: '240px' }}> <Spinner animation="border" variant="primary" /></div>
+  ) : (
     !isLoadingOneImgCategory ? (
-      getOneData.length > 0 ? (
-        getOneData.map((image, index) => (
-          <Col key={index} xl={3} lg={4} md={6} sm={12}>
-            {/* Placeholder for heartImg */}
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '60px', gap: '20px', position: 'absolute' }}>
-              <Link to={"/favpictures"}>  <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '30px', marginRight: '35px', marginTop: '10px' }} /></Link>
-            </div>
+      getOneData[0]?.image?.map((image, index) => (
+        <Col key={image.id} xl={3} lg={4} md={6} sm={12}>
+          {/* Placeholder for heartImg */}
+          <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '1' }}>
+            <IoHeartCircleSharp onClick={handleCheckLogin} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+          </div>
+          {image && (
             <img
               src={image.image}
               width={250}
               height={350}
               alt={`pic${index + 1}`}
-              style={{ marginBottom: '35px', borderRadius: '15px' }}
+              style={{ marginBottom: '35px', borderRadius: '15px', cursor: 'pointer' }}
               onClick={() => handleShow(image.image)}
               id='img-responsive-pic'
             />
-          </Col>
-        ))
-      ) : <div style={{height:'240px'}}> </div>
-    ):<div style={{height:'240px'}}> <Spinner animation="border" variant="primary" /></div>
+          )}
+        </Col>
+      ))
+    ) : <div style={{ height: '240px' }}> <Spinner animation="border" variant="primary" /></div>
+  )
+}
 
 
-    }
   </Row>
   <Modal show={show} onHide={handleClose}>
     {/* Display the selected image */}
@@ -174,11 +179,17 @@ const downloadImage=()=>{
       <div style={{ width: '180px', justifyContent: 'space-between', display: 'flex' }}>
         {/* Your icons */}
         <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
-        <Link to={"/login"}>   <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={downloadImage}/></Link>
-        <Link to={"/favpictures"}>    <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} /></Link>
+       
+        <MdDownloadForOffline
+            onClick={handleCheckLogin}
+            style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }}
+        />           
+                
+                      <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }}  onClick={handleCheckLogin} />
       </div>
     </div>
   </Modal>
+  <ToastContainer/>
 </Container>
 
 

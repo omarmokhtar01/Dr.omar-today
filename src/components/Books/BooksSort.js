@@ -8,7 +8,7 @@ import {
   Form,
   FormControl,
   NavDropdown,
-  Row,
+  Row,Spinner
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -19,11 +19,16 @@ import group1 from "../../images/Group-1-1.png";
 
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
-import { getBookMainCategory, getBooks } from "../../features/books/booksSlice";
+import { getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks } from "../../features/books/booksSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
 
+import notify from "../UseNotifications/useNotification";
 const BooksSort = () => {
+  const [id,setId]=useState(null)
+
   const dispatch = useDispatch();
   const getAll = useSelector((state) => state.books.booksData);
   const isLoading = useSelector((state) => state.books.isLoading);
@@ -35,13 +40,18 @@ const BooksSort = () => {
     (state) => state.books.booksMainSubCategory
   );
 
-  const dummyData = [
-    { category: "كتب اسلامية" },
-    { category: "كتب علميه" },
-    { category: "قصص وروايات" },
-    { category: "أحاديث اسلامية" },
-    { category: "كتب اسلامية" },
-  ];
+
+  const getDataBooksCategory = useSelector((state) => state.books.allBooksCategory);
+  const isLoadingAllBooksCategory = useSelector((state) => state.books.isLoading);
+  const errorAllBooksCategory = useSelector((state) => state.books.error);
+
+  const  booksMainSubCategory= useSelector((state) => state.books.booksMainSubCategory);
+
+  // You can use this dummy data array to map over and generate your JSX elements dynamically
+
+  useEffect(() => {
+    dispatch(getAllBooksCategory());
+  }, [dispatch]);
 
   // You can use this dummy data array to map over and generate your JSX elements dynamically
 
@@ -52,6 +62,24 @@ const BooksSort = () => {
     dispatch(getBookMainCategory());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (id !== null) {
+      dispatch(getBookSubCategory(id));
+    }
+  }, [dispatch, id]);
+
+  const handleCheckLogin = () => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+      notify("تم التحميل", "success");
+    } else {
+      // Token doesn't exist, notify the user
+      notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
+  };
   //to change icon
   const [isClicked, setIsClicked] = useState(false);
 
@@ -86,101 +114,79 @@ const BooksSort = () => {
       </Container>
 
       <Container className="d-flex justify-content-center align-items-center">
-        <Row className="m-3">
-          {dummyData.length <= 0 ? (
-            <Col
-              xs="6"
-              md="4"
-              lg="2"
-              style={{
-                textAlign: "center",
-                marginBottom: "10px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <div
-                style={{
-                  border: "none",
-                  borderRadius: "23px",
-                  width: "124px",
-                  height: "33.74px",
-                  background:
-                    "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)",
-                  boxShadow:
-                    "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)",
-                }}
-              >
-                <p style={{ color: "#FFFFFF", fontWeight: "bold" }}>الكل</p>
-              </div>
-            </Col>
-          ) : (
-            <Col
-              xs="6"
-              md="4"
-              lg="2"
-              style={{
-                textAlign: "center",
-                marginBottom: "10px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  border: "none",
-                  borderRadius: "23px",
-                  width: "124px",
-                  height: "33.74px",
-                  background:
-                    "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)",
-                  boxShadow:
-                    "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)",
-                }}
-              >
-                <p style={{ color: "#FFFFFF", fontWeight: "bold" }}>الكل</p>
-              </div>
-            </Col>
-          )}
+        <Row className="m-3 d-flex" style={{ justifyContent: "space-between" }}>
+        <Col
+            xs="6"
+            md="4"
+            lg="2"
+            style={{ textAlign: "center", marginBottom: "10px",cursor:'pointer' }}
+            onClick={()=>setId(null)}
+          >
+            <div
+  style={{
+    border: "none",
+    borderRadius: "23px",
+    width: "124px",
+    height: "33.74px",
+    background:
+      id === null
+        ? "linear-gradient(331.41deg, #D19B6F 6.78%, #F6E5C3 204.87%)"
+        : "linear-gradient(0deg, rgb(232, 232, 232), rgb(232, 232, 232)), linear-gradient(0deg, rgb(245, 245, 245), rgb(245, 245, 245))",
+    boxShadow:
+    id === null
+    ? "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)": "none"
+  }}
+>
+  <p style={{color: id === null ? 'white' :  'black', fontWeight: "bold" }}>الكل</p>
+</div>
 
-          {dummyData.map((item) => (
-            <Col
-              xs="6"
-              md="4"
-              lg="2"
-              style={{
-                textAlign: "center",
-                marginBottom: "10px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  border: "1.38px solid rgba(232, 232, 232, 1)",
-                  borderRadius: "23px",
-                  width: "124px",
-                  height: "33.74px",
-                  background:
-                    "linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)",
-                }}
-              >
-                <h6
+          </Col>
+
+          {
+            getDataBooksCategory ? (
+              <>
+                {getDataBooksCategory.map((item, index) => (
+                  <Col
+                  key={item.id}
+                  xs="6"
+                  md="4"
+                  lg="2"
                   style={{
-                    color: "rgba(5, 20, 39, 1)",
-                    fontSize: "15px",
-                    marginTop: "5px",
+                    textAlign: "center",
+                    marginBottom: "10px",
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    if (id !== item.id) { 
+                      setId(item.id);
+                    }
                   }}
                 >
-                  {item.category}
-                </h6>
-              </div>
-            </Col>
-          ))}
+                  <div
+                    style={{
+                      border: "1.38px solid rgba(232, 232, 232, 1)",
+                      borderRadius: "23px",
+                      width: "124px",
+                      height: "33.74px",
+                      background: id === item.id ? 'linear-gradient(331.41deg, rgb(209, 155, 111) 6.78%, rgb(246, 229, 195) 204.87%)' :  "linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)"
+                     , boxShadow: id === item.id ?"0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)" :'none'
+                    }}
+                  >
+                    <h6
+                      style={{
+                        color: id === item.id ? "white":"black",
+                        fontSize: "15px",
+                        marginTop: "5px",
+                      }}
+                    >
+                      {item.title}
+                    </h6>
+                  </div>
+                </Col>
+                ))}
+              </>
+            ) : null
+          }
         </Row>
       </Container>
 
@@ -319,83 +325,176 @@ const BooksSort = () => {
               </div>
             </div>
             <Row className="row row-cols-2 row-cols-lg-5 g-lg-2">
-              {!isLoading
-                ? getAll && getAll.length > 0
-                  ? getAll.map((item) => (
-                      <Col xs={6} md={4} lg={3} key={item.id}>
-                        <div class="p-2">
-                          <div
-                            className="card-book-sort"
-                            style={{
-                              border: "1px solid gray",
-                              borderRadius: "10px",
-                              width: "175px",
-                              height: "300px",
-                            }}
-                          >
-                            <div
-                              className="card-book-pdf"
-                              style={{
-                                position: "relative",
-                                cursor: "pointer",
-                              }}
-                              onClick={() =>
-                                window.open(
-                                  `https://docs.google.com/viewer?url=${encodeURIComponent(
-                                    item.Book
-                                  )}&embedded=true`
-                                )
-                              }
-                            >
-                              <img
-                                className="card-book-img"
-                                src={item.image}
-                                alt=""
-                                height={246}
-                                width={169}
-                              />
-                              <div
-                                style={{
-                                  position: "absolute",
-                                  top: "50%",
-                                  left: "50%",
-                                  transform: "translate(-50%, -50%)",
-                                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                                  color: "#fff",
-                                  padding: "10px",
-                                  borderRadius: "5px",
-                                }}
-                              >
-                                Click to view book
-                              </div>
-                            </div>
-                            <div
-                              style={{
-                                position: "absolute",
-                                marginTop: "-238px",
-                                marginRight: "25px",
-                                display: "flex",
-                                gap: "10px",
-                              }}
-                            >
-                              <Link to={"/favBook"}>
-                                <IoHeartCircleSharp
-                                  style={{ color: "gray", fontSize: "30px" }}
-                                />
-                              </Link>
-                            </div>
-                            <h5> {item.name}</h5>
-                            <p style={{ marginTop: "-5px" }}>20 صفحه</p>
-                          </div>
-                        </div>
-                      </Col>
-                    ))
-                  : null
-                : null}
-            </Row>
+  {id == null ? (
+    !isLoading ? (
+      getAll && getAll.length > 0 ? (
+        getAll.map((item) => (
+          <Col xs={6} md={4} lg={3} key={item.id}>
+            <div className="p-2">
+              <div
+                className="card-book-sort"
+                style={{
+                  border: "1px solid gray",
+                  borderRadius: "10px",
+                  width: "175px",
+                  height: "300px",
+                }}
+              >
+                <div
+                  className="card-book-pdf"
+                  style={{
+                    position: "relative",
+                    cursor: "pointer",
+                  }}
+                  onClick={() =>
+                    window.open(
+                      `https://docs.google.com/viewer?url=${encodeURIComponent(
+                        item.Book
+                      )}&embedded=true`
+                    )
+                  }
+                >
+                  <img
+                    className="card-book-img"
+                    src={item.image}
+                    alt=""
+                    height={246}
+                    width={169}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      color: "#fff",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    Click to view book
+                  </div>
+                </div>
+                <div
+                  style={{
+                    position: "absolute",
+                    marginTop: "-238px",
+                    marginRight: "25px",
+                    display: "flex",
+                    gap: "10px",
+                  }}
+                >
+                 
+                    <IoHeartCircleSharp
+                      style={{ color: "gray", fontSize: "30px",cursor:'pointer' }}
+                      onClick={handleCheckLogin}
+                    />
+                 
+                </div>
+                <h5>{item.name}</h5>
+                <p style={{ marginTop: "-5px" }}>20 صفحه</p>
+              </div>
+            </div>
+          </Col>
+        ))
+      ) : (
+        <div style={{ height: "140px" }}></div>
+      )
+    ) : (
+      <div style={{ height: "140px" }}>
+        {" "}
+        <Spinner animation="border" variant="primary" />
+      </div>
+    )
+  ) : !isLoading ? (
+    booksMainSubCategory && booksMainSubCategory.length > 0 ? (
+      booksMainSubCategory.map((item) => (
+        <Col xs={6} md={4} lg={3} key={item.id}>
+          <div className="p-2">
+            <div
+              className="card-book-sort"
+              style={{
+                border: "1px solid gray",
+                borderRadius: "10px",
+                width: "175px",
+                height: "300px",
+              }}
+            >
+              <div
+                className="card-book-pdf"
+                style={{
+                  position: "relative",
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  window.open(
+                    `https://docs.google.com/viewer?url=${encodeURIComponent(
+                      item.Book
+                    )}&embedded=true`
+                  )
+                }
+              >
+                <img
+                  className="card-book-img"
+                  src={item.image}
+                  alt=""
+                  height={246}
+                  width={169}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    color: "#fff",
+                    padding: "10px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  Click to view book
+                </div>
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  marginTop: "-238px",
+                  marginRight: "25px",
+                  display: "flex",
+                  gap: "10px",
+                }}
+              >
+                
+                  <IoHeartCircleSharp
+                    style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
+                    onClick={handleCheckLogin}
+
+                  />
+                
+              </div>
+              <h5>{item.name}</h5>
+              <p style={{ marginTop: "-5px" }}>20 صفحه</p>
+            </div>
+          </div>
+        </Col>
+      ))
+    ) : (
+      <div style={{ height: "140px" }}></div>
+    )
+  ) : (
+    <div style={{ height: "140px" }}>
+      {" "}
+      <Spinner animation="border" variant="primary" />
+    </div>
+  )}
+</Row>
+
           </Col>
         </Row>
       </Container>
+      <ToastContainer/>
     </>
   );
 };
