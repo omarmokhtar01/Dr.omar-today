@@ -19,7 +19,7 @@ import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { MdDownloadForOffline } from "react-icons/md";
 import { PiShareFatFill } from "react-icons/pi";
 import { LuArrowUpDown } from "react-icons/lu";
-import { favOneElder, getEldersByIdAudios } from "../../features/elders/eldersSlice";
+import { downloadOneElder, favOneElder, getEldersByIdAudios } from "../../features/elders/eldersSlice";
 import { favOneAudio } from "../../features/audios/audioSlice";
 
 import Cookies from "js-cookie";
@@ -30,9 +30,29 @@ import notify from "../UseNotifications/useNotification";
 import JSZip from 'jszip';
 
 const AudioCard = () => {
-  function downloadAudiosAsZip(audioData) {
+  const params = useParams();
+
+  // Now you can access the parameters using the keys defined in your route
+  const { id } = params;
+  const dispatch = useDispatch();
+
+  const elderDown = useSelector((state) => state.elders.downElder);
+
+  const isLoadingElderDown = useSelector((state) => state.elders.isLoadingDownElder);
+
+
+  function downloadAudiosAsZip(audioData,idElder) {
     const zip = new JSZip();
-  
+    if (!token) {
+      return       notify("من فضلك قم بتسجيل الدخول أولاً", "error");
+
+    }
+    const formData = {
+      elder_id: idElder, // Replace 'your_audio_id_here' with the actual audio ID value
+      // other formData properties if any
+  };
+    dispatch(downloadOneElder({ formData, token }))
+
     // Add each audio file to the zip archive
     audioData.forEach(audio => {
       fetch(audio.audio)
@@ -107,6 +127,7 @@ const AudioCard = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      
     } catch (error) {
       console.error('Error downloading audio:', error);
       notify("حدثت مشكلة أثناء تحميل الصوت", "error");
@@ -192,11 +213,7 @@ const AudioCard = () => {
     };
   };
   
-  const params = useParams();
 
-  // Now you can access the parameters using the keys defined in your route
-  const { id } = params;
-  const dispatch = useDispatch();
 
   const getDataOne = useSelector((state) => state.elders.elderAudioOne);
 
@@ -275,7 +292,27 @@ const AudioCard = () => {
       
             }
               }, [isLoadingFavElder,checkAddToFavElder]);
+
+
+
+
+              useEffect(() => {
+                if (isLoadingElderDown === false) {
+                  if(elderDown && elderDown.success) {
+                if (elderDown.success === true) {
+                  // Notify "تم الاضافة بنجاح"
+                  notify(" تم الأضافة للمفضلة بنجاح", "success");
+                } else {
+                  // Handle other statuses or errors if needed
+                  notify("حدث مشكلة في الاضافة", "error");
+              }
+            }
+      
+            }
+              }, [isLoadingElderDown,elderDown]);
   return (
+
+
     <>
       <NavBar />
 
@@ -362,7 +399,7 @@ const AudioCard = () => {
                         cursor: "pointer",
                       }}
                       className="icon-audio-card"
-                      onClick={() => downloadAudiosAsZip(getDataOne.data.Audio)}
+                      onClick={() => downloadAudiosAsZip(getDataOne.data.Audio,getDataOne.data.id)}
 
                     />
                     {/* End of download functionality */}

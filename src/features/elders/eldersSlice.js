@@ -9,6 +9,8 @@ const initialState = {
  elderAudioOne:{},
  favElder:{},
  isLoadingFavElder: false,
+ downElder:{},
+ isLoadingDownElder: false,
   isLoading: false,
   error: null,
 };
@@ -67,6 +69,27 @@ const getEldersByIdAudios = createAsyncThunk('post/elders/id/audio', async (id, 
                   return error;
               }
           });
+
+
+
+                      // to get audio details
+                      const downloadOneElder = createAsyncThunk('down/add-elder', async ({ formData, token }, thunkAPI) => {
+                        try {
+                            const response = await baseUrl.post(
+                                `download/Download-Elder`,
+                                formData, // Include formData in the request
+                                {
+                                    headers: {
+                                        Authorization: `Bearer ${token}` // Include token in the request headers
+                                    }
+                                }
+                            );
+                            console.log(response.data);
+                            return response.data;
+                        } catch (error) {
+                            return error;
+                        }
+                    });
 
 
 const eldersSlice = createSlice({
@@ -133,9 +156,24 @@ const eldersSlice = createSlice({
         state.isLoadingFavElder = false;
         state.error = action.payload;
       })
+
+
+      .addCase(downloadOneElder.pending, (state) => {
+        state.isLoadingDownElder = true;
+        state.error = null;
+      })
+      .addCase(downloadOneElder.fulfilled, (state, action) => {
+        state.downElder = action.payload;
+        state.isLoadingDownElder = false;
+        state.error = null;
+      })
+      .addCase(downloadOneElder.rejected, (state, action) => {
+        state.isLoadingDownElder = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { getElders,getEldersById,getEldersByIdAudios,favOneElder };
+export { getElders,getEldersById,getEldersByIdAudios,favOneElder,downloadOneElder };
 
 export default eldersSlice.reducer;

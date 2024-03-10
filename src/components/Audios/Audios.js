@@ -28,7 +28,8 @@ import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 
 import notify from "../UseNotifications/useNotification";
-import { favOneElder } from "../../features/elders/eldersSlice";
+import { downloadOneElder, favOneElder } from "../../features/elders/eldersSlice";
+import JSZip from 'jszip';
 
 const Audios = () => {
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
@@ -75,6 +76,47 @@ const Audios = () => {
     (state) => state.audio.audioCategoryId
   );
 
+
+  const elderDown = useSelector((state) => state.elders.downElder);
+
+  const isLoadingElderDown = useSelector((state) => state.elders.isLoadingDownElder);
+
+  function downloadAudiosAsZip(audioData,idElder) {
+    const zip = new JSZip();
+    if (!token) {
+      return       notify("من فضلك قم بتسجيل الدخول أولاً", "error");
+
+    }
+    const formData = {
+      elder_id: idElder, // Replace 'your_audio_id_here' with the actual audio ID value
+      // other formData properties if any
+  };
+    dispatch(downloadOneElder({ formData, token }))
+
+    // Add each audio file to the zip archive
+    audioData.forEach(audio => {
+      fetch(audio.audio)
+        .then(response => response.blob())
+        .then(blob => {
+          zip.file(`${audio.title}.mp3`, blob);
+        })
+        .catch(error => console.error('Error downloading audio:', error));
+    });
+  
+    // Generate the .zip archive
+    zip.generateAsync({ type: 'blob' })
+      .then(zipBlob => {
+        const url = window.URL.createObjectURL(new Blob([zipBlob]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'audios.zip');
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch(error => console.error('Error generating .zip file:', error));
+  }
+
   useEffect(() => {
     dispatch(getAudios());
     dispatch(getAudioCategory());
@@ -105,6 +147,19 @@ const Audios = () => {
   const handleClick = () => {
     setIsClicked(!isClicked);
   };
+
+
+
+ 
+
+
+
+
+
+
+
+
+
 
 
 
@@ -141,6 +196,29 @@ const Audios = () => {
 
       }
         }, [isLoadingFavElder,checkAddToFavElder]);
+
+
+
+
+
+
+        useEffect(() => {
+          if (isLoadingElderDown === false) {
+            if(elderDown && elderDown.success) {
+          if (elderDown.success === true) {
+            // Notify "تم الاضافة بنجاح"
+            notify(" تم الأضافة للمفضلة بنجاح", "success");
+          } else {
+            // Handle other statuses or errors if needed
+            notify("حدث مشكلة في الاضافة", "error");
+        }
+      }
+
+      }
+        }, [isLoadingElderDown,elderDown]);
+
+
+
   return (
     <>
       <NavBar />
@@ -436,8 +514,8 @@ const Audios = () => {
                               paddingLeft: "5px",
                               cursor: "pointer",
                             }}
-                            onClick={handleCheckLogin}
-                          />
+                            onClick={() => downloadAudiosAsZip(item.id)}
+                            />
                         </div>
                       </div>
                     </Col>
@@ -518,10 +596,10 @@ const Audios = () => {
                             fontSize: "40px",
                             cursor: "pointer",
                           }}
-                          onClick={handleCheckLogin}
+                          onClick={()=>handelAddtoFavElder(item.id)}
                         />
                         <MdDownloadForOffline
-                          onClick={handleCheckLogin}
+                          onClick={()=>downloadAudiosAsZip(item.id,item.id)}
                           style={{
                             color: "rgb(219 176 134)",
                             fontSize: "42px",
