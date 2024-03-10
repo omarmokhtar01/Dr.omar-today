@@ -114,7 +114,11 @@ Object.keys(prayerTimes).forEach(prayer => {
 
 // Calculate the remaining time until the next prayer
 // Calculate the remaining time until the next prayer
-const remainingTime = nextPrayerTime.getTime() - currentTime.getTime();
+let remainingTime = 0; // Initialize remaining time to 0
+if (nextPrayerTime) {
+    // Calculate the remaining time until the next prayer
+    remainingTime = nextPrayerTime.getTime() - currentTime.getTime();
+}
 
 // Convert the remaining time to hours, minutes, and seconds
 const hours = Math.floor(remainingTime / (1000 * 60 * 60));
