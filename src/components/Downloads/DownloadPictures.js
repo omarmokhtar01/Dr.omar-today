@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPicturesDownload } from "../../features/allDownload/allDownloadSlice";
 import Cookies from "js-cookie";
-
+ 
 const DownloadPictures = () => {
   const token = Cookies.get("token");
 
@@ -84,13 +84,11 @@ const DownloadPictures = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+             
             }}
           >
             <div
@@ -121,13 +119,10 @@ const DownloadPictures = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <div
@@ -158,13 +153,11 @@ const DownloadPictures = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+             
             }}
           >
             <div
@@ -195,13 +188,10 @@ const DownloadPictures = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <div
@@ -262,7 +252,7 @@ const DownloadPictures = () => {
               }}
             />
             <img className="img-fav-card"
-            src={item.image} alt="" style={{ marginBottom: "20px",maxHeight:'350px',maxWidth:'450px' }} />
+            src={item.image} alt="" style={{ marginBottom: "20px",maxHeight:'350px',maxWidth:'450px', borderRadius:'10px' }} />
 
    
           </Col>

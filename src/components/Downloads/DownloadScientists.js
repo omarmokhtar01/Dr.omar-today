@@ -75,14 +75,12 @@ const DownloadScientists = () => {
         <Row className="m-3 justify-content-center align-items-center">
           <Col
             xs="6"
-            md="4"
-            lg="2"
+            md="3"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+             
             }}
           >
             <div
@@ -112,14 +110,12 @@ const DownloadScientists = () => {
 
           <Col
             xs="6"
-            md="4"
-            lg="2"
+            md="3"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+            
             }}
           >
             <div
@@ -149,14 +145,12 @@ const DownloadScientists = () => {
 
           <Col
             xs="6"
-            md="4"
-            lg="2"
+            md="3"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              
             }}
           >
             <div
@@ -186,14 +180,11 @@ const DownloadScientists = () => {
 
           <Col
             xs="6"
-            md="4"
-            lg="2"
+            md="3"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <div
@@ -224,7 +215,7 @@ const DownloadScientists = () => {
       </Container>
 
       <div class="container text-center">
-        <div class="row row-cols-2 row-cols-lg-5  g-lg-3">
+        <div class="row row-cols-2 row-cols-lg-4  g-lg-3">
 
           {/* <div class="col">
             <div>
@@ -265,21 +256,18 @@ const DownloadScientists = () => {
                  <div class="col">
             <div>
               {/* <Link to="/audioCardDownload"> */}
-                <img src={item.image} alt="" className="img-card-download"  style={{width:'245px', height:'180px'}}/>
+                <img src={item.image} alt="" className="img-card-download"  style={{width:'245px', height:'180px', borderRadius:'8px'}}/>
               {/* </Link> */}
 
               <div
                 style={{
-                  position: "absolute",
-                  marginTop: "-45px",
-                  marginRight: "100px",
                   display: "flex",
-                  gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
+                  marginTop: "-43px",
+                 justifyContent:'center',
+                 textAlign:'center',
+                 alignItems:'center',
                 }}
-                className="icon-del"
+               
               >
                 <RiDeleteBin5Line
                   style={{
@@ -287,11 +275,13 @@ const DownloadScientists = () => {
                     fontSize: "35px",
                     color: "gray",
                     padding: "5px",
+                    background:'#FFFFFF',
+                    borderRadius:'25px'
                   }}
                 />
               </div>
 
-              <h5>{item.name}  </h5>
+              <h5 style={{marginTop:'15px'}}>{item.name}  </h5>
               <p style={{ marginTop: "-5px" }}>{item.count_audios}  مقطع صوتي</p>
             </div>
           </div>

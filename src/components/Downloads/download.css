@@ -6,11 +6,11 @@
       
     }
    }
-@media (max-width: 576px) { 
+/* @media (max-width: 576px) { 
     .icon-del{
    margin-right: 50px !important;
     }
- }
+ } */
   
 @media (max-width: 576px) { 
     .book-download{
@@ -23,4 +23,3 @@
 margin-right: 10px !important;
     }
  }
-  

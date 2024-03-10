@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./home.css";
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -37,6 +37,9 @@ import {
 import { ToastContainer } from "react-toastify";
 import notify from "../UseNotifications/useNotification";
 import NavBar from "../Navbar/NavBar";
+
+const Adhan = require('adhan');
+
 const HomePage = () => {
   const [isPressed, setIsPressed] = useState(false);
   let timeoutId;
@@ -53,6 +56,87 @@ const HomePage = () => {
     setIsPressed(false);
   };
 
+
+ 
+
+// Initialize coordinates with default values
+const [coordinates, setCoordinates] = useState(null);
+
+// Effect to fetch user's location
+useEffect(() => {
+    // Check if geolocation is supported by the browser
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          // Set the coordinates state
+          setCoordinates(new Adhan.Coordinates(latitude, longitude));
+        },
+        (error) => {
+          console.error("Error getting geolocation:", error);
+        }
+      );
+    } else {
+      console.log('Geolocation is not supported by your browser');
+    }
+}, []);
+
+// Check if coordinates are available
+if (!coordinates) {
+  // Render loading state or handle accordingly
+  return <div>Loading...</div>;
+}
+
+// Replace date with the desired date
+const date = new Date();
+
+// Replace parameters with your calculation parameters
+const params = Adhan.CalculationMethod.MuslimWorldLeague();
+
+const prayerTimes = new Adhan.PrayerTimes(coordinates, date, params);
+
+// Get current time
+const currentTime = new Date();
+
+
+// Iterate over prayer times to find the next upcoming prayer
+let nextPrayer;
+let nextPrayerTime;
+Object.keys(prayerTimes).forEach(prayer => {
+    if (!nextPrayer && currentTime < prayerTimes[prayer]) {
+        nextPrayer = prayer;
+        nextPrayerTime = prayerTimes[prayer];
+    }
+}); 
+
+
+// Calculate the remaining time until the next prayer
+// Calculate the remaining time until the next prayer
+const remainingTime = nextPrayerTime.getTime() - currentTime.getTime();
+
+// Convert the remaining time to hours, minutes, and seconds
+const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+// Format the hours, minutes, and seconds with leading zeros if necessary
+const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+const prayerNames = {
+  fajr: 'الفجر',
+  dhuhr: 'الظهر',
+  asr: 'العصر',
+  maghrib: 'المغرب',
+  isha: 'العشاء'
+}; 
+
+// Get the Arabic name of the next prayer
+const arabicNextPrayer = prayerNames[nextPrayer];
+
+console.log('Next prayer (Arabic):', arabicNextPrayer);
+
+
+  
   return (
     <>
       <NavBar />
@@ -92,11 +176,11 @@ const HomePage = () => {
                 عُــمــر كامـــل{" "}
               </h1>
               <h5 style={{ color: "#7A808A", marginTop: "10px" }}>
-                الصلاه القادمه : <span style={{ color: "#FFFFFF" }}>العصر</span>
+                الصلاه القادمه : <span style={{ color: "#FFFFFF" }}>{arabicNextPrayer}</span>
               </h5>
               <h5 style={{ color: "#FFFFFF", marginTop: "10px" }}>
                 {" "}
-                الموعد بعد : 02:46:32
+                الموعد بعد : {formattedTime}
               </h5>
 
               <div

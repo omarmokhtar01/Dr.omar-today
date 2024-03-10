@@ -403,18 +403,13 @@ const Books = () => {
                     justifyContent: "center",
                   }}
                 >
+                  <Link to={`/book/${item.id}`}>
                   <div
                     style={{
                       position: "relative",
                       cursor: "pointer",
                     }}
-                    onClick={() =>
-                      window.open(
-                        `https://docs.google.com/viewer?url=${encodeURIComponent(
-                          item.Book
-                        )}&embedded=true`
-                      )
-                    }
+                   
                   >
                     <img
                       src={item.image}
@@ -437,6 +432,7 @@ const Books = () => {
                       Click to view book
                     </div>
                   </div>
+                  </Link>
                   <div
                     style={{
                       display: "flex",
@@ -446,9 +442,9 @@ const Books = () => {
                     }}
                   >
                     <h5 style={{ color: "black" }}>{item.name}</h5>
-                    <p style={{ color: "rgba(130, 130, 130, 1)" }}>
+                    {/* <p style={{ color: "rgba(130, 130, 130, 1)" }}>
                       20 صفحه
-                    </p>
+                    </p> */}
                   </div>
                 </div>
                 <div
@@ -506,18 +502,13 @@ const Books = () => {
                   justifyContent: "center",
                 }}
               >
+                 <Link to={`/book/${item.id}`}>
                 <div
                   style={{
                     position: "relative",
                     cursor: "pointer",
                   }}
-                  onClick={() =>
-                    window.open(
-                      `https://docs.google.com/viewer?url=${encodeURIComponent(
-                        item.Book
-                      )}&embedded=true`
-                    )
-                  }
+                 
                 >
                   <img src={item.image} alt="" height={164} width={134} />
                   <div
@@ -535,6 +526,7 @@ const Books = () => {
                     Click to view book
                   </div>
                 </div>
+                </Link>
                 <div
                   style={{
                     display: "flex",
@@ -544,7 +536,7 @@ const Books = () => {
                   }}
                 >
                   <h5 style={{ color: "black" }}>{item.name}</h5>
-                  <p style={{ color: "rgba(130, 130, 130, 1)" }}>20 صفحه</p>
+                  {/* <p style={{ color: "rgba(130, 130, 130, 1)" }}>20 صفحه</p> */}
                 </div>
               </div>
               <div

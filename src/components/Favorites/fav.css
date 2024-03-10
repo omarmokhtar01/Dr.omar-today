@@ -12,3 +12,11 @@
     }
     
 }
+
+@media (max-width: 576px) { 
+    .img-card-scien {      
+        width: 172px !important;    
+       
+    }
+    
+}

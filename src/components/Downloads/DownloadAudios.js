@@ -135,13 +135,10 @@ const DownloadAudios = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <div
@@ -172,13 +169,10 @@ const DownloadAudios = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <div
@@ -209,13 +203,10 @@ const DownloadAudios = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <div
@@ -246,13 +237,10 @@ const DownloadAudios = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <div

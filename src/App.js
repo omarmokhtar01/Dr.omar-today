@@ -37,6 +37,7 @@ import ArticalCategory from "./components/Articles/ArticalCategory";
 import AudioCategory from "./components/Audios/AudioCategory";
 import AudioCategorySort from "./components/Audios/AudioCategorySort";
 import AudioCardCategory from "./components/Audios/AudioCardCategory";
+import ViewBook from "./components/Books/ViewBook";
 
 function App() {
   return (
@@ -68,6 +69,8 @@ function App() {
 
           <Route path="/Books" element={<Books />} />
           <Route path="/bookSort" element={<BooksSort />} />
+          <Route path="/book/:id" element={<ViewBook />} />
+
           <Route path="/favScientists" element={<FavScientists />} />
           <Route path="/favAudios" element={<FavAudios />} />
           <Route path="/audioCardfav" element={<FavAudioCard />} />

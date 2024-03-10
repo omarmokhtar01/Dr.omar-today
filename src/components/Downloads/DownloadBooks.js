@@ -90,13 +90,10 @@ const DownloadBooks = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <div
@@ -127,13 +124,10 @@ const DownloadBooks = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <div
@@ -164,13 +158,11 @@ const DownloadBooks = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
               marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+             
             }}
           >
             <div
@@ -201,13 +193,10 @@ const DownloadBooks = () => {
           <Col
             xs="6"
             md="3"
-            lg="2"
+            lg="3"
             style={{
               textAlign: "center",
-              marginBottom: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              marginBottom: "10px", 
             }}
           >
             <div
@@ -239,7 +228,7 @@ const DownloadBooks = () => {
 
       <div class="container text-center">
       <div
-          class="row row-cols-3 row-cols-lg-5  g-lg-3  row-section"
+          class="row row-cols-2 row-cols-lg-5  row-cols-xs-1  g-lg-3  row-section"
           style={{ width: "100%" }}
         >
           

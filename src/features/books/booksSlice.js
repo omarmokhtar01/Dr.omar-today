@@ -9,6 +9,7 @@ const initialState = {
   booksMainCategory: [],
   booksMainSubCategory: [],
   allBooksCategory:[],
+  showOne:{},
   isLoading: false,
   error: null,
 };
@@ -59,6 +60,19 @@ const getAllBooksCategory = createAsyncThunk('get/books/category', async (_, thu
     return error
   }
 });
+
+
+const showBook = createAsyncThunk('show/book', async (id, thunkAPI) => {
+  try {
+    const response = await baseUrl.post(
+      `Books/Find-Book-Public?id=${id}`);
+      
+    return response.data;
+  } catch (error) {
+    return error
+  }
+});
+
 
 const booksSlice = createSlice({
   name: 'booksSlice',
@@ -124,9 +138,27 @@ const booksSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+
+
+
+
+      .addCase(showBook.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(showBook.fulfilled, (state, action) => {
+        state.showOne = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(showBook.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory};
+export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory,showBook};
 
 export default booksSlice.reducer;

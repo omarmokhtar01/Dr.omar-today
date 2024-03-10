@@ -240,7 +240,7 @@ const AudioCard = () => {
       }
 
       }
-        }, [isLoadingFav]);
+        }, [isLoadingFav,checkAddToFav]);
 
 
         const checkAddToFavElder = useSelector((state) => state.elders.favElder);
@@ -274,7 +274,7 @@ const AudioCard = () => {
             }
       
             }
-              }, [isLoadingFavElder]);
+              }, [isLoadingFavElder,checkAddToFavElder]);
   return (
     <>
       <NavBar />
