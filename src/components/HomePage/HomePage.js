@@ -100,7 +100,6 @@ const prayerTimes = new Adhan.PrayerTimes(coordinates, date, params);
 // Get current time
 const currentTime = new Date();
 
-
 // Iterate over prayer times to find the next upcoming prayer
 let nextPrayer;
 let nextPrayerTime;
@@ -111,8 +110,15 @@ Object.keys(prayerTimes).forEach(prayer => {
     }
 }); 
 
+// If there's no upcoming prayer time for today, check for the next day's Fajr
+if (!nextPrayer || nextPrayer === 'isha') {
+    const dateNext = new Date();
+    dateNext.setDate(dateNext.getDate() + 1);
+    const prayerTimesNext = new Adhan.PrayerTimes(coordinates, dateNext, params);
+    nextPrayer = 'fajr'; // Fajr prayer for the next day
+    nextPrayerTime = prayerTimesNext.fajr;
+}
 
-// Calculate the remaining time until the next prayer
 // Calculate the remaining time until the next prayer
 let remainingTime = 0; // Initialize remaining time to 0
 if (nextPrayerTime) {
@@ -132,7 +138,7 @@ const prayerNames = {
   fajr: 'الفجر',
   dhuhr: 'الظهر',
   asr: 'العصر',
-  sunset: 'المغرب',
+  maghrib: 'المغرب',
   isha: 'العشاء'
 }; 
 
@@ -140,8 +146,7 @@ const prayerNames = {
 const arabicNextPrayer = prayerNames[nextPrayer];
 
 console.log('Next prayer (Arabic):', arabicNextPrayer);
-
-console.log(nextPrayer);
+console.log('Time until next prayer:', formattedTime);
   
   return (
     <>
@@ -182,7 +187,7 @@ console.log(nextPrayer);
                 عُــمــر كامـــل{" "}
               </h1>
               <h5 style={{ color: "#7A808A", marginTop: "10px" }}>
-                الصلاه القادمه : <span style={{ color: "#FFFFFF" }}>{arabicNextPrayer}</span>
+                الصلاه القادمه : <span style={{ color: "#FFFFFF" }}>{arabicNextPrayer ? (arabicNextPrayer): 'الفجر'}</span>
               </h5>
               <h5 style={{ color: "#FFFFFF", marginTop: "10px" }}>
                 {" "}
