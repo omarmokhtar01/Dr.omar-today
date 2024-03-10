@@ -60,32 +60,34 @@ const HomePage = () => {
  
 
 // Initialize coordinates with default values
-const [coordinates, setCoordinates] = useState(null);
+const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null });
 
-// Effect to fetch user's location
 useEffect(() => {
-    // Check if geolocation is supported by the browser
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
+  // Check if geolocation is supported by the browser
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        if (position && position.coords) {
           const { latitude, longitude } = position.coords;
-          // Set the coordinates state
-          setCoordinates(new Adhan.Coordinates(latitude, longitude));
-        },
-        (error) => {
-          console.error("Error getting geolocation:", error);
+          // Check if latitude and longitude are valid numbers
+          if (!isNaN(latitude) && !isNaN(longitude)) {
+            // Set the coordinates state
+            setCoordinates({ latitude, longitude });
+          } else {
+            console.error("Invalid latitude or longitude values");
+          }
+        } else {
+          console.error("Error: position.coords is null");
         }
-      );
-    } else {
-      console.log('Geolocation is not supported by your browser');
-    }
+      },
+      (error) => {
+        console.error("Error getting geolocation:", error);
+      }
+    );
+  } else {
+    console.log('Geolocation is not supported by your browser');
+  }
 }, []);
-
-// Check if coordinates are available
-if (!coordinates) {
-  // Render loading state or handle accordingly
-  return <div>Loading...</div>;
-}
 
 // Replace date with the desired date
 const date = new Date();
