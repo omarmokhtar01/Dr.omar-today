@@ -128,7 +128,7 @@ const prayerNames = {
   fajr: 'الفجر',
   dhuhr: 'الظهر',
   asr: 'العصر',
-  maghrib: 'المغرب',
+  sunset: 'المغرب',
   isha: 'العشاء'
 }; 
 
@@ -137,7 +137,7 @@ const arabicNextPrayer = prayerNames[nextPrayer];
 
 console.log('Next prayer (Arabic):', arabicNextPrayer);
 
-
+console.log(nextPrayer);
   
   return (
     <>
