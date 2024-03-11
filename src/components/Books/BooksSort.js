@@ -19,7 +19,7 @@ import group1 from "../../images/Group-1-1.png";
 
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
-import { getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
+import { addToFavBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
@@ -131,6 +131,43 @@ const BooksSort = () => {
     // Update searchResults whenever searchListen changes
     setSearchResults(searchListen);
   }, [searchListen]);
+
+
+
+  let token = Cookies.get("token");
+
+
+  const checkAddToFavBook = useSelector((state) => state.books.favBook);
+  const isLoadingFavBook = useSelector((state) => state.books.isLoadingBook);
+
+  const handelAddtoFavBook = (bookId) => {
+    const formData = {
+      book_id: bookId, // Replace 'your_audio_id_here' with the actual audio ID value
+        // other formData properties if any
+    };
+    if (!token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
+
+    dispatch(addToFavBook({ formData, token }))
+           
+        }
+        useEffect(() => {
+          if (isLoadingFavBook === false) {
+            if(checkAddToFavBook && checkAddToFavBook.success) {
+          if (checkAddToFavBook.success === true) {
+            // Notify "تم الاضافة بنجاح"
+            notify(" تم الأضافة للمفضلة بنجاح", "success");
+          } else {
+            // Handle other statuses or errors if needed
+            notify("حدث مشكلة في الاضافة", "error");
+        }
+      }
+
+      }
+        }, [isLoadingFavBook,checkAddToFavBook]);
 
   return (
     <>
@@ -437,7 +474,7 @@ const BooksSort = () => {
             
               <IoHeartCircleSharp
                 style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
-                onClick={handleCheckLogin}
+                onClick={()=>handelAddtoFavBook(item.id)}
 
               />
             
@@ -513,7 +550,8 @@ const BooksSort = () => {
               
                 <IoHeartCircleSharp
                   style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
-                  onClick={handleCheckLogin}
+                                  onClick={()=>handelAddtoFavBook(item.id)}
+
 
                 />
               
@@ -592,7 +630,8 @@ const BooksSort = () => {
                 
                   <IoHeartCircleSharp
                     style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
-                    onClick={handleCheckLogin}
+                                    onClick={()=>handelAddtoFavBook(item.id)}
+
 
                   />
                 
@@ -667,7 +706,8 @@ const BooksSort = () => {
                 
                   <IoHeartCircleSharp
                     style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
-                    onClick={handleCheckLogin}
+                                    onClick={()=>handelAddtoFavBook(item.id)}
+
 
                   />
                 

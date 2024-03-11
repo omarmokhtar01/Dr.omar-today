@@ -18,6 +18,11 @@ const initialState = {
   isLoading: false,
   isLoadingSearchBooks: false,
 
+
+  favBook:{},
+  isLoadingBook: false,
+  isLoadingFav: false,
+
   error: null,
 };
 
@@ -97,6 +102,23 @@ const searchBooks = createAsyncThunk('search/book', async (name, thunkAPI) => {
   try {
     const response = await baseUrl.post(
       `Search/search_Book?name=${name}`);
+      console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return error
+  }
+});
+
+const addToFavBook = createAsyncThunk('add-to-fav/book', async ({formData,token}, thunkAPI) => {
+  try {
+    const response = await baseUrl.post(
+      `Favorite/Favorite-Book`,
+      formData, // Include formData in the request
+      {
+          headers: {
+              Authorization: `Bearer ${token}` // Include token in the request headers
+          }
+      });
       console.log(response.data);
     return response.data;
   } catch (error) {
@@ -217,9 +239,24 @@ const booksSlice = createSlice({
         state.isLoadingSearchBooks = false;
         state.error = action.payload;
       })
+
+
+      .addCase(addToFavBook.pending, (state) => {
+        state.isLoadingFav = true;
+        state.error = null;
+      })
+      .addCase(addToFavBook.fulfilled, (state, action) => {
+        state.favBook = action.payload;
+        state.isLoadingFav = false;
+        state.error = null;
+      })
+      .addCase(addToFavBook.rejected, (state, action) => {
+        state.isLoadingFav = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory,showBook,lastVersion,searchBooks};
+export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory,showBook,lastVersion,searchBooks,addToFavBook};
 
 export default booksSlice.reducer;

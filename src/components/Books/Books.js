@@ -21,7 +21,7 @@ import group from "../../images/Group.png";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
+import { addToFavBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 
@@ -144,7 +144,43 @@ const Books = () => {
     // Update searchResults whenever searchListen changes
     setSearchResults(searchListen);
   }, [searchListen]);
-console.log(searchResults);
+
+  let token = Cookies.get("token");
+
+
+  const checkAddToFavBook = useSelector((state) => state.books.favBook);
+  const isLoadingFavBook = useSelector((state) => state.books.isLoadingBook);
+
+  const handelAddtoFavBook = (bookId) => {
+    const formData = {
+      book_id: bookId, // Replace 'your_audio_id_here' with the actual audio ID value
+        // other formData properties if any
+    };
+    if (!token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
+
+    dispatch(addToFavBook({ formData, token }))
+           
+        }
+        useEffect(() => {
+          if (isLoadingFavBook === false) {
+            if(checkAddToFavBook && checkAddToFavBook.success) {
+          if (checkAddToFavBook.success === true) {
+            // Notify "تم الاضافة بنجاح"
+            notify(" تم الأضافة للمفضلة بنجاح", "success");
+          } else {
+            // Handle other statuses or errors if needed
+            notify("حدث مشكلة في الاضافة", "error");
+        }
+      }
+
+      }
+        }, [isLoadingFavBook,checkAddToFavBook]);
+
+
   return (
     <>
       <NavBar />
@@ -469,7 +505,7 @@ console.log(searchResults);
                 marginRight: "-30px",
                 cursor: 'pointer'
               }}
-              onClick={handleCheckLogin}
+              onClick={()=>handelAddtoFavBook(item.id)}
             />
           </div>
         </div>
@@ -559,7 +595,7 @@ console.log(searchResults);
                   marginRight: "-30px",
                   cursor: 'pointer'
                 }}
-                onClick={handleCheckLogin}
+              onClick={()=>handelAddtoFavBook(item.id)}
               />
             </div>
           </div>
@@ -646,7 +682,7 @@ console.log(searchResults);
                   marginRight: "-30px",
                   cursor: 'pointer'
                 }}
-                onClick={handleCheckLogin}
+              onClick={()=>handelAddtoFavBook(item.id)}
               />
             </div>
           </div>
@@ -724,7 +760,7 @@ console.log(searchResults);
                     marginRight: "-30px",
                     cursor: 'pointer'
                   }}
-                  onClick={handleCheckLogin}
+                onClick={()=>handelAddtoFavBook(item.id)}
                 />
               </div>
             </div>

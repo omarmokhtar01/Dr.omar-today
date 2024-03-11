@@ -38,7 +38,8 @@ const Pictures = () => {
 //to make modal
 const [show, setShow] = useState(false);
 const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image
-const [saveIdState, setSaveIdState] = useState(null); // State to hold the selected image
+const [savedId, setSavedId] = useState(null);
+
 
 const handleClose = () => setShow(false);
 const handleShow = (image) => {
@@ -56,7 +57,6 @@ const handleShow = (image) => {
   const isLoadingAllImgCategory = useSelector(state => state.imgCategory.isLoading);
   const errorAllImgCategory = useSelector(state => state.imgCategory.error);
   
-console.log(getAllPicturesData);
 
 const handleDownload = (picId) => {
 
@@ -129,6 +129,7 @@ const handleDownload = (picId) => {
            
         }
 
+        console.log(savedId);
 
         useEffect(() => {
           if (isLoadingFavPic === false) {
@@ -145,7 +146,6 @@ const handleDownload = (picId) => {
       }
         }, [isLoadingFavPic,checkAddToFavPic]);
   
-        console.log(saveIdState);
     return <>
      <NavBar />
 
@@ -284,21 +284,30 @@ const handleDownload = (picId) => {
   ) : (
     !isLoadingOneImgCategory ? (
       getOneData[0]?.image?.map((image, index) => (
-        <Col key={index} xl={6} lg={6} md={12} sm={12} onClick={()=>setSaveIdState(image.id)}>
+        <Col key={image.id} xl={6} lg={6} md={12} sm={12} >
         {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '10px', right: '10px', zIndex: '1' }}>
             <IoHeartCircleSharp onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
           {image && (
-            <img
-            src={image.image}
-           
-            alt={`pic${index + 1}`}
-            style={{ marginBottom: '35px', borderRadius: '15px', cursor: 'pointer',maxHeight:'350px',maxWidth:'450px' }}
-            onClick={() => handleShow(image.image)}
-            id='img-responsive-pic'
-          />
-          )}
+  <img
+    src={image.image}
+    alt={`pic${index + 1}`}
+    style={{
+      marginBottom: '35px',
+      borderRadius: '15px',
+      cursor: 'pointer',
+      maxHeight: '350px',
+      maxWidth: '450px'
+    }}
+    onClick={() => {
+      handleShow(image.image);
+      setSavedId(image.id);
+    }}
+    id='img-responsive-pic'
+  />
+)}
+
         </Col>
       ))
     ) : <div style={{ height: '240px' }}> <Spinner animation="border" variant="primary" /></div>
@@ -310,12 +319,11 @@ const handleDownload = (picId) => {
   <Modal show={show} onHide={handleClose}>
   {/* Display the selected image */}
   <img src={selectedImage} alt="modal" style={{ width: '400px' }} />
-  {console.log(selectedImage)}
   <div style={{ display: 'flex', justifyContent: 'center' }}>
     <div style={{ width: '180px', justifyContent: 'space-between', display: 'flex' }}>
       {/* Your icons */}
       <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
-      <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={()=>handleDownload(saveIdState)} />        
+      <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={()=>handleDownload(savedId)} />        
       <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} onClick={handleCheckLogin} />
     </div>
   </div>
