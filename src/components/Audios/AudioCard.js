@@ -220,7 +220,7 @@ const AudioCard = () => {
   const isLoading = useSelector((state) => state.elders.isLoading);
   const error = useSelector((state) => state.elders.error);
 
-
+console.log(getDataOne);
 
   useEffect(() => {
     dispatch(getEldersByIdAudios(id));

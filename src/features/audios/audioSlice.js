@@ -16,7 +16,7 @@ const initialState = {
     isLoading: false,
     isLoadingFav: false,
     isLoadingMostListen: false,
-
+    isLoadingDown:false,
     error: null,
   };
   
@@ -216,16 +216,16 @@ const initialState = {
 
 
             .addCase(downloadOneAudio.pending, (state) => {
-              state.isLoading = true;
+              state.isLoadingDown = true;
               state.error = null;
             })
             .addCase(downloadOneAudio.fulfilled, (state, action) => {
               state.downAudio = action.payload;
-              state.isLoading = false;
+              state.isLoadingDown = false;
               state.error = null;
             })
             .addCase(downloadOneAudio.rejected, (state, action) => {
-              state.isLoading = false;
+              state.isLoadingDown = false;
               state.error = action.payload;
             })
 

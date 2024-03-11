@@ -161,14 +161,14 @@ const prayerNames = {
   fajr: 'الفجر',
   dhuhr: 'الظهر',
   asr: 'العصر',
-  maghrib: 'المغرب',
+  sunset: 'المغرب',
   isha: 'العشاء'
 }; 
 
 // Get the Arabic name of the next prayer
 const arabicNextPrayer = prayerNames[nextPrayer];
 
-// console.log('Next prayer (Arabic):', arabicNextPrayer);
+console.log('Next prayer (Arabic):', nextPrayer);
 // console.log('Time until next prayer:', formattedTime);
   
 
@@ -270,8 +270,8 @@ const handelAddtoFav = (audioId) => {
 
 
       const downAudio = useSelector((state) => state.audio.downAudio);
-      const isLoadingDown = useSelector((state) => state.audio.isLoading);
-    
+      const isLoadingDown = useSelector((state) => state.audio.isLoadingDown);
+    console.log(downAudio);
       const handelDownloadAudio = (audioId) => {
         const formData = {
             audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
@@ -290,14 +290,14 @@ const handelAddtoFav = (audioId) => {
     
             useEffect(() => {
               if (isLoadingDown === false) {
-                if(downAudio && downAudio.success) {
-              if (downAudio.success === true) {
+                if(downAudio) {
+              
                 // Notify "تم الاضافة بنجاح"
-                notify("تم الأضافة للمفضلة بنجاح", "success");
+                notify("سيتم بدأ التحميل الان", "success");
               } else {
                 // Handle other statuses or errors if needed
                 notify("حدث مشكلة في الاضافة", "error");
-            }
+           
           }
     
           }
@@ -736,9 +736,14 @@ const handelAddtoFav = (audioId) => {
             {indexMobileState > 0 && (
               <TbPlayerTrackPrevFilled size={20} style={{ cursor: "pointer" }} onClick={handlePrev} />
             )}
-            
+             {token ? (
+               <a href={`${mostListenedData[indexMobileState]?.audio || null}?download=true`} target="_blank">
               <MdFileDownload size={30} color="rgb(209, 155, 111)" style={{ cursor: "pointer" }} onClick={()=>handelDownloadAudio(mostListenedData[indexMobileState]?.id || null)}/>
-            
+              </a>
+              ) : (
+                <MdFileDownload size={30} color="rgb(209, 155, 111)" style={{ cursor: "pointer" }} onClick={()=>handelDownloadAudio(mostListenedData[indexMobileState]?.id || null)}/>
+
+                )}
           </Col>
         </div>
       </Col>

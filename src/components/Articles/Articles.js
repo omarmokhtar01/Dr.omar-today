@@ -287,106 +287,9 @@ const Articles = () => {
 
       <Container>
       <Row xs={1} md={2} className="g-4 me-auto mb-5">
-  {id == null ? (
-    !isLoading ? (
-      <>
-        {(searchResults && searchResults.length > 0) ? (
-          <>
-            {[...(searchResults)].sort(sortFunction).map((item) => (
-              <Col key={item.id}>
-                <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
-                  <Card style={{ width: "100%", borderRadius: "15px" }}>
-                    <Card.Img variant="top" src={item.image} width={100} height={300} />
-                    <Card.Body>
-                      <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
-                      <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
-                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                          <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
-                          منذ ساعة
-                        </p>
-                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                          <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                          23 مشاهدة
-                        </p>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Link>
-              </Col>
-            ))}
-          </>
-        ) : (
-          <>
-        {(getData && getData.length > 0) ? (
-          <>
-            {[...(getData)].sort(sortFunction).map((item) => (
-              <Col key={item.id}>
-                <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
-                  <Card style={{ width: "100%", borderRadius: "15px" }}>
-                    <Card.Img variant="top" src={item.image} width={100} height={300} />
-                    <Card.Body>
-                      <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
-                      <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
-                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                          <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
-                          منذ ساعة
-                        </p>
-                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                          <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                          23 مشاهدة
-                        </p>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Link>
-              </Col>
-            ))}
-          </>
-        ) : (
-          <div style={{ height: "140px" }}>
-            No search results found.
-          </div>
-        )}
-      </>
-        )}
-      </>
-    ) : (
-      <div style={{ height: "140px" }}></div>
-    )
-  ) : (
-    !isLoading ? (
-      <>
-        {(searchResults && searchResults.length > 0) ? (
-          <>
-            {[...(searchResults)].sort(sortFunction).map((item) => (
-              <Col key={item.id}>
-                <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
-                  <Card style={{ width: "100%", borderRadius: "15px" }}>
-                    <Card.Img variant="top" src={item.image} width={100} height={300} />
-                    <Card.Body>
-                      <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
-                      <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
-                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                          <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
-                          منذ ساعة
-                        </p>
-                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                          <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                          23 مشاهدة
-                        </p>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Link>
-              </Col>
-            ))}
-          </>
-        ) : (
-          <>
-            {Array.isArray(getDataById) && getDataById.length > 0 ? (
-              <>
-                {[...(getDataById)].sort(sortFunction).map((item) => (
-                  <Col key={item.id}>
+      {searchState !== '' && searchResults.length > 0 ? (
+    searchResults.map((item) => (
+      <Col key={item.id}>
                     <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
                       <Card style={{ width: "100%", borderRadius: "15px" }}>
                         <Card.Img variant="top" src={item.image} width={100} height={300} />
@@ -406,19 +309,98 @@ const Articles = () => {
                       </Card>
                     </Link>
                   </Col>
-                ))}
-              </>
-            ) : (
-              <div style={{ height: "140px" }}></div>
-            )}
-          </>
-        )}
-      </>
+    ))
+  ) : searchResults.length === 0 ? (
+    <div style={{ textAlign: "center" }}>لا يوجد بيانات</div>
+  ) : id == null ? (
+    !isLoading ? (
+      getData && getData.length > 0 ? 
+      [...getData].sort(sortFunction).map((item) => (
+        <Col key={item.id}>
+        <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
+          <Card style={{ width: "100%", borderRadius: "15px" }}>
+            <Card.Img variant="top" src={item.image} width={100} height={300} />
+            <Card.Body>
+              <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
+              <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
+                <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                  <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                  منذ ساعة
+                </p>
+                <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                  <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                  23 مشاهدة
+                </p>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Link>
+      </Col>
+      ))
+      : <div style={{ height: "140px" }}></div>
     ) : (
       <div style={{ height: "140px" }}>
         <Spinner animation="border" variant="primary" />
       </div>
     )
+  ) : !isLoading ? (
+    searchState !== '' && searchResults.length > 0 ? (
+      searchResults.map((item) => (
+        <Col key={item.id}>
+        <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
+          <Card style={{ width: "100%", borderRadius: "15px" }}>
+            <Card.Img variant="top" src={item.image} width={100} height={300} />
+            <Card.Body>
+              <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
+              <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
+                <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                  <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                  منذ ساعة
+                </p>
+                <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                  <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                  23 مشاهدة
+                </p>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Link>
+      </Col>
+      ))
+    ) : (
+      getDataById &&
+      Array.isArray(getDataById) &&
+      getDataById.length > 0 ? (
+        [...getDataById].sort(sortFunction).map((item) => (
+          <Col key={item.id}>
+          <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
+            <Card style={{ width: "100%", borderRadius: "15px" }}>
+              <Card.Img variant="top" src={item.image} width={100} height={300} />
+              <Card.Body>
+                <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
+                <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
+                  <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                    <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                    منذ ساعة
+                  </p>
+                  <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                    <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                    23 مشاهدة
+                  </p>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>
+        ))
+      ) : (
+        <div style={{ height: "140px" }}></div>
+      )
+    )
+  ) : (
+    <div style={{ height: "140px" }}>
+      <Spinner animation="border" variant="primary" />
+    </div>
   )}
 </Row>
 
