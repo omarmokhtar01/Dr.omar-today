@@ -19,7 +19,7 @@ import group1 from "../../images/Group-1-1.png";
 
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
-import { getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks } from "../../features/books/booksSlice";
+import { getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
@@ -116,6 +116,21 @@ const BooksSort = () => {
   const handleClick = () => {
     setIsClicked(!isClicked);
   };
+
+
+  const [searchState, setSearchState] = useState('');
+  const searchListen = useSelector((state) => state.books.searchBooks);
+  const isLoadingSearch = useSelector((state) => state.books.isLoadingSearchBooks);
+  const [searchResults, setSearchResults] = useState([]);
+  useEffect(() => {
+    // Dispatch the thunk action creator when the searchState changes
+    dispatch(searchBooks(searchState));
+  }, [dispatch, searchState]);
+
+  useEffect(() => {
+    // Update searchResults whenever searchListen changes
+    setSearchResults(searchListen);
+  }, [searchListen]);
 
   return (
     <>
@@ -301,6 +316,8 @@ const BooksSort = () => {
                   className="me-2 w-100  search-book"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
+                  onChange={(e)=>setSearchState(e.target.value)}
+
                 />
                 <img
                   src={search}
@@ -359,91 +376,163 @@ const BooksSort = () => {
               </div>
             </div>
             <Row className="row row-cols-2 row-cols-lg-5 g-lg-2">
-  {id == null ? (
+            {searchState !== '' && searchResults.length > 0 ? (
+    searchResults.map((item) => (
+      <Col xs={6} md={4} lg={3} key={item.id}>
+      <div className="p-2">
+        <div
+          className="card-book-sort"
+          style={{
+            border: "1px solid gray",
+            borderRadius: "10px",
+            width: "175px",
+            height: "300px",
+          }}
+        >
+          <div
+            className="card-book-pdf"
+            style={{
+              position: "relative",
+              cursor: "pointer",
+            }}
+            onClick={() =>
+              window.open(
+                `https://docs.google.com/viewer?url=${encodeURIComponent(
+                  item.Book
+                )}&embedded=true`
+              )
+            }
+          >
+            <img
+              className="card-book-img"
+              src={item.image}
+              alt=""
+              height={246}
+              width={169}
+            />
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                color: "#fff",
+                padding: "10px",
+                borderRadius: "5px",
+              }}
+            >
+              Click to view book
+            </div>
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              marginTop: "-238px",
+              marginRight: "25px",
+              display: "flex",
+              gap: "10px",
+            }}
+          >
+            
+              <IoHeartCircleSharp
+                style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
+                onClick={handleCheckLogin}
+
+              />
+            
+          </div>
+          <h5>{item.name}</h5>
+          <p style={{ marginTop: "-5px" }}>20 صفحه</p>
+        </div>
+      </div>
+    </Col>
+    ))
+  ) : searchResults.length === 0 ? (
+    <div style={{ textAlign: "center" }}>لا يوجد بيانات</div>
+  ) : id == null ? (
     !isLoading ? (
-      getAll && getAll.length > 0 ? (
-        [...getAll].sort(sortFunction).map((item) => (
-          <Col xs={6} md={4} lg={3} key={item.id}>
-            <div className="p-2">
+      getAll && getAll.length > 0 ? 
+      [...getAll].sort(sortFunction).map((item) => (
+        <Col xs={6} md={4} lg={3} key={item.id}>
+        <div className="p-2">
+          <div
+            className="card-book-sort"
+            style={{
+              border: "1px solid gray",
+              borderRadius: "10px",
+              width: "175px",
+              height: "300px",
+            }}
+          >
+            <div
+              className="card-book-pdf"
+              style={{
+                position: "relative",
+                cursor: "pointer",
+              }}
+              onClick={() =>
+                window.open(
+                  `https://docs.google.com/viewer?url=${encodeURIComponent(
+                    item.Book
+                  )}&embedded=true`
+                )
+              }
+            >
+              <img
+                className="card-book-img"
+                src={item.image}
+                alt=""
+                height={246}
+                width={169}
+              />
               <div
-                className="card-book-sort"
                 style={{
-                  border: "1px solid gray",
-                  borderRadius: "10px",
-                  width: "175px",
-                  height: "300px",
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  color: "#fff",
+                  padding: "10px",
+                  borderRadius: "5px",
                 }}
               >
-                <div
-                  className="card-book-pdf"
-                  style={{
-                    position: "relative",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      `https://docs.google.com/viewer?url=${encodeURIComponent(
-                        item.Book
-                      )}&embedded=true`
-                    )
-                  }
-                >
-                  <img
-                    className="card-book-img"
-                    src={item.image}
-                    alt=""
-                    height={246}
-                    width={169}
-                  />
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      backgroundColor: "rgba(0, 0, 0, 0.5)",
-                      color: "#fff",
-                      padding: "10px",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    Click to view book
-                  </div>
-                </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    marginTop: "-238px",
-                    marginRight: "25px",
-                    display: "flex",
-                    gap: "10px",
-                  }}
-                >
-                 
-                    <IoHeartCircleSharp
-                      style={{ color: "gray", fontSize: "30px",cursor:'pointer' }}
-                      onClick={handleCheckLogin}
-                    />
-                 
-                </div>
-                <h5>{item.name}</h5>
-                <p style={{ marginTop: "-5px" }}>20 صفحه</p>
+                Click to view book
               </div>
             </div>
-          </Col>
-        ))
-      ) : (
-        <div style={{ height: "140px" }}></div>
-      )
+            <div
+              style={{
+                position: "absolute",
+                marginTop: "-238px",
+                marginRight: "25px",
+                display: "flex",
+                gap: "10px",
+              }}
+            >
+              
+                <IoHeartCircleSharp
+                  style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
+                  onClick={handleCheckLogin}
+
+                />
+              
+            </div>
+            <h5>{item.name}</h5>
+            <p style={{ marginTop: "-5px" }}>20 صفحه</p>
+          </div>
+        </div>
+      </Col>
+      ))
+      : <div style={{ height: "140px" }}></div>
     ) : (
       <div style={{ height: "140px" }}>
-        {" "}
         <Spinner animation="border" variant="primary" />
       </div>
     )
   ) : !isLoading ? (
-    booksMainSubCategory && booksMainSubCategory.length > 0 ? (
-      [...booksMainSubCategory].sort(sortFunction).map((item) => (
+    searchState !== '' && searchResults.length > 0 ? (
+      searchResults.map((item) => (
         <Col xs={6} md={4} lg={3} key={item.id}>
           <div className="p-2">
             <div
@@ -515,11 +604,86 @@ const BooksSort = () => {
         </Col>
       ))
     ) : (
-      <div style={{ height: "140px" }}></div>
+      booksMainSubCategory &&
+      Array.isArray(booksMainSubCategory) &&
+      booksMainSubCategory.length > 0 ? (
+        [...booksMainSubCategory].sort(sortFunction).map((item) => (
+          <Col xs={6} md={4} lg={3} key={item.id}>
+          <div className="p-2">
+            <div
+              className="card-book-sort"
+              style={{
+                border: "1px solid gray",
+                borderRadius: "10px",
+                width: "175px",
+                height: "300px",
+              }}
+            >
+              <div
+                className="card-book-pdf"
+                style={{
+                  position: "relative",
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  window.open(
+                    `https://docs.google.com/viewer?url=${encodeURIComponent(
+                      item.Book
+                    )}&embedded=true`
+                  )
+                }
+              >
+                <img
+                  className="card-book-img"
+                  src={item.image}
+                  alt=""
+                  height={246}
+                  width={169}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    color: "#fff",
+                    padding: "10px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  Click to view book
+                </div>
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  marginTop: "-238px",
+                  marginRight: "25px",
+                  display: "flex",
+                  gap: "10px",
+                }}
+              >
+                
+                  <IoHeartCircleSharp
+                    style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
+                    onClick={handleCheckLogin}
+
+                  />
+                
+              </div>
+              <h5>{item.name}</h5>
+              <p style={{ marginTop: "-5px" }}>20 صفحه</p>
+            </div>
+          </div>
+        </Col>
+        ))
+      ) : (
+        <div style={{ height: "140px" }}></div>
+      )
     )
   ) : (
     <div style={{ height: "140px" }}>
-      {" "}
       <Spinner animation="border" variant="primary" />
     </div>
   )}

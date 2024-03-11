@@ -5,7 +5,7 @@ import { Button, Col, Container, Modal, Row, Spinner } from 'react-bootstrap';
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { favOnePic, getAllPicuture } from '../../features/allPictres/allPicturesSlice';
+import { downOnePic, favOnePic, getAllPicuture } from '../../features/allPictres/allPicturesSlice';
 import { Link } from 'react-router-dom';
 import { getAllImgCategory, getOneImgCategory } from '../../features/imgCategory/imgCategorySlice';
 import { IoHeartCircleSharp } from 'react-icons/io5';
@@ -38,6 +38,7 @@ const Pictures = () => {
 //to make modal
 const [show, setShow] = useState(false);
 const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image
+const [saveIdState, setSaveIdState] = useState(null); // State to hold the selected image
 
 const handleClose = () => setShow(false);
 const handleShow = (image) => {
@@ -57,7 +58,20 @@ const handleShow = (image) => {
   
 console.log(getAllPicturesData);
 
-const handleDownload = () => {
+const handleDownload = (picId) => {
+
+  const formData = {
+    image_id: picId, // Replace 'your_audio_id_here' with the actual audio ID value
+      // other formData properties if any
+  };
+  if (!token) {
+    // Token exists, perform the download action
+    // Add your download logic here
+   return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+  }
+
+  dispatch(downOnePic({ formData, token }))
+
   fetch(selectedImage)
     .then(response => response.blob())
     .then(blob => {
@@ -131,6 +145,7 @@ const handleDownload = () => {
       }
         }, [isLoadingFavPic,checkAddToFavPic]);
   
+        console.log(saveIdState);
     return <>
      <NavBar />
 
@@ -269,7 +284,7 @@ const handleDownload = () => {
   ) : (
     !isLoadingOneImgCategory ? (
       getOneData[0]?.image?.map((image, index) => (
-        <Col key={index} xl={6} lg={6} md={12} sm={12}>
+        <Col key={index} xl={6} lg={6} md={12} sm={12} onClick={()=>setSaveIdState(image.id)}>
         {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '10px', right: '10px', zIndex: '1' }}>
             <IoHeartCircleSharp onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
@@ -295,11 +310,12 @@ const handleDownload = () => {
   <Modal show={show} onHide={handleClose}>
   {/* Display the selected image */}
   <img src={selectedImage} alt="modal" style={{ width: '400px' }} />
+  {console.log(selectedImage)}
   <div style={{ display: 'flex', justifyContent: 'center' }}>
     <div style={{ width: '180px', justifyContent: 'space-between', display: 'flex' }}>
       {/* Your icons */}
       <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
-      <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={handleDownload} />        
+      <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={()=>handleDownload(saveIdState)} />        
       <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} onClick={handleCheckLogin} />
     </div>
   </div>

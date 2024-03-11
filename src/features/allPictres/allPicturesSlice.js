@@ -8,6 +8,9 @@ const initialState = {
     error: null,
     favPic:{},
     isLoadingFavPic: false,
+
+    downPic:{},
+    isLoadingDownPic: false,
   };
   
   
@@ -41,6 +44,25 @@ const initialState = {
                   return error;
               }
           });
+
+
+          const downOnePic = createAsyncThunk('down/add-img', async ({ formData, token }, thunkAPI) => {
+            try {
+                const response = await baseUrl.post(
+                    `download/Download-Image`,
+                    formData, // Include formData in the request
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}` // Include token in the request headers
+                        }
+                    }
+                );
+                console.log(response.data);
+                return response.data;
+            } catch (error) {
+                return error;
+            }
+        });
 
     const PicturesSlice = createSlice({
         name: 'getAllPicuture',
@@ -78,10 +100,25 @@ const initialState = {
               state.error = action.payload;
             })
   
+
+
+            .addCase(downOnePic.pending, (state) => {
+              state.isLoadingDownPic = true;
+              state.error = null;
+            })
+            .addCase(downOnePic.fulfilled, (state, action) => {
+              state.downPic = action.payload;
+              state.isLoadingDownPic = false;
+              state.error = null;
+            })
+            .addCase(downOnePic.rejected, (state, action) => {
+              state.isLoadingDownPic = false;
+              state.error = action.payload;
+            })
   
 
             }}
             );
-      export { getAllPicuture,favOnePic };
+      export { getAllPicuture,favOnePic,downOnePic };
       
       export default PicturesSlice.reducer;

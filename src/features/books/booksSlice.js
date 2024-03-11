@@ -6,11 +6,18 @@ import baseUrl from "../../Api/baseURL";
 
 const initialState = {
   booksData: [],
+  lastVersionData: [],
+  isLoadingLastVersion: false,
+
   booksMainCategory: [],
   booksMainSubCategory: [],
   allBooksCategory:[],
+  searchBooks:[],
+
   showOne:{},
   isLoading: false,
+  isLoadingSearchBooks: false,
+
   error: null,
 };
 
@@ -67,6 +74,30 @@ const showBook = createAsyncThunk('show/book', async (id, thunkAPI) => {
     const response = await baseUrl.post(
       `Books/Find-Book-Public?id=${id}`);
       
+    return response.data;
+  } catch (error) {
+    return error
+  }
+});
+
+
+const lastVersion = createAsyncThunk('last/book', async (_, thunkAPI) => {
+  try {
+    const response = await baseUrl.get(
+      `Books/LatestVersionBooks`);
+      console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return error
+  }
+});
+
+
+const searchBooks = createAsyncThunk('search/book', async (name, thunkAPI) => {
+  try {
+    const response = await baseUrl.post(
+      `Search/search_Book?name=${name}`);
+      console.log(response.data);
     return response.data;
   } catch (error) {
     return error
@@ -156,9 +187,39 @@ const booksSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+
+      .addCase(lastVersion.pending, (state) => {
+        state.isLoadingLastVersion = true;
+        state.error = null;
+      })
+      .addCase(lastVersion.fulfilled, (state, action) => {
+        state.lastVersionData = action.payload;
+        state.isLoadingLastVersion = false;
+        state.error = null;
+      })
+      .addCase(lastVersion.rejected, (state, action) => {
+        state.isLoadingLastVersion = false;
+        state.error = action.payload;
+      })
+
+
+      .addCase(searchBooks.pending, (state) => {
+        state.isLoadingSearchBooks = true;
+        state.error = null;
+      })
+      .addCase(searchBooks.fulfilled, (state, action) => {
+        state.searchBooks = action.payload;
+        state.isLoadingSearchBooks = false;
+        state.error = null;
+      })
+      .addCase(searchBooks.rejected, (state, action) => {
+        state.isLoadingSearchBooks = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory,showBook};
+export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory,showBook,lastVersion,searchBooks};
 
 export default booksSlice.reducer;

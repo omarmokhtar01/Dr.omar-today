@@ -16,7 +16,7 @@ import NavBar from "../Navbar/NavBar";
 import group1 from "../../images/Group-1-1.png";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { getAudioCategory, getAudioCategoryById, getAudios } from "../../features/audios/audioSlice";
+import { getAudioCategory, getAudioCategoryById, getAudios, searchListened } from "../../features/audios/audioSlice";
 import { LuArrowUpDown } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
 const AudiosSort = () => {
@@ -81,7 +81,19 @@ const AudiosSort = () => {
 
 
 console.log(getAudioCategoryData);
+const [searchState, setSearchState] = useState('');
+const searchListen = useSelector((state) => state.audio.searchListen);
+const isLoadingSearch = useSelector((state) => state.audio.isLoadingSearch);
+const [searchResults, setSearchResults] = useState([]);
+useEffect(() => {
+  // Dispatch the thunk action creator when the searchState changes
+  dispatch(searchListened(searchState));
+}, [dispatch, searchState]);
 
+useEffect(() => {
+  // Update searchResults whenever searchListen changes
+  setSearchResults(searchListen);
+}, [searchListen]);
 
 
   return (
@@ -209,6 +221,8 @@ console.log(getAudioCategoryData);
                   className="me-2 w-100  search-audio"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
+                  onChange={(e)=>setSearchState(e.target.value)}
+
                 />
                 <IoSearch
                   width="20px"
@@ -280,69 +294,114 @@ console.log(getAudioCategoryData);
 
       <div class="container text-center">
   <div class="row row-cols-2 row-cols-lg-5 g-lg-3" style={{ width: "100%" }}>
-  {
-  id == null ? (
+  {searchState !== '' && searchResults.length > 0 ? (
+    searchResults.map((item) => (
+      <Link to={`/audioCard/${item.id}`} style={{ textDecoration: "none", color: "black" }} key={item.id}>
+      <div className="col-lg-12 col-md-12 col-sm-12">
+        <div className="row-lg-12">
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <img src={item.image} alt="pic" width={160} height={200} />
+          </div>
+          <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
+            <h5 className="text-center text-lg-center p-2">{item.name}</h5>
+          </div>
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
+              {item.count_audios} مقطع صوتي
+            </p>
+          </div>
+        </div>
+      </div>
+    </Link>
+    ))
+  ) : searchResults.length === 0 ? (
+    <div style={{ textAlign: "center" }}>لا يوجد بيانات</div>
+  ) : id == null ? (
     !isLoading ? (
-      getAll && getAll.length > 0 ? (
-        [...getAll].sort(sortFunction).map((item) => (
+      getAll && getAll.length > 0 ? 
+      ([...getAll].sort(sortFunction).map((item) => {
+        return (
           <Link to={`/audioCard/${item.id}`} style={{ textDecoration: "none", color: "black" }} key={item.id}>
-            <div className="col-lg-12 col-md-12 col-sm-12">
-              <div className="row-lg-12">
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <img src={item.image} alt="pic" width={160} height={200} />
-                </div>
-                <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
-                  <h5 className="text-center text-lg-center p-2">{item.name}</h5>
-                </div>
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
-                    {item.count_audios} مقطع صوتي
-                  </p>
-                </div>
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <div className="row-lg-12">
+              <div className="col-lg-12 col-md-12 col-sm-12">
+                <img src={item.image} alt="pic" width={160} height={200} />
+              </div>
+              <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
+                <h5 className="text-center text-lg-center p-2">{item.name}</h5>
+              </div>
+              <div className="col-lg-12 col-md-12 col-sm-12">
+                <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
+                  {item.count_audios} مقطع صوتي
+                </p>
               </div>
             </div>
-          </Link>
-        ))
-      ) : (
+          </div>
+        </Link>
+        );
+      })) : (
         <div style={{ height: "140px" }}></div>
       )
     ) : (
       <div style={{ height: "140px" }}>
+        {" "}
         <Spinner animation="border" variant="primary" />
       </div>
     )
-  ) : (
-    !getAudioCategoryLoading ? (
-      getAudioCategoryData && Array.isArray(getAudioCategoryData) && getAudioCategoryData.length > 0 ? (
+  ) : !isLoading ? (
+    searchState !== '' && searchResults.length > 0 ? (
+      searchResults.map((item) => (
+        <Link to={`/audioCard/${item.id}`} style={{ textDecoration: "none", color: "black" }} key={item.id}>
+        <div className="col-lg-12 col-md-12 col-sm-12">
+          <div className="row-lg-12">
+            <div className="col-lg-12 col-md-12 col-sm-12">
+              <img src={item.image} alt="pic" width={160} height={200} />
+            </div>
+            <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
+              <h5 className="text-center text-lg-center p-2">{item.name}</h5>
+            </div>
+            <div className="col-lg-12 col-md-12 col-sm-12">
+              <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
+                {item.count_audios} مقطع صوتي
+              </p>
+            </div>
+          </div>
+        </div>
+      </Link>
+      ))
+    ) : (
+      getAudioCategoryData &&
+      Array.isArray(getAudioCategoryData) &&
+      getAudioCategoryData.length > 0 ? (
         [...getAudioCategoryData].sort(sortFunction).map((item) => (
           <Link to={`/audioCard/${item.id}`} style={{ textDecoration: "none", color: "black" }} key={item.id}>
-            <div className="col-lg-12 col-md-12 col-sm-12">
-              <div className="row-lg-12">
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <img src={item.image} alt="pic" width={160} height={200} />
-                </div>
-                <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
-                  <h5 className="text-center text-lg-center p-2">{item.name}</h5>
-                </div>
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
-                    {item.count_audios} مقطع صوتي
-                  </p>
-                </div>
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <div className="row-lg-12">
+              <div className="col-lg-12 col-md-12 col-sm-12">
+                <img src={item.image} alt="pic" width={160} height={200} />
+              </div>
+              <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
+                <h5 className="text-center text-lg-center p-2">{item.name}</h5>
+              </div>
+              <div className="col-lg-12 col-md-12 col-sm-12">
+                <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
+                  {item.count_audios} مقطع صوتي
+                </p>
               </div>
             </div>
-          </Link>
+          </div>
+        </Link>
         ))
       ) : (
         <div style={{ height: "140px" }}></div>
       )
-    ) : (
-      <div style={{ height: "140px" }}>
-        <Spinner animation="border" variant="primary" />
-      </div>
     )
-  )
-}
+  ) : (
+    <div style={{ height: "140px" }}>
+      {" "}
+      <Spinner animation="border" variant="primary" />
+    </div>
+  )}
 
 
 

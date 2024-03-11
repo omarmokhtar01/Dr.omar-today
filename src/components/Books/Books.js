@@ -21,7 +21,7 @@ import group from "../../images/Group.png";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks } from "../../features/books/booksSlice";
+import { getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 
@@ -127,6 +127,24 @@ const Books = () => {
       notify("من فضلك قم بتسجيل الدخول اولا", "error");
     }
   };
+
+
+
+  
+  const [searchState, setSearchState] = useState('');
+  const searchListen = useSelector((state) => state.books.searchBooks);
+  const isLoadingSearch = useSelector((state) => state.books.isLoadingSearchBooks);
+  const [searchResults, setSearchResults] = useState([]);
+  useEffect(() => {
+    // Dispatch the thunk action creator when the searchState changes
+    dispatch(searchBooks(searchState));
+  }, [dispatch, searchState]);
+
+  useEffect(() => {
+    // Update searchResults whenever searchListen changes
+    setSearchResults(searchListen);
+  }, [searchListen]);
+console.log(searchResults);
   return (
     <>
       <NavBar />
@@ -313,6 +331,8 @@ const Books = () => {
                   className="me-2 w-100  search-book"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
+                                    onChange={(e)=>setSearchState(e.target.value)}
+
                 />
                 <IoSearch
                   width="20px"
@@ -374,118 +394,269 @@ const Books = () => {
                 </Link>
               </div>
             </div>
-
             <Row>
-  {id == null ? (
-    !isLoading ? (
-      getAll && getAll.length > 0 ? (
-        [...getAll].sort(sortFunction).map((item) => {
-          return (
-            <Col
-              xs="12"
-              md="12"
-              lg="6"
-              className="mb-3"
-              key={item.id}
+  {searchState !== '' && searchResults.length > 0 ? (
+    searchResults.map((item) => (
+      <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            border: "2px solid rgba(236, 236, 236, 1)",
+            borderRadius: "15px",
+            width: "auto",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Link to={`/book/${item.id}`}>
+              <div
+                style={{
+                  position: "relative",
+                  cursor: "pointer",
+                }}
+              >
+                <img
+                  src={item.image}
+                  alt=""
+                  height={164}
+                  width={134}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    color: "#fff",
+                    padding: "10px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  Click to view book
+                </div>
+              </div>
+            </Link>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                padding: "20px",
+              }}
             >
+              <h5 style={{ color: "black" }}>{item.name}</h5>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              marginLeft: "60px",
+              gap: "20px",
+            }}
+          >
+            <IoHeartCircleSharp
+              style={{
+                color: "#878787bd",
+                fontSize: "30px",
+                marginRight: "-30px",
+                cursor: 'pointer'
+              }}
+              onClick={handleCheckLogin}
+            />
+          </div>
+        </div>
+      </Col>
+    ))
+  ) : searchResults.length === 0 ? (
+    <div style={{ textAlign: "center" }}>لا يوجد بيانات</div>
+  ) : id == null ? (
+    !isLoading ? (
+      getAll && getAll.length > 0 ? 
+      [...getAll].sort(sortFunction).map((item) => (
+        <Col
+          xs="12"
+          md="12"
+          lg="6"
+          className="mb-3"
+          key={item.id}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              border: "2px solid rgba(236, 236, 236, 1)",
+              borderRadius: "15px",
+              width: "auto",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Link to={`/book/${item.id}`}>
+                <div
+                  style={{
+                    position: "relative",
+                    cursor: "pointer",
+                  }}
+                >
+                  <img
+                    src={item.image}
+                    alt=""
+                    height={164}
+                    width={134}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      color: "#fff",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    Click to view book
+                  </div>
+                </div>
+              </Link>
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
-                  border: "2px solid rgba(236, 236, 236, 1)",
-                  borderRadius: "15px",
-                  width: "auto",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  padding: "20px",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Link to={`/book/${item.id}`}>
-                  <div
-                    style={{
-                      position: "relative",
-                      cursor: "pointer",
-                    }}
-                   
-                  >
-                    <img
-                      src={item.image}
-                      alt=""
-                      height={164}
-                      width={134}
-                    />
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        backgroundColor: "rgba(0, 0, 0, 0.5)",
-                        color: "#fff",
-                        padding: "10px",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      Click to view book
-                    </div>
-                  </div>
-                  </Link>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      flexDirection: "column",
-                      padding: "20px",
-                    }}
-                  >
-                    <h5 style={{ color: "black" }}>{item.name}</h5>
-                    {/* <p style={{ color: "rgba(130, 130, 130, 1)" }}>
-                      20 صفحه
-                    </p> */}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    marginLeft: "60px",
-                    gap: "20px",
-                  }}
-                >
-                
-                    {" "}
-                    <IoHeartCircleSharp
-                      style={{
-                        color: "#878787bd",
-                        fontSize: "30px",
-                        marginRight: "-30px",
-                        cursor:'pointer'
-                      }}
-                      onClick={handleCheckLogin}
-                    />
-                 
-                </div>
+                <h5 style={{ color: "black" }}>{item.name}</h5>
               </div>
-            </Col>
-          );
-        })
-      ) : (
-        <div style={{ height: "140px" }}></div>
-      )
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                marginLeft: "60px",
+                gap: "20px",
+              }}
+            >
+              <IoHeartCircleSharp
+                style={{
+                  color: "#878787bd",
+                  fontSize: "30px",
+                  marginRight: "-30px",
+                  cursor: 'pointer'
+                }}
+                onClick={handleCheckLogin}
+              />
+            </div>
+          </div>
+        </Col>
+      ))
+      : <div style={{ height: "140px" }}></div>
     ) : (
       <div style={{ height: "140px" }}>
-        {" "}
         <Spinner animation="border" variant="primary" />
       </div>
     )
   ) : !isLoading ? (
-    booksMainSubCategory && booksMainSubCategory.length > 0 ? (
-      [...booksMainSubCategory].sort(sortFunction).map((item) => {
-        return (
+    searchState !== '' && searchResults.length > 0 ? (
+      searchResults.map((item) => (
+        <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              border: "2px solid rgba(236, 236, 236, 1)",
+              borderRadius: "15px",
+              width: "auto",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Link to={`/book/${item.id}`}>
+                <div
+                  style={{
+                    position: "relative",
+                    cursor: "pointer",
+                  }}
+                >
+                  <img
+                    src={item.image}
+                    alt=""
+                    height={164}
+                    width={134}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      color: "#fff",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    Click to view book
+                  </div>
+                </div>
+              </Link>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  padding: "20px",
+                }}
+              >
+                <h5 style={{ color: "black" }}>{item.name}</h5>
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                marginLeft: "60px",
+                gap: "20px",
+              }}
+            >
+              <IoHeartCircleSharp
+                style={{
+                  color: "#878787bd",
+                  fontSize: "30px",
+                  marginRight: "-30px",
+                  cursor: 'pointer'
+                }}
+                onClick={handleCheckLogin}
+              />
+            </div>
+          </div>
+        </Col>
+      ))
+    ) : (
+      booksMainSubCategory &&
+      Array.isArray(booksMainSubCategory) &&
+      booksMainSubCategory.length > 0 ? (
+        [...booksMainSubCategory].sort(sortFunction).map((item) => (
           <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
             <div
               style={{
@@ -502,30 +673,29 @@ const Books = () => {
                   justifyContent: "center",
                 }}
               >
-                 <Link to={`/book/${item.id}`}>
-                <div
-                  style={{
-                    position: "relative",
-                    cursor: "pointer",
-                  }}
-                 
-                >
-                  <img src={item.image} alt="" height={164} width={134} />
+                <Link to={`/book/${item.id}`}>
                   <div
                     style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      backgroundColor: "rgba(0, 0, 0, 0.5)",
-                      color: "#fff",
-                      padding: "10px",
-                      borderRadius: "5px",
+                      position: "relative",
+                      cursor: "pointer",
                     }}
                   >
-                    Click to view book
+                    <img src={item.image} alt="" height={164} width={134} />
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        color: "#fff",
+                        padding: "10px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      Click to view book
+                    </div>
                   </div>
-                </div>
                 </Link>
                 <div
                   style={{
@@ -536,7 +706,6 @@ const Books = () => {
                   }}
                 >
                   <h5 style={{ color: "black" }}>{item.name}</h5>
-                  {/* <p style={{ color: "rgba(130, 130, 130, 1)" }}>20 صفحه</p> */}
                 </div>
               </div>
               <div
@@ -548,37 +717,35 @@ const Books = () => {
                   gap: "20px",
                 }}
               >
-                
-                  {" "}
-                  <IoHeartCircleSharp
-                    style={{
-                      color: "#878787bd",
-                      fontSize: "30px",
-                      marginRight: "-30px",
-                      cursor:'pointer'
-                    }}
-                    onClick={handleCheckLogin}
-
-                  />
-                
+                <IoHeartCircleSharp
+                  style={{
+                    color: "#878787bd",
+                    fontSize: "30px",
+                    marginRight: "-30px",
+                    cursor: 'pointer'
+                  }}
+                  onClick={handleCheckLogin}
+                />
               </div>
             </div>
           </Col>
-        );
-      })
-    ) : (
-      <div style={{ height: "140px" }}></div>
+        ))
+      ) : (
+        <div style={{ height: "140px" }}></div>
+      )
     )
   ) : (
     <div style={{ height: "140px" }}>
-      {" "}
       <Spinner animation="border" variant="primary" />
     </div>
   )}
 </Row>
 
-          </Col>
-        </Row>
+
+
+
+</Col>
+</Row>
       </Container>
       <ToastContainer/>
     </>

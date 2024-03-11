@@ -7,10 +7,16 @@ const initialState = {
     audioCategory: [],
     audioCategoryId:[],
     publicAudio:[],
+    mostListen:[],
+    searchListen:[],
+    isLoadingSearch: false,
+
     downAudio:{},
     favAudio:{},
     isLoading: false,
     isLoadingFav: false,
+    isLoadingMostListen: false,
+
     error: null,
   };
   
@@ -74,7 +80,12 @@ const initialState = {
     const downloadOneAudio = createAsyncThunk('down/audio-public', async ({formData,token}, thunkAPI) => {
       try {
         const response = await baseUrl.post(
-          `download/Donwload-Audio`);
+          `download/Donwload-Audio`, formData, // Include formData in the request
+          {
+              headers: {
+                  Authorization: `Bearer ${token}` // Include token in the request headers
+              }
+          });
           console.log(response.data);
         return response.data;
       } catch (error) {
@@ -101,6 +112,33 @@ const initialState = {
               }
           });
           
+
+          const mostListened = createAsyncThunk('most/listen', async (_, thunkAPI) => {
+            try {
+                const response = await baseUrl.get(
+                    `Audios/MostListened`,
+                   
+                );
+                console.log(response.data);
+                return response.data;
+            } catch (error) {
+                return error;
+            }
+        });
+
+
+        const searchListened = createAsyncThunk('search/listen', async (name, thunkAPI) => {
+          try {
+              const response = await baseUrl.post(
+                  `Search/search_elder?name=${name}`,
+                 
+              );
+              console.log(response.data);
+              return response.data;
+          } catch (error) {
+              return error;
+          }
+      });
 
     const audioSlice = createSlice({
         name: 'audio',
@@ -208,12 +246,49 @@ const initialState = {
               state.error = action.payload;
             })
 
+
+
+
+
+
+
+            .addCase(mostListened.pending, (state) => {
+              state.isLoadingMostListen = true;
+              state.error = null;
+            })
+            .addCase(mostListened.fulfilled, (state, action) => {
+              state.mostListen = action.payload;
+              state.isLoadingMostListen = false;
+              state.error = null;
+            })
+            .addCase(mostListened.rejected, (state, action) => {
+              state.isLoadingMostListen = false;
+              state.error = action.payload;
+            })
+
+
+
+            .addCase(searchListened.pending, (state) => {
+              state.isLoadingSearch = true;
+              state.error = null;
+            })
+            .addCase(searchListened.fulfilled, (state, action) => {
+              state.searchListen = action.payload;
+              state.isLoadingSearch = false;
+              state.error = null;
+            })
+            .addCase(searchListened.rejected, (state, action) => {
+              state.isLoadingSearch = false;
+              state.error = action.payload;
+            })
+
+
             }}
             );
       export {
          getAudios,
         getAudioCategory,getAudioCategoryById,
-        getAudioPublic,downloadOneAudio,favOneAudio
+        getAudioPublic,downloadOneAudio,favOneAudio,mostListened,searchListened
     };
       
       export default audioSlice.reducer;

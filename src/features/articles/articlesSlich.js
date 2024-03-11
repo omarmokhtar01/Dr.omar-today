@@ -7,7 +7,9 @@ const initialState = {
     articleCategory: [],
     articleCategoryId:[],
     oneArticale:{},
-    
+    searchArticles: [],
+    isLoadingSearchArticle: false,
+
     isLoading: false,
     error: null,
   };
@@ -56,6 +58,19 @@ const initialState = {
       try {
         const response = await baseUrl.post(
           `Articles/Get-id?id=${id}`);
+          console.log(response.data);
+        return response.data;
+      } catch (error) {
+        return error
+      }
+    });
+
+
+
+    const searchArticle = createAsyncThunk('get/article-search', async (title, thunkAPI) => {
+      try {
+        const response = await baseUrl.post(
+          `Search/search_articles?title=${title}`);
           console.log(response.data);
         return response.data;
       } catch (error) {
@@ -135,8 +150,23 @@ const initialState = {
             })
 
 
+            .addCase(searchArticle.pending, (state) => {
+              state.isLoadingSearchArticle = true;
+              state.error = null;
+            })
+            .addCase(searchArticle.fulfilled, (state, action) => {
+              state.searchArticles = action.payload;
+              state.isLoadingSearchArticle = false;
+              state.error = null;
+            })
+            .addCase(searchArticle.rejected, (state, action) => {
+              state.isLoadingSearchArticle = false;
+              state.error = action.payload;
+            })
+
+
             }}
             );
-      export { getArticles,getArticleCategory,getArticleCategoryById ,getArticleCategoryOne};
+      export { getArticles,getArticleCategory,getArticleCategoryById ,getArticleCategoryOne,searchArticle};
       
       export default articlesSlich.reducer;

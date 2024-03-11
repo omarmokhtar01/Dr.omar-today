@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./home.css";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row,Spinner } from "react-bootstrap";
 
 import profile from "../../images/profile.png";
 import vector from "../../images/Vector (1).png";
@@ -23,7 +23,7 @@ import google from "../../images/google.png";
 
 import { Link } from "react-router-dom";
 
-import { FaCirclePlay } from "react-icons/fa6";
+import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 import { MdFileDownload } from "react-icons/md";
 import { MdAudiotrack } from "react-icons/md";
 import { Carousel } from "react-bootstrap";
@@ -37,11 +37,34 @@ import {
 import { ToastContainer } from "react-toastify";
 import notify from "../UseNotifications/useNotification";
 import NavBar from "../Navbar/NavBar";
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { lastVersion } from "../../features/books/booksSlice";
+import { downloadOneAudio, favOneAudio, mostListened } from "../../features/audios/audioSlice";
+import  Cookies  from 'js-cookie';
 
 const Adhan = require('adhan');
 
 const HomePage = () => {
-  const [isPressed, setIsPressed] = useState(false);
+
+const dispatch = useDispatch()
+const lastVersionData = useSelector((state) => state.books.lastVersionData);
+const isLoadingLastVersion = useSelector((state) => state.books.isLoadingLastVersion);
+
+useEffect(()=>{
+dispatch(lastVersion())
+},[dispatch])
+
+
+const mostListenedData = useSelector((state) => state.audio.mostListen);
+const isLoadingMostListen = useSelector((state) => state.audio.isLoadingMostListen);
+
+useEffect(()=>{
+dispatch(mostListened())
+},[dispatch])
+
+
+const [isPressed, setIsPressed] = useState(false);
   let timeoutId;
 
   const handleMouseDown = () => {
@@ -145,10 +168,143 @@ const prayerNames = {
 // Get the Arabic name of the next prayer
 const arabicNextPrayer = prayerNames[nextPrayer];
 
-console.log('Next prayer (Arabic):', arabicNextPrayer);
-console.log('Time until next prayer:', formattedTime);
+// console.log('Next prayer (Arabic):', arabicNextPrayer);
+// console.log('Time until next prayer:', formattedTime);
   
-  return (
+
+
+const audioRefs = useRef([]);
+const [durations, setDurations] = useState([]);
+const [durationFormatted, setDurationFormatted] = useState("0:00");
+const [isPlaying, setIsPlaying] = useState([]);
+
+const handlePlay = (index) => {
+  const newIsPlaying = [...isPlaying];
+  newIsPlaying[index] = !isPlaying[index];
+  setIsPlaying(newIsPlaying);
+  const audioElement = audioRefs.current[index];
+  if (audioElement) {
+    if (newIsPlaying[index]) {
+      // Check if the audio is not already playing before calling play()
+      if (audioElement.paused) {
+        audioElement
+          .play()
+          .catch((error) => console.error("Error playing audio:", error));
+      }
+    } else {
+      // Check if the audio is playing before calling pause()
+      if (!audioElement.paused) {
+        audioElement.pause();
+      }
+    }
+  }
+};
+
+const handleLoadedMetadata = (index) => {
+  return (e) => {
+    const newDurations = [...durations];
+    newDurations[index] = e.target.duration;
+    setDurations(newDurations);
+  };
+};
+
+
+
+let token = Cookies.get("token");
+
+
+const checkAddToFav = useSelector((state) => state.audio.favAudio);
+const isLoadingFav = useSelector((state) => state.audio.isLoadingFav);
+
+const handelAddtoFav = (audioId) => {
+  const formData = {
+      audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
+      // other formData properties if any
+  };
+  if (!token) {
+    // Token exists, perform the download action
+    // Add your download logic here
+   return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+  }
+  dispatch(favOneAudio({ formData, token }))
+         
+      }
+
+
+      useEffect(() => {
+        if (isLoadingFav === false) {
+          if(checkAddToFav && checkAddToFav.success) {
+        if (checkAddToFav.success === true) {
+          // Notify "تم الاضافة بنجاح"
+          notify("تم الأضافة للمفضلة بنجاح", "success");
+        } else {
+          // Handle other statuses or errors if needed
+          notify("حدث مشكلة في الاضافة", "error");
+      }
+    }
+
+    }
+      }, [isLoadingFav,checkAddToFav]);
+
+
+ 
+      const [indexMobileState, setIndexMobileState] = useState(0);
+
+      const handleNext = () => {
+        if (indexMobileState < mostListenedData.length - 1) {
+          setIndexMobileState(indexMobileState + 1);
+        } else {
+          // Handle boundary condition, for example, do nothing or loop back to the beginning
+          // setIndexMobileState(0);
+        }
+      };
+    
+      const handlePrev = () => {
+        if (indexMobileState > 0) {
+          setIndexMobileState(indexMobileState - 1);
+        } else {
+          // Handle boundary condition, for example, do nothing or loop back to the end
+          // setIndexMobileState(mostListenedData.length - 1);
+        }
+      };
+
+
+      const downAudio = useSelector((state) => state.audio.downAudio);
+      const isLoadingDown = useSelector((state) => state.audio.isLoading);
+    
+      const handelDownloadAudio = (audioId) => {
+        const formData = {
+            audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
+            // other formData properties if any
+        };
+        if (!token) {
+          // Token exists, perform the download action
+          // Add your download logic here
+         return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+        }
+        
+        dispatch(downloadOneAudio({ formData, token }))
+               
+            }
+    
+    
+            useEffect(() => {
+              if (isLoadingDown === false) {
+                if(downAudio && downAudio.success) {
+              if (downAudio.success === true) {
+                // Notify "تم الاضافة بنجاح"
+                notify("تم الأضافة للمفضلة بنجاح", "success");
+              } else {
+                // Handle other statuses or errors if needed
+                notify("حدث مشكلة في الاضافة", "error");
+            }
+          }
+    
+          }
+            }, [isLoadingDown,downAudio]);
+
+      
+      return (
     <>
       <NavBar />
 
@@ -367,164 +523,7 @@ console.log('Time until next prayer:', formattedTime);
               </Col>
             </Row>
           </Carousel.Item>
-          <Carousel.Item>
-            <Row
-              className="d-flex justify-content-between align-items-center"
-              style={{ margin: "20", padding: "20px" }}
-            >
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card1}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card2}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card3}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card4}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card2}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card3}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-            </Row>
-          </Carousel.Item>
-          <Carousel.Item>
-            <Row
-              className="d-flex justify-content-between align-items-center"
-              style={{ margin: "20", padding: "20px" }}
-            >
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card1}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card2}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card3}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card4}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card2}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-              <Col
-                xs="6"
-                md="4"
-                lg="2"
-                style={{ textAlign: "center", marginBottom: "10px" }}
-              >
-                <img
-                  src={card3}
-                  alt=""
-                  style={{ width: "80%", height: "auto", marginRight: "5px" }}
-                />
-              </Col>
-            </Row>
-          </Carousel.Item>
+
           {/* Add more Carousel.Items for additional slides if needed */}
         </Carousel>
       </Container>
@@ -554,239 +553,124 @@ console.log('Time until next prayer:', formattedTime);
               </p>
             </div>
 
-            <Row
-              className="d-flex justify-content-between align-items-center mt-3 "
-              style={{ margin: "10px" }}
-            >
-              <Col sm="4  ">
-                <div className="d-flex justify-content-center align-items-center ">
-                  <img src={image3} alt="" className="mb-3" />
-                  <h5 style={{ width: "100%" }}> احمد بن يوسف السيد </h5>
-                </div>
-              </Col>
+            {
+  !isLoadingMostListen ? (
+    mostListenedData && mostListenedData.length > 0 ? 
+    (
+      mostListenedData.map((item,index) => (
+        <Row
+          className="d-flex justify-content-between align-items-center mt-3 "
+          style={{ margin: "10px" }}
+          key={item.id} // Add a unique key for each item in the map
+        >
+          <Col sm="4">
+            <div className="d-flex justify-content-center align-items-center ">
+              <img src={item.image} alt="" className="mb-3" width={61} height={61}/>
+              <h5 style={{ width: "100%" }}> {item.title} </h5>
+            </div>
+          </Col>
 
-              <Col sm="2">
-                <div className="d-flex justify-content-center responsive-span-home">
-                  <div
-                    style={{
-                      backgroundColor: "#aec3b5",
-                      borderRadius: "50%",
-                      width: "20px",
-                      height: "20px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginLeft: "5px",
-                    }}
-                  >
-                    <MdAudiotrack
-                      style={{
-                        marginBottom: "5px",
-                        color: "white",
-                        position: "relative",
-                        top: "2px",
-                      }}
-                    />
-                  </div>
-                  <span
-                    style={{
-                      marginLeft: "5px",
-                      color: "#828282",
-                      fontWeight: "500",
-                    }}
-                    className="responsive-span-home"
-                  >
-                    45 مقطع صوتي
-                  </span>
-                </div>
-              </Col>
-
-              <Col sm="4" className="responsive-sounds">
-                <div className="d-flex justify-content-center align-items-center  ">
-                <Link to={"/favAudios"}>  <IoHeartCircleSharp
-                    style={{
-                      color: "#878787bd",
-                      fontSize: "35px",
-                      cursor: "pointer",
-                    }}
-                  />
-</Link>
-                  <FaCirclePlay
-                    size={50}
-                    style={{
-                      color: "rgb(209, 155, 111)",
-                      fontSize: "26px",
-                      paddingRight: "15px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </div>
-              </Col>
+          <Col sm="2">
+            {/* <div className="d-flex justify-content-center responsive-span-home">
               <div
                 style={{
-                  marginLeft: "-55px",
-                  marginBottom: "10px",
-                  borderBottom: "1.5px solid #EEEEEE ",
-                  width: "90%",
+                  backgroundColor: "#aec3b5",
+                  borderRadius: "50%",
+                  width: "20px",
+                  height: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginLeft: "5px",
                 }}
-              ></div>
-            </Row>
-
-            <Row
-              className="d-flex justify-content-between align-items-center mt-3 "
-              style={{ margin: "10px" }}
-            >
-              <Col sm="4  ">
-                <div className="d-flex justify-content-center align-items-center ">
-                  <img src={image3} alt="" className="mb-3" />
-                  <h5 style={{ width: "100%" }}> احمد بن يوسف السيد </h5>
-                </div>
-              </Col>
-
-              <Col sm="2">
-                <div className="d-flex justify-content-center responsive-span-home">
-                  <div
-                    style={{
-                      backgroundColor: "#aec3b5",
-                      borderRadius: "50%",
-                      width: "20px",
-                      height: "20px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginLeft: "5px",
-                    }}
-                  >
-                    <MdAudiotrack
-                      style={{
-                        marginBottom: "5px",
-                        color: "white",
-                        position: "relative",
-                        top: "2px",
-                      }}
-                    />
-                  </div>
-                  <span
-                    style={{
-                      marginLeft: "5px",
-                      color: "#828282",
-                      fontWeight: "500",
-                    }}
-                    className="responsive-span-home"
-                  >
-                    45 مقطع صوتي
-                  </span>
-                </div>
-              </Col>
-
-              <Col sm="4" className="responsive-sounds">
-                <div className="d-flex justify-content-center align-items-center  ">
-                                  <Link to={"/favAudios"}>  <IoHeartCircleSharp
-                    style={{
-                      color: "#878787bd",
-                      fontSize: "35px",
-                      cursor: "pointer",
-                    }}
-                  />
-</Link>
-                  <FaCirclePlay
-                    size={50}
-                    style={{
-                      color: "rgb(209, 155, 111)",
-                      fontSize: "26px",
-                      paddingRight: "15px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </div>
-              </Col>
-              <div
+              >
+                <MdAudiotrack
+                  style={{
+                    marginBottom: "5px",
+                    color: "white",
+                    position: "relative",
+                    top: "2px",
+                  }}
+                />
+              </div>
+              <span
                 style={{
-                  marginLeft: "-55px",
-                  marginBottom: "10px",
-                  borderBottom: "1.5px solid #EEEEEE ",
-                  width: "90%",
+                  marginLeft: "5px",
+                  color: "#828282",
+                  fontWeight: "500",
                 }}
-              ></div>
-            </Row>
+                className="responsive-span-home"
+              >
+                45 مقطع صوتي
+              </span>
+            </div> */}
+          </Col>
 
-            <Row
-              className="d-flex justify-content-between align-items-center mt-3 "
-              style={{ margin: "10px" }}
-            >
-              <Col sm="4  ">
-                <div className="d-flex justify-content-center align-items-center ">
-                  <img src={image3} alt="" className="mb-3" />
-                  <h5 style={{ width: "100%" }}> احمد بن يوسف السيد </h5>
-                </div>
-              </Col>
-
-              <Col sm="2">
-                <div className="d-flex justify-content-center responsive-span-home">
-                  <div
-                    style={{
-                      backgroundColor: "#aec3b5",
-                      borderRadius: "50%",
-                      width: "20px",
-                      height: "20px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginLeft: "5px",
-                    }}
-                  >
-                    <MdAudiotrack
+          <Col sm="4" className="responsive-sounds">
+            <div className="d-flex justify-content-center align-items-center  ">
+                
+            <IoHeartCircleSharp
                       style={{
-                        marginBottom: "5px",
-                        color: "white",
-                        position: "relative",
-                        top: "2px",
+                        color: "#878787bd",
+                        fontSize: "30px",
+                        cursor: "pointer",
                       }}
+                      onClick={() => handelAddtoFav(item.id)} // Assuming 'audioId' is accessible in this scope
                     />
-                  </div>
-                  <span
-                    style={{
-                      marginLeft: "5px",
-                      color: "#828282",
-                      fontWeight: "500",
-                    }}
-                    className="responsive-span-home"
-                  >
-                    45 مقطع صوتي
-                  </span>
-                </div>
-              </Col>
+               
+              <button
+                      onClick={() => handlePlay(index)}
+                      style={{ border: "none", background: "#FFFFFF" }}
+                    >
+                      {isPlaying[index] ? (
+                        <FaCirclePause
+                          style={{
+                            color: "rgb(209, 155, 111)",
+                            fontSize: "26px",
+                          }}
+                        />
+                      ) : (
+                        <FaCirclePlay
+                          style={{
+                            color: "rgb(209, 155, 111)",
+                            fontSize: "26px",
+                          }}
+                        />
+                      )}
+                    </button>
+                    <audio
+                      key={index}
+                      ref={(el) => (audioRefs.current[index] = el)}
+                      src={item.audio}
+                      controls
+                      hidden
+                      onLoadedMetadata={handleLoadedMetadata(index)}
+                    />
+            </div>
+          </Col>
+          <div
+            style={{
+              marginLeft: "-55px",
+              marginBottom: "10px",
+              borderBottom: "1.5px solid #EEEEEE ",
+              width: "90%",
+            }}
+          ></div>
+        </Row>
+      ))
+    ) : (
+      <div style={{ height: "140px" }}></div>
+    )
+  ) : (
+    <div style={{ height: "140px" }}>
+      <Spinner animation="border" variant="primary" />
+    </div>
+  )
+}
 
-              <Col sm="4" className="responsive-sounds">
-                <div className="d-flex justify-content-center align-items-center  ">
-                                  <Link to={"/favAudios"}>  <IoHeartCircleSharp
-                    style={{
-                      color: "#878787bd",
-                      fontSize: "35px",
-                      cursor: "pointer",
-                    }}
-                  />
-</Link>
-                  <FaCirclePlay
-                    size={50}
-                    style={{
-                      color: "rgb(209, 155, 111)",
-                      fontSize: "26px",
-                      paddingRight: "15px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </div>
-              </Col>
-              <div
-                style={{
-                  marginLeft: "-55px",
-                  marginBottom: "10px",
-                  borderBottom: "1.5px solid #EEEEEE ",
-                  width: "90%",
-                }}
-              ></div>
-            </Row>
+           
+
+           
           </Col>
 
           <Col sm="12" md="4">
@@ -800,74 +684,75 @@ console.log('Time until next prayer:', formattedTime);
               >
                 متابعه الاستماع
               </h2>
-              {/* <img src={card5} alt="" style={{ width: "100%" }} /> */}
-              <Col
-                md={12}
-                sm={12}
-                style={{ display: "flex", justifyContent: "center" }}
-              >
-                <div
-                  style={{
-                    backgroundColor: "#FFFFFFCC",
-                    borderRadius: "40px",
-                    boxShadow: "4px 7px 22.200000762939453px 6px #0000000D",
-                    border:'1.5px solid #DBDBDB'
-                  }}
-                  id="mobile-responsive"
-                >
-                  <img
-                    src={
-                      "https://i1.sndcdn.com/artworks-jA2OFYdUrideAlyu-AeHsrA-t500x500.jpg"
-                    }
-                    alt="pic"
-                    width={300}
-                    height={280}
-                    style={{ marginTop: "20px", borderRadius: "40px" , boxShadow:'0px 20px 60px 0px #00000026'}}
-                    id="img-mobile-responsive"
-    />
-                  <Col className="mt-4">
-                    <h4>فضل شهر رمضان</h4>
-                    <span style={{ color: "gray" }}>محمد صالح المنجد</span>
-                  </Col>
-                  <Col
-                    className="mt-5"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-around",
-                    }}
-                  >
-                    <TbArrowsExchange2
-                      size={30}
-                      color="gray"
-                      style={{ cursor: "pointer" }}
+              {
+  !isLoadingMostListen ? (
+    mostListenedData && mostListenedData.length > 0 ? (
+      <Col md={12} sm={12} style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ backgroundColor: "#FFFFFFCC", borderRadius: "40px", boxShadow: "4px 7px 22.2px 6px #0000000D", border:'1.5px solid #DBDBDB' }} id="mobile-responsive">
+          <img src={mostListenedData[indexMobileState]?.image||"https://i1.sndcdn.com/artworks-jA2OFYdUrideAlyu-AeHsrA-t500x500.jpg"} alt="pic" width={300} height={280} style={{ marginTop: "20px", borderRadius: "40px" , boxShadow:'0px 20px 60px 0px #00000026'}} id="img-mobile-responsive" />
+          <Col className="mt-4">
+          <h4>{mostListenedData[indexMobileState]?.title || "Default Title"}</h4>
+            {/* <span style={{ color: "gray" }}>محمد صالح المنجد</span> */}
+          </Col>
+          <Col className="mt-5" style={{ display: "flex", alignItems: "center", justifyContent: "space-around" }}>
+            <TbArrowsExchange2 size={30} color="gray" style={{ cursor: "pointer" }} />
+            {indexMobileState < mostListenedData.length - 1 && (
+              <TbPlayerTrackNextFilled size={20} style={{ cursor: "pointer" }} onClick={handleNext} />
+            )}
+
+
+
+             <button
+                      onClick={() => handlePlay(indexMobileState)}
+                      style={{ border: "none", background: "#FFFFFF" }}
+                    >
+                      {isPlaying[indexMobileState] ? (
+                        <FaCirclePause
+                          style={{
+                            color: "rgb(209, 155, 111)",
+                            fontSize: "50px",
+                          }}
+                        />
+                      ) : (
+                        <FaCirclePlay
+                          style={{
+                            color: "rgb(209, 155, 111)",
+                            fontSize: "50px",
+                          }}
+                        />
+                      )}
+                    </button>
+                    <audio
+                      key={indexMobileState}
+                      ref={(el) => (audioRefs.current[indexMobileState] = el)}
+                      src={mostListenedData[indexMobileState]?.audio||null}
+                      controls
+                      hidden
+                      onLoadedMetadata={handleLoadedMetadata(indexMobileState)}
                     />
 
-                    <TbPlayerTrackNextFilled
-                      size={20}
-                      style={{ cursor: "pointer" }}
-                    />
 
-                    <FaCirclePlay
-                      size={50}
-                      color="rgb(209, 155, 111)"
-                      style={{ cursor: "pointer" }}
-                    />
-                    <TbPlayerTrackPrevFilled
-                      size={20}
-                      style={{ cursor: "pointer" }}
-                    />
-                                        <Link to={"/login"}>
 
-                    <MdFileDownload
-                      size={30}
-                      color="rgb(209, 155, 111)"
-                      style={{ cursor: "pointer" }}
-                    />
-                    </Link>
-                  </Col>
-                </div>
-              </Col>
+            {indexMobileState > 0 && (
+              <TbPlayerTrackPrevFilled size={20} style={{ cursor: "pointer" }} onClick={handlePrev} />
+            )}
+            
+              <MdFileDownload size={30} color="rgb(209, 155, 111)" style={{ cursor: "pointer" }} onClick={()=>handelDownloadAudio(mostListenedData[indexMobileState]?.id || null)}/>
+            
+          </Col>
+        </div>
+      </Col>
+    ) : (
+      <div style={{ height: "140px" }}></div>
+    )
+  ) : (
+    <div style={{ height: "140px" }}>
+      <Spinner animation="border" variant="primary" />
+    </div>
+  )
+}
+
+              
             </div>
           </Col>
         </Row>
@@ -885,7 +770,7 @@ console.log('Time until next prayer:', formattedTime);
                   width: "100%", // Set the initial width to 100%
                   marginTop: "15px",
 
-                  "@media (max-width: 768px)": {
+                  "@media (maxWidth: 768px)": {
                     width: "50%", // Adjust the width for screens up to 768px
                     marginLeft: "auto", // Center the image horizontally
                     marginRight: "auto", // Center the image horizontally

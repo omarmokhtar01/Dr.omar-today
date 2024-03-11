@@ -20,7 +20,7 @@ import { MdDownloadForOffline } from "react-icons/md";
 import { PiShareFatFill } from "react-icons/pi";
 import { LuArrowUpDown } from "react-icons/lu";
 import { downloadOneElder, favOneElder, getEldersByIdAudios } from "../../features/elders/eldersSlice";
-import { favOneAudio } from "../../features/audios/audioSlice";
+import { favOneAudio,downloadOneAudio } from "../../features/audios/audioSlice";
 
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
@@ -258,6 +258,55 @@ const AudioCard = () => {
 
       }
         }, [isLoadingFav,checkAddToFav]);
+
+
+
+
+
+
+
+
+
+        const downAudio = useSelector((state) => state.audio.downAudio);
+        const isLoadingDown = useSelector((state) => state.audio.isLoading);
+      
+        const handelDownloadAudio = (audioId) => {
+          const formData = {
+              audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
+              // other formData properties if any
+          };
+          if (!token) {
+            // Token exists, perform the download action
+            // Add your download logic here
+           return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+          }
+          
+          dispatch(downloadOneAudio({ formData, token }))
+                 
+              }
+      
+      
+              useEffect(() => {
+                if (isLoadingDown === false) {
+                  if(downAudio && downAudio.success) {
+                if (downAudio.success === true) {
+                  // Notify "تم الاضافة بنجاح"
+                  notify("تم الأضافة للمفضلة بنجاح", "success");
+                } else {
+                  // Handle other statuses or errors if needed
+                  notify("حدث مشكلة في الاضافة", "error");
+              }
+            }
+      
+            }
+              }, [isLoadingDown,downAudio]);
+      
+
+
+
+
+
+
 
 
         const checkAddToFavElder = useSelector((state) => state.elders.favElder);
@@ -587,7 +636,7 @@ const AudioCard = () => {
                             fontSize: "30px",
                             cursor: "pointer",
                           }}
-                          onClick={handleCheckLogin}
+                          onClick={()=>handelDownloadAudio(item.id)}
                           download="audio_file"
                         />
                       </a>

@@ -17,6 +17,7 @@ import {
   getArticleCategory,
   getArticleCategoryById,
   getArticles,
+  searchArticle,
 } from "../../features/articles/articlesSlich";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { FaClock } from "react-icons/fa";
@@ -95,6 +96,23 @@ const Articles = () => {
   useEffect(() => {
     dispatch(getArticleCategoryById(id));
   }, [dispatch, id]);
+
+
+
+
+  const [searchState, setSearchState] = useState('');
+  const searchListen = useSelector((state) => state.articles.searchArticles);
+  const isLoadingSearch = useSelector((state) => state.articles.isLoadingSearchArticle);
+  const [searchResults, setSearchResults] = useState([]);
+  useEffect(() => {
+    // Dispatch the thunk action creator when the searchState changes
+    dispatch(searchArticle(searchState));
+  }, [dispatch, searchState]);
+
+  useEffect(() => {
+    // Update searchResults whenever searchListen changes
+    setSearchResults(searchListen);
+  }, [searchListen]);
   return (
     <>
       <NavBar />
@@ -213,6 +231,7 @@ const Articles = () => {
                   className="me-2 w-100  search-audio"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
+                  onChange={(e)=>setSearchState(e.target.value)}
                 />
 
                 <IoSearch
@@ -267,78 +286,26 @@ const Articles = () => {
       </Container>
 
       <Container>
-  <Row xs={1} md={2} className="g-4 me-auto mb-5">
-    {id == null ? (
-      !isLoading ? (
-        getData && getData.length > 0 ? (
+      <Row xs={1} md={2} className="g-4 me-auto mb-5">
+  {id == null ? (
+    !isLoading ? (
+      <>
+        {(searchResults && searchResults.length > 0) ? (
           <>
-            {
-                   [...getData]
-                   .sort(sortFunction)
-                   .map((item) => (
+            {[...(searchResults)].sort(sortFunction).map((item) => (
               <Col key={item.id}>
-                {/* Ensure each mapped element has a unique key */}
-                  {/* <IoHeartCircleSharp
-                    style={{
-                      color: "#878787bd",
-                      fontSize: "35px",
-                      cursor: "pointer",
-                      position: "absolute",
-                      zIndex: "2",
-                      margin: "10px",
-                      display: "flex",
-                    }}
-                    onClick={handleCheckLogin}
-                  /> */}
-                <Link
-                  to={`/articleCard/${item.id}`}
-                  style={{ textDecoration: "none" }}
-                >
+                <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
                   <Card style={{ width: "100%", borderRadius: "15px" }}>
-                    <Card.Img
-                      variant="top"
-                      src={item.image}
-                      width={100}
-                      height={300}
-                    />
+                    <Card.Img variant="top" src={item.image} width={100} height={300} />
                     <Card.Body>
-                      <Card.Title style={{ display: "flex" }}>
-                        {item.title}
-                      </Card.Title>
-                      <Card.Text
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <p
-                          style={{
-                            color: "rgba(130, 130, 130, 1)",
-                            fontSize: "14px",
-                          }}
-                        >
-                          <FaClock
-                            style={{
-                              marginLeft: "8px",
-                              color: "rgb(209, 155, 111)",
-                              fontSize: "17px",
-                            }}
-                          />
+                      <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
+                      <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
+                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                          <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
                           منذ ساعة
                         </p>
-                        <p
-                          style={{
-                            color: "rgba(130, 130, 130, 1)",
-                            fontSize: "14px",
-                          }}
-                        >
-                          <IoEye
-                            style={{
-                              marginLeft: "8px",
-                              color: "rgb(209, 155, 111)",
-                              fontSize: "20px",
-                            }}
-                          />
+                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                          <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
                           23 مشاهدة
                         </p>
                       </Card.Text>
@@ -349,84 +316,23 @@ const Articles = () => {
             ))}
           </>
         ) : (
-          <div style={{ height: "140px" }}></div>
-        )
-      ) : (
-        <div style={{ height: "140px" }}>
-          <Spinner animation="border" variant="primary" />
-        </div>
-      )
-    ) : !isLoading ? (
-        getDataById && getDataById.length > 0 ? (
           <>
-                     {[...getDataById] // Create a shallow copy of getDataById array
-            .sort(sortFunction)
-            .map((item) => (
+        {(getData && getData.length > 0) ? (
+          <>
+            {[...(getData)].sort(sortFunction).map((item) => (
               <Col key={item.id}>
-                {/* Ensure each mapped element has a unique key */}
-               
-                  {/* <IoHeartCircleSharp
-                    style={{
-                      color: "#878787bd",
-                      fontSize: "35px",
-                      cursor: "pointer",
-                      position: "absolute",
-                      zIndex: "2",
-                      margin: "10px",
-                      display: "flex",
-                    }}
-                    onClick={handleCheckLogin}
-                  /> */}
-                
-                <Link
-                  to={`/articleCard/${item.id}`}
-                  style={{ textDecoration: "none" }}
-                >
+                <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
                   <Card style={{ width: "100%", borderRadius: "15px" }}>
-                    <Card.Img
-                      variant="top"
-                      src={item.image}
-                      width={100}
-                      height={300}
-                    />
+                    <Card.Img variant="top" src={item.image} width={100} height={300} />
                     <Card.Body>
-                      <Card.Title style={{ display: "flex" }}>
-                        {item.title}
-                      </Card.Title>
-                      <Card.Text
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <p
-                          style={{
-                            color: "rgba(130, 130, 130, 1)",
-                            fontSize: "14px",
-                          }}
-                        >
-                          <FaClock
-                            style={{
-                              marginLeft: "8px",
-                              color: "rgb(209, 155, 111)",
-                              fontSize: "17px",
-                            }}
-                          />
+                      <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
+                      <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
+                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                          <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
                           منذ ساعة
                         </p>
-                        <p
-                          style={{
-                            color: "rgba(130, 130, 130, 1)",
-                            fontSize: "14px",
-                          }}
-                        >
-                          <IoEye
-                            style={{
-                              marginLeft: "8px",
-                              color: "rgb(209, 155, 111)",
-                              fontSize: "20px",
-                            }}
-                          />
+                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                          <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
                           23 مشاهدة
                         </p>
                       </Card.Text>
@@ -437,14 +343,88 @@ const Articles = () => {
             ))}
           </>
         ) : (
-          <div style={{ height: "140px" }}></div>
-        )
-      ) : (
-        <div style={{ height: "140px" }}>
-          <Spinner animation="border" variant="primary" />
-        </div>
-      )}
-  </Row>
+          <div style={{ height: "140px" }}>
+            No search results found.
+          </div>
+        )}
+      </>
+        )}
+      </>
+    ) : (
+      <div style={{ height: "140px" }}></div>
+    )
+  ) : (
+    !isLoading ? (
+      <>
+        {(searchResults && searchResults.length > 0) ? (
+          <>
+            {[...(searchResults)].sort(sortFunction).map((item) => (
+              <Col key={item.id}>
+                <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
+                  <Card style={{ width: "100%", borderRadius: "15px" }}>
+                    <Card.Img variant="top" src={item.image} width={100} height={300} />
+                    <Card.Body>
+                      <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
+                      <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
+                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                          <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                          منذ ساعة
+                        </p>
+                        <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                          <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                          23 مشاهدة
+                        </p>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Link>
+              </Col>
+            ))}
+          </>
+        ) : (
+          <>
+            {Array.isArray(getDataById) && getDataById.length > 0 ? (
+              <>
+                {[...(getDataById)].sort(sortFunction).map((item) => (
+                  <Col key={item.id}>
+                    <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
+                      <Card style={{ width: "100%", borderRadius: "15px" }}>
+                        <Card.Img variant="top" src={item.image} width={100} height={300} />
+                        <Card.Body>
+                          <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
+                          <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
+                            <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                              <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                              منذ ساعة
+                            </p>
+                            <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                              <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                              23 مشاهدة
+                            </p>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Link>
+                  </Col>
+                ))}
+              </>
+            ) : (
+              <div style={{ height: "140px" }}></div>
+            )}
+          </>
+        )}
+      </>
+    ) : (
+      <div style={{ height: "140px" }}>
+        <Spinner animation="border" variant="primary" />
+      </div>
+    )
+  )}
+</Row>
+
+
+
+
 </Container>
 <ToastContainer/>
     </>

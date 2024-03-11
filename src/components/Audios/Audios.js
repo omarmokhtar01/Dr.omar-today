@@ -19,6 +19,7 @@ import {
   getAudioCategory,
   getAudioCategoryById,
   getAudios,
+  searchListened,
 } from "../../features/audios/audioSlice";
 import { Link } from "react-router-dom";
 import NavBar from "../Navbar/NavBar";
@@ -222,6 +223,22 @@ const Audios = () => {
 
 
 
+
+
+        const [searchState, setSearchState] = useState('');
+        const searchListen = useSelector((state) => state.audio.searchListen);
+        const isLoadingSearch = useSelector((state) => state.audio.isLoadingSearch);
+        const [searchResults, setSearchResults] = useState([]);
+        useEffect(() => {
+          // Dispatch the thunk action creator when the searchState changes
+          dispatch(searchListened(searchState));
+        }, [dispatch, searchState]);
+      
+        useEffect(() => {
+          // Update searchResults whenever searchListen changes
+          setSearchResults(searchListen);
+        }, [searchListen]);
+      
   return (
     <>
       <NavBar />
@@ -359,6 +376,7 @@ const Audios = () => {
                   className="me-2 w-100  search-audio"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
+                  onChange={(e)=>setSearchState(e.target.value)}
                 />
 
                 <IoSearch
@@ -442,189 +460,337 @@ const Audios = () => {
       </Container>
 
       <Container>
-        <Row className="m-auto">
-          {id == null ? (
-            !isLoading ? (
-              getAll && getAll.length > 0 ? (
-                [...getAll].sort(sortFunction).map((item) => {
-                  return (
-                    <Col xs="12" md="12" lg="6" className="mb-3">
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          border: "2px solid rgba(236, 236, 236, 1)",
-                          borderRadius: "15px",
-                          width: "auto",
-                        }}
-                      >
-                        <div
-                          style={{ display: "flex", justifyContent: "center" }}
-                        >
-                          <Link to={`/audioCard/${item.id}`}>
-                            <img
-                              src={item.image}
-                              alt="img"
-                              width={200}
-                              height={200}
-                              id="img-card-audio"
-                            />
-                          </Link>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              flexDirection: "column",
-                              padding: "20px",
-                            }}
-                          >
-                            <h5>{item.name}</h5>
-                            <p
-                              style={{
-                                color: "rgb(130, 130, 130)",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {" "}
-                              {item.count_audios} مقطع صوتي
-                            </p>
-                          </div>
-                        </div>
-
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            marginLeft: "60px",
-                            gap: "20px",
-                          }}
-                          id="sounds-icons"
-                        >
-                          {" "}
-                          <IoHeartCircleSharp
-                            style={{
-                              color: "#878787bd",
-                              fontSize: "40px",
-                              cursor: "pointer",
-                            }}
-                            onClick={()=>handelAddtoFavElder(item.id)}
-                          />
-                          <MdDownloadForOffline
-                            style={{
-                              color: "rgb(219 176 134)",
-                              fontSize: "42px",
-                              paddingLeft: "5px",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => downloadAudiosAsZip(item.id)}
-                            />
-                        </div>
-                      </div>
-                    </Col>
-                  );
-                })
-              ) : (
-                <div style={{ height: "140px" }}></div>
-              )
-            ) : (
-              <div style={{ height: "140px" }}>
+      <Row className="m-auto">
+  {searchState !== '' && searchResults.length > 0 ? (
+    searchResults.map((item) => (
+      <Col xs="12" md="12" lg="6" className="mb-3">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            border: "2px solid rgba(236, 236, 236, 1)",
+            borderRadius: "15px",
+            width: "auto",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Link to={`/audioCard/${item.id}`}>
+              <img
+                src={item.image}
+                alt="img"
+                width={200}
+                height={200}
+                id="img-card-audio"
+              />
+            </Link>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                padding: "20px",
+              }}
+            >
+              <h5>{item.name}</h5>
+              <p
+                style={{
+                  color: "rgb(130, 130, 130)",
+                  fontWeight: "bold",
+                }}
+              >
                 {" "}
-                <Spinner animation="border" variant="primary" />
-              </div>
-            )
-          ) : !isLoading ? (
-            getAudioCategoryId &&
-            Array.isArray(getAudioCategoryId) &&
-            getAudioCategoryId.length > 0 ? (
-              [...getAudioCategoryId].sort(sortFunction).map((item) => {
-                return (
-                  <Col xs="12" md="12" lg="6" className="mb-3">
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        border: "2px solid rgba(236, 236, 236, 1)",
-                        borderRadius: "15px",
-                        width: "auto",
-                      }}
-                    >
-                      <div
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Link to={`/audioCard/${item.id}`}>
-                          <img
-                            src={item.image}
-                            alt="img"
-                            width={200}
-                            height={200}
-                            id="img-card-audio"
-                          />
-                        </Link>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            flexDirection: "column",
-                            padding: "20px",
-                          }}
-                        >
-                          <h5>{item.name}</h5>
-                          <p
-                            style={{
-                              color: "rgb(130, 130, 130)",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {" "}
-                            {item.count_audios} مقطع صوتي
-                          </p>
-                        </div>
-                      </div>
-
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          marginLeft: "60px",
-                          gap: "20px",
-                        }}
-                        id="sounds-icons"
-                      >
-                        {" "}
-                        <IoHeartCircleSharp
-                          style={{
-                            color: "#878787bd",
-                            fontSize: "40px",
-                            cursor: "pointer",
-                          }}
-                          onClick={()=>handelAddtoFavElder(item.id)}
-                        />
-                        <MdDownloadForOffline
-                          onClick={()=>downloadAudiosAsZip(item.id,item.id)}
-                          style={{
-                            color: "rgb(219 176 134)",
-                            fontSize: "42px",
-                            paddingLeft: "5px",
-                            cursor: "pointer",
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </Col>
-                );
-              })
-            ) : (
-              <div style={{ height: "140px" }}></div>
-            )
-          ) : (
-            <div style={{ height: "140px" }}>
-              {" "}
-              <Spinner animation="border" variant="primary" />
+                {item.count_audios} مقطع صوتي
+              </p>
             </div>
-          )}
-        </Row>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              marginLeft: "60px",
+              gap: "20px",
+            }}
+            id="sounds-icons"
+          >
+            {" "}
+            <IoHeartCircleSharp
+              style={{
+                color: "#878787bd",
+                fontSize: "40px",
+                cursor: "pointer",
+              }}
+              onClick={()=>handelAddtoFavElder(item.id)}
+            />
+            <MdDownloadForOffline
+              style={{
+                color: "rgb(219 176 134)",
+                fontSize: "42px",
+                paddingLeft: "5px",
+                cursor: "pointer",
+              }}
+              onClick={() => downloadAudiosAsZip(item.id)}
+            />
+          </div>
+        </div>
+      </Col>
+    ))
+  ) : searchResults.length === 0 ? (
+    <div style={{ textAlign: "center" }}>لا يوجد بيانات</div>
+  ) : id == null ? (
+    !isLoading ? (
+      getAll && getAll.length > 0 ? 
+      ([...getAll].sort(sortFunction).map((item) => {
+        return (
+          <Col xs="12" md="12" lg="6" className="mb-3">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                border: "2px solid rgba(236, 236, 236, 1)",
+                borderRadius: "15px",
+                width: "auto",
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Link to={`/audioCard/${item.id}`}>
+                  <img
+                    src={item.image}
+                    alt="img"
+                    width={200}
+                    height={200}
+                    id="img-card-audio"
+                  />
+                </Link>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    padding: "20px",
+                  }}
+                >
+                  <h5>{item.name}</h5>
+                  <p
+                    style={{
+                      color: "rgb(130, 130, 130)",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    {item.count_audios} مقطع صوتي
+                  </p>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  marginLeft: "60px",
+                  gap: "20px",
+                }}
+                id="sounds-icons"
+              >
+                {" "}
+                <IoHeartCircleSharp
+                  style={{
+                    color: "#878787bd",
+                    fontSize: "40px",
+                    cursor: "pointer",
+                  }}
+                  onClick={()=>handelAddtoFavElder(item.id)}
+                />
+                <MdDownloadForOffline
+                  style={{
+                    color: "rgb(219 176 134)",
+                    fontSize: "42px",
+                    paddingLeft: "5px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => downloadAudiosAsZip(item.id)}
+                />
+              </div>
+            </div>
+          </Col>
+        );
+      })) : (
+        <div style={{ height: "140px" }}></div>
+      )
+    ) : (
+      <div style={{ height: "140px" }}>
+        {" "}
+        <Spinner animation="border" variant="primary" />
+      </div>
+    )
+  ) : !isLoading ? (
+    searchState !== '' && searchResults.length > 0 ? (
+      searchResults.map((item) => (
+        <Col xs="12" md="12" lg="6" className="mb-3">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              border: "2px solid rgba(236, 236, 236, 1)",
+              borderRadius: "15px",
+              width: "auto",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Link to={`/audioCard/${item.id}`}>
+                <img
+                  src={item.image}
+                  alt="img"
+                  width={200}
+                  height={200}
+                  id="img-card-audio"
+                />
+              </Link>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  padding: "20px",
+                }}
+              >
+                <h5>{item.name}</h5>
+                <p
+                  style={{
+                    color: "rgb(130, 130, 130)",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {" "}
+                  {item.count_audios} مقطع صوتي
+                </p>
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                marginLeft: "60px",
+                gap: "20px",
+              }}
+              id="sounds-icons"
+            >
+              {" "}
+              <IoHeartCircleSharp
+                style={{
+                  color: "#878787bd",
+                  fontSize: "40px",
+                  cursor: "pointer",
+                }}
+                onClick={()=>handelAddtoFavElder(item.id)}
+              />
+              <MdDownloadForOffline
+                onClick={()=>downloadAudiosAsZip(item.id,item.id)}
+                style={{
+                  color: "rgb(219 176 134)",
+                  fontSize: "42px",
+                  paddingLeft: "5px",
+                  cursor: "pointer",
+                }}
+              />
+            </div>
+          </div>
+        </Col>
+      ))
+    ) : (
+      getAudioCategoryId &&
+      Array.isArray(getAudioCategoryId) &&
+      getAudioCategoryId.length > 0 ? (
+        [...getAudioCategoryId].sort(sortFunction).map((item) => (
+          <Col xs="12" md="12" lg="6" className="mb-3">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                border: "2px solid rgba(236, 236, 236, 1)",
+                borderRadius: "15px",
+                width: "auto",
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Link to={`/audioCard/${item.id}`}>
+                  <img
+                    src={item.image}
+                    alt="img"
+                    width={200}
+                    height={200}
+                    id="img-card-audio"
+                  />
+                </Link>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    padding: "20px",
+                  }}
+                >
+                  <h5>{item.name}</h5>
+                  <p
+                    style={{
+                      color: "rgb(130, 130, 130)",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {" "}
+                    {item.count_audios} مقطع صوتي
+                  </p>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  marginLeft: "60px",
+                  gap: "20px",
+                }}
+                id="sounds-icons"
+              >
+                {" "}
+                <IoHeartCircleSharp
+                  style={{
+                    color: "#878787bd",
+                    fontSize: "40px",
+                    cursor: "pointer",
+                  }}
+                  onClick={()=>handelAddtoFavElder(item.id)}
+                />
+                <MdDownloadForOffline
+                  onClick={()=>downloadAudiosAsZip(item.id,item.id)}
+                  style={{
+                    color: "rgb(219 176 134)",
+                    fontSize: "42px",
+                    paddingLeft: "5px",
+                    cursor: "pointer",
+                  }}
+                />
+              </div>
+            </div>
+          </Col>
+        ))
+      ) : (
+        <div style={{ height: "140px" }}></div>
+      )
+    )
+  ) : (
+    <div style={{ height: "140px" }}>
+      {" "}
+      <Spinner animation="border" variant="primary" />
+    </div>
+  )}
+</Row>
+
         <ToastContainer />
       </Container>
     </>
