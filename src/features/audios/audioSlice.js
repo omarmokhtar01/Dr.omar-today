@@ -86,7 +86,7 @@ const initialState = {
                   Authorization: `Bearer ${token}` // Include token in the request headers
               }
           });
-          console.log(response.data);
+          console.log(response.status);
         return response.data;
       } catch (error) {
         return error

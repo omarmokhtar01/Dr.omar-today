@@ -271,7 +271,7 @@ const handelAddtoFav = (audioId) => {
 
       const downAudio = useSelector((state) => state.audio.downAudio);
       const isLoadingDown = useSelector((state) => state.audio.isLoadingDown);
-    console.log(downAudio);
+    console.log(downAudio.status);
       const handelDownloadAudio = (audioId) => {
         const formData = {
             audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
@@ -288,20 +288,22 @@ const handelAddtoFav = (audioId) => {
             }
     
     
-            useEffect(() => {
-              if (isLoadingDown === false) {
-                if(downAudio) {
-              
-                // Notify "تم الاضافة بنجاح"
-                notify("سيتم بدأ التحميل الان", "success");
-              } else {
-                // Handle other statuses or errors if needed
-                notify("حدث مشكلة في الاضافة", "error");
+        //     useEffect(() => {
+        //       if (isLoadingDown === false) {
+        //         if(downAudio && downAudio.success) {
+        //           if(downAudio.success === true) {
+
+        //         // Notify "تم الاضافة بنجاح"
+        //         notify("سيتم بدأ التحميل الان", "success");
+        //       } else {
+        //         // Handle other statuses or errors if needed
+        //         notify("حدث مشكلة في التحميل", "error");
            
-          }
+        //   }
+        // }
     
-          }
-            }, [isLoadingDown,downAudio]);
+        //   }
+        //     }, [isLoadingDown,downAudio]);
 
       
       return (
