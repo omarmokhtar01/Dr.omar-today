@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./fav.css";
 import NavBar from "../Navbar/NavBar";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import img1 from "../../images/img1.png";
 import heart1 from "../../images/redhearticon.png";
@@ -245,7 +245,9 @@ const FavBook = () => {
           
 
           
-      {getData ? (
+       {
+          !isLoading ?(
+            getData && getData.length >0 ? (
             <>
               {getData.map((item, index) => (
                 <div class="col section-col ">
@@ -277,8 +279,11 @@ const FavBook = () => {
             </div>
           </div>
               ))}
-            </>
-          ) : null}
+              </>
+            ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          
+            ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
+          }
       
 {/* 
           <div class="col section-col ">

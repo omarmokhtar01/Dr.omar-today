@@ -154,7 +154,7 @@ useEffect(() => {
           {
   audioCategory ? (
     <>
-      {audioCategory.map((item, index) => (
+      {audioCategory && audioCategory.length > 0&&audioCategory.map((item, index) => (
             
         <Col
           key={item.id}
@@ -340,10 +340,10 @@ useEffect(() => {
         </Link>
         );
       })) : (
-        <div style={{ height: "140px" }}></div>
+         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
       )
     ) : (
-      <div style={{ height: "140px" }}>
+      <div style={{ height: "280px" }}>
         {" "}
         <Spinner animation="border" variant="primary" />
       </div>
@@ -393,11 +393,11 @@ useEffect(() => {
         </Link>
         ))
       ) : (
-        <div style={{ height: "140px" }}></div>
+         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
       )
     )
   ) : (
-    <div style={{ height: "140px" }}>
+    <div style={{ height: "280px" }}>
       {" "}
       <Spinner animation="border" variant="primary" />
     </div>

@@ -704,16 +704,16 @@ console.log(getDataOne);
           );
         })
       ) : (
-        <div style={{ height: "140px" }}></div>
+         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
       )
     ) : (
-      <div style={{ height: "140px" }}></div>
+       <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
     )
   ) : (
-    <div style={{ height: "140px" }}></div>
+     <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
   )
 ) : (
-  <div style={{ height: "220px" }}>
+  <div style={{ height: "280px" }}>
     {" "}
     <Spinner animation="border" variant="primary" />
   </div>

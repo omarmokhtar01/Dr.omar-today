@@ -317,7 +317,7 @@ const Books = () => {
                 <p style={{ color: "rgba(122, 128, 138, 1)" }}>مسح الكل</p>
               </div>
               {getMainCategory
-                ? getMainCategory.map((item, index) => (
+                ?getMainCategory&& getMainCategory.length > 0&& getMainCategory.map((item, index) => (
                     <Accordion key={index}>
                       <Accordion.Item eventKey="0">
                         <Accordion.Header>{item.title}</Accordion.Header>
@@ -601,11 +601,11 @@ const Books = () => {
           </div>
         </Col>
       ))
-      : <div style={{ height: "140px" }}></div>
+      :  <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
     ) : (
-      <div style={{ height: "140px" }}>
-        <Spinner animation="border" variant="primary" />
-      </div>
+      <div style={{ height: "280px" }}>
+      <Spinner animation="border" variant="primary" />
+    </div>
     )
   ) : !isLoading ? (
     searchState !== '' && searchResults.length > 0 ? (
@@ -767,11 +767,11 @@ const Books = () => {
           </Col>
         ))
       ) : (
-        <div style={{ height: "140px" }}></div>
+         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
       )
     )
   ) : (
-    <div style={{ height: "140px" }}>
+    <div style={{ height: "280px" }}>
       <Spinner animation="border" variant="primary" />
     </div>
   )}

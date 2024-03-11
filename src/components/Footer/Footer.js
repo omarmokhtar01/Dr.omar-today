@@ -17,7 +17,9 @@ const Footer = () => {
           <Row className="d-flex justify-content-center align-items-center w-100 ">
             <Col sm="12">
               <div style={{ width: "100%" }}>
-                <img src={footer} alt="" style={{ marginTop: "15px" }} />
+                <a href="/">
+                  <img src={footer} alt="" style={{ marginTop: "15px" }} />
+                  </a>
 
                 <div className="d-flex justify-content-center align-items-center d-flex-menu ">
                   <a href="/">الرئيسيه</a>

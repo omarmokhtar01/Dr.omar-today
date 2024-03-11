@@ -305,9 +305,11 @@ const Audios = () => {
             </div>
           </Col>
 
-          {audioCategory ? (
+          {
+          !isLoading?(
+          audioCategory ? (
             <>
-              {audioCategory.map((item, index) => (
+              {audioCategory && audioCategory.length > 0 && (audioCategory).map((item, index) => (
                 <Col
                   key={item.id}
                   xs="6"
@@ -353,7 +355,13 @@ const Audios = () => {
                 </Col>
               ))}
             </>
-          ) : null}
+          ) :  <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          ):(
+            <div style={{height:'280px'}}>
+            <Spinner animation="border" variant="primary" />
+          </div>
+            )
+        }
         </Row>
       </Container>
 
@@ -617,10 +625,10 @@ const Audios = () => {
           </Col>
         );
       })) : (
-        <div style={{ height: "140px" }}></div>
+        <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
       )
     ) : (
-      <div style={{ height: "140px" }}>
+      <div style={{ height: "280px" }}>
         {" "}
         <Spinner animation="border" variant="primary" />
       </div>
@@ -780,11 +788,11 @@ const Audios = () => {
           </Col>
         ))
       ) : (
-        <div style={{ height: "140px" }}></div>
+        <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
       )
     )
   ) : (
-    <div style={{ height: "140px" }}>
+    <div style={{ height: "280px" }}>
       {" "}
       <Spinner animation="border" variant="primary" />
     </div>

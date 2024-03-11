@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import NavBar from "../Navbar/NavBar";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import bookSort from "../../images/book-sort.png";
 import bookSort1 from "../../images/book-sort1.png";
@@ -232,10 +232,13 @@ const DownloadBooks = () => {
           style={{ width: "100%" }}
         >
           
-          {getData ? (
+          {
+          !isLoading ?(
+
+          getData && getData.length > 0 ? (
             <>
               {getData.map((item, index) => (
-                <div class="col">
+                <div class="col" key={item.id}>
             <div>
               <img src={item.image} alt="" className="book-download" height='247px' width='169'   />
 
@@ -267,7 +270,10 @@ const DownloadBooks = () => {
           </div>
               ))}
             </>
-          ) : null}
+          ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+        
+          ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
+        }
        
           {/* <div class="col">
             <div>

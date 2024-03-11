@@ -227,7 +227,7 @@ const BooksSort = () => {
           {
             getDataBooksCategory ? (
               <>
-                {getDataBooksCategory.map((item, index) => (
+                {getDataBooksCategory&&getDataBooksCategory.length > 0&&getDataBooksCategory.map((item, index) => (
                   <Col
                   key={item.id}
                   xs="6"
@@ -562,9 +562,9 @@ const BooksSort = () => {
         </div>
       </Col>
       ))
-      : <div style={{ height: "140px" }}></div>
+      :  <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
     ) : (
-      <div style={{ height: "140px" }}>
+      <div style={{ height: "280px" }}>
         <Spinner animation="border" variant="primary" />
       </div>
     )
@@ -719,11 +719,11 @@ const BooksSort = () => {
         </Col>
         ))
       ) : (
-        <div style={{ height: "140px" }}></div>
+         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
       )
     )
   ) : (
-    <div style={{ height: "140px" }}>
+    <div style={{ height: "280px" }}>
       <Spinner animation="border" variant="primary" />
     </div>
   )}

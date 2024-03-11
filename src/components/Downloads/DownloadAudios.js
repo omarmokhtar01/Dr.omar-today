@@ -104,6 +104,15 @@ const DownloadAudios = () => {
       setDurations(newDurations);
     };
   };
+
+  const formatDuration = (duration) => {
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.floor((duration % 3600) / 60);
+    const seconds = Math.floor(duration % 60);
+    return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+
   return (
     <>
       <NavBar />
@@ -326,7 +335,7 @@ const DownloadAudios = () => {
                   padding: "15px",
                 }}
               >
-                            {durationFormatted} دقيقة
+  {durations[index] ? formatDuration(durations[index]) : 'Loading...'}
               </p>
             </Col>
 
@@ -342,13 +351,13 @@ const DownloadAudios = () => {
               >
                 {/* <RiDeleteBin5Line style={{ fontSize: "25px", color: "gray" }} /> */}
 
-                <IoHeartCircleSharp
+                {/* <IoHeartCircleSharp
                   style={{
                     color: "#878787bd",
                     fontSize: "35px",
                     cursor: "pointer",
                   }}
-                />
+                /> */}
                 <button
                               onClick={() => handlePlay(index)}
                               style={{ border: "none", background: "#FFFFFF" }}
@@ -392,12 +401,9 @@ const DownloadAudios = () => {
       );
     })
   ) : (
-    <div style={{ height: "220px" }}>
-      {" "}
-      <Spinner animation="border" variant="primary" />
-    </div>
+    <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
   )
-) : null}
+) :<div style={{ height: "280px" }}> <Spinner animation="border" variant="primary" /> </div>}
 
     
 

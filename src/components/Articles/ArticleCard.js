@@ -233,13 +233,13 @@ const ArticleCard = () => {
                   </div>
                 </Col>
               ) : (
-                <div style={{ height: "140px" }}></div>
+                <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
               )
             ) : (
-              <div style={{ height: "140px" }}></div>
+              <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
             )
           ) : (
-            <div style={{ height: "200px" }}>
+            <div style={{ height: "280px" }}>
               {" "}
               <Spinner animation="border" variant="primary" />
             </div>

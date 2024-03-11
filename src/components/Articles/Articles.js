@@ -170,7 +170,7 @@ const Articles = () => {
           {
             getDataCategory ? (
               <>
-                {getDataCategory.map((img, index) => (
+                {getDataCategory&& getDataCategory.length > 0&&getDataCategory.map((img, index) => (
                   <Col
                     key={index}
                     xs="6"
@@ -394,11 +394,12 @@ const Articles = () => {
         </Col>
         ))
       ) : (
-        <div style={{ height: "140px" }}></div>
+         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+
       )
     )
   ) : (
-    <div style={{ height: "140px" }}>
+    <div style={{height:'280px'}}>
       <Spinner animation="border" variant="primary" />
     </div>
   )}

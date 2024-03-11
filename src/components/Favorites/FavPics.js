@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row,Spinner } from "react-bootstrap";
 import heart1 from "../../images/redhearticon.png";
 import pic1 from "../../images/pic1.png";
 import pic2 from "../../images/pic2.png";
@@ -262,7 +262,8 @@ const FavPics = () => {
             </div>
           </Col>       */}
 
-          {getData ? (
+          {          !isLoading ?(
+            getData && getData.length >0 ? (
             <>
               {getData.map((item, index) => (
                 <Col xl={6} lg={12} md={12} sm={12} xs={12} >
@@ -287,8 +288,11 @@ const FavPics = () => {
             </div> */}
                 </Col> 
               ))}
-            </>
-          ) : null}
+              </>
+            ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          
+            ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
+          }
           {/* <Col>
             <div>
               <img

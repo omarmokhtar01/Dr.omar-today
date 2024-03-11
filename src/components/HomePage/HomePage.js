@@ -42,12 +42,15 @@ import { useSelector } from 'react-redux';
 import { lastVersion } from "../../features/books/booksSlice";
 import { downloadOneAudio, favOneAudio, mostListened } from "../../features/audios/audioSlice";
 import  Cookies  from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const Adhan = require('adhan');
 
 const HomePage = () => {
 
 const dispatch = useDispatch()
+const navigate = useNavigate()
+
 const lastVersionData = useSelector((state) => state.books.lastVersionData);
 const isLoadingLastVersion = useSelector((state) => state.books.isLoadingLastVersion);
 
@@ -152,10 +155,11 @@ if (nextPrayerTime) {
 // Convert the remaining time to hours, minutes, and seconds
 const hours = Math.floor(remainingTime / (1000 * 60 * 60));
 const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+// const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
 // Format the hours, minutes, and seconds with leading zeros if necessary
-const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+// const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
 const prayerNames = {
   fajr: 'الفجر',
@@ -226,25 +230,28 @@ const handelAddtoFav = (audioId) => {
     // Add your download logic here
    return notify("من فضلك قم بتسجيل الدخول اولا", "error");
   }
+  notify("تم الأضافة للمفضلة بنجاح", "success");
+
   dispatch(favOneAudio({ formData, token }))
+  setTimeout(() => {
+    navigate("/favAudios")
+
+  }, 1500);
+
          
       }
 
 
-      useEffect(() => {
-        if (isLoadingFav === false) {
-          if(checkAddToFav && checkAddToFav.success) {
-        if (checkAddToFav.success === true) {
-          // Notify "تم الاضافة بنجاح"
-          notify("تم الأضافة للمفضلة بنجاح", "success");
-        } else {
-          // Handle other statuses or errors if needed
-          notify("حدث مشكلة في الاضافة", "error");
-      }
-    }
-
-    }
-      }, [isLoadingFav,checkAddToFav]);
+      // useEffect(() => {
+      //   if (isLoadingFav === false ) {
+      //     if(checkAddToFav)
+      //     {if (checkAddToFav.success === true && checkAddToFav.message ==="The Audio has been added to your favorites") {
+      //     } else {
+      //       notify("حدث مشكلة في الاضافة", "error");
+      //     }}
+      //   }
+      // }, [isLoadingFav]);
+      
 
 
  
@@ -435,11 +442,11 @@ const handelAddtoFav = (audioId) => {
               <img src={icon3} alt="" style={{ marginLeft: "5px" }} />
               اصدارات جديدة{" "}
             </p>
-            <p
+            {/* <p
               style={{ color: "#D19B6F", fontSize: "16px", fontWeight: "400" }}
             >
               عرض المزيد
-            </p>
+            </p> */}
           </div>
         </Row>
       </Container>

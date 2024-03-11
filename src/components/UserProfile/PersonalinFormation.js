@@ -159,7 +159,7 @@ const PersonalinFormation = () => {
                         paddingRight: "9px",
                       }}
                     />
-                    <button
+                    {/* <button
                       style={{
                         position: "absolute",
                         margin: "13px 100px 13px 13px",
@@ -173,7 +173,7 @@ const PersonalinFormation = () => {
                       className="active-button"
                     >
                       تفعيل
-                    </button>
+                    </button> */}
                   </div>
 
                   <Form.Control

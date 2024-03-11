@@ -199,9 +199,11 @@ const handleDownload = (picId) => {
             </div>
           </Col>
 
-          {getAllImgData ? (
+          {
+          !isLoadingAllImgCategory ? (
+          getAllImgData ? (
             <>
-              {getAllImgData.map((item, index) => (
+              {getAllImgData && getAllImgData.length > 0 &&getAllImgData.map((item, index) => (
                 <Col
                   key={item.id}
                   xs="6"
@@ -247,7 +249,12 @@ const handleDownload = (picId) => {
                 </Col>
               ))}
             </>
-          ) : null}
+          ) :  <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          ):<div style={{height:'280px'}}>
+          <Spinner animation="border" variant="primary" />
+        </div>
+        
+        }
         </Row>
       </Container>
 

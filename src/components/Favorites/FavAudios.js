@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -11,8 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { IoIosHeart } from "react-icons/io";
-import { FaCirclePlay } from "react-icons/fa6";
+import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 import { MdDownloadForOffline } from "react-icons/md";
+import notify from "../UseNotifications/useNotification";
+import { downloadOneAudio } from "../../features/audios/audioSlice";
 
 const FavAudios = () => {
   const token = Cookies.get("token");
@@ -52,6 +54,129 @@ const FavAudios = () => {
     }
   }, [isLoading]);
 
+  const downloadAudio = async (audioUrl) => {
+    try {
+      const response = await fetch(audioUrl);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      
+      const blob = await response.blob();
+      
+      // Create a temporary link element
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'audio_file.mp3'; // Set the desired filename with the correct extension
+      
+      // Append the link to the body, trigger the click event, and remove the link afterward
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+    } catch (error) {
+      console.error('Error downloading audio:', error);
+      notify("حدثت مشكلة أثناء تحميل الصوت", "error");
+    }
+  };
+  
+  
+  
+  const handleCheckLogin = (audioUrl) => {
+    let token = Cookies.get("token");
+  
+    if (token) {
+      // Token exists, perform the download action if the URL is valid
+      if (audioUrl) {
+        notify("تم التحميل", "success");
+        downloadAudio(audioUrl);
+      } else {
+        notify("عذرًا، الصوت غير متاح حاليًا", "error");
+      }
+    } else {
+      // Token doesn't exist, notify the user to log in
+      notify("من فضلك قم بتسجيل الدخول أولاً", "error");
+    }
+  };
+
+  const audioRefs = useRef([]);
+  const [durations, setDurations] = useState([]);
+  const [durationFormatted, setDurationFormatted] = useState("0:00");
+  const [isPlaying, setIsPlaying] = useState([]);
+
+  useEffect(() => {
+    audioRefs.current = audioRefs.current.slice(0, durations.length);
+    setIsPlaying(new Array(durations.length).fill(false));
+  }, [durations]);
+
+  useEffect(() => {
+    if (durations.length > 0) {
+      const totalDuration = durations.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      );
+      const hours = Math.floor(totalDuration / 3600);
+      const minutes = Math.floor((totalDuration % 3600) / 60);
+      const seconds = Math.floor(totalDuration % 60);
+      setDurationFormatted(
+        `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
+          .toString()
+          .padStart(2, "0")}`
+      );
+    } else {
+      setDurationFormatted("0:00:00"); // Reset to initial state if there's no duration
+    }
+  }, [durations]);
+
+  const handlePlay = (index) => {
+    const newIsPlaying = [...isPlaying];
+    newIsPlaying[index] = !isPlaying[index];
+    setIsPlaying(newIsPlaying);
+    const audioElement = audioRefs.current[index];
+    if (audioElement) {
+      if (newIsPlaying[index]) {
+        // Check if the audio is not already playing before calling play()
+        if (audioElement.paused) {
+          audioElement
+            .play()
+            .catch((error) => console.error("Error playing audio:", error));
+        }
+      } else {
+        // Check if the audio is playing before calling pause()
+        if (!audioElement.paused) {
+          audioElement.pause();
+        }
+      }
+    }
+  };
+  const handelDownloadAudio = (audioId) => {
+    const formData = {
+        audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
+        // other formData properties if any
+    };
+    if (!token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+    }
+    
+    dispatch(downloadOneAudio({ formData, token }))
+           
+        }
+
+
+  const handleLoadedMetadata = (index) => {
+    return (e) => {
+      const newDurations = [...durations];
+      newDurations[index] = e.target.duration;
+      setDurations(newDurations);
+    };
+  };
+  const formatDuration = (duration) => {
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.floor((duration % 3600) / 60);
+    const seconds = Math.floor(duration % 60);
+    return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
   return (
     <>
       <NavBar />
@@ -243,11 +368,13 @@ const FavAudios = () => {
 
       <Container>
 
-      {getData ? (
+      {
+          !isLoading ?(
+            getData && getData.length >0 ? (
             <>
               {getData.map((item, index) => (
                 <Row className="me-auto" md={4}>
-          <Col>
+          <Col key={item.id}>
             <div style={{ display: "flex" }}>
               <img
                 src={item.image}
@@ -272,7 +399,7 @@ const FavAudios = () => {
           </Col>
 
           <Col xs={6}>
-            <p
+            {/* <p
               style={{
                 color: "rgba(130, 130, 130, 1)",
                 display: "flex",
@@ -282,7 +409,7 @@ const FavAudios = () => {
               }}
             >
               محمد صالح المنجد
-            </p>
+            </p> */}
           </Col>
 
           <Col xs={6}>
@@ -296,7 +423,7 @@ const FavAudios = () => {
                 padding: "15px",
               }}
             >
-              3:40 دقيقة
+  {durations[index] ? formatDuration(durations[index]) : 'Loading...'}
             </p>
           </Col>
 
@@ -310,8 +437,29 @@ const FavAudios = () => {
                 gap: "15px",
               }}
             >
-             <MdDownloadForOffline style={{color: "rgb(219 176 134)", fontSize: "32px",paddingLeft: "5px",cursor: "pointer",
-                            }} />
+              {token ? (
+                      <a href={`${item.audio}?download=true`} target="_blank">
+                        <MdDownloadForOffline
+                          style={{
+                            color: "rgb(209, 155, 111)",
+                            fontSize: "30px",
+                            cursor: "pointer",
+                          }}
+                          onClick={()=>handelDownloadAudio(item.id)}
+                          download="audio_file"
+                        />
+                      </a>
+                    ) : (
+                      <MdDownloadForOffline
+                        style={{
+                          color: "rgb(209, 155, 111)",
+                          fontSize: "30px",
+                          cursor: "pointer",
+                        }}
+                        onClick={handleCheckLogin}
+                        download="audio_file"
+                      />
+                    )}
               <IoIosHeart 
                   style={{
                     color: "red",
@@ -319,14 +467,43 @@ const FavAudios = () => {
                     cursor: "pointer",
                   }}
                 />
-            <FaCirclePlay
-                 style={{color: "rgb(209, 155, 111)",fontSize: "25px", }} />
+           <button
+                      onClick={() => handlePlay(index)}
+                      style={{ border: "none", background: "#FFFFFF" }}
+                    >
+                      {isPlaying[index] ? (
+                        <FaCirclePause
+                          style={{
+                            color: "rgb(209, 155, 111)",
+                            fontSize: "26px",
+                          }}
+                        />
+                      ) : (
+                        <FaCirclePlay
+                          style={{
+                            color: "rgb(209, 155, 111)",
+                            fontSize: "26px",
+                          }}
+                        />
+                      )}
+                    </button>
+                    <audio
+                      key={index}
+                      ref={(el) => (audioRefs.current[index] = el)}
+                      src={item.audio}
+                      controls
+                      hidden
+                      onLoadedMetadata={handleLoadedMetadata(index)}
+                    />
             </div>
           </Col>
         </Row>
               ))}
-            </>
-          ) : null}
+              </>
+            ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          
+            ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
+          }
       
 
 

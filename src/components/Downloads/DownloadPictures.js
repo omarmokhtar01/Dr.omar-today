@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import NavBar from "../Navbar/NavBar";
 import '../Favorites/fav.css'
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import pic1 from "../../images/pic1.png";
 import pic2 from "../../images/pic2.png";
@@ -228,7 +228,10 @@ const DownloadPictures = () => {
         >
           
 
-          {getData ? (
+          {
+                    !isLoading ?(
+
+          getData && getData.length >0 ? (
             <>
               {getData.map((item, index) => (
                 <Col  xl={6} lg={12} md={12} sm={12} xs={12} >
@@ -258,7 +261,10 @@ const DownloadPictures = () => {
           </Col>
               ))}
             </>
-          ) : null}
+          ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
+
+        }
 
 
           {/* <Col>
