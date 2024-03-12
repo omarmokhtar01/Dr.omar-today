@@ -24,7 +24,7 @@ import {
 import { Link } from "react-router-dom";
 import NavBar from "../Navbar/NavBar";
 import { MdDownloadForOffline } from "react-icons/md";
-import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
+import { IoHeartCircleSharp, IoSearch, IoTerminal } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
@@ -85,41 +85,70 @@ const Audios = () => {
 
   const isLoadingElderDown = useSelector((state) => state.elders.isLoadingDownElder);
 
-  function downloadAudiosAsZip(audioData,idElder) {
-    const zip = new JSZip();
+  function downloadAudiosAsZip(idElder) {
     if (!token) {
-      return       notify("من فضلك قم بتسجيل الدخول أولاً", "error");
-
+      return notify("من فضلك قم بتسجيل الدخول أولاً", "error");
     }
-    const formData = {
-      elder_id: idElder, // Replace 'your_audio_id_here' with the actual audio ID value
-      // other formData properties if any
-  };
-    dispatch(downloadOneElder({ formData, token }))
-
-    // Add each audio file to the zip archive
-    audioData.forEach(audio => {
-      fetch(audio.audio)
-        .then(response => response.blob())
-        .then(blob => {
-          zip.file(`${audio.title}.mp3`, blob);
-        })
-        .catch(error => console.error('Error downloading audio:', error));
-    });
   
-    // Generate the .zip archive
-    zip.generateAsync({ type: 'blob' })
-      .then(zipBlob => {
-        const url = window.URL.createObjectURL(new Blob([zipBlob]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'audios.zip');
-        document.body.appendChild(link);
-        link.click();
-        link.parentNode.removeChild(link);
-      })
-      .catch(error => console.error('Error generating .zip file:', error));
+    const formData = {
+      elder_id: idElder,
+      // other formData properties if any
+    };
+  
+    // Dispatch action to download audio data for the elder
+    dispatch(downloadOneElder({ formData, token }))
+    .then(response => {
+      console.log(response);
+      let audioData = [];
+      
+      // Check if response.payload is an array or an object with audio data
+      if (Array.isArray(response.payload)) {
+        // Case 1: response.payload is already an array of audios
+        audioData = response.payload;
+      } else if (response.payload && response.payload.audio) {
+        // Case 2: response.payload has an 'audio' property containing audio data
+        audioData = response.payload.audio;
+      } else {
+        console.error('Error: Invalid audio data format');
+        return; // Exit the function or handle the error appropriately
+      }
+    
+      const zip = new JSZip();
+    
+      audioData.forEach((audio, index) => {
+        fetch(audio.audio)
+          .then(response => response.blob())
+          .then(blob => {
+            zip.file(`audio_${index + 1}.mp3`, blob); // Rename the files as needed
+          })
+          .catch(error =>
+            console.error(`Error downloading audio ${index + 1}:`, error)
+          );
+      });
+    
+      // Generate the .zip archive
+      zip.generateAsync({ type: 'blob' })
+        .then(zipBlob => {
+          const url = window.URL.createObjectURL(new Blob([zipBlob]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'audios.zip');
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link); // Remove the link after download
+        })
+        .catch(error => console.error('Error generating .zip file:', error));
+    })
+    .catch(error => {
+      console.error('Error downloading audio data:', error);
+    });
+    
+    
   }
+  
+  
+  
+  
 
   useEffect(() => {
     dispatch(getAudios());
@@ -471,7 +500,7 @@ const Audios = () => {
       <Row className="m-auto">
   {searchState !== '' && searchResults.length > 0 ? (
     searchResults.map((item) => (
-      <Col xs="12" md="12" lg="6" className="mb-3">
+      <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
         <div
           style={{
             display: "flex",
@@ -551,7 +580,7 @@ const Audios = () => {
       getAll && getAll.length > 0 ? 
       ([...getAll].sort(sortFunction).map((item) => {
         return (
-          <Col xs="12" md="12" lg="6" className="mb-3">
+          <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
             <div
               style={{
                 display: "flex",
@@ -636,7 +665,7 @@ const Audios = () => {
   ) : !isLoading ? (
     searchState !== '' && searchResults.length > 0 ? (
       searchResults.map((item) => (
-        <Col xs="12" md="12" lg="6" className="mb-3">
+        <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
           <div
             style={{
               display: "flex",
@@ -714,7 +743,7 @@ const Audios = () => {
       Array.isArray(getAudioCategoryId) &&
       getAudioCategoryId.length > 0 ? (
         [...getAudioCategoryId].sort(sortFunction).map((item) => (
-          <Col xs="12" md="12" lg="6" className="mb-3">
+          <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
             <div
               style={{
                 display: "flex",

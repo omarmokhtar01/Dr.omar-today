@@ -40,7 +40,7 @@ const [show, setShow] = useState(false);
 const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image
 const [savedId, setSavedId] = useState(null);
 
-
+console.log(savedId);
 const handleClose = () => setShow(false);
 const handleShow = (image) => {
   setSelectedImage(image); // Set the selected image
@@ -129,7 +129,7 @@ const handleDownload = (picId) => {
            
         }
 
-        console.log(savedId);
+        console.log(checkAddToFavPic);
 
         useEffect(() => {
           if (isLoadingFavPic === false) {
@@ -269,7 +269,7 @@ const handleDownload = (picId) => {
     !isLoadingAllPictures ? (
       getAllPicturesData.length > 0 ? (
         getAllPicturesData.map((image, index) => (
-          <Col key={index} xl={6} lg={6} md={12} sm={12}>
+          <Col key={index} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
             {/* Placeholder for heartImg */}
             <div style={{ position: 'relative', top: '10px', right: '10px', zIndex: '1' }}>
               <IoHeartCircleSharp onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
@@ -291,7 +291,7 @@ const handleDownload = (picId) => {
   ) : (
     !isLoadingOneImgCategory ? (
       getOneData[0]?.image?.map((image, index) => (
-        <Col key={image.id} xl={6} lg={6} md={12} sm={12} >
+        <Col key={image.id} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
         {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '10px', right: '10px', zIndex: '1' }}>
             <IoHeartCircleSharp onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
@@ -309,7 +309,6 @@ const handleDownload = (picId) => {
     }}
     onClick={() => {
       handleShow(image.image);
-      setSavedId(image.id);
     }}
     id='img-responsive-pic'
   />
@@ -331,7 +330,7 @@ const handleDownload = (picId) => {
       {/* Your icons */}
       <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
       <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={()=>handleDownload(savedId)} />        
-      <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} onClick={handleCheckLogin} />
+      <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} onClick={()=>handelAddtoFavPic(savedId)} />
     </div>
   </div>
 </Modal>

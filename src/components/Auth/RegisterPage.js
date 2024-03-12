@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Auth.css";
 
-import { Col, Container, Form, Modal, Row } from "react-bootstrap";
+import { Col, Container, Form, Modal, Row,Spinner } from "react-bootstrap";
 import ForgetPass4 from "./ForgetPass4";
 import { Link } from "react-router-dom";
 import LoginPage from "./LoginPage";
@@ -347,7 +347,14 @@ const RegisterPage = () => {
                     }}
                     className="profileButton"
                   >
-                    تسجيل
+                    {isLoading ? (
+                      <Spinner animation="border" role="status">
+                        {" "}
+                        {/* Add spinner component here */}{" "}
+                      </Spinner>
+                    ) : (
+                      "تسجيل"
+                    )}
                   </button>
                 </div>
               </Form>

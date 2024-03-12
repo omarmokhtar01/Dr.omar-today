@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Auth.css";
-import { Col, Container, Form, Modal, Row } from "react-bootstrap";
+import { Col, Container, Form, Modal, Row,Spinner } from "react-bootstrap";
 import facebook from "../../images/face.png";
 import gmail from "../../images/gamil.png";
 import apple from "../../images/apple.png";
@@ -225,7 +225,14 @@ const LoginPage = () => {
                     }}
                     className="profileButton"
                   >
-                    دخول
+                   {isLoading ? (
+                      <Spinner animation="border" role="status">
+                        {" "}
+                        {/* Add spinner component here */}{" "}
+                      </Spinner>
+                    ) : (
+                      "دخول"
+                    )}
                   </button>
                 </div>
 

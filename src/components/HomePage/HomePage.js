@@ -57,7 +57,7 @@ const isLoadingLastVersion = useSelector((state) => state.books.isLoadingLastVer
 useEffect(()=>{
 dispatch(lastVersion())
 },[dispatch])
-
+console.log(lastVersionData);
 
 const mostListenedData = useSelector((state) => state.audio.mostListen);
 const isLoadingMostListen = useSelector((state) => state.audio.isLoadingMostListen);

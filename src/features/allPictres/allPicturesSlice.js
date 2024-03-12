@@ -53,7 +53,8 @@ const initialState = {
                     formData, // Include formData in the request
                     {
                         headers: {
-                            Authorization: `Bearer ${token}` // Include token in the request headers
+                            Authorization: `Bearer ${token}` ,
+                            
                         }
                     }
                 );
