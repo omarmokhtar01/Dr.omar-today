@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./home.css";
 import { Col, Container, Row,Spinner } from "react-bootstrap";
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 import profile from "../../images/profile.png";
 import vector from "../../images/Vector (1).png";
@@ -16,7 +19,7 @@ import card2 from "../../images/card2.png";
 import card3 from "../../images/card3.png";
 import card4 from "../../images/card4.png";
 import image3 from "../../images/image 3.png";
-
+// import { Carousel } from '@trendyol-js/react-carousel';
 import mobile from "../../images/mobile.png";
 import vector4 from "../../images/Vector (4).png";
 import google from "../../images/google.png";
@@ -26,9 +29,10 @@ import { Link } from "react-router-dom";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 import { MdFileDownload } from "react-icons/md";
 import { MdAudiotrack } from "react-icons/md";
-import { Carousel } from "react-bootstrap";
+// import { Carousel } from "react-bootstrap";
 import { IoHeartCircleSharp } from "react-icons/io5";
-
+import circleNext from "../../images/circle.png";
+import circlePrev from "../../images/circle.png";
 import {
   TbArrowsExchange2,
   TbPlayerTrackNextFilled,
@@ -43,7 +47,13 @@ import { lastVersion } from "../../features/books/booksSlice";
 import { downloadOneAudio, favOneAudio, mostListened } from "../../features/audios/audioSlice";
 import  Cookies  from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+// import 'react-multi-carousel/lib/styles.css';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper/modules';
+import { FreeMode} from 'swiper/modules';
+
+import 'swiper/css/free-mode';
 const Adhan = require('adhan');
 
 const HomePage = () => {
@@ -57,7 +67,9 @@ const isLoadingLastVersion = useSelector((state) => state.books.isLoadingLastVer
 useEffect(()=>{
 dispatch(lastVersion())
 },[dispatch])
-console.log(lastVersionData);
+
+
+console.log(lastVersionData)
 
 const mostListenedData = useSelector((state) => state.audio.mostListen);
 const isLoadingMostListen = useSelector((state) => state.audio.isLoadingMostListen);
@@ -66,7 +78,7 @@ useEffect(()=>{
 dispatch(mostListened())
 },[dispatch])
 
-
+console.log(mostListenedData)
 const [isPressed, setIsPressed] = useState(false);
   let timeoutId;
 
@@ -158,7 +170,7 @@ const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
 // const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
 // Format the hours, minutes, and seconds with leading zeros if necessary
-// const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+// const formattedTime = ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')};
 const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
 const prayerNames = {
@@ -253,7 +265,7 @@ const handelAddtoFav = (audioId) => {
       // }, [isLoadingFav]);
       
 
-
+ 
  
       const [indexMobileState, setIndexMobileState] = useState(0);
 
@@ -312,6 +324,37 @@ const handelAddtoFav = (audioId) => {
         //   }
         //     }, [isLoadingDown,downAudio]);
 
+
+        const [swiperRef, setSwiperRef] = useState(null);
+
+        let appendNumber = 4;
+        let prependNumber = 1;
+      
+        const prepend2 = () => {
+          swiperRef.prependSlide([
+            '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
+            '<div class="swiper-slide">Slide ' + --prependNumber + '</div>',
+          ]);
+        };
+      
+        const prepend = () => {
+          swiperRef.prependSlide(
+            '<div class="swiper-slide">Slide ' + --prependNumber + '</div>'
+          );
+        };
+      
+        const append = () => {
+          swiperRef.appendSlide(
+            '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>'
+          );
+        };
+      
+        const append2 = () => {
+          swiperRef.appendSlide([
+            '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
+            '<div class="swiper-slide">Slide ' + ++appendNumber + '</div>',
+          ]);
+        };
       
       return (
     <>
@@ -336,25 +379,27 @@ const handelAddtoFav = (audioId) => {
             >
               <h2
                 id="dr-responsive"
-                style={{ color: "#FFFFFF", width: "72px", marginLeft: "90px" }}
+                style={{ color: "#FFFFFF", width: "72px", marginLeft: "90px",fontSize:'28.96px'}}
               >
                 الدكتور
               </h2>
 
               <h1
-                style={{
-                  color: "#051427",
-                  fontSize: "45px",
-                  fontWeight: "bold",
-                }}
-              >
-                {" "}
-                عُــمــر كامـــل{" "}
-              </h1>
-              <h5 style={{ color: "#7A808A", marginTop: "10px" }}>
+  style={{
+    backgroundImage: 'linear-gradient(235.96deg, #384659 0%, #051427 65.49%)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    fontSize: '49.4px',
+    fontWeight: 'bold',
+  }}
+>
+  عُــمــر كامـــل
+</h1>
+
+              <h5 style={{ color: "#7A808A", marginTop: "10px",fontSize:'25.55px' }}>
                 الصلاه القادمه : <span style={{ color: "#FFFFFF" }}>{arabicNextPrayer ? (arabicNextPrayer): 'الفجر'}</span>
               </h5>
-              <h5 style={{ color: "#FFFFFF", marginTop: "10px" }}>
+              <h5 style={{ color: "#FFFFFF", marginTop: "10px",fontSize:'22.15px' }}>
                 {" "}
                 الموعد بعد : {formattedTime}
               </h5>
@@ -451,7 +496,7 @@ const handelAddtoFav = (audioId) => {
         </Row>
       </Container>
 
-      <Container>
+      {/* <Container>
         <Carousel>
           <Carousel.Item>
             <Row
@@ -533,9 +578,144 @@ const handelAddtoFav = (audioId) => {
             </Row>
           </Carousel.Item>
 
-          {/* Add more Carousel.Items for additional slides if needed */}
+         
         </Carousel>
-      </Container>
+      </Container> */}
+
+
+      <Container>
+        <Row className="d-flex justify-content-between align-items-center" style={{ margin: '20', padding: '20px' }}>
+        {/* <Col lg='2'>
+        <img src={circleNext} alt="" style={{ width: '25px', height: '25px', marginBottom: '7px' }} />
+        </Col> */}
+      
+          {/* <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px' }}>
+            <img src={circle} alt="" style={{ width: '25px', height: '25px', marginBottom: '7px' }} />
+            <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          </Col> */}
+
+  
+  
+          {/* <Carousel show={7}  transition={0.5}>
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          <img src={card1} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+   
+</Carousel> */}
+
+
+
+
+
+
+
+
+<>
+      <Swiper
+        onSwiper={setSwiperRef}
+        slidesPerView={4}
+        centeredSlides={true}
+        spaceBetween={30}
+        pagination={{
+          type: 'fraction',
+        }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        className="mySwiper"
+      >
+
+        {
+            !isLoadingLastVersion ?(
+
+              lastVersionData && lastVersionData.length >0 ? (
+            <>
+              {lastVersionData.map((item, index) => (
+                <SwiperSlide>  <img src={item.image} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} /></SwiperSlide>
+              ))}
+            </>
+          ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
+
+        }
+      </Swiper>
+
+      
+    </>
+
+
+
+
+
+
+    {/* <>
+      <Swiper
+        slidesPerView={3}
+        spaceBetween={30}
+        freeMode={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[FreeMode, Pagination]}
+        className="mySwiper"
+      >
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+        <SwiperSlide>Slide 5</SwiperSlide>
+        <SwiperSlide>Slide 6</SwiperSlide>
+        <SwiperSlide>Slide 7</SwiperSlide>
+        <SwiperSlide>Slide 8</SwiperSlide>
+        <SwiperSlide>Slide 9</SwiperSlide>
+      </Swiper>
+    </> */}
+
+
+
+
+
+
+
+
+
+
+
+
+          {/* {
+            !isLoadingLastVersion ?(
+
+              lastVersionData && lastVersionData.length >0 ? (
+            <>
+              {lastVersionData.map((item, index) => (
+                <Col xs="6" md="4" lg="2" style={{ textAlign: 'center', marginBottom: '10px' }}>
+                
+            <img src={item.image} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} />
+          </Col>
+              ))}
+            </>
+          ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
+
+        } */}
+        {/* <Col lg='2'>
+        <img src={circlePrev} alt="" style={{ width: '25px', height: '25px', marginBottom: '7px' }} />
+        </Col> */}
+        </Row>
+       </Container>
+
 
       <Container>
         <Row className="d-flex justify-content-between align-items-center me-auto  ">

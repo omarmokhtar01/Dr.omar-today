@@ -19,14 +19,12 @@ import {
   getArticles,
   searchArticle,
 } from "../../features/articles/articlesSlich";
-import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
+import {  IoSearch } from "react-icons/io5";
 import { FaClock } from "react-icons/fa";
 import { IoEye } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
-import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 
-import notify from "../UseNotifications/useNotification";
 const Articles = () => {
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
 
@@ -58,18 +56,7 @@ const Articles = () => {
   };
   
 
-  const handleCheckLogin = () => {
-    const token = Cookies.get("token");
 
-    if (token) {
-      // Token exists, perform the download action
-      // Add your download logic here
-      notify("تم التحميل", "success");
-    } else {
-      // Token doesn't exist, notify the user
-      notify("من فضلك قم بتسجيل الدخول اولا", "error");
-    }
-  };
   const [id,setId]=useState(null)
 
   const dispatch = useDispatch();
