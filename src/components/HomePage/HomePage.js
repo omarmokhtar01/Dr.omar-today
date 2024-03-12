@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./home.css";
-import { Col, Container, Row,Spinner } from "react-bootstrap";
+import { Col, Container, Row,Spinner,Carousel,Button } from "react-bootstrap";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -9,6 +9,9 @@ import profile from "../../images/profile.png";
 import vector from "../../images/Vector (1).png";
 import vector2 from "../../images/Vector (2).png";
 import quran from "../../images/quran.png";
+import play from "../../images/play.svg";
+import heartIcon from "../../images/heartIcon.svg";
+
 import box1 from "../../images/box1.png";
 import box2 from "../../images/box2.png";
 import box3 from "../../images/box3.png";
@@ -57,6 +60,15 @@ import 'swiper/css/free-mode';
 const Adhan = require('adhan');
 
 const HomePage = () => {
+  const [data, setData] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const handleNextCarousel = () => {
+    setStartIndex(startIndex + 8);
+  };
+
+  const handlePrevCarousel = () => {
+    setStartIndex(Math.max(startIndex - 8, 0));
+  };
 
 const dispatch = useDispatch()
 const navigate = useNavigate()
@@ -85,7 +97,7 @@ const [isPressed, setIsPressed] = useState(false);
   const handleMouseDown = () => {
     timeoutId = setTimeout(() => {
       setIsPressed(true);
-      notify("الوضع الخاص", "success");
+      // notify("الوضع الخاص", "success");
     }, 2000);
   };
 
@@ -375,39 +387,41 @@ const handelAddtoFav = (audioId) => {
           <Col sm="4">
             <div
               className=" d-flex align-items-center  "
-              style={{ flexDirection: "column" }}
+              style={{ flexDirection: "column",
+              // fontFamily:'Helvetica Neue W23 for SKY'
+             }}
             >
-              <h2
+              <span
                 id="dr-responsive"
                 style={{ color: "#FFFFFF", width: "72px", marginLeft: "90px",fontSize:'28.96px'}}
               >
                 الدكتور
-              </h2>
+              </span>
 
-              <h1
+              <span
   style={{
     backgroundImage: 'linear-gradient(235.96deg, #384659 0%, #051427 65.49%)',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     fontSize: '49.4px',
-    fontWeight: 'bold',
+    fontWeight: '700',
+    
   }}
 >
   عُــمــر كامـــل
-</h1>
+</span>
 
-              <h5 style={{ color: "#7A808A", marginTop: "10px",fontSize:'25.55px' }}>
+              <span style={{ color: "#7A808A", marginTop: "10px",fontSize:'25.55px' }}>
                 الصلاه القادمه : <span style={{ color: "#FFFFFF" }}>{arabicNextPrayer ? (arabicNextPrayer): 'الفجر'}</span>
-              </h5>
-              <h5 style={{ color: "#FFFFFF", marginTop: "10px",fontSize:'22.15px' }}>
+              </span>
+              <span style={{ color: "#FFFFFF", marginTop: "10px",fontSize:'22.15px' }}>
                 {" "}
                 الموعد بعد : {formattedTime}
-              </h5>
+              </span>
 
               <div
                 className="d-flex align-items-center justify-content-center   "
-                style={{ marginBottom: "-80px", marginLeft: "-220px" }}
-              >
+                style={{ marginBottom: "-60px", marginLeft: "-220px" }}              >
                 <img
                   src={quran}
                   alt=""
@@ -440,7 +454,7 @@ const handelAddtoFav = (audioId) => {
             <Link to="/audios" style={{ textDecoration: "none" }}>
               <div className="box-Audio">
                 <img src={box4} alt="" style={{ marginTop: "15px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
+                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)",fontSize:'15px',fontWeight:'400' }}>
                   صوتيات
                 </p>
               </div>
@@ -451,7 +465,7 @@ const handelAddtoFav = (audioId) => {
             <Link to="/Books" style={{ textDecoration: "none" }}>
               <div className="box-Book">
                 <img src={box3} alt="" style={{ marginTop: "15px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
+                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)",fontSize:'15px',fontWeight:'400' }}>
                   كتب
                 </p>
               </div>
@@ -462,7 +476,7 @@ const handelAddtoFav = (audioId) => {
             <Link to="/articles" style={{ textDecoration: "none" }}>
               <div className="box-Aritcle">
                 <img src={box2} alt="" style={{ marginTop: "15px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
+                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)",fontSize:'15px',fontWeight:'400' }}>
                   مقالات
                 </p>
               </div>
@@ -473,7 +487,7 @@ const handelAddtoFav = (audioId) => {
             <Link to="/pictures" style={{ textDecoration: "none" }}>
               <div className="box-Pic">
                 <img src={box1} alt="" style={{ marginTop: "20px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
+                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)",fontSize:'15px',fontWeight:'400' }}>
                   صور
                 </p>
               </div>
@@ -624,34 +638,40 @@ const handelAddtoFav = (audioId) => {
 
 
 <>
-      <Swiper
-        onSwiper={setSwiperRef}
-        slidesPerView={4}
-        centeredSlides={true}
-        spaceBetween={30}
-        pagination={{
-          type: 'fraction',
-        }}
-        navigation={true}
-        modules={[Pagination, Navigation]}
-        className="mySwiper"
-      >
 
         {
             !isLoadingLastVersion ?(
 
               lastVersionData && lastVersionData.length >0 ? (
             <>
-              {lastVersionData.map((item, index) => (
-                <SwiperSlide>  <img src={item.image} alt="" style={{ width: '80%', height: 'auto', marginRight: '5px' }} /></SwiperSlide>
-              ))}
+              {lastVersionData.slice(startIndex, startIndex + 6).map((item, index) => (
+                
+                    <Col
+                xs="6"
+                md="4"
+                lg="2"
+                style={{ textAlign: "center", marginBottom: "10px" }}
+                key={item.id}
+              >
+                <img
+                  src={item.image}
+                  alt=""
+                  style={{ width: "80%", height: "193px", marginRight: "5px",borderRadius:'10px' }}
+                />
+              </Col>
+               
+))}
             </>
           ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
           ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
 
         }
-      </Swiper>
-
+      {/* <Button variant="primary" onClick={handlePrevCarousel} disabled={startIndex === 0}>
+        Previous
+      </Button>
+      <Button variant="primary" onClick={handleNextCarousel} disabled={startIndex + 8 >= data.length}>
+        Next
+      </Button> */}
       
     </>
 
@@ -755,7 +775,7 @@ const handelAddtoFav = (audioId) => {
           <Col sm="4">
             <div className="d-flex justify-content-center align-items-center ">
               <img src={item.image} alt="" className="mb-3" width={61} height={61}/>
-              <h5 style={{ width: "100%" }}> {item.title} </h5>
+              <h5 style={{ width: "100%",fontWeight:'700',fontSize:'16px',lineHeight:'21.28px' }}> {item.title} </h5>
             </div>
           </Col>
 
@@ -798,7 +818,7 @@ const handelAddtoFav = (audioId) => {
           <Col sm="4" className="responsive-sounds">
             <div className="d-flex justify-content-center align-items-center  ">
                 
-            <IoHeartCircleSharp
+            <img src={heartIcon}
                       style={{
                         color: "#878787bd",
                         fontSize: "30px",
@@ -815,11 +835,11 @@ const handelAddtoFav = (audioId) => {
                         <FaCirclePause
                           style={{
                             color: "rgb(209, 155, 111)",
-                            fontSize: "26px",
+                            fontSize: "50px",
                           }}
                         />
                       ) : (
-                        <FaCirclePlay
+                        <img src={play}
                           style={{
                             color: "rgb(209, 155, 111)",
                             fontSize: "26px",
@@ -880,7 +900,7 @@ const handelAddtoFav = (audioId) => {
         <div style={{ backgroundColor: "#FFFFFFCC", borderRadius: "40px", boxShadow: "4px 7px 22.2px 6px #0000000D", border:'1.5px solid #DBDBDB' }} id="mobile-responsive">
           <img src={mostListenedData[indexMobileState]?.image||"https://i1.sndcdn.com/artworks-jA2OFYdUrideAlyu-AeHsrA-t500x500.jpg"} alt="pic" width={300} height={280} style={{ marginTop: "20px", borderRadius: "40px" , boxShadow:'0px 20px 60px 0px #00000026'}} id="img-mobile-responsive" />
           <Col className="mt-4">
-          <h4>{mostListenedData[indexMobileState]?.title || "Default Title"}</h4>
+          <h4 style={{fontSize:'18px',fontWeight:'700',lineHeight:'23.4px'}}>{mostListenedData[indexMobileState]?.title || "Default Title"}</h4>
             {/* <span style={{ color: "gray" }}>محمد صالح المنجد</span> */}
           </Col>
           <Col className="mt-5" style={{ display: "flex", alignItems: "center", justifyContent: "space-around" }}>
@@ -899,11 +919,11 @@ const handelAddtoFav = (audioId) => {
                         <FaCirclePause
                           style={{
                             color: "rgb(209, 155, 111)",
-                            fontSize: "50px",
+                            fontSize: "55px",
                           }}
                         />
                       ) : (
-                        <FaCirclePlay
+                        <img src={play}
                           style={{
                             color: "rgb(209, 155, 111)",
                             fontSize: "50px",

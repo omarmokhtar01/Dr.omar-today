@@ -9,6 +9,8 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
+import play from "../../images/play.svg";
+import heartIcon from "../../images/heartIcon.svg";
 
 import NavBar from "../Navbar/NavBar";
 import { useDispatch } from "react-redux";
@@ -479,7 +481,7 @@ console.log(getDataOne);
 
                     />
                     {/* End of download functionality */}
-                    <IoHeartCircleSharp
+                    <img src={heartIcon}
                       style={{
                         color: "#878787bd",
                         fontSize: "45px",
@@ -679,7 +681,7 @@ console.log(getDataOne);
                       />
                     )}
 
-                    <IoHeartCircleSharp
+                    <img src={heartIcon}
                       style={{
                         color: "#878787bd",
                         fontSize: "30px",
@@ -696,11 +698,11 @@ console.log(getDataOne);
                         <FaCirclePause
                           style={{
                             color: "rgb(209, 155, 111)",
-                            fontSize: "26px",
+                            fontSize: "50px",
                           }}
                         />
                       ) : (
-                        <FaCirclePlay
+                        <img src={play}
                           style={{
                             color: "rgb(209, 155, 111)",
                             fontSize: "26px",

@@ -45,5 +45,24 @@ width: 820px;
   
    }
 
-  
+   @media (max-width: 991.98px) {
+    .res-card{
+    margin-bottom:20px !important
+  }
+   }
  
+
+
+   @media (min-width: 992px) and (max-width: 1003px) {
+    .nav-menu {
+      position: relative;
+      left: 50px;
+    }
+  }
+
+  @media (min-width: 1036px) and (max-width: 1082px) {
+    .nav-menu {
+      position: relative;
+      left: 30px;
+    }
+  }

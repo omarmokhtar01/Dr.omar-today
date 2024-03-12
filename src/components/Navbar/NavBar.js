@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './navbar.css'
 import { Container, Nav, NavDropdown, Navbar, Modal, Col, Button } from 'react-bootstrap';
 import logo from "../../images/logo 1.png";
+import locationIcon from "../../images/location.svg";
+import download from "../../images/download.svg";
+import heart from "../../images/heart.svg";
+import noti from "../../images/noti.svg";
+import personal from "../../images/personal.svg";
+import vector from "../../images/vector.svg";
+
 import backgroundImage from '../../images/back-header.png';
 import { Link, useLocation } from 'react-router-dom';
 import { IoHeartCircleSharp } from 'react-icons/io5';
@@ -82,6 +89,7 @@ const NavBar = () => {
     const navbarStyle = {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover', // You can adjust this property based on your image and design preferences
+      
 
       };
       const navbarStyleUnLogin = {
@@ -170,26 +178,26 @@ const NavBar = () => {
               }}
               type="submit"
             >
-            <SlLocationPin style={{ marginLeft: "5px" , fontSize:'20px'}}/>
+            <img src={locationIcon} style={{ marginLeft: "5px" , fontSize:'20px'}}/>
             
              {location || ""}{" "}
             </Button>
 
           <Link to='/DownloadScientest' >
-          <MdDownloadForOffline  style={{ color: 'rgb(219 176 134)', fontSize: '35px' ,paddingLeft:'5px' }}/>
+          <img src={download}  style={{ color: 'rgb(219 176 134)', fontSize: '35px' ,paddingLeft:'5px' }}/>
           </Link>
          
           
           <Link to='/favScientists' >
-          <IoHeartCircleSharp style={{ color: '#FFFFFF', fontSize: '35px' ,paddingLeft:'5px' }} />
+          <img src={heart} style={{ color: '#FFFFFF', fontSize: '35px' ,paddingLeft:'5px' }} />
           </Link>
           
           <Link to='/notification'>
-          <MdCircleNotifications  style={{ color: '#FFFFFF', fontSize: '35px' ,paddingLeft:'5px' }}/>
+          <img src={noti}  style={{ color: '#FFFFFF', fontSize: '35px' ,paddingLeft:'5px' }}/>
           </Link>
          
           
-        <NavDropdown title={ <IoPersonCircleOutline style={{ color: '#FFFFFF', fontSize: '30px' }} /> } className='pp'    >
+        <NavDropdown title={ <img src={personal} style={{ color: '#FFFFFF', fontSize: '30px' }} /> } className='pp'    >
             <NavDropdown.Item    href='/personaLinformation'>الملف الشخصي</NavDropdown.Item>
             <NavDropdown.Item   href='/conditionandroles'>الشروط والاحكام </NavDropdown.Item>
             <NavDropdown.Item 
@@ -285,7 +293,7 @@ const NavBar = () => {
               }}
               type="submit"
             >
-            <SlLocationPin style={{ marginLeft: "5px" , fontSize:'20px'}}/>
+            <img src={locationIcon} style={{ marginLeft: "5px" , fontSize:'20px'}}/>
             
              {location || ""}{" "}
             </Button>
@@ -316,7 +324,7 @@ const NavBar = () => {
                 type="submit"
               >
 
-                <HiOutlineUser style={{ marginLeft: "5px", fontSize:'20px' }} />
+                <img src={vector} style={{ marginLeft: "5px", fontSize:'20px' }} />
             تسجيل
               </Button>
 

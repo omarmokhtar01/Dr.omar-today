@@ -10,6 +10,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { Coordinates, CalculationMethod, PrayerTimes } from 'adhan';
+import heartIcon from "../../images/heartIcon.svg";
 
 import group from "../../images/Group.png";
 import group2 from "../../images/Group2.png";
