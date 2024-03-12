@@ -9,9 +9,8 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
-import play from "../../images/play.svg";
-import heartIcon from "../../images/heartIcon.svg";
-
+import PlayIcon from "../../images/play.svg";
+import PauseIcon from "../../images/pause.svg";
 import NavBar from "../Navbar/NavBar";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -23,8 +22,15 @@ import { PiShareFatFill } from "react-icons/pi";
 import { LuArrowUpDown } from "react-icons/lu";
 import { downloadOneElder, favOneElder, getEldersByIdAudios } from "../../features/elders/eldersSlice";
 import { favOneAudio,downloadOneAudio } from "../../features/audios/audioSlice";
-
+import favIcon from "../../images/fav.svg";
+import downloadIcon from "../../images/download.svg";
 import Cookies from "js-cookie";
+import searchIcon from "../../images/search.svg";
+import arrowsIcon from "../../images/twoArr.svg";
+import shareIcon from "../../images/share.svg";
+import downIcon from "../../images/downloadBorder.svg";
+import audioWhiteIcon from "../../images/audiowhite.svg";
+import fav2Icon from "../../images/fav2.svg";
 import { ToastContainer } from "react-toastify";
 
 import notify from "../UseNotifications/useNotification";
@@ -78,7 +84,7 @@ const AudioCard = () => {
         fetch(audio.audio)
           .then(response => response.blob())
           .then(blob => {
-            zip.file(`audio_${index + 1}.mp3`, blob); // Rename the files as needed
+            zip.file(`audio_${index + 1}.mp3, blob`); // Rename the files as needed
           })
           .catch(error =>
             console.error(`Error downloading audio ${index + 1}:`, error)
@@ -415,7 +421,7 @@ console.log(getDataOne);
                 <Col
                   sm="6"
                   xs="6"
-                  className=" d-flex "
+                  className=" d-flex img-res-audio"
                   style={{ marginTop: "-35px" }}
                 >
                   <img
@@ -423,7 +429,7 @@ console.log(getDataOne);
                     width={200}
                     height={180}
                     alt=""
-                    style={{ marginTop: "20px", borderRadius: "10px" }}
+                    style={{ marginTop: "20px", borderRadius: "0px 15px 15px 0px" }}
                   />
                 </Col>
 
@@ -444,6 +450,7 @@ console.log(getDataOne);
                       marginRight: "-40px",
                       marginTop: "-20px",
                     }}
+                    className="res-h5-name"
                   >
                     <h5
                       style={{
@@ -454,7 +461,7 @@ console.log(getDataOne);
                       {" "}
                       {getDataOne.data.name}
                     </h5>
-                    <p>{getDataOne.data.count_audios} مقطع صوتي</p>
+                    <p> <img src={audioWhiteIcon} /> {getDataOne.data.count_audios} مقطع صوتي</p>
                   </div>
                 </Col>
 
@@ -470,10 +477,9 @@ console.log(getDataOne);
                     className="icons-div"
                   >
                     {/* Add the download functionality here */}
-                    <MdDownloadForOffline
+                    <img src={downIcon}
                       style={{
-                        color: "rgb(209, 155, 111)",
-                        fontSize: "45px",
+                       
                         cursor: "pointer",
                       }}
                       className="icon-audio-card"
@@ -481,19 +487,17 @@ console.log(getDataOne);
 
                     />
                     {/* End of download functionality */}
-                    <img src={heartIcon}
+                    <img src={fav2Icon}
                       style={{
-                        color: "#878787bd",
-                        fontSize: "45px",
+                      
                         cursor: "pointer",
                       }}
                       className="icon-audio-card"
                       onClick={() => handelAddtoFavElder(getDataOne.data.id)}
                     />
-                    <PiShareFatFill
+                    <img src={shareIcon}
                       style={{
-                        color: "#FFFFFF",
-                        fontSize: "45px",
+                     
                         cursor: "pointer",
                       }}
                       className="icon-audio-card"
@@ -531,29 +535,22 @@ console.log(getDataOne);
                   aria-label="Search"
                   style={{ borderRadius: "25px", width: "95%" }}
                 />
-                <IoSearch
-                  width="20px"
-                  height="20px"
-                  style={{
+                 <img src={searchIcon}   className="img-search" style={{
                     position: "absolute",
                     marginTop: "-30px",
                     marginRight: "70px",
                     fontSize: "25px",
                     color: "#00000082",
-                  }}
-                  className="img-search"
-                />
+                  }} />
               </Form>
 
               <div style={{ display: "flex", gap: "10px" }}>
-                <LuArrowUpDown
-                  style={{
+              <img style={{
                     marginRight: "5px",
                     position: "absolute",
                     marginTop: "10px",
                     color: "rgb(219, 176, 134)",
-                  }}
-                />
+                  }} src={arrowsIcon} />
 
 <NavDropdown
         title="الترتيب حسب"
@@ -596,7 +593,7 @@ console.log(getDataOne);
                     <img
                       src={item.image}
                       alt=""
-                      style={{}}
+                      style={{borderRadius:'5.81px'}}
                       width="61px"
                       height="61px"
                     />
@@ -627,7 +624,8 @@ console.log(getDataOne);
                     }}
                   >
                     {" "}
-                    {item.name}{" "}
+                    {/* {item.name}{" "} */}
+                    محمد صالح المنجد
                   </p>
                 </Col>
 
@@ -642,7 +640,7 @@ console.log(getDataOne);
     padding: "15px",
   }}
 >
-  {durations[index] ? formatDuration(durations[index]) : 'Loading...'}
+  {durations[index] ? formatDuration(durations[index]) : 'Loading...'} دقيقه
 </p>
 
                 </Col>
@@ -659,7 +657,7 @@ console.log(getDataOne);
                   >
                     {token ? (
                       <a href={`${item.audio}?download=true`} target="_blank">
-                        <MdDownloadForOffline
+                        <img src={downloadIcon}
                           style={{
                             color: "rgb(209, 155, 111)",
                             fontSize: "30px",
@@ -681,7 +679,7 @@ console.log(getDataOne);
                       />
                     )}
 
-                    <img src={heartIcon}
+                    <img src={favIcon}
                       style={{
                         color: "#878787bd",
                         fontSize: "30px",
@@ -695,18 +693,12 @@ console.log(getDataOne);
                       style={{ border: "none", background: "#FFFFFF" }}
                     >
                       {isPlaying[index] ? (
-                        <FaCirclePause
-                          style={{
-                            color: "rgb(209, 155, 111)",
-                            fontSize: "50px",
-                          }}
+                        <img src={PauseIcon}
+                          
                         />
                       ) : (
-                        <img src={play}
-                          style={{
-                            color: "rgb(209, 155, 111)",
-                            fontSize: "26px",
-                          }}
+                        <img src={PlayIcon}
+                         
                         />
                       )}
                     </button>

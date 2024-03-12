@@ -15,7 +15,10 @@ import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 import { MdDownloadForOffline } from "react-icons/md";
 import notify from "../UseNotifications/useNotification";
 import { downloadOneAudio } from "../../features/audios/audioSlice";
-
+import favrediconwith from "../../images/favredWith.svg";
+import PlayIcon from "../../images/play.svg";
+import PauseIcon from "../../images/pause.svg";
+import downloadIcon from "../../images/download.svg";
 const FavAudios = () => {
   const token = Cookies.get("token");
 
@@ -399,7 +402,7 @@ const FavAudios = () => {
           </Col>
 
           <Col xs={6}>
-            {/* <p
+            <p
               style={{
                 color: "rgba(130, 130, 130, 1)",
                 display: "flex",
@@ -409,7 +412,7 @@ const FavAudios = () => {
               }}
             >
               محمد صالح المنجد
-            </p> */}
+            </p>
           </Col>
 
           <Col xs={6}>
@@ -423,7 +426,7 @@ const FavAudios = () => {
                 padding: "15px",
               }}
             >
-  {durations[index] ? formatDuration(durations[index]) : 'Loading...'}
+  {durations[index] ? formatDuration(durations[index]) : 'Loading...'} دقيقه
             </p>
           </Col>
 
@@ -439,7 +442,7 @@ const FavAudios = () => {
             >
               {token ? (
                       <a href={`${item.audio}?download=true`} target="_blank">
-                        <MdDownloadForOffline
+                        <img src={downloadIcon}
                           style={{
                             color: "rgb(209, 155, 111)",
                             fontSize: "30px",
@@ -450,7 +453,7 @@ const FavAudios = () => {
                         />
                       </a>
                     ) : (
-                      <MdDownloadForOffline
+                      <img src={downloadIcon}
                         style={{
                           color: "rgb(209, 155, 111)",
                           fontSize: "30px",
@@ -460,10 +463,9 @@ const FavAudios = () => {
                         download="audio_file"
                       />
                     )}
-              <IoIosHeart 
+              <img src={favrediconwith}
                   style={{
-                    color: "red",
-                    fontSize: "25px",
+                    
                     cursor: "pointer",
                   }}
                 />
@@ -472,18 +474,12 @@ const FavAudios = () => {
                       style={{ border: "none", background: "#FFFFFF" }}
                     >
                       {isPlaying[index] ? (
-                        <FaCirclePause
-                          style={{
-                            color: "rgb(209, 155, 111)",
-                            fontSize: "26px",
-                          }}
+                        <img src={PauseIcon}
+                          
                         />
                       ) : (
-                        <FaCirclePlay
-                          style={{
-                            color: "rgb(209, 155, 111)",
-                            fontSize: "26px",
-                          }}
+                        <img src={PlayIcon}
+                        
                         />
                       )}
                     </button>

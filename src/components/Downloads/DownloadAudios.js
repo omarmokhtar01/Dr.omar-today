@@ -3,13 +3,16 @@ import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom"; 
 import audioProfile from "../../images/audio-profile.png";
-
+import trashIcon from "../../images/trash.svg";
+import PlayIcon from "../../images/play.svg";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAudiosDownload } from "../../features/allDownload/allDownloadSlice";
+import favIcon from "../../images/fav.svg";
+import PauseIcon from "../../images/pause.svg";
 import Cookies from "js-cookie";
 
 const DownloadAudios = () => {
@@ -129,7 +132,7 @@ const DownloadAudios = () => {
                   paddingTop: "15px",
                   borderRadius: "25px",
                 }}
-                className=" background-image"
+                className=" background-image-2"
               >
                 {" "}
                 التحميلات{" "}
@@ -291,7 +294,7 @@ const DownloadAudios = () => {
                 <img
                   src={item.image}
                   alt=""
-                  style={{}}
+                  style={{borderRadius:'5.81px'}}
                   width="61px"
                   height="61px"
                 />
@@ -335,7 +338,7 @@ const DownloadAudios = () => {
                   padding: "15px",
                 }}
               >
-  {durations[index] ? formatDuration(durations[index]) : 'Loading...'}
+  {durations[index] ? formatDuration(durations[index]) : 'Loading...'} دقيقه
               </p>
             </Col>
 
@@ -349,33 +352,27 @@ const DownloadAudios = () => {
                   gap: "5px",
                 }}
               >
-                {/* <RiDeleteBin5Line style={{ fontSize: "25px", color: "gray" }} /> */}
+                <img src={trashIcon} style={{ marginLeft:'10px' }} />
 
-                {/* <IoHeartCircleSharp
+                <img src={favIcon}
                   style={{
-                    color: "#878787bd",
-                    fontSize: "35px",
+                   
                     cursor: "pointer",
                   }}
-                /> */}
+                />
                 <button
                               onClick={() => handlePlay(index)}
                               style={{ border: "none", background: "#FFFFFF" }}
                             >
                               {isPlaying[index] ? (
-                                <FaCirclePause
+                                <img src={PauseIcon}
                                   style={{
                                     color: "rgb(209, 155, 111)",
                                     fontSize: "26px",
                                   }}
                                 />
                               ) : (
-                                <FaCirclePlay
-                                  style={{
-                                    color: "rgb(209, 155, 111)",
-                                    fontSize: "26px",
-                                  }}
-                                />
+                                <img src={PlayIcon} />
                               )}
                             </button>
                             <audio

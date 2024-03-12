@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from '../Navbar/NavBar';
-import './pic.css'
+import './pic.css' 
 import { Button, Col, Container, Modal, Row, Spinner } from 'react-bootstrap';
-
+import modalfav from "../../images/modalfav.svg";
+import modaldown from "../../images/modaldown.svg";
+import modalshare from "../../images/modalshare.svg";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { downOnePic, favOnePic, getAllPicuture } from '../../features/allPictres/allPicturesSlice';
@@ -15,9 +17,9 @@ import { FaShareFromSquare } from "react-icons/fa6";
 import { saveAs } from 'file-saver';
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
-
+import favGroundIcon from "../../images/favground.svg";
 import notify from "../UseNotifications/useNotification";
-
+ 
 const Pictures = () => {
   let token = Cookies.get("token");
 
@@ -271,8 +273,8 @@ const handleDownload = (picId) => {
         getAllPicturesData.map((image, index) => (
           <Col key={index} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
             {/* Placeholder for heartImg */}
-            <div style={{ position: 'relative', top: '10px', right: '10px', zIndex: '1' }}>
-              <IoHeartCircleSharp onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+            <div style={{ position: 'relative', top: '40px', right: '-80px', zIndex: '1' }}>
+              <img src={favGroundIcon}  onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
             </div>
             {image && image.image && (
               <img
@@ -293,8 +295,8 @@ const handleDownload = (picId) => {
       getOneData[0]?.image?.map((image, index) => (
         <Col key={image.id} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
         {/* Placeholder for heartImg */}
-          <div style={{ position: 'relative', top: '10px', right: '10px', zIndex: '1' }}>
-            <IoHeartCircleSharp onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+          <div style={{ position: 'relative', top: '40px', right: '-70px', zIndex: '1' }}>
+            <img src={favGroundIcon}  onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
           {image && (
   <img
@@ -328,9 +330,9 @@ const handleDownload = (picId) => {
   <div style={{ display: 'flex', justifyContent: 'center' }}>
     <div style={{ width: '180px', justifyContent: 'space-between', display: 'flex' }}>
       {/* Your icons */}
-      <FaShareFromSquare style={{ color: '#878787bd', fontSize: '40px', marginTop: '12px', cursor: 'pointer' }} />
-      <MdDownloadForOffline style={{ color: 'rgb(219 176 134)', fontSize: '50px', cursor: 'pointer' }} onClick={()=>handleDownload(savedId)} />        
-      <IoHeartCircleSharp style={{ color: '#878787bd', fontSize: '45px', marginTop: '10px', cursor: 'pointer' }} onClick={()=>handelAddtoFavPic(savedId)} />
+      <img src={modalshare} style={{  marginTop: '12px', cursor: 'pointer' }} />
+      <img src={modaldown}  style={{  cursor: 'pointer' }} onClick={()=>handleDownload(savedId)} />        
+      <img src={modalfav}  style={{ marginTop: '10px', cursor: 'pointer' }} onClick={()=>handelAddtoFavPic(savedId)} />
     </div>
   </div>
 </Modal>

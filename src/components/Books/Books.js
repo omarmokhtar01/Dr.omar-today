@@ -13,11 +13,14 @@ import {
 
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import squareIcon from "../../images/squares.svg";
+import rowaIcon from "../../images/rows.svg";
 import group2 from "../../images/Group2.png";
 import group22 from "../../images/Group-2-2.png";
 import group from "../../images/Group.png";
-
+import searchIcon from "../../images/search.svg";
+import favGroundIcon from "../../images/favground.svg";
+import arrowsIcon from "../../images/twoArr.svg";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import { useSelector, useDispatch } from "react-redux";
@@ -370,28 +373,21 @@ const Books = () => {
                                     onChange={(e)=>setSearchState(e.target.value)}
 
                 />
-                <IoSearch
-                  width="20px"
-                  height="20px"
-                  style={{
+               <img src={searchIcon}   className="img-search" style={{
                     position: "absolute",
                     marginTop: "-30px",
                     marginRight: "70px",
                     fontSize: "25px",
                     color: "#00000082",
-                  }}
-                  className="img-search"
-                />
+                  }} />
               </Form>
               <div style={{ display: "flex", gap: "10px" }}>
-                <LuArrowUpDown
-                  style={{
+              <img style={{
                     marginRight: "5px",
                     position: "absolute",
                     marginTop: "10px",
                     color: "rgb(219, 176, 134)",
-                  }}
-                />
+                  }} src={arrowsIcon} />
 
 <NavDropdown
         title="الترتيب حسب"
@@ -416,17 +412,18 @@ const Books = () => {
       </NavDropdown>
 
                 <Link to="/bookSort">
-                  <img src={group} alt="" width="30px" height="30px" />
+                  <img src={squareIcon} alt=""/>
                 </Link>
 
                 <Link to="/Books">
-                  {" "}
+                <img src={rowaIcon} alt=""/>
+                  {/* {" "}
                   <img
                     src={isClicked ? group2 : group22}
                     width="30px"
                     height="30px"
                     onClick={handleClick}
-                  />
+                  /> */}
                 </Link>
               </div>
             </div>
@@ -456,12 +453,7 @@ const Books = () => {
                   cursor: "pointer",
                 }}
               >
-                <img
-                  src={item.image}
-                  alt=""
-                  height={164}
-                  width={134}
-                />
+              
                 <div
                   style={{
                     position: "absolute",
@@ -550,7 +542,7 @@ const Books = () => {
                     src={item.image}
                     alt=""
                     height={164}
-                    width={134}
+                    width={134} style={{borderRadius:'0px 12.32px 12.32px 0px'}}
                   />
                   <div
                     style={{
@@ -588,7 +580,7 @@ const Books = () => {
                 gap: "20px",
               }}
             >
-              <IoHeartCircleSharp
+              <img src={favGroundIcon}
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -675,10 +667,9 @@ const Books = () => {
                 gap: "20px",
               }}
             >
-              <IoHeartCircleSharp
+              <img src={favGroundIcon}
                 style={{
-                  color: "#878787bd",
-                  fontSize: "30px",
+                 
                   marginRight: "-30px",
                   cursor: 'pointer'
                 }}
@@ -716,7 +707,7 @@ const Books = () => {
                       cursor: "pointer",
                     }}
                   >
-                    <img src={item.image} alt="" height={164} width={134} />
+                    <img src={item.image} alt="" height={164} width={134} style={{borderRadius:'0px 12.32px 12.32px 0px'}} />
                     <div
                       style={{
                         position: "absolute",
@@ -753,7 +744,7 @@ const Books = () => {
                   gap: "20px",
                 }}
               >
-                <IoHeartCircleSharp
+                <img src={favGroundIcon}
                   style={{
                     color: "#878787bd",
                     fontSize: "30px",

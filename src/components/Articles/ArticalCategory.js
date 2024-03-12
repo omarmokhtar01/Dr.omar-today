@@ -20,7 +20,8 @@ import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import { FaClock } from "react-icons/fa";
 import { IoEye } from "react-icons/io5";
-
+import clockIcon from "../../images/clock.svg";
+import eyeIcon from "../../images/eye.svg";
 const ArticalCategory = () => {
   const params = useParams();
 
@@ -274,7 +275,7 @@ const ArticalCategory = () => {
                                   fontSize: "14px",
                                 }}
                               >
-                                <FaClock
+                                <img src={clockIcon}
                                   style={{
                                     marginLeft: "8px",
                                     color: "rgb(209, 155, 111)",
@@ -289,7 +290,7 @@ const ArticalCategory = () => {
                                   fontSize: "14px",
                                 }}
                               >
-                                <IoEye
+                                <img src={eyeIcon}
                                   style={{
                                     marginLeft: "8px",
                                     color: "rgb(209, 155, 111)",

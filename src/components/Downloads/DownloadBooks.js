@@ -11,6 +11,7 @@ import { getBooksDownload } from "../../features/allDownload/allDownloadSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import delIcon from "../../images/del.svg";
 
 const DownloadBooks = () => {
   const token = Cookies.get("token");
@@ -63,7 +64,7 @@ const DownloadBooks = () => {
                   paddingTop: "15px",
                   borderRadius: "25px",
                 }}
-                className=" background-image"
+                className=" background-image-2"
               >
                 {" "}
                 التحميلات{" "}
@@ -240,7 +241,7 @@ const DownloadBooks = () => {
               {getData.map((item, index) => (
                 <div class="col" key={item.id}>
             <div>
-              <img src={item.image} alt="" className="book-download" height='247px' width='169'   />
+              <img src={item.image} alt="" className="book-download" height='247px' width='169' style={{borderRadius:'15px'}}  />
 
               <div
                 style={{
@@ -249,23 +250,20 @@ const DownloadBooks = () => {
                   marginRight: "40px",
                   display: "flex",
                   gap: "10px",
-                  border: "1px solid #FFFFFF",
-                  background: "#FFFFFF",
-                  borderRadius: "25px",
+                 
                 }}
               >
-                <RiDeleteBin5Line
+                <img src={delIcon}
                   style={{
                     paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
+                   
+                    
                   }}
                 />
               </div>
-
-              <h5> {item.name} </h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
+              <h5 style={{fontWeight:'700'}}>حياه محمد</h5>
+              {/* <h5> {item.name} </h5> */}
+              <p style={{ marginTop: "-5px" , color:'#828282'}}>20 صفحه </p>
             </div>
           </div>
               ))}

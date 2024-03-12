@@ -11,12 +11,13 @@ import {
   Row,Spinner
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import favGroundIcon from "../../images/favground.svg";
 import group2 from "../../images/Group2.png";
 import search from "../../images/search.png";
 import group from "../../images/Group.png";
 import group1 from "../../images/Group-1-1.png";
-
+import blackSquareIcon from "../../images/blackSquare.svg";
+import whiteRowsIcon from "../../images/whiteRows.svg";
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import { addToFavBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
@@ -400,15 +401,16 @@ const BooksSort = () => {
         </NavDropdown.Item>
       </NavDropdown>
                 <Link to="/bookSort">
-                  <img
+                <img src={blackSquareIcon} alt="" />
+                  {/* <img
                     src={isClicked ? group : group1}
                     width="30px"
                     height="30px"
                     onClick={handleClick}
-                  />
+                  /> */}
                 </Link>
                 <Link to="/Books">
-                  <img src={group2} alt="" width="30px" height="30px" />
+                  <img src={whiteRowsIcon} alt=""  />
                 </Link>
               </div>
             </div>
@@ -496,7 +498,7 @@ const BooksSort = () => {
           <div
             className="card-book-sort"
             style={{
-              border: "1px solid gray",
+             
               borderRadius: "10px",
               width: "175px",
               height: "300px",
@@ -522,6 +524,7 @@ const BooksSort = () => {
                 alt=""
                 height={246}
                 width={169}
+                style={{borderRadius:'10px'}}
               />
               <div
                 style={{
@@ -548,8 +551,8 @@ const BooksSort = () => {
               }}
             >
               
-                <IoHeartCircleSharp
-                  style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
+                <img src={favGroundIcon}
+                  style={{ cursor:'pointer' }}
                                   onClick={()=>handelAddtoFavBook(item.id)}
 
 
@@ -576,7 +579,7 @@ const BooksSort = () => {
             <div
               className="card-book-sort"
               style={{
-                border: "1px solid gray",
+            
                 borderRadius: "10px",
                 width: "175px",
                 height: "300px",
@@ -602,6 +605,7 @@ const BooksSort = () => {
                   alt=""
                   height={246}
                   width={169}
+                 
                 />
                 <div
                   style={{
@@ -628,8 +632,8 @@ const BooksSort = () => {
                 }}
               >
                 
-                  <IoHeartCircleSharp
-                    style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
+                  <img src={favGroundIcon}
+                    style={{ cursor:'pointer' }}
                                     onClick={()=>handelAddtoFavBook(item.id)}
 
 
@@ -652,7 +656,7 @@ const BooksSort = () => {
             <div
               className="card-book-sort"
               style={{
-                border: "1px solid gray",
+              
                 borderRadius: "10px",
                 width: "175px",
                 height: "300px",
@@ -677,7 +681,8 @@ const BooksSort = () => {
                   src={item.image}
                   alt=""
                   height={246}
-                  width={169}
+                  width={169} 
+                  style={{borderRadius:'10px'}}
                 />
                 <div
                   style={{
@@ -704,8 +709,8 @@ const BooksSort = () => {
                 }}
               >
                 
-                  <IoHeartCircleSharp
-                    style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
+                  <img src={favGroundIcon}
+                    style={{cursor:'pointer' }}
                                     onClick={()=>handelAddtoFavBook(item.id)}
 
 

@@ -8,6 +8,7 @@ import heart from "../../images/heart.svg";
 import noti from "../../images/noti.svg";
 import personal from "../../images/personal.svg";
 import vector from "../../images/vector.svg";
+import downNav from "../../images/downNav.svg";
 
 import backgroundImage from '../../images/back-header.png';
 import { Link, useLocation } from 'react-router-dom';
@@ -184,7 +185,7 @@ const NavBar = () => {
             </Button>
 
           <Link to='/DownloadScientest' >
-          <img src={download}  style={{ color: 'rgb(219 176 134)', fontSize: '35px' ,paddingLeft:'5px' }}/>
+          <img src={downNav}  style={{ color: 'rgb(219 176 134)', fontSize: '35px' ,paddingLeft:'5px' }}/>
           </Link>
          
           

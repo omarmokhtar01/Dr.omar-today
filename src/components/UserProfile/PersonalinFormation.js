@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./profile.css";
 import NavBar from "../Navbar/NavBar";
 import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
-import phone from "../../images/phone.png";
-import email from "../../images/email.png";
-import name from "../../images/name.png";
+import phone from "../../images/phone.svg";
+import email from "../../images/email.svg";
+import name from "../../images/name.svg";
 import deleteAcc from "../../images/deleteAccount.png";
 import { Link } from "react-router-dom";
 

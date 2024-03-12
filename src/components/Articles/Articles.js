@@ -24,6 +24,10 @@ import { FaClock } from "react-icons/fa";
 import { IoEye } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import { ToastContainer } from "react-toastify";
+import searchIcon from "../../images/search.svg";
+import arrowsIcon from "../../images/twoArr.svg";
+import clockIcon from "../../images/clock.svg";
+import eyeIcon from "../../images/eye.svg";
 
 const Articles = () => {
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
@@ -221,29 +225,23 @@ const Articles = () => {
                   onChange={(e)=>setSearchState(e.target.value)}
                 />
 
-                <IoSearch
-                  width="20px"
-                  height="20px"
-                  style={{
+              <img src={searchIcon}   className="img-search" style={{
                     position: "absolute",
                     marginTop: "-30px",
                     marginRight: "70px",
                     fontSize: "25px",
                     color: "#00000082",
-                  }}
-                  className="img-search"
-                />
+                  }} />
               </Form>
 
               <div style={{ display: "flex", gap: "10px" }}>
-                <LuArrowUpDown
-                  style={{
+              <img style={{
                     marginRight: "5px",
                     position: "absolute",
                     marginTop: "10px",
                     color: "rgb(219, 176, 134)",
-                  }}
-                />
+                  }} src={arrowsIcon} />
+
 
                 <NavDropdown
         title="الترتيب حسب"
@@ -284,11 +282,11 @@ const Articles = () => {
                           <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
                           <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
                             <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                              <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                              <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
                               منذ ساعة
                             </p>
                             <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                              <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                              <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
                               23 مشاهدة
                             </p>
                           </Card.Text>
@@ -311,11 +309,11 @@ const Articles = () => {
               <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
               <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                  <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                  <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
                   منذ ساعة
                 </p>
                 <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                  <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                  <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
                   23 مشاهدة
                 </p>
               </Card.Text>
@@ -341,11 +339,11 @@ const Articles = () => {
               <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
               <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                  <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                  <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
                   منذ ساعة
                 </p>
                 <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                  <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                  <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
                   23 مشاهدة
                 </p>
               </Card.Text>
@@ -367,11 +365,11 @@ const Articles = () => {
                 <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
                 <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
                   <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                    <FaClock style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                    <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
                     منذ ساعة
                   </p>
                   <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                    <IoEye style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                    <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
                     23 مشاهدة
                   </p>
                 </Card.Text>

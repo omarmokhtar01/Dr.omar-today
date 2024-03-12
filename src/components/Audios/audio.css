@@ -92,7 +92,7 @@ width: 100%
 @media (max-width: 576px) { 
   .icons-div{
  
-  font-size: 20px;
+  margin-right: 30px;
     
   }
  }
@@ -111,4 +111,16 @@ width: 100%
   }
  }
 
+ @media (min-width: 576px) and (max-width: 767.98px) { 
+  .icons-div{
  
+    margin-right: 100px;
+      
+    }
+    .img-res-audio{
+      margin-left: 135px;
+    }
+    .res-h5-name{
+      margin-right: -160px !important;
+    }
+  }

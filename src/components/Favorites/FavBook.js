@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { getBooksFavorite } from "../../features/allFavorites/allFavoritesSlice";
 import Cookies from "js-cookie";
 import { IoIosHeart } from "react-icons/io";
-
+import favredicon from "../../images/redfav.svg";
 const FavBook = () => {
   const token = Cookies.get("token");
 
@@ -252,7 +252,7 @@ const FavBook = () => {
               {getData.map((item, index) => (
                 <div class="col section-col ">
             <div>
-              <img src={item.image} alt="" height='247px' width='169' />
+              <img src={item.image} alt="" height='247px' width='169' style={{borderRadius:'15px'}}/>
               <div
                 style={{
                   position: "absolute",
@@ -260,16 +260,15 @@ const FavBook = () => {
                   marginRight: "40px",
                   display: "flex",
                   gap: "10px",
+
                 }}
               >
-                <IoIosHeart 
+                <img src={favredicon}
                   style={{
-                    color: "red",
-                    fontSize: "35px",
+                  
                     cursor: "pointer",
-                    borderRadius:'25px',
-                    background:'#f3e9e9'
-                    ,padding:'5px'
+                  
+                    padding:'5px'
                   }}
                 />
               </div>

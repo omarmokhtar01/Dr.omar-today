@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import img1 from "../../images/img1.png";
+import favredicon from "../../images/redfav.svg";
 import heart1 from "../../images/redhearticon.png";
 import { getAllEldersFavorite } from "../../features/allFavorites/allFavoritesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { IoIosHeart } from "react-icons/io";
+import audioIcon from "../../images/audio.svg"; 
 
 const FavScientists = () => {
   const token = Cookies.get("token");
@@ -280,19 +281,18 @@ const FavScientists = () => {
                   
                 }}
               >
-               <IoIosHeart 
+               <img src={favredicon}
                   style={{
-                    color: "red",
-                    fontSize: "35px",
-                    cursor: "pointer",
-                    borderRadius:'25px',
-                    background:'#f3e9e9'
+                    
+                   
+                    cursor: "pointer"
+                  
                     ,padding:'5px'
                   }} />
               </div>
 
               <h5 style={{marginTop:'15px'}}>  {item.name}</h5>
-              <p style={{ marginTop: "-5px" }}>{item.count_audios} مقطع صوتي</p>
+              <p style={{ marginTop: "-5px", color:'#828282' }}>  <img src={audioIcon} />  {item.count_audios} مقطع صوتي</p>
             </div>
           </div>
             ))}

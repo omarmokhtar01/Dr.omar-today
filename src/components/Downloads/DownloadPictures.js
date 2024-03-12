@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPicturesDownload } from "../../features/allDownload/allDownloadSlice";
 import Cookies from "js-cookie";
- 
+import delIcon from "../../images/del.svg";
 const DownloadPictures = () => {
   const token = Cookies.get("token");
 
@@ -69,7 +69,7 @@ const DownloadPictures = () => {
                   paddingTop: "15px",
                   borderRadius: "25px",
                 }}
-                className=" background-image"
+                className=" background-image-2"
               >
                 {" "}
                 التحميلات{" "}
@@ -241,7 +241,7 @@ const DownloadPictures = () => {
                     
              </div> */}
 
-            <RiDeleteBin5Line
+            <img src={delIcon}
               style={{
                 fontSize: "35px",
                 color: "gray",
@@ -249,9 +249,7 @@ const DownloadPictures = () => {
                 position: "absolute",
                 zIndex: "2",
                 margin: "15px",
-                border: "1px solid #FFFFFF",
-                borderRadius: "25px",
-                background: "#FFFFFF",
+               
               }}
             />
             <img className="img-fav-card"

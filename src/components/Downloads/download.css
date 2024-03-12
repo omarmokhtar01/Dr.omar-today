@@ -23,3 +23,7 @@
 margin-right: 10px !important;
     }
  }
+ .background-image-2 {
+    background-image: url('../../images/green-vector.png');
+    background-size: cover;
+  }

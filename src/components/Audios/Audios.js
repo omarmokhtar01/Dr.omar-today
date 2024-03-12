@@ -8,13 +8,23 @@ import {
   NavDropdown,
   Row,
   Spinner,
-} from "react-bootstrap";
+} from "react-bootstrap"; 
 import { Coordinates, CalculationMethod, PrayerTimes } from 'adhan';
-import heartIcon from "../../images/heartIcon.svg";
 
 import group from "../../images/Group.png";
+import searchIcon from "../../images/search.svg";
 import group2 from "../../images/Group2.png";
 import group22 from "../../images/Group-2-2.png";
+import arrowsIcon from "../../images/twoArr.svg";
+import squareIcon from "../../images/squares.svg";
+import rowaIcon from "../../images/rows.svg";
+import favGroundIcon from "../../images/favground.svg";
+import audioIcon from "../../images/audio.svg"; 
+import downGroundIcon from "../../images/downloadGround.svg";
+
+
+
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   getAudioCategory,
@@ -120,7 +130,7 @@ const Audios = () => {
         fetch(audio.audio)
           .then(response => response.blob())
           .then(blob => {
-            zip.file(`audio_${index + 1}.mp3`, blob); // Rename the files as needed
+            zip.file(`audio_${index + 1}.mp3, blob`); // Rename the files as needed
           })
           .catch(error =>
             console.error(`Error downloading audio ${index + 1}:`, error)
@@ -416,19 +426,15 @@ const Audios = () => {
                   style={{ borderRadius: "25px" }}
                   onChange={(e)=>setSearchState(e.target.value)}
                 />
-
-                <IoSearch
-                  width="20px"
-                  height="20px"
-                  style={{
+              
+               
+                 <img src={searchIcon}   className="img-search" style={{
                     position: "absolute",
                     marginTop: "-30px",
                     marginRight: "70px",
                     fontSize: "25px",
                     color: "#00000082",
-                  }}
-                  className="img-search"
-                />
+                  }} />
               </Form>
 
               <div
@@ -447,14 +453,13 @@ const Audios = () => {
                   }} 
                 /> */}
 
-                <LuArrowUpDown
-                  style={{
+               
+                <img style={{
                     marginRight: "5px",
                     position: "absolute",
                     marginTop: "10px",
                     color: "rgb(219, 176, 134)",
-                  }}
-                />
+                  }} src={arrowsIcon} />
 
 <NavDropdown
         title="الترتيب حسب"
@@ -479,17 +484,18 @@ const Audios = () => {
       </NavDropdown>
 
                 <Link to="/audiosSort">
-                  <img src={group} alt="" width="30px" height="30px" />
+                  <img src={squareIcon} alt=""  />
                 </Link>
 
                 <Link to="/audios">
-                  {" "}
+                  {/* {" "}
                   <img
-                    src={isClicked ? group2 : group22}
+                    src={isClicked ? rowaIcon : group22}
                     width="30px"
                     height="30px"
                     onClick={handleClick}
-                  />
+                  /> */}
+                  <img src={rowaIcon} alt=""  />
                 </Link>
               </div>
             </div>
@@ -537,7 +543,7 @@ const Audios = () => {
                 }}
               >
                 {" "}
-                {item.count_audios} مقطع صوتي
+                {item.count_audios} مقطع صوتي   
               </p>
             </div>
           </div>
@@ -553,7 +559,7 @@ const Audios = () => {
             id="sounds-icons"
           >
             {" "}
-            <IoHeartCircleSharp
+            <img src={favGroundIcon}
               style={{
                 color: "#878787bd",
                 fontSize: "40px",
@@ -599,6 +605,7 @@ const Audios = () => {
                     width={200}
                     height={200}
                     id="img-card-audio"
+                    style={{borderRadius:'0px 15px 15px 0px'}}
                   />
                 </Link>
                 <div
@@ -617,7 +624,7 @@ const Audios = () => {
                     }}
                   >
                     {" "}
-                    {item.count_audios} مقطع صوتي
+                    <img src={audioIcon} />    {item.count_audios} مقطع صوتي  
                   </p>
                 </div>
               </div>
@@ -633,7 +640,7 @@ const Audios = () => {
                 id="sounds-icons"
               >
                 {" "}
-                <IoHeartCircleSharp
+                <img src={favGroundIcon}
                   style={{
                     color: "#878787bd",
                     fontSize: "40px",
@@ -641,7 +648,7 @@ const Audios = () => {
                   }}
                   onClick={()=>handelAddtoFavElder(item.id)}
                 />
-                <MdDownloadForOffline
+                <img src={downGroundIcon}
                   style={{
                     color: "rgb(219 176 134)",
                     fontSize: "42px",
@@ -702,7 +709,7 @@ const Audios = () => {
                   }}
                 >
                   {" "}
-                  {item.count_audios} مقطع صوتي
+                  <img src={audioIcon} />  {item.count_audios} مقطع صوتي
                 </p>
               </div>
             </div>
@@ -726,7 +733,7 @@ const Audios = () => {
                 }}
                 onClick={()=>handelAddtoFavElder(item.id)}
               />
-              <MdDownloadForOffline
+              <img src={downGroundIcon}
                 onClick={()=>downloadAudiosAsZip(item.id,item.id)}
                 style={{
                   color: "rgb(219 176 134)",
@@ -762,6 +769,7 @@ const Audios = () => {
                     width={200}
                     height={200}
                     id="img-card-audio"
+                    style={{borderRadius:'0px 15px 15px 0px'}}
                   />
                 </Link>
                 <div
@@ -780,7 +788,7 @@ const Audios = () => {
                     }}
                   >
                     {" "}
-                    {item.count_audios} مقطع صوتي
+                    <img src={audioIcon} />  {item.count_audios} مقطع صوتي
                   </p>
                 </div>
               </div>
@@ -796,7 +804,7 @@ const Audios = () => {
                 id="sounds-icons"
               >
                 {" "}
-                <IoHeartCircleSharp
+                <img src={favGroundIcon}
                   style={{
                     color: "#878787bd",
                     fontSize: "40px",
@@ -804,7 +812,7 @@ const Audios = () => {
                   }}
                   onClick={()=>handelAddtoFavElder(item.id)}
                 />
-                <MdDownloadForOffline
+                <img src={downGroundIcon}
                   onClick={()=>downloadAudiosAsZip(item.id,item.id)}
                   style={{
                     color: "rgb(219 176 134)",

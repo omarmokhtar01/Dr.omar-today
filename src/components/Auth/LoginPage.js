@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./Auth.css";
 import { Col, Container, Form, Modal, Row,Spinner } from "react-bootstrap";
-import facebook from "../../images/face.png";
-import gmail from "../../images/gamil.png";
-import apple from "../../images/apple.png";
+import facebook from "../../images/face.svg";
+import gmail from "../../images/gmail.svg";
+import apple from "../../images/apple.svg";
 import ForgetPasswordPage from "./ForgetPasswordPage";
 import RegisterPage from "./RegisterPage";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import notify from "../UseNotifications/useNotification";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import emailIcon from "../../images/email.svg";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -136,14 +137,14 @@ const LoginPage = () => {
                     الأيميل
                   </Form.Label>
 
-                  <MdOutlineMail
+                  <img src={emailIcon}
                     style={{
-                      color: "gray",
+                     
                       position: "absolute",
                       display: "flex",
-                      marginTop: "12px",
+                      marginTop: "20px",
                       paddingRight: "9px",
-                      fontSize: "35px",
+                      
                     }}
                   />
 

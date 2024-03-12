@@ -4,10 +4,10 @@ import React, { useEffect } from "react";
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 
-import facebook from "../../images/facebook.png";
-import whats from "../../images/whats.png";
-import messgener from "../../images/Messanger.png";
-import instagram from "../../images/instrgram.png";
+import facebook from "../../images/facebook.svg";
+import whats from "../../images/whats.svg";
+import messgener from "../../images/messnger.svg";
+import instagram from "../../images/instgram.svg";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getArticleCategoryOne } from "../../features/articles/articlesSlich";
@@ -15,7 +15,8 @@ import { IoEye, IoHeartCircleSharp } from "react-icons/io5";
 import { FaClock } from "react-icons/fa6";
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
-
+import clockIcon from "../../images/clock.svg";
+import eyeIcon from "../../images/eye.svg";
 import notify from "../UseNotifications/useNotification";
 const ArticleCard = () => {
   const handleCheckLogin = () => {
@@ -102,7 +103,7 @@ const ArticleCard = () => {
                   >
                     <div>
                       {" "}
-                      <FaClock
+                      <img src={clockIcon}
                         style={{
                           marginLeft: "8px",
                           color: "rgb(209, 155, 111)",
@@ -122,7 +123,7 @@ const ArticleCard = () => {
                   >
                     <div>
                       {" "}
-                      <IoEye
+                      <img src={eyeIcon}
                         style={{
                           marginLeft: "8px",
                           color: "rgb(209, 155, 111)",

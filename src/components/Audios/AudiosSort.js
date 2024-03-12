@@ -10,7 +10,11 @@ import {
 } from "react-bootstrap";
 import group from "../../images/Group.png";
 import group2 from "../../images/Group2.png";
-
+import arrowsIcon from "../../images/twoArr.svg";
+import audioIcon from "../../images/audio.svg"; 
+import searchIcon from "../../images/search.svg";
+import blackSquareIcon from "../../images/blackSquare.svg";
+import whiteRowsIcon from "../../images/whiteRows.svg";
 import { Link } from "react-router-dom";
 import NavBar from "../Navbar/NavBar";
 import group1 from "../../images/Group-1-1.png";
@@ -224,32 +228,25 @@ useEffect(() => {
                   onChange={(e)=>setSearchState(e.target.value)}
 
                 />
-                <IoSearch
-                  width="20px"
-                  height="20px"
-                  style={{
+                 <img src={searchIcon}   className="img-search" style={{
                     position: "absolute",
                     marginTop: "-30px",
                     marginRight: "70px",
                     fontSize: "25px",
                     color: "#00000082",
-                  }}
-                  className="img-search"
-                />
+                  }} />
               </Form>
 
               <div
                 className="audio-section"
                 style={{ display: "flex", gap: "5px", marginLeft: "5px" }}
               >
-                <LuArrowUpDown
-                  style={{
+                 <img style={{
                     marginRight: "5px",
                     position: "absolute",
                     marginTop: "10px",
                     color: "rgb(219, 176, 134)",
-                  }}
-                />
+                  }} src={arrowsIcon} />
 
 <NavDropdown
         title="الترتيب حسب"
@@ -274,17 +271,18 @@ useEffect(() => {
       </NavDropdown>
 
                 <Link to="/audiosSort">
-                  <img
+                  {/* <img
                     src={isClicked ? group : group1}
                     width="30px"
                     height="30px"
                     onClick={handleClick}
                     alt=""
-                  />
+                  /> */}
+                  <img src={blackSquareIcon} alt=""  />
                 </Link>
 
                 <Link to="/audios">
-                  <img src={group2} alt="" width="30px" height="30px" />
+                  <img src={whiteRowsIcon} alt="" />
                 </Link>
               </div>
             </div>
@@ -300,14 +298,14 @@ useEffect(() => {
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row-lg-12">
           <div className="col-lg-12 col-md-12 col-sm-12">
-            <img src={item.image} alt="pic" width={160} height={200} />
+            <img src={item.image} alt="pic" width={160} height={200} style={{borderRadius:'15px'}} />
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
             <h5 className="text-center text-lg-center p-2">{item.name}</h5>
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12">
             <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
-              {item.count_audios} مقطع صوتي
+            <img src={audioIcon} />   {item.count_audios} مقطع صوتي
             </p>
           </div>
         </div>
@@ -325,14 +323,14 @@ useEffect(() => {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="row-lg-12">
               <div className="col-lg-12 col-md-12 col-sm-12">
-                <img src={item.image} alt="pic" width={160} height={200} />
+                <img src={item.image} alt="pic" width={160} height={200} style={{borderRadius:'15px'}}/>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
                 <h5 className="text-center text-lg-center p-2">{item.name}</h5>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
-                  {item.count_audios} مقطع صوتي
+                <img src={audioIcon} />   {item.count_audios} مقطع صوتي
                 </p>
               </div>
             </div>
@@ -355,14 +353,14 @@ useEffect(() => {
         <div className="col-lg-12 col-md-12 col-sm-12">
           <div className="row-lg-12">
             <div className="col-lg-12 col-md-12 col-sm-12">
-              <img src={item.image} alt="pic" width={160} height={200} />
+              <img src={item.image} alt="pic" width={160} height={200} style={{borderRadius:'15px'}}/>
             </div>
             <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
               <h5 className="text-center text-lg-center p-2">{item.name}</h5>
             </div>
             <div className="col-lg-12 col-md-12 col-sm-12">
               <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
-                {item.count_audios} مقطع صوتي
+              <img src={audioIcon} />   {item.count_audios} مقطع صوتي
               </p>
             </div>
           </div>
@@ -378,14 +376,14 @@ useEffect(() => {
           <div className="col-lg-12 col-md-12 col-sm-12">
             <div className="row-lg-12">
               <div className="col-lg-12 col-md-12 col-sm-12">
-                <img src={item.image} alt="pic" width={160} height={200} />
+                <img src={item.image} alt="pic" width={160} height={200} style={{borderRadius:'15px'}}/>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
                 <h5 className="text-center text-lg-center p-2">{item.name}</h5>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
-                  {item.count_audios} مقطع صوتي
+                <img src={audioIcon} />   {item.count_audios} مقطع صوتي
                 </p>
               </div>
             </div>

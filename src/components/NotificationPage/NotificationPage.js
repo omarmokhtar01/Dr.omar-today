@@ -1,7 +1,8 @@
 import React from "react";
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row } from "react-bootstrap";
-
+import delIcon from "../../images/del.svg";
+import bellIcon from "../../images/bell.svg";
 import picNotifcation from "../../images/pic-noti.png";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { FaBell } from "react-icons/fa6";
@@ -52,14 +53,13 @@ const NotificationPage = () => {
               <div className="d-flex justify-content-between align-items-center m-2">
                 <h5>
                   {" "}
-                  <FaBell style={{ color: "#ffc107", marginLeft: "5px" }} />
+                  <img src={bellIcon} style={{marginLeft: "5px" }} />
                   الادمن
                 </h5>
-                <RiDeleteBin5Line
+                <img src={delIcon}
                   style={{
                     paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
+ 
                   }}
                 />
               </div>
@@ -106,15 +106,14 @@ const NotificationPage = () => {
               <div className="d-flex justify-content-between align-items-center m-2">
                 <h5>
                   {" "}
-                  <FaBell style={{ color: "#ffc107", marginLeft: "5px" }} />
+                  <img src={bellIcon} style={{marginLeft: "5px" }} />
                   الادمن
                 </h5>
 
-                <RiDeleteBin5Line
+                <img src={delIcon}
                   style={{
                     paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
+ 
                   }}
                 />
               </div>
@@ -156,21 +155,20 @@ const NotificationPage = () => {
                 boxShadow: "0px 0px 42px 0px rgba(3, 20, 37, 0.05)",
                 border: "2px solid rgba(238, 238, 238, 1)",
                 borderRadius: "8px",
-                marginBottom: "20px",
+                marginBottom: "20px", 
               }}
             >
               <div className="d-flex justify-content-between align-items-center m-2">
                 <h5>
                   {" "}
-                  <FaBell style={{ color: "#ffc107", marginLeft: "5px" }} />
+                  <img src={bellIcon} style={{marginLeft: "5px" }} />
                   الادمن
                 </h5>
 
-                <RiDeleteBin5Line
+                <img src={delIcon}
                   style={{
                     paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
+ 
                   }}
                 />
               </div>
@@ -223,15 +221,14 @@ const NotificationPage = () => {
               <div className="d-flex justify-content-between align-items-center m-2">
                 <h5>
                   {" "}
-                  <FaBell style={{ color: "#ffc107", marginLeft: "5px" }} />
+                  <img src={bellIcon} style={{marginLeft: "5px" }} />
                   الادمن
                 </h5>
 
-                <RiDeleteBin5Line
+                <img src={delIcon}
                   style={{
                     paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
+ 
                   }}
                 />
               </div>

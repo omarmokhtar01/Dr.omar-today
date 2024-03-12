@@ -12,6 +12,25 @@ import quran from "../../images/quran.png";
 import play from "../../images/play.svg";
 import heartIcon from "../../images/heartIcon.svg";
 
+
+
+import PlayIcon from "../../images/play.svg";
+import favIcon from "../../images/fav.svg";
+import downloadIcon from "../../images/download.svg";
+import leftIcon from "../../images/left.svg";
+import rightIcon from "../../images/right.svg";
+import changeIcon from "../../images/change.svg"; 
+import audioIcon from "../../images/audio.svg"; 
+import audiossIcon from "../../images/audios.svg"; 
+import booksIcon from "../../images/books.svg"; 
+import articlesIcon from "../../images/articles.svg"; 
+import picIcon from "../../images/pic.svg"; 
+import progressimg from "../../images/progress.png";
+
+
+import PauseIcon from "../../images/progress.png";
+
+
 import box1 from "../../images/box1.png";
 import box2 from "../../images/box2.png";
 import box3 from "../../images/box3.png";
@@ -28,7 +47,7 @@ import vector4 from "../../images/Vector (4).png";
 import google from "../../images/google.png";
 
 import { Link } from "react-router-dom";
-
+import lastVerIcon from "../../images/newVer.svg";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 import { MdFileDownload } from "react-icons/md";
 import { MdAudiotrack } from "react-icons/md";
@@ -453,8 +472,8 @@ const handelAddtoFav = (audioId) => {
           <Col sm="6 p-1 " md={6} lg={3} xs={6}>
             <Link to="/audios" style={{ textDecoration: "none" }}>
               <div className="box-Audio">
-                <img src={box4} alt="" style={{ marginTop: "15px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)",fontSize:'15px',fontWeight:'400' }}>
+                <img src={audiossIcon} alt="" style={{ marginTop: "15px" }} />
+                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
                   صوتيات
                 </p>
               </div>
@@ -464,8 +483,8 @@ const handelAddtoFav = (audioId) => {
           <Col sm="6 p-1 " md={6} lg={3} xs={6}>
             <Link to="/Books" style={{ textDecoration: "none" }}>
               <div className="box-Book">
-                <img src={box3} alt="" style={{ marginTop: "15px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)",fontSize:'15px',fontWeight:'400' }}>
+                <img src={booksIcon} alt="" style={{ marginTop: "15px" }} />
+                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
                   كتب
                 </p>
               </div>
@@ -475,8 +494,8 @@ const handelAddtoFav = (audioId) => {
           <Col sm="6 p-1 " md={6} lg={3} xs={6}>
             <Link to="/articles" style={{ textDecoration: "none" }}>
               <div className="box-Aritcle">
-                <img src={box2} alt="" style={{ marginTop: "15px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)",fontSize:'15px',fontWeight:'400' }}>
+                <img src={articlesIcon} alt="" style={{ marginTop: "15px" }} />
+                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
                   مقالات
                 </p>
               </div>
@@ -486,8 +505,8 @@ const handelAddtoFav = (audioId) => {
           <Col sm="6 p-1 " md={6} lg={3} xs={6}>
             <Link to="/pictures" style={{ textDecoration: "none" }}>
               <div className="box-Pic">
-                <img src={box1} alt="" style={{ marginTop: "20px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)",fontSize:'15px',fontWeight:'400' }}>
+                <img src={picIcon} alt="" style={{ marginTop: "20px" }} />
+                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
                   صور
                 </p>
               </div>
@@ -498,7 +517,7 @@ const handelAddtoFav = (audioId) => {
             <p
               style={{ color: "#051427", fontSize: "18px", fontWeight: "700" }}
             >
-              <img src={icon3} alt="" style={{ marginLeft: "5px" }} />
+              <img src={lastVerIcon} alt="" style={{ marginLeft: "5px" }} />
               اصدارات جديدة{" "}
             </p>
             {/* <p
@@ -737,7 +756,7 @@ const handelAddtoFav = (audioId) => {
        </Container>
 
 
-      <Container>
+       <Container>
         <Row className="d-flex justify-content-between align-items-center me-auto  ">
           <Col sm="12 " md="8">
             <div className="d-flex justify-content-between mt-3">
@@ -748,7 +767,7 @@ const handelAddtoFav = (audioId) => {
                   fontWeight: "700",
                 }}
               >
-                <img src={icon3} alt="" style={{ marginLeft: "5px" }} />
+               <img src={lastVerIcon} alt="" style={{ marginLeft: "5px" }} />
                 الاكثر استماعاً
               </p>
               <p
@@ -774,77 +793,45 @@ const handelAddtoFav = (audioId) => {
         >
           <Col sm="4">
             <div className="d-flex justify-content-center align-items-center ">
-              <img src={item.image} alt="" className="mb-3" width={61} height={61}/>
-              <h5 style={{ width: "100%",fontWeight:'700',fontSize:'16px',lineHeight:'21.28px' }}> {item.title} </h5>
+              <img src={item.image} alt="" className="mb-3" width={61} height={61} style={{borderRadius:'5.81px'}}/>
+         
+              <h5 style={{ width: "100%" }}> {item.title} </h5>
             </div>
           </Col>
 
-          <Col sm="2">
-            {/* <div className="d-flex justify-content-center responsive-span-home">
-              <div
-                style={{
-                  backgroundColor: "#aec3b5",
-                  borderRadius: "50%",
-                  width: "20px",
-                  height: "20px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginLeft: "5px",
-                }}
-              >
-                <MdAudiotrack
-                  style={{
-                    marginBottom: "5px",
-                    color: "white",
-                    position: "relative",
-                    top: "2px",
-                  }}
-                />
-              </div>
+          <Col sm="4">
+            <div className="d-flex justify-content-center responsive-span-home">
+              <img src={audioIcon} />
               <span
                 style={{
                   marginLeft: "5px",
                   color: "#828282",
                   fontWeight: "500",
+                  marginRight:'5px'
                 }}
                 className="responsive-span-home"
               >
                 45 مقطع صوتي
               </span>
-            </div> */}
+            </div>
+           
           </Col>
 
           <Col sm="4" className="responsive-sounds">
             <div className="d-flex justify-content-center align-items-center  ">
-                
-            <img src={heartIcon}
-                      style={{
-                        color: "#878787bd",
-                        fontSize: "30px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handelAddtoFav(item.id)} // Assuming 'audioId' is accessible in this scope
-                    />
+              <img src={favIcon} style={{marginLeft:'10px',cursor:'pointer'}}  onClick={() => handelAddtoFav(item.id)} />
+           
                
               <button
                       onClick={() => handlePlay(index)}
                       style={{ border: "none", background: "#FFFFFF" }}
                     >
                       {isPlaying[index] ? (
-                        <FaCirclePause
-                          style={{
-                            color: "rgb(209, 155, 111)",
-                            fontSize: "50px",
-                          }}
+                        <img src={PauseIcon}
                         />
                       ) : (
-                        <img src={play}
-                          style={{
-                            color: "rgb(209, 155, 111)",
-                            fontSize: "26px",
-                          }}
-                        />
+                       <img src={PlayIcon} />
+                        
                       )}
                     </button>
                     <audio
@@ -900,13 +887,14 @@ const handelAddtoFav = (audioId) => {
         <div style={{ backgroundColor: "#FFFFFFCC", borderRadius: "40px", boxShadow: "4px 7px 22.2px 6px #0000000D", border:'1.5px solid #DBDBDB' }} id="mobile-responsive">
           <img src={mostListenedData[indexMobileState]?.image||"https://i1.sndcdn.com/artworks-jA2OFYdUrideAlyu-AeHsrA-t500x500.jpg"} alt="pic" width={300} height={280} style={{ marginTop: "20px", borderRadius: "40px" , boxShadow:'0px 20px 60px 0px #00000026'}} id="img-mobile-responsive" />
           <Col className="mt-4">
-          <h4 style={{fontSize:'18px',fontWeight:'700',lineHeight:'23.4px'}}>{mostListenedData[indexMobileState]?.title || "Default Title"}</h4>
-            {/* <span style={{ color: "gray" }}>محمد صالح المنجد</span> */}
+          <h4>{mostListenedData[indexMobileState]?.title || "Default Title"}</h4>
+            <span style={{ color: "gray" }}>محمد صالح المنجد</span>
+            <img src={progressimg} />
           </Col>
           <Col className="mt-5" style={{ display: "flex", alignItems: "center", justifyContent: "space-around" }}>
-            <TbArrowsExchange2 size={30} color="gray" style={{ cursor: "pointer" }} />
+            <img src={changeIcon} size={30} color="gray" style={{ cursor: "pointer" }} />
             {indexMobileState < mostListenedData.length - 1 && (
-              <TbPlayerTrackNextFilled size={20} style={{ cursor: "pointer" }} onClick={handleNext} />
+              <img src={rightIcon} size={20} style={{ cursor: "pointer" }} onClick={handleNext} />
             )}
 
 
@@ -916,19 +904,10 @@ const handelAddtoFav = (audioId) => {
                       style={{ border: "none", background: "#FFFFFF" }}
                     >
                       {isPlaying[indexMobileState] ? (
-                        <FaCirclePause
-                          style={{
-                            color: "rgb(209, 155, 111)",
-                            fontSize: "55px",
-                          }}
+                        <img src={PauseIcon}
                         />
                       ) : (
-                        <img src={play}
-                          style={{
-                            color: "rgb(209, 155, 111)",
-                            fontSize: "50px",
-                          }}
-                        />
+                        <img src={PlayIcon} />
                       )}
                     </button>
                     <audio
@@ -943,14 +922,14 @@ const handelAddtoFav = (audioId) => {
 
 
             {indexMobileState > 0 && (
-              <TbPlayerTrackPrevFilled size={20} style={{ cursor: "pointer" }} onClick={handlePrev} />
+              <img src={leftIcon} size={20} style={{ cursor: "pointer" }} onClick={handlePrev} />
             )}
              {token ? (
                <a href={`${mostListenedData[indexMobileState]?.audio || null}?download=true`} target="_blank">
-              <MdFileDownload size={30} color="rgb(209, 155, 111)" style={{ cursor: "pointer" }} onClick={()=>handelDownloadAudio(mostListenedData[indexMobileState]?.id || null)}/>
+              <img src={downloadIcon}   color="rgb(209, 155, 111)" style={{ cursor: "pointer" }} onClick={()=>handelDownloadAudio(mostListenedData[indexMobileState]?.id || null)}/>
               </a>
               ) : (
-                <MdFileDownload size={30} color="rgb(209, 155, 111)" style={{ cursor: "pointer" }} onClick={()=>handelDownloadAudio(mostListenedData[indexMobileState]?.id || null)}/>
+                <img src={downloadIcon}  color="rgb(209, 155, 111)" style={{ cursor: "pointer" }} onClick={()=>handelDownloadAudio(mostListenedData[indexMobileState]?.id || null)}/>
 
                 )}
           </Col>

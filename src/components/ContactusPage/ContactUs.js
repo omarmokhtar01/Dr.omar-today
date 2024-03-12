@@ -3,10 +3,13 @@ import "./contact.css";
 import { Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import contact from "../../images/contact.png";
 
-import facebook from "../../images/facebook.png";
-import whats from "../../images/whats.png";
-import messgener from "../../images/Messanger.png";
-import instagram from "../../images/instrgram.png";
+import facebook from "../../images/facebook.svg";
+import whats from "../../images/whats.svg";
+import messgener from "../../images/messnger.svg";
+import instagram from "../../images/instgram.svg";
+import phoneIcon from "../../images/phone.svg"; 
+import emailIcon from "../../images/email.svg";
+import nameIcon from "../../images/name.svg";
 import NavBar from "../Navbar/NavBar";
 import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineMail, MdOutlinePhoneIphone } from "react-icons/md";
@@ -166,16 +169,15 @@ const ContactUs = () => {
                     الاسم بالكامل
                   </Form.Label>
 
-                  <FaRegUser
-                    style={{
-                      color: "gray",
+                 
+                  <img src={nameIcon} style={{
+                    
                       position: "absolute",
                       display: "flex",
                       marginTop: "17px",
                       paddingRight: "9px",
-                      fontSize: "25px",
-                    }}
-                  />
+                    
+                    }} />
 
                   <Form.Control
                     type="text"
@@ -195,16 +197,15 @@ const ContactUs = () => {
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
                     رقم الموبيل
                   </Form.Label>
-                  <MdOutlinePhoneIphone
-                    style={{
-                      color: "gray",
+                
+                  <img src={phoneIcon}  style={{
+                     
                       position: "absolute",
                       display: "flex",
-                      marginTop: "12px",
+                      marginTop: "17px",
                       paddingRight: "9px",
-                      fontSize: "35px",
-                    }}
-                  />
+                     
+                    }}/>
 
                   <Form.Control
                     type="text"
@@ -225,16 +226,15 @@ const ContactUs = () => {
                     البريد الالكتروني{" "}
                   </Form.Label>
 
-                  <MdOutlineMail
-                    style={{
-                      color: "gray",
-                      position: "absolute",
-                      display: "flex",
-                      marginTop: "12px",
-                      paddingRight: "9px",
-                      fontSize: "35px",
-                    }}
-                  />
+                 
+                  <img src={emailIcon}  style={{
+                     
+                     position: "absolute",
+                     display: "flex",
+                     marginTop: "20px",
+                     paddingRight: "9px",
+                    
+                   }}/>
 
                   <Form.Control
                     type="text"

@@ -8,6 +8,8 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllEldersDownload } from "../../features/allDownload/allDownloadSlice";
 import { useNavigate } from "react-router-dom";
+import audioIcon from "../../images/audio.svg"; 
+import deletGroundIcon from "../../images/deletground.svg"; 
 import Cookies from "js-cookie";
 
 const DownloadScientists = () => {
@@ -61,7 +63,7 @@ const DownloadScientists = () => {
                   paddingTop: "15px",
                   borderRadius: "25px",
                 }}
-                className=" background-image"
+                className=" background-image-2"
               >
                 {" "}
                 التحميلات{" "}
@@ -272,20 +274,17 @@ const DownloadScientists = () => {
                 }}
                
               >
-                <RiDeleteBin5Line
+                <img src={deletGroundIcon}
                   style={{
                     paddingLeft: "10px",
-                    fontSize: "35px",
-                    color: "gray",
-                    padding: "5px",
-                    background:'#FFFFFF',
-                    borderRadius:'25px'
+              
+                   
                   }}
                 />
               </div>
 
               <h5 style={{marginTop:'15px'}}>{item.name}  </h5>
-              <p style={{ marginTop: "-5px" }}>{item.count_audios}  مقطع صوتي</p>
+              <p style={{ marginTop: "-5px", color:'#828282', fontWeight:'400' }}>  <img src={audioIcon} /> {item.count_audios}  مقطع صوتي</p>
             </div>
           </div>
               ))}

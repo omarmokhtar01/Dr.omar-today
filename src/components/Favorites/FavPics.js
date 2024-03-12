@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { IoIosHeart } from "react-icons/io";
- 
+import favredicon from "../../images/redfav.svg";
 const FavPics = () => {
   const token = Cookies.get("token");
 
@@ -267,14 +267,12 @@ const FavPics = () => {
             <>
               {getData.map((item, index) => (
                 <Col xl={6} lg={12} md={12} sm={12} xs={12} >
-                <IoIosHeart 
+                <img src={favredicon}
                   style={{
-                    color: "red",
-                    fontSize: "35px",
+                   position:'absolute',
                     cursor: "pointer",
-                    borderRadius:'25px',
-                    background:'#f3e9e9'
-                    ,padding:'5px'
+                  
+                    padding:'5px'
                   }}/>
             <img className="img-fav-card"
             src={item.image} alt="" style={{ marginBottom: "20px", borderRadius: '15px', cursor: 'pointer',maxHeight:'350px',maxWidth:'450px' }} />
