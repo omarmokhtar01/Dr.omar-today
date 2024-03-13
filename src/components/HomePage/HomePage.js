@@ -665,7 +665,8 @@ const handelAddtoFav = (audioId) => {
               lastVersionData && lastVersionData.length >0 ? (
             <>
               {lastVersionData.slice(startIndex, startIndex + 6).map((item, index) => (
-                
+                            <Link to={`/book/${item.id}`}>
+
                     <Col
                 xs="6"
                 md="4"
@@ -679,6 +680,7 @@ const handelAddtoFav = (audioId) => {
                   style={{ width: "80%", height: "193px", marginRight: "5px",borderRadius:'10px' }}
                 />
               </Col>
+              </Link>
                
 ))}
             </>
