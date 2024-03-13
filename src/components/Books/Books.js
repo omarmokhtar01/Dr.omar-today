@@ -240,7 +240,7 @@ const Books = () => {
           </Col>
 
           {
-            getDataBooksCategory ? (
+            getDataBooksCategory && getDataBooksCategory.length > 0? (
               <>
                 {getDataBooksCategory.map((item, index) => (
                   <Col
@@ -317,7 +317,7 @@ const Books = () => {
                 <h4 style={{ color: "rgba(4, 32, 48, 1)", fontWeight: "bold" }}>
                   الفئات
                 </h4>
-                <p style={{ color: "rgba(122, 128, 138, 1)" }}>مسح الكل</p>
+                {/* <p style={{ color: "rgba(122, 128, 138, 1)" }}>مسح الكل</p> */}
               </div>
               {getMainCategory
                 ?getMainCategory&& getMainCategory.length > 0&& getMainCategory.map((item, index) => (

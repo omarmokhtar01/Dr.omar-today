@@ -223,6 +223,7 @@ const Articles = () => {
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
                   onChange={(e)=>setSearchState(e.target.value)}
+                  required
                 />
 
               <img src={searchIcon}   className="img-search" style={{

@@ -62,7 +62,7 @@ const PersonalinFormation = () => {
             </div>
           </Col>
 
-          <Col
+          {/* <Col
             xs="6"
             md="6"
             lg="6"
@@ -91,7 +91,7 @@ const PersonalinFormation = () => {
                 </h6>
               </div>
             </Link>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
 

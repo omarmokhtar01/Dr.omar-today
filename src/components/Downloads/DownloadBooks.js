@@ -263,7 +263,7 @@ const DownloadBooks = () => {
               </div>
               <h5 style={{fontWeight:'700'}}>حياه محمد</h5>
               {/* <h5> {item.name} </h5> */}
-              <p style={{ marginTop: "-5px" , color:'#828282'}}>20 صفحه </p>
+              {/* <p style={{ marginTop: "-5px" , color:'#828282'}}>20 صفحه </p> */}
             </div>
           </div>
               ))}

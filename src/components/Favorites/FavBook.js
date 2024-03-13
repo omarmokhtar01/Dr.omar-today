@@ -251,7 +251,6 @@ const FavBook = () => {
             <>
               {getData.map((item, index) => (
                 <div class="col section-col ">
-                   <Link to={`/book/${item.id}`}>
               <div
                 style={{
                   position: "relative",
@@ -259,7 +258,11 @@ const FavBook = () => {
                 }}
               ></div>
             <div>
+            <Link to={`/book/${item.id}`} style={{textDecoration:'none',color:"black"}}>
+
               <img src={item.image} alt="" height='247px' width='169' style={{borderRadius:'15px'}}/>
+              </Link>
+
               <div
                 style={{
                   position: "absolute",
@@ -286,7 +289,6 @@ const FavBook = () => {
 
 
 
-            </Link>
           </div>
               ))}
               </>

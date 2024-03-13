@@ -82,13 +82,13 @@ const Adhan = require('adhan');
 const HomePage = () => {
   const [data, setData] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
-  const handleNextCarousel = () => {
-    setStartIndex(startIndex + 8);
-  };
+  // const handleNextCarousel = () => {
+  //   setStartIndex(startIndex + 8);
+  // };
 
-  const handlePrevCarousel = () => {
-    setStartIndex(Math.max(startIndex - 8, 0));
-  };
+  // const handlePrevCarousel = () => {
+  //   setStartIndex(Math.max(startIndex - 8, 0));
+  // };
 
 const dispatch = useDispatch()
 const navigate = useNavigate()
@@ -220,7 +220,6 @@ console.log('Next prayer (Arabic):', nextPrayer);
 // console.log('Time until next prayer:', formattedTime);
   
 
-
 const audioRefs = useRef([]);
 const [durations, setDurations] = useState([]);
 const [durationFormatted, setDurationFormatted] = useState("0:00");
@@ -301,12 +300,19 @@ const handelAddtoFav = (audioId) => {
  
       const [indexMobileState, setIndexMobileState] = useState(0);
 
+      const [indexMobileStateMost, setIndexMobileStateMost] = useState(0);
+
+
+
+
       const handleNext = () => {
         if (indexMobileState < mostListenedData.length - 1) {
           setIndexMobileState(indexMobileState + 1);
         } else {
           // Handle boundary condition, for example, do nothing or loop back to the beginning
           // setIndexMobileState(0);
+          <img src={rightIcon} alt="prev"/>
+
         }
       };
     
@@ -314,8 +320,8 @@ const handelAddtoFav = (audioId) => {
         if (indexMobileState > 0) {
           setIndexMobileState(indexMobileState - 1);
         } else {
-          // Handle boundary condition, for example, do nothing or loop back to the end
-          // setIndexMobileState(mostListenedData.length - 1);
+          
+          <img src={leftIcon} alt="prev"/>
         }
       };
 
@@ -665,7 +671,7 @@ const handelAddtoFav = (audioId) => {
               lastVersionData && lastVersionData.length >0 ? (
             <>
               {lastVersionData.slice(startIndex, startIndex + 6).map((item, index) => (
-                            <Link to={`/book/${item.id}`}>
+                           
 
                     <Col
                 xs="6"
@@ -674,13 +680,13 @@ const handelAddtoFav = (audioId) => {
                 style={{ textAlign: "center", marginBottom: "10px" }}
                 key={item.id}
               >
+                 <Link to={`/book/${item.id}`}>
                 <img
                   src={item.image}
                   alt=""
                   style={{ width: "80%", height: "193px", marginRight: "5px",borderRadius:'10px' }}
-                />
+                /></Link>
               </Col>
-              </Link>
                
 ))}
             </>
@@ -773,7 +779,7 @@ const handelAddtoFav = (audioId) => {
                <img src={lastVerIcon} alt="" style={{ marginLeft: "5px" }} />
                 الاكثر استماعاً
               </p>
-              <p
+              {/* <p
                 style={{
                   color: "#D19B6F",
                   fontSize: "16px",
@@ -781,7 +787,7 @@ const handelAddtoFav = (audioId) => {
                 }}
               >
                 عرض المزيد
-              </p>
+              </p> */}
             </div>
 
             {
@@ -803,7 +809,7 @@ const handelAddtoFav = (audioId) => {
           </Col>
 
           <Col sm="4">
-            <div className="d-flex justify-content-center responsive-span-home">
+            {/* <div className="d-flex justify-content-center responsive-span-home">
               <img src={audioIcon} />
               <span
                 style={{
@@ -816,7 +822,7 @@ const handelAddtoFav = (audioId) => {
               >
                 45 مقطع صوتي
               </span>
-            </div>
+            </div> */}
            
           </Col>
 
@@ -891,42 +897,83 @@ const handelAddtoFav = (audioId) => {
           <img src={mostListenedData[indexMobileState]?.image||"https://i1.sndcdn.com/artworks-jA2OFYdUrideAlyu-AeHsrA-t500x500.jpg"} alt="pic" width={300} height={280} style={{ marginTop: "20px", borderRadius: "40px" , boxShadow:'0px 20px 60px 0px #00000026'}} id="img-mobile-responsive" />
           <Col className="mt-4">
           <h4>{mostListenedData[indexMobileState]?.title || "Default Title"}</h4>
-            <span style={{ color: "gray" }}>محمد صالح المنجد</span>
-            <img src={progressimg} />
+            {/* <span style={{ color: "gray" }}>محمد صالح المنجد</span> */}
+            <img src={PauseIcon } />
           </Col>
           <Col className="mt-5" style={{ display: "flex", alignItems: "center", justifyContent: "space-around" }}>
             <img src={changeIcon} size={30} color="gray" style={{ cursor: "pointer" }} />
-            {indexMobileState < mostListenedData.length - 1 && (
-              <img src={rightIcon} size={20} style={{ cursor: "pointer" }} onClick={handleNext} />
-            )}
+            {
+  indexMobileState < mostListenedData.length - 1 ? (
+    <img
+      src={rightIcon}
+      size={20}
+      style={{
+        cursor: "pointer",
+        // Add conditional styles to disable the image
+        filter: indexMobileState < mostListenedData.length - 1 ? "none" : "grayscale(100%)",
+        pointerEvents: indexMobileState < mostListenedData.length - 1 ? "auto" : "none",
+      }}
+      onClick={handleNext}
+      alt="right icon"
+    />
+  ) : (
+    // Show a disabled version of the image when the condition is not met
+    <img
+      src={rightIcon}
+      size={20}
+      style={{
+        cursor: "no-drop",
+        filter: "grayscale(100%)",
+      }}
+      alt="right icon"
+    />
+  )
+}
+
 
 
 
              <button
-                      onClick={() => handlePlay(indexMobileState)}
+                      onClick={() => handlePlay(indexMobileStateMost)}
                       style={{ border: "none", background: "#FFFFFF" }}
                     >
-                      {isPlaying[indexMobileState] ? (
-                        <img src={PauseIcon}
+                      {isPlaying[indexMobileStateMost] ? (
+                        <img src={PauseIconMostListen}
                         />
                       ) : (
                         <img src={PlayIcon} />
                       )}
                     </button>
                     <audio
-                      key={indexMobileState}
-                      ref={(el) => (audioRefs.current[indexMobileState] = el)}
-                      src={mostListenedData[indexMobileState]?.audio||null}
+                      key={indexMobileStateMost}
+                      ref={(el) => (audioRefs.current[indexMobileStateMost] = el)}
+                      src={mostListenedData[indexMobileStateMost]?.audio||null}
                       controls
                       hidden
-                      onLoadedMetadata={handleLoadedMetadata(indexMobileState)}
+                      onLoadedMetadata={handleLoadedMetadata(indexMobileStateMost)}
                     />
 
 
 
-            {indexMobileState > 0 && (
-              <img src={leftIcon} size={20} style={{ cursor: "pointer" }} onClick={handlePrev} />
-            )}
+{
+  indexMobileState > 0 ? (
+    <img
+      src={leftIcon}
+      size={20}
+      style={{ cursor: "pointer" }}
+      onClick={handlePrev}
+      alt="left icon"
+    />
+  ) : (
+    <img
+      src={leftIcon}
+      size={20}
+      style={{ cursor: "no-drop" }}
+      alt="left icon "
+    />
+  )
+}
+
              {token ? (
                <a href={`${mostListenedData[indexMobileState]?.audio || null}?download=true`} target="_blank">
               <img src={downloadIcon}   color="rgb(209, 155, 111)" style={{ cursor: "pointer" }} onClick={()=>handelDownloadAudio(mostListenedData[indexMobileState]?.id || null)}/>

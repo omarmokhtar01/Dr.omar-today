@@ -29,7 +29,7 @@ const FavAudios = () => {
 
   const isLoading = useSelector((state) => state.favorite.isLoading);
   const error = useSelector((state) => state.favorite.error);
-
+console.log(getData);
   useEffect(() => {
     if (!token) {
       navigate("/login");

@@ -22,7 +22,7 @@ const DownloadScientists = () => {
 
   const isLoading = useSelector((state) => state.download.isLoading);
   const error = useSelector((state) => state.articles.error);
-
+console.log(getData);
   useEffect(() => {
     if (!token) {
       navigate("/login");

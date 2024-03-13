@@ -90,7 +90,7 @@ const Audios = () => {
   const getAudioCategoryId = useSelector(
     (state) => state.audio.audioCategoryId
   );
-
+console.log(getAudioCategoryId);
 
   const elderDown = useSelector((state) => state.elders.downElder);
 
@@ -672,8 +672,8 @@ const Audios = () => {
     )
   ) : !isLoading ? (
     searchState !== '' && searchResults.length > 0 ? (
-      searchResults.map((item) => (
-        <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
+      searchResults.map((item,index) => (
+        <Col xs="12" md="12" lg="6" className="mb-3" key={index}>
           <div
             style={{
               display: "flex",
@@ -750,8 +750,8 @@ const Audios = () => {
       getAudioCategoryId &&
       Array.isArray(getAudioCategoryId) &&
       getAudioCategoryId.length > 0 ? (
-        [...getAudioCategoryId].sort(sortFunction).map((item) => (
-          <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
+        [...getAudioCategoryId].sort(sortFunction).map((item,index) => (
+          <Col xs="12" md="12" lg="6" className="mb-3" key={index}>
             <div
               style={{
                 display: "flex",

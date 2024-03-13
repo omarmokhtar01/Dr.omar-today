@@ -108,7 +108,7 @@ const NavBar = () => {
    {hasToken ? (
    <>
 
-    <Navbar expand="lg" style={navbarStyle} >
+    <Navbar expand="lg" style={navbarStyle} className='navLogin'>
       <Container style={{marginBottom:'50px '}} >
         <Navbar.Brand >
         <Link to='/'>
@@ -213,7 +213,7 @@ const NavBar = () => {
     </> ) : (
       <>
 
-      <Navbar expand="lg" className="navbarStyle" style={navbarStyleUnLogin}>
+      <Navbar expand="lg" className="navbarStyle " style={navbarStyleUnLogin}>
       <Container className="nav-responsive" style={{ marginTop: "-120px" }}>
         <Navbar.Brand>
           <Link to="/">
