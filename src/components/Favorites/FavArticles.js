@@ -8,6 +8,7 @@ import imgArticle3 from "../../images/img-article3.png";
 import icon1 from "../../images/article-icon.png";
 import icon2 from "../../images/article-icon2.png";
 import heart1 from "../../images/redhearticon.png";
+import nodata from "../../images/nodata.svg";
 
 const FavArticles = () => {
   return (

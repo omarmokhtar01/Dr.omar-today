@@ -9,6 +9,7 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
+import nodata from "../../images/nodata.svg";
 
 import group from "../../images/Group.png";
 import group2 from "../../images/Group2.png";
@@ -160,8 +161,10 @@ const AudioCategory = () => {
                   </Col>
                 ))}
               </>
-            ) : null
-          ) : null}
+            ) : <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+            لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          ) : <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>}
         </Row>
       </Container>
 

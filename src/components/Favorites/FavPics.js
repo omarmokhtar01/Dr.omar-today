@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { IoIosHeart } from "react-icons/io";
+import nodata from "../../images/nodata.svg";
+
 import favredicon from "../../images/redfav.svg";
 const FavPics = () => {
   const token = Cookies.get("token");
@@ -287,7 +289,8 @@ const FavPics = () => {
                 </Col> 
               ))}
               </>
-            ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+            ) : <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+            لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
           
             ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
           }

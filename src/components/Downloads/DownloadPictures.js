@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import NavBar from "../Navbar/NavBar";
 import '../Favorites/fav.css'
+import nodata from "../../images/nodata.svg";
+
 import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import pic1 from "../../images/pic1.png";
@@ -259,7 +261,8 @@ const DownloadPictures = () => {
           </Col>
               ))}
             </>
-          ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          ) : <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
           ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
 
         }

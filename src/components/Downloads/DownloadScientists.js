@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import audioIcon from "../../images/audio.svg"; 
 import deletGroundIcon from "../../images/deletground.svg"; 
 import Cookies from "js-cookie";
+import nodata from "../../images/nodata.svg";
 
 const DownloadScientists = () => {
   const navigate = useNavigate();
@@ -289,7 +290,8 @@ console.log(getData);
           </div>
               ))}
             </>
-          ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          ) : <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
           ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
 
           }

@@ -54,9 +54,12 @@ const initialState = {
                     {
                         headers: {
                             Authorization: `Bearer ${token}` ,
-                            Accept: 'application/json',
+                            "X-Requested-With":'XMLHttpRequest',
+                            
+                            'Accept': 'application/json',
                             'Content-Type': 'application/json',
-                            mode: 'no-cors'
+                            'Access-Control-Allow-Origin':'*',
+                            
                         }
                     }
                 );

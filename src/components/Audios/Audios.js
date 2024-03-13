@@ -10,6 +10,7 @@ import {
   Spinner,
 } from "react-bootstrap"; 
 import { Coordinates, CalculationMethod, PrayerTimes } from 'adhan';
+import nodata from "../../images/nodata.svg";
 
 import group from "../../images/Group.png";
 import searchIcon from "../../images/search.svg";
@@ -93,7 +94,7 @@ const Audios = () => {
 console.log(getAudioCategoryId);
 
   const elderDown = useSelector((state) => state.elders.downElder);
-
+console.log(elderDown);
   const isLoadingElderDown = useSelector((state) => state.elders.isLoadingDownElder);
 
   function downloadAudiosAsZip(idElder) {
@@ -395,7 +396,8 @@ console.log(getAudioCategoryId);
                 </Col>
               ))}
             </>
-          ) :  <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          ) :  <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
           ):(
             <div style={{height:'280px'}}>
             <Spinner animation="border" variant="primary" />
@@ -425,6 +427,7 @@ console.log(getAudioCategoryId);
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
                   onChange={(e)=>setSearchState(e.target.value)}
+                  required
                 />
               
                
@@ -581,7 +584,8 @@ console.log(getAudioCategoryId);
       </Col>
     ))
   ) : searchResults.length === 0 ? (
-    <div style={{ textAlign: "center" }}>لا يوجد بيانات</div>
+    <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
   ) : id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? 
@@ -662,7 +666,8 @@ console.log(getAudioCategoryId);
           </Col>
         );
       })) : (
-        <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+        <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
       )
     ) : (
       <div style={{ height: "280px" }}>
@@ -826,7 +831,8 @@ console.log(getAudioCategoryId);
           </Col>
         ))
       ) : (
-        <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+        <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
       )
     )
   ) : (

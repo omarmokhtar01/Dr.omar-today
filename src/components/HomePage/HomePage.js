@@ -11,6 +11,7 @@ import vector2 from "../../images/Vector (2).png";
 import quran from "../../images/quran.png";
 import play from "../../images/play.svg";
 import heartIcon from "../../images/heartIcon.svg";
+import nodata from "../../images/nodata.svg";
 
 
 
@@ -442,7 +443,7 @@ const handelAddtoFav = (audioId) => {
               </span>
               <span style={{ color: "#FFFFFF", marginTop: "10px",fontSize:'22.15px' }}>
                 {" "}
-                الموعد بعد : {formattedTime}
+                الموعد بعد : {formattedTime} ساعة
               </span>
 
               <div
@@ -690,7 +691,8 @@ const handelAddtoFav = (audioId) => {
                
 ))}
             </>
-          ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          ) : <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
           ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
 
         }

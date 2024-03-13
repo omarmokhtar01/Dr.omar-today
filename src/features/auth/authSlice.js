@@ -4,6 +4,8 @@ import baseUrl from "../../Api/baseURL";
 
 const initialState = {
   userLogin:{},
+  userDel:{},
+
   userRegister:{},
   isLoading: false,
   error: null,
@@ -31,6 +33,22 @@ const register = createAsyncThunk('auth/register', async (formData, thunkAPI) =>
     }
   });
   
+  const delAcc = createAsyncThunk('auth/del-acc', async (token, thunkAPI) => {
+    try {
+      const response = await baseUrl.get(
+        'user/delete-account', {
+          headers: {
+              Authorization: `Bearer ${token}` // Include token in the request headers
+          }
+      });
+        console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return error
+    }
+  });
+
+
 
 
 const authSlice = createSlice({
@@ -68,9 +86,23 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+      .addCase(delAcc.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(delAcc.fulfilled, (state, action) => {
+        state.delAcc = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(delAcc.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { createLoginUser , register};
+export { createLoginUser , register,delAcc};
 
 export default authSlice.reducer;

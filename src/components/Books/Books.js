@@ -12,6 +12,9 @@ import {
   Spinner,
 
 } from "react-bootstrap";
+import nodata from "../../images/nodata.svg";
+
+
 import { Link } from "react-router-dom";
 import squareIcon from "../../images/squares.svg";
 import rowaIcon from "../../images/rows.svg";
@@ -371,7 +374,7 @@ const Books = () => {
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
                                     onChange={(e)=>setSearchState(e.target.value)}
-
+required
                 />
                <img src={searchIcon}   className="img-search" style={{
                     position: "absolute",
@@ -504,7 +507,8 @@ const Books = () => {
       </Col>
     ))
   ) : searchResults.length === 0 ? (
-    <div style={{ textAlign: "center" }}>لا يوجد بيانات</div>
+    <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
   ) : id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? 
@@ -593,7 +597,8 @@ const Books = () => {
           </div>
         </Col>
       ))
-      :  <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+      : <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+      لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
     ) : (
       <div style={{ height: "280px" }}>
       <Spinner animation="border" variant="primary" />
@@ -758,7 +763,8 @@ const Books = () => {
           </Col>
         ))
       ) : (
-         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+        <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+        لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
       )
     )
   ) : (

@@ -12,6 +12,8 @@ import {
     Spinner,
   
   } from "react-bootstrap";
+  import nodata from "../../images/nodata.svg";
+
   import { Link, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { showBook } from "../../features/books/booksSlice";

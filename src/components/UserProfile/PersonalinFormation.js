@@ -7,10 +7,34 @@ import email from "../../images/email.svg";
 import name from "../../images/name.svg";
 import deleteAcc from "../../images/deleteAccount.png";
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { delAcc } from "../../features/auth/authSlice";
+import Cookies from "js-cookie";
+import notify from "../UseNotifications/useNotification";
 
 const PersonalinFormation = () => {
   const [smShow, setSmShow] = useState(false);
+  const dispatch = useDispatch()
+  let token = Cookies.get("token");
 
+  const delAccount = useSelector(state => state.auth.delAcc);
+  const isLoadingAllPictures = useSelector(state => state.auth.isLoading);
+
+  console.log(delAccount);
+  const delFunc =()=>{
+if(!token){
+  return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+
+}
+    dispatch(delAcc(token))
+    Cookies.remove("token");
+    setTimeout(() => {
+      window.location.href="/";
+  }, 1500);
+  notify("تم حذف الحساب بنجاح", "success");
+
+  }
   return (
     <>
       <NavBar />
@@ -289,6 +313,7 @@ const PersonalinFormation = () => {
                             border: "none",
                           }}
                           className="profileButton"
+                          onClick={delFunc}
                         >
                           حذف الحساب
                         </button>

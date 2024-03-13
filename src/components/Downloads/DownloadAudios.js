@@ -14,6 +14,7 @@ import { getAudiosDownload } from "../../features/allDownload/allDownloadSlice";
 import favIcon from "../../images/fav.svg";
 import PauseIcon from "../../images/pause.svg";
 import Cookies from "js-cookie";
+import nodata from "../../images/nodata.svg";
 
 const DownloadAudios = () => {
   const token = Cookies.get("token");
@@ -284,7 +285,7 @@ const DownloadAudios = () => {
 
       <Container>
       {!isLoading ? (
-  getData ? (
+  getData && getData.length > 0 ? (
     getData.map((item, index) => {
       return (
         <>
@@ -323,7 +324,7 @@ const DownloadAudios = () => {
                   padding: "15px",
                 }}
               >
-                محمد صالح المنجد
+                {item.elder.name}
               </p>
             </Col>
 
@@ -398,7 +399,8 @@ const DownloadAudios = () => {
       );
     })
   ) : (
-    <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+    <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
   )
 ) :<div style={{ height: "280px" }}> <Spinner animation="border" variant="primary" /> </div>}
 

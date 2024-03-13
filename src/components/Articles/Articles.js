@@ -284,11 +284,11 @@ const Articles = () => {
                           <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
                             <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
                               <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
-                              منذ ساعة
+                              {item.created_at} 
                             </p>
                             <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
                               <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                              23 مشاهدة
+                              {item.visit_count} مشاهدة
                             </p>
                           </Card.Text>
                         </Card.Body>
@@ -309,14 +309,14 @@ const Articles = () => {
             <Card.Body>
               <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
               <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
-                <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                  <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
-                  منذ ساعة
-                </p>
-                <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                  <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                  23 مشاهدة
-                </p>
+              <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                              <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                              {item.created_at} 
+                            </p>
+                            <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                              <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                              {item.visit_count} مشاهدة
+                            </p>
               </Card.Text>
             </Card.Body>
           </Card>
@@ -339,14 +339,14 @@ const Articles = () => {
             <Card.Body>
               <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
               <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
-                <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                  <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
-                  منذ ساعة
-                </p>
-                <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                  <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                  23 مشاهدة
-                </p>
+              <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                              <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                              {item.created_at} 
+                            </p>
+                            <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                              <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                              {item.visit_count} مشاهدة
+                            </p>
               </Card.Text>
             </Card.Body>
           </Card>
@@ -365,14 +365,14 @@ const Articles = () => {
               <Card.Body>
                 <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
                 <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
-                  <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                    <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
-                    منذ ساعة
-                  </p>
-                  <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
-                    <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                    23 مشاهدة
-                  </p>
+                <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                              <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                              {item.created_at} 
+                            </p>
+                            <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                              <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                              {item.visit_count} مشاهدة
+                            </p>
                 </Card.Text>
               </Card.Body>
             </Card>

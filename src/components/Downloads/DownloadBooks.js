@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import delIcon from "../../images/del.svg";
+import nodata from "../../images/nodata.svg";
 
 const DownloadBooks = () => {
   const token = Cookies.get("token");
@@ -268,7 +269,8 @@ const DownloadBooks = () => {
           </div>
               ))}
             </>
-          ) : <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+          ) : <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
+          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
         
           ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
         }
