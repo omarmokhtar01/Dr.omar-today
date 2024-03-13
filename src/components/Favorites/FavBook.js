@@ -251,6 +251,13 @@ const FavBook = () => {
             <>
               {getData.map((item, index) => (
                 <div class="col section-col ">
+                   <Link to={`/book/${item.id}`}>
+              <div
+                style={{
+                  position: "relative",
+                  cursor: "pointer",
+                }}
+              ></div>
             <div>
               <img src={item.image} alt="" height='247px' width='169' style={{borderRadius:'15px'}}/>
               <div
@@ -274,8 +281,12 @@ const FavBook = () => {
               </div>
 
               <h5> {item.name} </h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه </p>
+              {/* <p style={{ marginTop: "-5px" }}>20 صفحه </p> */}
             </div>
+
+
+
+            </Link>
           </div>
               ))}
               </>

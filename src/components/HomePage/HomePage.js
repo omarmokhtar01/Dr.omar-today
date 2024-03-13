@@ -27,6 +27,7 @@ import articlesIcon from "../../images/articles.svg";
 import picIcon from "../../images/pic.svg"; 
 import progressimg from "../../images/progress.png";
 
+import PauseIconMostListen from "../../images/pause.svg";
 
 import PauseIcon from "../../images/progress.png";
 
@@ -827,7 +828,7 @@ const handelAddtoFav = (audioId) => {
                       style={{ border: "none", background: "#FFFFFF" }}
                     >
                       {isPlaying[index] ? (
-                        <img src={PauseIcon}
+                        <img src={PauseIconMostListen}
                         />
                       ) : (
                        <img src={PlayIcon} />

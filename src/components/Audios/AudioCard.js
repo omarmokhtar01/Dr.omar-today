@@ -527,7 +527,7 @@ console.log(getDataOne);
         <Row>
           <Col>
             <div className="d-flex justify-content-between mb-4">
-              <Form>
+              {/* <Form>
                 <FormControl
                   type="search"
                   placeholder="ابحث..."
@@ -542,7 +542,7 @@ console.log(getDataOne);
                     fontSize: "25px",
                     color: "#00000082",
                   }} />
-              </Form>
+              </Form> */}
 
               <div style={{ display: "flex", gap: "10px" }}>
               <img style={{
