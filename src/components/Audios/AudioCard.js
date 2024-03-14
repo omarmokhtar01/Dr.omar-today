@@ -16,7 +16,7 @@ import PauseIcon from "../../images/pause.svg";
 import NavBar from "../Navbar/NavBar";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useNavigate } from "react-router-dom";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { MdDownloadForOffline } from "react-icons/md";
@@ -41,7 +41,7 @@ import JSZip from 'jszip';
 
 const AudioCard = () => {
   const params = useParams();
-
+const navigate = useNavigate()
   // Now you can access the parameters using the keys defined in your route
   const { id } = params;
   const dispatch = useDispatch();
@@ -277,7 +277,7 @@ console.log(getDataOne);
      return notify("من فضلك قم بتسجيل الدخول اولا", "error");
     }
     dispatch(favOneAudio({ formData, token }))
-           
+           navigate("/favAudios")
         }
 
 

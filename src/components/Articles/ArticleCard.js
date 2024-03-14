@@ -113,8 +113,8 @@ const ArticleCard = () => {
                         }}
                       />
                     </div>
-                    منذ ساعة
-                  </p>
+                    {getDataOne.created_at} 
+                                      </p>
 
                   <p
                     style={{
@@ -133,7 +133,7 @@ const ArticleCard = () => {
                         }}
                       />{" "}
                     </div>
-                    23 مشاهدة{" "}
+                    {getDataOne.visit_count} مشاهدة
                   </p>
 
                   <p style={{ margin: "5px 35px 35px 50px" }}>

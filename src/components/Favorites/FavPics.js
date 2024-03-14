@@ -269,11 +269,10 @@ const FavPics = () => {
             <>
               {getData.map((item, index) => (
                 <Col xl={6} lg={12} md={12} sm={12} xs={12} >
-                <img src={favredicon}
+                <img  src={favredicon}
                   style={{
                    position:'absolute',
                     cursor: "pointer",
-                  
                     padding:'5px'
                   }}/>
             <img className="img-fav-card"
