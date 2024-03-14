@@ -171,6 +171,8 @@ const Books = () => {
     }
 
     dispatch(addToFavBook({ formData, token }))
+    localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
+
     notify(" تم الأضافة للمفضلة بنجاح", "success");
 
     setTimeout(() => {

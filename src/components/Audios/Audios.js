@@ -109,51 +109,53 @@ console.log(elderDown);
   
     // Dispatch action to download audio data for the elder
     dispatch(downloadOneElder({ formData, token }))
-    .then(response => {
-      console.log(response);
-      let audioData = [];
+    localStorage.setItem("elderdown","تحميل عالم بنجاح")
+
+    // .then(response => {
+    //   console.log(response);
+    //   let audioData = [];cf
       
-      // Check if response.payload is an array or an object with audio data
-      if (Array.isArray(response.payload)) {
-        // Case 1: response.payload is already an array of audios
-        audioData = response.payload;
-      } else if (response.payload && response.payload.audio) {
-        // Case 2: response.payload has an 'audio' property containing audio data
-        audioData = response.payload.audio;
-      } else {
-        console.error('Error: Invalid audio data format');
-        return; // Exit the function or handle the error appropriately
-      }
+    //   // Check if response.payload is an array or an object with audio data
+    //   if (Array.isArray(response.payload)) {
+    //     // Case 1: response.payload is already an array of audios
+    //     audioData = response.payload;
+    //   } else if (response.payload && response.payload.audio) {
+    //     // Case 2: response.payload has an 'audio' property containing audio data
+    //     audioData = response.payload.audio;
+    //   } else {
+    //     console.error('Error: Invalid audio data format');
+    //     return; // Exit the function or handle the error appropriately
+    //   }
     
-      const zip = new JSZip();
+    //   const zip = new JSZip();
     
-      audioData.forEach((audio, index) => {
-        fetch(audio.audio)
-          .then(response => response.blob())
-          .then(blob => {
-            zip.file(`audio_${index + 1}.mp3, blob`); // Rename the files as needed
-          })
-          .catch(error =>
-            console.error(`Error downloading audio ${index + 1}:`, error)
-          );
-      });
+    //   audioData.forEach((audio, index) => {
+    //     fetch(audio.audio)
+    //       .then(response => response.blob())
+    //       .then(blob => {
+    //         zip.file(`audio_${index + 1}.mp3, blob`); // Rename the files as needed
+    //       })
+    //       .catch(error =>
+    //         console.error(`Error downloading audio ${index + 1}:`, error)
+    //       );
+    //   });
     
-      // Generate the .zip archive
-      zip.generateAsync({ type: 'blob' })
-        .then(zipBlob => {
-          const url = window.URL.createObjectURL(new Blob([zipBlob]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'audios.zip');
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link); // Remove the link after download
-        })
-        .catch(error => console.error('Error generating .zip file:', error));
-    })
-    .catch(error => {
-      console.error('Error downloading audio data:', error);
-    });
+    //   // Generate the .zip archive
+    //   zip.generateAsync({ type: 'blob' })
+    //     .then(zipBlob => {
+    //       const url = window.URL.createObjectURL(new Blob([zipBlob]));
+    //       const link = document.createElement('a');
+    //       link.href = url;
+    //       link.setAttribute('download', 'audios.zip');
+    //       document.body.appendChild(link);
+    //       link.click();
+    //       document.body.removeChild(link); // Remove the link after download
+    //     })
+    //     .catch(error => console.error('Error generating .zip file:', error));
+    // })
+    // .catch(error => {
+    //   console.error('Error downloading audio data:', error);
+    // });
     
     
   }
@@ -224,6 +226,7 @@ console.log(elderDown);
 
     dispatch(favOneElder({ formData, token }))
     notify(" تم الأضافة للمفضلة بنجاح", "success");
+    localStorage.setItem("elderfav","تمت اضافة عالم بنجاح")
 
     setTimeout(() => {
       navigate("/favScientists")

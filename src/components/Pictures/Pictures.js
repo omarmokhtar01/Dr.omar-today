@@ -74,6 +74,7 @@ const handleDownload = (picId) => {
   }
 
   dispatch(downOnePic({ formData, token }))
+  localStorage.setItem("photodown","تم تحميل  الصورة بنجاح")
 
   saveAs(selectedImage,'test.jpg');
 
@@ -145,6 +146,8 @@ const handleDownload = (picId) => {
       // Add your download logic here
      return notify("من فضلك قم بتسجيل الدخول اولا", "error");
     }
+    localStorage.setItem("photofav","تم اضافة  الصورة بنجاح")
+
 
     dispatch(favOnePic({ formData, token }))
                 notify(" تم الأضافة للمفضلة بنجاح", "success");

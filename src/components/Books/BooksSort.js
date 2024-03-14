@@ -154,6 +154,7 @@ const BooksSort = () => {
       // Add your download logic here
      return notify("من فضلك قم بتسجيل الدخول اولا", "error");
     }
+    localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
 
     dispatch(addToFavBook({ formData, token }))
                 notify(" تم الأضافة للمفضلة بنجاح", "success");

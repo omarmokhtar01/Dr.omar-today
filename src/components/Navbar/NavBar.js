@@ -66,6 +66,15 @@ const NavBar = () => {
       setLocation('Geolocation is not supported by your browser');
     }
   }, []);
+
+
+  useEffect(() => {
+    // Update session storage when location changes
+    if (location) {
+      sessionStorage.setItem('userLocation', location);
+    }
+  }, []);
+let getLocation=sessionStorage.getItem('userLocation')
   // Check if token exists in cookies
   const checkToken = () => {
     const tokenExists = Cookies.get('token') !== undefined;
@@ -104,6 +113,7 @@ const NavBar = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
  return <>
    {hasToken ? (
    <>
@@ -181,7 +191,7 @@ const NavBar = () => {
             >
             <img src={locationIcon} style={{ marginLeft: "5px" , fontSize:'20px'}}/>
             
-             {location || ""}{" "}
+             {getLocation || ""}{" "}
             </Button>
 
           <Link to='/DownloadScientest' >
@@ -296,7 +306,7 @@ const NavBar = () => {
             >
             <img src={locationIcon} style={{ marginLeft: "5px" , fontSize:'20px'}}/>
             
-             {location || ""}{" "}
+             {getLocation || ""}{" "}
             </Button>
 
             {/* 

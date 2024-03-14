@@ -316,7 +316,7 @@ const HomePage = () => {
 
   const checkAddToFav = useSelector((state) => state.audio.favAudio);
   const isLoadingFav = useSelector((state) => state.audio.isLoadingFav);
-
+console.log(checkAddToFav);
   const handelAddtoFav = (audioId) => {
     const formData = {
       audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
@@ -328,8 +328,9 @@ const HomePage = () => {
       return notify("من فضلك قم بتسجيل الدخول اولا", "error");
     }
     notify("تم الأضافة للمفضلة بنجاح", "success");
-
+localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
     dispatch(favOneAudio({ formData, token }));
+
     setTimeout(() => {
       navigate("/favAudios");
     }, 1500);
@@ -380,6 +381,7 @@ const HomePage = () => {
       // Add your download logic here
       return notify("من فضلك قم بتسجيل الدخول اولا", "error");
     }
+    localStorage.setItem("audiodown","تم تحميل صوت بنجاح")
 
     dispatch(downloadOneAudio({ formData, token }));
   };
@@ -401,6 +403,8 @@ const HomePage = () => {
   //   }
   //     }, [isLoadingDown,downAudio]);
 
+
+  
   const [swiperRef, setSwiperRef] = useState(null);
 
   let appendNumber = 4;
