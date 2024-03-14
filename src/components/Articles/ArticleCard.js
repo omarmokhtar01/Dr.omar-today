@@ -18,6 +18,8 @@ import { ToastContainer } from "react-toastify";
 import clockIcon from "../../images/clock.svg";
 import eyeIcon from "../../images/eye.svg";
 import notify from "../UseNotifications/useNotification";
+import nodata from "../../images/nodata.svg";
+
 const ArticleCard = () => {
   const handleCheckLogin = () => {
     const token = Cookies.get("token");
@@ -234,10 +236,14 @@ const ArticleCard = () => {
                   </div>
                 </Col>
               ) : (
-                <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+                <div style={{height:'280px'}}><img src={nodata}/> <br/>
+          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
               )
             ) : (
-              <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+              <div style={{height:'280px'}}><img src={nodata}/> <br/>
+          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
             )
           ) : (
             <div style={{ height: "280px" }}>

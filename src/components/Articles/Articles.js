@@ -10,6 +10,7 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
+import nodata from "../../images/nodata.svg";
 
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -297,7 +298,9 @@ const Articles = () => {
                   </Col>
     ))
   ) : searchResults.length === 0 ? (
-    <div style={{ textAlign: "center" }}>لا يوجد بيانات</div>
+    <div style={{height:'280px'}}><img src={nodata}/> <br/>
+          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
   ) : id == null ? (
     !isLoading ? (
       getData && getData.length > 0 ? 
@@ -380,7 +383,9 @@ const Articles = () => {
         </Col>
         ))
       ) : (
-         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+        <div style={{height:'280px'}}><img src={nodata}/> <br/>
+        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
 
       )
     )

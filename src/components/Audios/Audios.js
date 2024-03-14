@@ -33,7 +33,7 @@ import {
   getAudios,
   searchListened,
 } from "../../features/audios/audioSlice";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import NavBar from "../Navbar/NavBar";
 import { MdDownloadForOffline } from "react-icons/md";
 import { IoHeartCircleSharp, IoSearch, IoTerminal } from "react-icons/io5";
@@ -47,7 +47,7 @@ import JSZip from 'jszip';
 
 const Audios = () => {
 
-
+const navigate = useNavigate()
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
 
   // Event handler for sorting by latest addition
@@ -223,24 +223,30 @@ console.log(elderDown);
     }
 
     dispatch(favOneElder({ formData, token }))
+    notify(" تم الأضافة للمفضلة بنجاح", "success");
+
+    setTimeout(() => {
+      navigate("/favScientists")
+
+    }, 1000);
            
         }
 
 
-        useEffect(() => {
-          if (isLoadingFavElder === false) {
-            if(checkAddToFavElder && checkAddToFavElder.success) {
-          if (checkAddToFavElder.success === true) {
-            // Notify "تم الاضافة بنجاح"
-            notify(" تم الأضافة للمفضلة بنجاح", "success");
-          } else {
-            // Handle other statuses or errors if needed
-            notify("حدث مشكلة في الاضافة", "error");
-        }
-      }
+      //   useEffect(() => {
+      //     if (isLoadingFavElder === false) {
+      //       if(checkAddToFavElder && checkAddToFavElder.success) {
+      //     if (checkAddToFavElder.success === true) {
+      //       // Notify "تم الاضافة بنجاح"
+      //       notify(" تم الأضافة للمفضلة بنجاح", "success");
+      //     } else {
+      //       // Handle other statuses or errors if needed
+      //       notify("حدث مشكلة في الاضافة", "error");
+      //   }
+      // }
 
-      }
-        }, [isLoadingFavElder,checkAddToFavElder]);
+      // }
+      //   }, [isLoadingFavElder,checkAddToFavElder]);
 
 
 
@@ -396,12 +402,11 @@ console.log(elderDown);
                 </Col>
               ))}
             </>
-          ) :  <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
-          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          ) :   <div style={{height:'280px'}}><img src={nodata}/> <br/>
+          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
           ):(
-            <div style={{height:'280px'}}>
-            <Spinner animation="border" variant="primary" />
-          </div>
+            null
             )
         }
         </Row>
@@ -584,8 +589,9 @@ console.log(elderDown);
       </Col>
     ))
   ) : searchResults.length === 0 ? (
-    <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
-          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+    <div style={{height:'280px'}}><img src={nodata}/> <br/>
+    <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+    <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
   ) : id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? 
@@ -666,8 +672,9 @@ console.log(elderDown);
           </Col>
         );
       })) : (
-        <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
-          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+        <div style={{height:'280px'}}><img src={nodata}/> <br/>
+        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
       )
     ) : (
       <div style={{ height: "280px" }}>
@@ -831,8 +838,9 @@ console.log(elderDown);
           </Col>
         ))
       ) : (
-        <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
-          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+        <div style={{height:'280px'}}><img src={nodata}/> <br/>
+        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
       )
     )
   ) : (

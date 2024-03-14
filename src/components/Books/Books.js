@@ -15,7 +15,7 @@ import {
 import nodata from "../../images/nodata.svg";
 
 
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import squareIcon from "../../images/squares.svg";
 import rowaIcon from "../../images/rows.svg";
 import group2 from "../../images/Group2.png";
@@ -33,6 +33,8 @@ import { ToastContainer } from "react-toastify";
 
 import notify from "../UseNotifications/useNotification";
 const Books = () => {
+  const navigate = useNavigate()
+
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
 
   // Event handler for sorting by latest addition
@@ -169,22 +171,28 @@ const Books = () => {
     }
 
     dispatch(addToFavBook({ formData, token }))
-           
-        }
-        useEffect(() => {
-          if (isLoadingFavBook === false) {
-            if(checkAddToFavBook && checkAddToFavBook.success) {
-          if (checkAddToFavBook.success === true) {
-            // Notify "تم الاضافة بنجاح"
-            notify(" تم الأضافة للمفضلة بنجاح", "success");
-          } else {
-            // Handle other statuses or errors if needed
-            notify("حدث مشكلة في الاضافة", "error");
-        }
-      }
+    notify(" تم الأضافة للمفضلة بنجاح", "success");
 
-      }
-        }, [isLoadingFavBook,checkAddToFavBook]);
+    setTimeout(() => {
+
+    navigate("/favBook")
+  }, 1000);
+
+        }
+      //   useEffect(() => {
+      //     if (isLoadingFavBook === false) {
+      //       if(checkAddToFavBook && checkAddToFavBook.success) {
+      //     if (checkAddToFavBook.success === true) {
+      //       // Notify "تم الاضافة بنجاح"
+      //       notify(" تم الأضافة للمفضلة بنجاح", "success");
+      //     } else {
+      //       // Handle other statuses or errors if needed
+      //       notify("حدث مشكلة في الاضافة", "error");
+      //   }
+      // }
+
+      // }
+      //   }, [isLoadingFavBook,checkAddToFavBook]);
 
 
   return (
@@ -507,8 +515,9 @@ required
       </Col>
     ))
   ) : searchResults.length === 0 ? (
-    <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
-          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+    <div style={{height:'280px'}}><img src={nodata}/> <br/>
+          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
   ) : id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? 
@@ -597,8 +606,9 @@ required
           </div>
         </Col>
       ))
-      : <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
-      لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+      : <div style={{height:'280px'}}><img src={nodata}/> <br/>
+      <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+      <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
     ) : (
       <div style={{ height: "280px" }}>
       <Spinner animation="border" variant="primary" />
@@ -763,8 +773,9 @@ required
           </Col>
         ))
       ) : (
-        <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
-        لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+        <div style={{height:'280px'}}><img src={nodata}/> <br/>
+          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
       )
     )
   ) : (

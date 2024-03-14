@@ -8,7 +8,7 @@ import modalshare from "../../images/modalshare.svg";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { downOnePic, favOnePic, getAllPicuture } from '../../features/allPictres/allPicturesSlice';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { getAllImgCategory, getOneImgCategory } from '../../features/imgCategory/imgCategorySlice';
 import { IoHeartCircleSharp } from 'react-icons/io5';
 import { MdDownloadForOffline, MdOutlineFavoriteBorder } from "react-icons/md";
@@ -22,6 +22,7 @@ import notify from "../UseNotifications/useNotification";
  
 const Pictures = () => {
   let token = Cookies.get("token");
+  const navigate = useNavigate()
 
   const handleCheckLogin = () => {
     const token = Cookies.get("token");
@@ -74,29 +75,47 @@ const handleDownload = (picId) => {
 
   dispatch(downOnePic({ formData, token }))
 
-  fetch(selectedImage)
-    .then(response => response.blob())
-    .then(blob => {
-      // Create a temporary URL for the blob
-      const url = window.URL.createObjectURL(new Blob([blob]));
+  saveAs(selectedImage,'test.jpg');
+
+
+// console.log(selectedImage);
+//   fetch(selectedImage)
+//     .then(response => response.blob())
+//     .then(blob => {
+//       // Create a temporary URL for the blob
+//       const url = window.URL.createObjectURL(new Blob([blob]));
       
-      // Create a temporary anchor element
-      const downloadLink = document.createElement('a');
-      downloadLink.href = url;
-      downloadLink.setAttribute('download', 'image');
+//       // Create a temporary anchor element
+//       const downloadLink = document.createElement('a');
+//       downloadLink.href = url;
+//       downloadLink.setAttribute('download', 'image');
       
-      // Append the anchor element to the body
-      document.body.appendChild(downloadLink);
+//       // Append the anchor element to the body
+//       document.body.appendChild(downloadLink);
       
-      // Trigger a click event on the anchor element
-      downloadLink.click();
+//       // Trigger a click event on the anchor element
+//       downloadLink.click();
       
-      // Clean up: remove the anchor element from the body and revoke the URL
-      downloadLink.remove();
-      window.URL.revokeObjectURL(url);
-    })
-    .catch(error => console.error('Error downloading image:', error));
+//       // Clean up: remove the anchor element from the body and revoke the URL
+//       downloadLink.remove();
+//       window.URL.revokeObjectURL(url);
+//     })
+//     .catch(error => console.error('Error downloading image:', error));
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   const getOneData = useSelector((state) => state.imgCategory.OneImgsData);
@@ -128,25 +147,30 @@ const handleDownload = (picId) => {
     }
 
     dispatch(favOnePic({ formData, token }))
-           
+                notify(" تم الأضافة للمفضلة بنجاح", "success");
+
+    setTimeout(() => {
+
+      navigate("/favBook")
+    }, 1000);
         }
 
         console.log(checkAddToFavPic);
 
-        useEffect(() => {
-          if (isLoadingFavPic === false) {
-            if(checkAddToFavPic && checkAddToFavPic.success) {
-          if (checkAddToFavPic.success === true) {
-            // Notify "تم الاضافة بنجاح"
-            notify(" تم الأضافة للمفضلة بنجاح", "success");
-          } else {
-            // Handle other statuses or errors if needed
-            notify("حدث مشكلة في الاضافة", "error");
-        }
-      }
+      //   useEffect(() => {
+      //     if (isLoadingFavPic === false) {
+      //       if(checkAddToFavPic && checkAddToFavPic.success) {
+      //     if (checkAddToFavPic.success === true) {
+      //       // Notify "تم الاضافة بنجاح"
+      //       notify(" تم الأضافة للمفضلة بنجاح", "success");
+      //     } else {
+      //       // Handle other statuses or errors if needed
+      //       notify("حدث مشكلة في الاضافة", "error");
+      //   }
+      // }
 
-      }
-        }, [isLoadingFavPic,checkAddToFavPic]);
+      // }
+      //   }, [isLoadingFavPic,checkAddToFavPic]);
   
     return <>
      <NavBar />
@@ -252,9 +276,7 @@ const handleDownload = (picId) => {
               ))}
             </>
           ) :  <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
-          ):<div style={{height:'280px'}}>
-          <Spinner animation="border" variant="primary" />
-        </div>
+          ):null
         
         }
         </Row>

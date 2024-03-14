@@ -93,7 +93,7 @@ function App() {
           <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
           <Route path="/forgetPass" element={<ForgetPass2 />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/error-page" element={<ErrorPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
       <Footer />

@@ -8,6 +8,8 @@ import {
   NavDropdown,
   Row,Spinner
 } from "react-bootstrap";
+import nodata from "../../images/nodata.svg";
+
 import group from "../../images/Group.png";
 import group2 from "../../images/Group2.png";
 import arrowsIcon from "../../images/twoArr.svg";
@@ -313,7 +315,9 @@ useEffect(() => {
     </Link>
     ))
   ) : searchResults.length === 0 ? (
-    <div style={{ textAlign: "center" }}>لا يوجد بيانات</div>
+    <div style={{height:'280px'}}><img src={nodata}/> <br/>
+          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
   ) : id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? 
@@ -338,7 +342,9 @@ useEffect(() => {
         </Link>
         );
       })) : (
-         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+        <div style={{height:'280px'}}><img src={nodata}/> <br/>
+        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
       )
     ) : (
       <div style={{ height: "280px" }}>
@@ -391,7 +397,9 @@ useEffect(() => {
         </Link>
         ))
       ) : (
-         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+        <div style={{height:'280px'}}><img src={nodata}/> <br/>
+        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
       )
     )
   ) : (

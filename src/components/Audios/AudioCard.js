@@ -9,6 +9,8 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
+import nodata from "../../images/nodata.svg";
+
 import PlayIcon from "../../images/play.svg";
 import PauseIcon from "../../images/pause.svg";
 import NavBar from "../Navbar/NavBar";
@@ -725,13 +727,19 @@ console.log(getDataOne);
           );
         })
       ) : (
-         <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+        <div style={{height:'280px'}}><img src={nodata}/> <br/>
+        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
       )
     ) : (
-       <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+      <div style={{height:'280px'}}><img src={nodata}/> <br/>
+      <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+      <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
     )
   ) : (
-     <div style={{height:'280px'}}><span>لا يوجد بيانات</span></div>
+    <div style={{height:'280px'}}><img src={nodata}/> <br/>
+    <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+    <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
   )
 ) : (
   <div style={{ height: "280px" }}>

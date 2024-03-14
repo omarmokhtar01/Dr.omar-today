@@ -691,8 +691,9 @@ const handelAddtoFav = (audioId) => {
                
 ))}
             </>
-          ) : <div style={{height:'280px'}}><img src={nodata}/> <span>لا توجد عناصر بعد
-          لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
+          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
+          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
           ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
 
         }

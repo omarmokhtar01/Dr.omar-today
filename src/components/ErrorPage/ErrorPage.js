@@ -2,10 +2,13 @@ import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import errorImg from "../../images/404.png";
 import { Link } from 'react-router-dom';
+import NavBar from '../Navbar/NavBar';
 
 const ErrorPage = () => {
     return <>
-        <Container className='d-flex justify-content-center align-items-center ' style={{marginTop:'12%'}} >
+    <NavBar/>
+
+        <Container className='d-flex justify-content-center align-items-center ' style={{marginTop:'12%',marginBottom:'15%'}} >
             <Row>
                 <Col>
                     <img src={errorImg} alt='' width='350px' />
