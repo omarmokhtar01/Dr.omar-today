@@ -101,7 +101,7 @@ const HomePage = () => {
   const handleMouseDown = () => {
     timeoutId = setTimeout(() => {
       setIsPressed(true);
-      // notify("الوضع الخاص", "success");
+      notify("الوضع الخاص", "success");
     }, 2000);
   };
 
@@ -404,7 +404,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
   //     }, [isLoadingDown,downAudio]);
 
 
-  
+
   const [swiperRef, setSwiperRef] = useState(null);
 
   let appendNumber = 4;
