@@ -50,7 +50,7 @@ function App() {
 
           {/* <Route path="/audiosCategory/:id" element={<AudioCategory />} />
           <Route path="/audiosCategorySort/:id" element={<AudioCategorySort />} /> */}
-          <Route path="/audioCardCategory/:id" element={<AudioCardCategory />} />
+          {/* <Route path="/audioCardCategory/:id" element={<AudioCardCategory />} /> */}
 
 
           <Route path="/audioCard/:id" element={<AudioCard />} />
@@ -60,7 +60,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/articles" element={<Articles />} />
 
-          <Route path="/articles/:id" element={<ArticalCategory />} />
+          {/* <Route path="/articles/:id" element={<ArticalCategory />} /> */}
 
           <Route path="/articleCard/:id" element={<ArticleCard />} />
           <Route path="/pictures" element={<Pictures />} />
@@ -73,10 +73,10 @@ function App() {
 
           <Route path="/favScientists" element={<FavScientists />} />
           <Route path="/favAudios" element={<FavAudios />} />
-          <Route path="/audioCardfav" element={<FavAudioCard />} />
+          {/* <Route path="/audioCardfav" element={<FavAudioCard />} /> */}
           <Route path="/favBook" element={<FavBook />} />
           <Route path="/favpictures" element={<FavPics />} />
-          <Route path="/favArtivles" element={<FavArticles />} />
+          {/* <Route path="/favArtivles" element={<FavArticles />} /> */}
           <Route path="/DownloadScientest" element={<DownloadScientists />} />
           <Route path="/Downloadpictures" element={<DownloadPictures />} />
           <Route path="/DownloadAudios" element={<DownloadAudios />} />
@@ -88,10 +88,10 @@ function App() {
             path="/personaLinformation"
             element={<PersonalinFormation />}
           />
-          <Route path="/personaLPassword" element={<UserPassword />} />
+          {/* <Route path="/personaLPassword" element={<UserPassword />} /> */}
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
-          <Route path="/forgetPass" element={<ForgetPass2 />} />
+          {/* <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
+          <Route path="/forgetPass" element={<ForgetPass2 />} /> */}
           <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
