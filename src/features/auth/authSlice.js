@@ -5,7 +5,7 @@ import baseUrl from "../../Api/baseURL";
 const initialState = {
   userLogin:{},
   userDel:{},
-
+userData:{},
   userRegister:{},
   isLoading: false,
   error: null,
@@ -42,6 +42,21 @@ const register = createAsyncThunk('auth/register', async (formData, thunkAPI) =>
           }
       });
         console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return error
+    }
+  });
+
+
+  const getProfile = createAsyncThunk('auth/profile', async (token, thunkAPI) => {
+    try {
+      const response = await baseUrl.get(
+        'user/Profile', {
+          headers: {
+              Authorization: `Bearer ${token}` // Include token in the request headers
+          }
+      });
       return response.data;
     } catch (error) {
       return error
@@ -100,9 +115,25 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+
+
+      .addCase(getProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getProfile.fulfilled, (state, action) => {
+        state.userData = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { createLoginUser , register,delAcc};
+export { createLoginUser , register,delAcc,getProfile};
 
 export default authSlice.reducer;

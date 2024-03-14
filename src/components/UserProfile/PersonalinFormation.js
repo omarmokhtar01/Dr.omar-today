@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./profile.css";
 import NavBar from "../Navbar/NavBar";
 import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
@@ -9,7 +9,7 @@ import deleteAcc from "../../images/deleteAccount.png";
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { delAcc } from "../../features/auth/authSlice";
+import { delAcc, getProfile } from "../../features/auth/authSlice";
 import Cookies from "js-cookie";
 import notify from "../UseNotifications/useNotification";
 
@@ -35,6 +35,13 @@ if(!token){
   notify("تم حذف الحساب بنجاح", "success");
 
   }
+
+  const dataProfile = useSelector(state => state.auth.userData);
+console.log(dataProfile);
+  useEffect(()=>{
+    dispatch(getProfile(token))
+  },[ dispatch])
+
   return (
     <>
       <NavBar />
@@ -155,15 +162,17 @@ if(!token){
                       paddingRight: "9px",
                     }}
                   />
-                  <Form.Control
-                    type="text"
-                    placeholder="محمد خالد"
-                    style={{
-                      background: "rgba(245, 245, 245, 1)",
-                      borderRadius: "10px",
-                      padding: "15px 35px 15px 15px",
-                    }}
-                  />
+                 <Form.Control
+  type="text"
+  placeholder="محمد خالد"
+  style={{
+    background: "rgba(245, 245, 245, 1)",
+    borderRadius: "10px",
+    padding: "15px 35px 15px 15px",
+  }}
+  value={dataProfile?.data?.name || ''}
+/>
+
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -208,6 +217,8 @@ if(!token){
                       borderRadius: "10px",
                       padding: "15px 35px 15px 15px",
                     }}
+                    value={dataProfile?.data?.phone || ''}
+
                   />
                 </Form.Group>
 
@@ -234,6 +245,8 @@ if(!token){
                       borderRadius: "10px",
                       padding: "15px 38px 15px 15px",
                     }}
+                    value={dataProfile?.data?.email || ''}
+
                   />
                 </Form.Group>
 
@@ -322,7 +335,7 @@ if(!token){
                   </Modal.Body>
                 </Modal>
 
-                <div
+                {/* <div
                   className="d-flex justify-content-center align-items-center"
                   style={{ borderRadius: "30px" }}
                 >
@@ -337,7 +350,7 @@ if(!token){
                   >
                     حفظ
                   </button>
-                </div>
+                </div> */}
               </Form>
             </div>
           </Col>
