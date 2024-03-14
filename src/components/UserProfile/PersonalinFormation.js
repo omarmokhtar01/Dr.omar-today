@@ -6,7 +6,7 @@ import phone from "../../images/phone.svg";
 import email from "../../images/email.svg";
 import name from "../../images/name.svg";
 import deleteAcc from "../../images/deleteAccount.png";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { delAcc, getProfile } from "../../features/auth/authSlice";
@@ -17,6 +17,7 @@ const PersonalinFormation = () => {
   const [smShow, setSmShow] = useState(false);
   const dispatch = useDispatch()
   let token = Cookies.get("token");
+  const navigate = useNavigate()
 
   const delAccount = useSelector(state => state.auth.delAcc);
   const isLoadingAllPictures = useSelector(state => state.auth.isLoading);
@@ -39,6 +40,9 @@ if(!token){
   const dataProfile = useSelector(state => state.auth.userData);
 console.log(dataProfile);
   useEffect(()=>{
+    if (!token) {
+    return  navigate("/");
+    }
     dispatch(getProfile(token))
   },[ dispatch])
 

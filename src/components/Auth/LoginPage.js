@@ -161,7 +161,7 @@ const LoginPage = () => {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3" >
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
                     {" "}
                     كلمه المرور{" "}
