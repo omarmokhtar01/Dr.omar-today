@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './navbar.css'
-import { Container, Nav, NavDropdown, Navbar, Modal, Col, Button } from 'react-bootstrap';
+import { Container, Nav, NavDropdown, Navbar, Modal, Col, Button,Dropdown } from 'react-bootstrap';
 import logo from "../../images/logo 1.png";
 import locationIcon from "../../images/location.svg";
 import download from "../../images/download.svg";
@@ -335,13 +335,16 @@ let getLocation=sessionStorage.getItem('userLocation')
 
           <Col
             xs="auto"
-            className="me-auto mb-2"
+            className="me-auto mb-2 nav-res-unlogin"
             style={{ position: "relative", left: "5px" }}
           >
              <div className="dropdown">
         <div
           className="dropdown-btn"
-          style={{
+          
+        >
+        </div>
+        <Dropdown style={{
             border: '1px solid white',
             width: '50px',
             borderRadius: '20px',
@@ -351,14 +354,16 @@ let getLocation=sessionStorage.getItem('userLocation')
             height: '35px',
             marginLeft: '5px',
             cursor: 'pointer',
-          }}
-        >
-    <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'En' : 'Ar'}</span>
-        </div>
-        <div className="dropdown-content">
-          <button onClick={() => changeLanguage('en')}>English</button>
-          <button onClick={() => changeLanguage('ar')}>العربية</button>
-        </div>
+            backgroundColor:'#FFFFFF',
+          }}>
+  <Dropdown.Toggle variant="success" id="language-dropdown" style={{backgroundColor:'#54abc8'}}>
+  <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'En' : 'Ar'}</span>
+  </Dropdown.Toggle>
+  <Dropdown.Menu>
+    <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
+    <Dropdown.Item onClick={() => changeLanguage('ar')}>العربية</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
       </div>
             <Button
               style={{

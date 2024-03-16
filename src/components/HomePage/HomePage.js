@@ -106,7 +106,8 @@ const HomePage = () => {
   const handleMouseDown = () => {
     timeoutId = setTimeout(() => {
       setIsPressed(true);
-      // notify("الوضع الخاص", "success");
+      setSmShowImg(true) 
+
     }, 2000);
   };
 
@@ -522,7 +523,6 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                   id="quran-img"
                   onMouseDown={handleMouseDown}
                   onMouseUp={handleMouseUp}
-                  onClick={() => setSmShowImg(true)}
                 />
                 <img src={vector2} alt="" className="responsive-image " />
               </div>
@@ -552,7 +552,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                       borderRadius: "10px",
                       padding: "15px",
                     }}
-                   
+                   maxLength={6}
                   />
                 </Form.Group>
         </Modal.Body>

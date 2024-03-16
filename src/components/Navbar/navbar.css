@@ -37,13 +37,21 @@ width: 820px;
 }}
 
   @media (min-width: 992px) and (max-width: 1036px) { 
-	
+
     .nav-menu{
  position: relative;
  left: 40px;
     }
   
    }
+   @media (min-width: 992px) and (max-width: 1199.98px) { 
+    .nav-res-unlogin{
+      position: relative;
+      left: 65px !important;
+    }
+    }
+
+
 
    @media (max-width: 991.98px) {
     .res-card{
@@ -90,7 +98,7 @@ width: 820px;
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
+  background-color: white;
   min-width: 160px;
   z-index: 1;
 }
