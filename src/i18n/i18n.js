@@ -1,14 +1,14 @@
 // i18n.js
-import I18n from 'i18next';
+import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import enArticles from '../lang/articles/en.json';
-import arArticles from '../lang/articles/ar.json';
+import enArticles from '../locales/articles/en.json';
+import arArticles from '../locales/articles/ar.json';
 
 // Import other resources similarly
 
-I18n
+i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
@@ -29,4 +29,4 @@ I18n
     },
   });
 
-export default I18n;
+export default i18n;

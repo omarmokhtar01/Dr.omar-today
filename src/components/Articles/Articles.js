@@ -29,8 +29,11 @@ import searchIcon from "../../images/search.svg";
 import arrowsIcon from "../../images/twoArr.svg";
 import clockIcon from "../../images/clock.svg";
 import eyeIcon from "../../images/eye.svg";
+import { useTranslation } from 'react-i18next';
 
 const Articles = () => {
+  const { t } = useTranslation('articles');
+
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
 
   // Event handler for sorting by latest addition
@@ -124,7 +127,8 @@ const Articles = () => {
                 className=" background-image"
               >
                 {" "}
-                مقالات{" "}
+                {t('articles')}
+{" "}
               </h1>
             </div>
           </Col>
@@ -155,7 +159,7 @@ const Articles = () => {
               ? "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)": "none"
             }}
             >
-  <p style={{color: id === null ? 'white' :  'black', fontWeight: "bold" }}>الكل</p>
+  <p style={{color: id === null ? 'white' :  'black', fontWeight: "bold" }}>{t('all')}</p>
             </div>
           </Col>
 

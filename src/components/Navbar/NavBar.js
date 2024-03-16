@@ -202,8 +202,28 @@ let getLocation=sessionStorage.getItem('userLocation')
 
          <div  className=" nav-menu  d-flex">
           
-          <div style={{border:'1px solid white',width:'50px',borderRadius:'20px',display:'flex',justifyContent:'center',alignItems:'center',height:'35px',marginLeft:'5px'}}><span style={{color:'white'}}>AR</span></div>
-          <Button
+         <div className="dropdown">
+        <div
+          className="dropdown-btn"
+          style={{
+            border: '1px solid white',
+            width: '50px',
+            borderRadius: '20px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '35px',
+            marginLeft: '5px',
+            cursor: 'pointer',
+          }}
+        >
+    <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'En' : 'Ar'}</span>
+        </div>
+        <div className="dropdown-content">
+          <button onClick={() => changeLanguage('en')}>English</button>
+          <button onClick={() => changeLanguage('ar')}>العربية</button>
+        </div>
+      </div>          <Button
               style={{
                 color: "#FFFFFF",
                 backgroundColor: "rgba(209, 155, 111, 0.3)",

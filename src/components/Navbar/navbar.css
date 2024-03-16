@@ -73,3 +73,38 @@ width: 820px;
   .navLogin{
     height: 300px !important;
   } }
+
+
+
+
+  /* styles.css */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  /* Add custom styles here */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content button {
+  color: #333;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
