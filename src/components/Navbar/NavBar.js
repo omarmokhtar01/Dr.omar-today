@@ -25,6 +25,28 @@ import { SlLocationPin } from 'react-icons/sl';
 import backgroundImageee from "../../images/ground-home.png";
 
 const NavBar = () => {
+
+
+
+
+
+
+
+  useEffect(() => {
+    const handleTranslate = () => {
+      const translateButton = document.querySelector('.goog-te-combo');
+      if (translateButton) {
+        translateButton.dispatchEvent(new MouseEvent('mousedown'));
+      }
+    };
+
+    // Attach the translate function to a global scope to make it accessible outside the component
+    window.handleTranslate = handleTranslate;
+  }, []);
+
+
+
+
   const [hasToken, setHasToken] = useState(false);
   const [location, setLocation] = useState(null);
   const [activeLink, setActiveLink] = useState(null);
