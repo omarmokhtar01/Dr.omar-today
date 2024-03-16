@@ -150,7 +150,10 @@ const HomePage = () => {
       console.log("Geolocation is not supported by your browser");
     }
   }, []);
-
+  const customIcons = {
+    play: <img src={PlayIcon} alt="Play" />,
+    pause: <img src={PauseIconMostListen} alt="Pause" />,
+  };
   // Replace date with the desired date
   const date = new Date();
 
@@ -1008,7 +1011,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                             "Default Title"}
                         </h4>
                         {/* <span style={{ color: "gray" }}>محمد صالح المنجد</span> */}
-                        <img src={PauseIcon}  alt=""/>
+                        {/* <img src={PauseIcon}  alt=""/> */}
                       </Col>
                       <Col
                         className="mt-5"
@@ -1018,13 +1021,13 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                           justifyContent: "space-around",
                         }}
                       >
-                        <img
+                        {/* <img
                           src={changeIcon}
                           size={30}
                           color="gray"
                           style={{ cursor: "pointer" }}
-                        />
-                        {indexMobileState < mostListenedData.length - 1 ? (
+                        /> */}
+                        {/* {indexMobileState < mostListenedData.length - 1 ? (
                           <img
                             src={rightIcon}
                             size={20}
@@ -1065,9 +1068,9 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                           ) : (
                             <img src={PlayIcon} />
                           )}
-                        </button>
+                        </button> */}
 
-                        <audio
+                        {/* <audio
                           key={indexMobileStateMost}
                           ref={(el) =>
                             (audioRefs.current[indexMobileStateMost] = el)
@@ -1081,9 +1084,30 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                           onLoadedMetadata={handleLoadedMetadata(
                             indexMobileStateMost
                           )}
-                        />
+                        /> */}
 
-                        {indexMobileState > 0 ? (
+<AudioPlayer
+    
+    src={
+      mostListenedData[indexMobileStateMost]?.audio ||
+      null
+    }
+    key={indexMobileStateMost}
+    ref={(el) =>
+      (audioRefs.current[indexMobileStateMost] = el)
+    }
+    onPlay={e => console.log("onPlay")}
+    onLoadedMetadata={handleLoadedMetadata(
+      indexMobileStateMost
+    )}   
+    customIcons={customIcons}
+    progressDirection="ltr" // Set progress direction to right-to-left
+
+    // other props here
+  />
+
+
+                        {/* {indexMobileState > 0 ? (
                           <img
                             src={leftIcon}
                             size={20}
@@ -1098,7 +1122,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                             style={{ cursor: "no-drop" }}
                             alt="left icon "
                           />
-                        )}
+                        )} */}
 
                         {token ? (
                           <a

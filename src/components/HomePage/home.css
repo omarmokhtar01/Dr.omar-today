@@ -240,4 +240,23 @@ margin-left: 0px !important;
 
 
 
-   
+  .rhap_progress-filled{
+    background-color: #d89661;
+  }
+  .rhap_progress-indicator{
+    background-color: #d89661;
+    font-size: 15px;
+
+  }
+  .rhap_progress-container {
+    direction: ltr; /* Set direction to right-to-left */
+  }
+  .rhap_play-pause-button {
+    width: 80px !important;
+    height: 50px !important;
+    
+    /* Add other styles as needed */
+  }
+  .rhap_container{
+    box-shadow: none;
+  }
