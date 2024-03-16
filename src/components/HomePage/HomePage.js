@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 import "./home.css";
 import {
   Col,
@@ -1064,6 +1066,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                             <img src={PlayIcon} />
                           )}
                         </button>
+
                         <audio
                           key={indexMobileStateMost}
                           ref={(el) =>
