@@ -30,27 +30,20 @@ const NavBar = () => {
 
   const {  i18n } = useTranslation();
   const { t } = useTranslation('navbar');
+  const [lang, setLang] = useState(localStorage.getItem('lang') || 'ar'); // Get language from localStorage or default to 'ar'
 
   const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    localStorage.setItem('lang', lng); // Save selected language to localStorage
+    if (lng !== lang) {
+      i18n.changeLanguage(lng);
+      setLang(lng);
+      localStorage.setItem('lang', lng); // Save selected language to localStorage
+    }
   };
 
-let lang = localStorage.getItem('lang');
 
 
 
-  useEffect(() => {
-    const handleTranslate = () => {
-      const translateButton = document.querySelector('.goog-te-combo');
-      if (translateButton) {
-        translateButton.dispatchEvent(new MouseEvent('mousedown'));
-      }
-    };
 
-    // Attach the translate function to a global scope to make it accessible outside the component
-    window.handleTranslate = handleTranslate;
-  }, []);
 
 
 
@@ -69,6 +62,10 @@ let lang = localStorage.getItem('lang');
       setActiveLink(link);
   };
   useEffect(() => {
+    if (!localStorage.getItem('lang')) {
+      changeLanguage('ar');
+    }
+    console.log(lang);
     // Check if geolocation is supported by the browser
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -76,7 +73,7 @@ let lang = localStorage.getItem('lang');
           const { latitude, longitude } = position.coords;
           try {
             // Fetch address using reverse geocoding with language set to Arabic
-            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=${lang}`);
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=en`);
             const data = await response.json();
             console.log(data);
             // Extract city and country from the address
@@ -96,7 +93,8 @@ let lang = localStorage.getItem('lang');
     } else {
       setLocation('Geolocation is not supported by your browser');
     }
-  }, [lang,location]);
+  }, [changeLanguage]);
+  
 
 
   useEffect(() => {

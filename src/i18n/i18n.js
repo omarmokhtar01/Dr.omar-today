@@ -122,6 +122,7 @@ favbook:arfavbook
 // Add other sections here
       },
     },
+    lng:'ar',
     fallbackLng: 'en',
     debug: true,
     interpolation: {
@@ -129,4 +130,7 @@ favbook:arfavbook
     },
   });
 
+  if (!localStorage.getItem('i18nextLng')) {
+    localStorage.setItem('i18nextLng', 'ar');
+  }
 export default i18n;

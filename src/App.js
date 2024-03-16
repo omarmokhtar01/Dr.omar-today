@@ -38,8 +38,12 @@ import AudioCategory from "./components/Audios/AudioCategory";
 import AudioCategorySort from "./components/Audios/AudioCategorySort";
 import AudioCardCategory from "./components/Audios/AudioCardCategory";
 import ViewBook from "./components/Books/ViewBook";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(()=>{
+localStorage.setItem("i18nextLng","ar")
+  },[])
   return (
     <div className="App">
       <BrowserRouter>
