@@ -34,12 +34,15 @@ import downIcon from "../../images/downloadBorder.svg";
 import audioWhiteIcon from "../../images/audiowhite.svg";
 import fav2Icon from "../../images/fav2.svg";
 import { ToastContainer } from "react-toastify";
+import { useTranslation } from 'react-i18next';
 
 import notify from "../UseNotifications/useNotification";
 
 import JSZip from 'jszip';
 
 const AudioCard = () => {
+  const { t } = useTranslation('audios');
+
   const params = useParams();
 const navigate = useNavigate()
   // Now you can access the parameters using the keys defined in your route
@@ -54,7 +57,7 @@ const navigate = useNavigate()
 
   function downloadAudiosAsZip(idElder) {
     if (!token) {
-      return notify("من فضلك قم بتسجيل الدخول أولاً", "error");
+      return notify(t('loginRequired'), "error");
     }
   
     const formData = {
@@ -180,15 +183,15 @@ const navigate = useNavigate()
     if (token) {
       // Token exists, perform the download action if the URL is valid
       if (audioUrl) {
-        notify("تم التحميل", "success");
+        notify(t('Downloadedsuccessfully'), "success");
         downloadAudio(audioUrl);
 
       } else {
-        notify("عذرًا، الصوت غير متاح حاليًا", "error");
+        notify(t('audioUnavailable'), "error");
       }
     } else {
       // Token doesn't exist, notify the user to log in
-      notify("من فضلك قم بتسجيل الدخول أولاً", "error");
+      return notify(t('loginRequired'), "error");
     }
   };
   
@@ -276,7 +279,7 @@ console.log(getDataOne);
     if (!token) {
       // Token exists, perform the download action
       // Add your download logic here
-     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+      return notify(t('loginRequired'), "error");
     }
     dispatch(favOneAudio({ formData, token }))
            navigate("/favAudios")
@@ -288,10 +291,10 @@ console.log(getDataOne);
             if(checkAddToFav && checkAddToFav.success) {
           if (checkAddToFav.success === true) {
             // Notify "تم الاضافة بنجاح"
-            notify("تم الأضافة للمفضلة بنجاح", "success");
+            notify(t('addToFavoritesSuccess'), "success");
           } else {
             // Handle other statuses or errors if needed
-            notify("حدث مشكلة في الاضافة", "error");
+            notify(t('addToFavoritesError'), "error");
         }
       }
 
@@ -317,7 +320,7 @@ console.log(getDataOne);
           if (!token) {
             // Token exists, perform the download action
             // Add your download logic here
-           return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+            return notify(t('loginRequired'), "error");
           }
           localStorage.setItem("audiodown","تم تحميل صوت بنجاح")
 
@@ -326,20 +329,20 @@ console.log(getDataOne);
               }
       
       
-              useEffect(() => {
-                if (isLoadingDown === false) {
-                  if(downAudio && downAudio.success) {
-                if (downAudio.success === true) {
-                  // Notify "تم الاضافة بنجاح"
-                  notify("تم الأضافة للمفضلة بنجاح", "success");
-                } else {
-                  // Handle other statuses or errors if needed
-                  notify("حدث مشكلة في الاضافة", "error");
-              }
-            }
+            //   useEffect(() => {
+            //     if (isLoadingDown === false) {
+            //       if(downAudio && downAudio.success) {
+            //     if (downAudio.success === true) {
+            //       // Notify "تم الاضافة بنجاح"
+            //       notify("تم الأضافة للمفضلة بنجاح", "success");
+            //     } else {
+            //       // Handle other statuses or errors if needed
+            //       notify("حدث مشكلة في الاضافة", "error");
+            //   }
+            // }
       
-            }
-              }, [isLoadingDown,downAudio]);
+            // }
+            //   }, [isLoadingDown,downAudio]);
       
 
 
@@ -360,7 +363,7 @@ console.log(getDataOne);
           if (!token) {
             // Token exists, perform the download action
             // Add your download logic here
-           return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+            return notify(t('loginRequired'), "error");
           }
           dispatch(favOneElder({ formData, token }))
           localStorage.setItem("elderfav","تم حفظ  العالم بنجاح")
@@ -377,10 +380,10 @@ console.log(getDataOne);
                   if(checkAddToFavElder && checkAddToFavElder.success) {
                 if (checkAddToFavElder.success === true) {
                   // Notify "تم الاضافة بنجاح"
-                  notify(" تم الأضافة للمفضلة بنجاح", "success");
+                  notify(t('addToFavoritesSuccess'), "success");
                 } else {
                   // Handle other statuses or errors if needed
-                  notify("حدث مشكلة في الاضافة", "error");
+                  notify(t('addToFavoritesError'), "error");
               }
             }
       
@@ -390,20 +393,20 @@ console.log(getDataOne);
 
 
 
-              useEffect(() => {
-                if (isLoadingElderDown === false) {
-                  if(elderDown && elderDown.success) {
-                if (elderDown.success === true) {
-                  // Notify "تم الاضافة بنجاح"
-                  notify(" تم الأضافة للمفضلة بنجاح", "success");
-                } else {
-                  // Handle other statuses or errors if needed
-                  notify("حدث مشكلة في الاضافة", "error");
-              }
-            }
+            //   useEffect(() => {
+            //     if (isLoadingElderDown === false) {
+            //       if(elderDown && elderDown.success) {
+            //     if (elderDown.success === true) {
+            //       // Notify "تم الاضافة بنجاح"
+            //       notify(" تم الأضافة للمفضلة بنجاح", "success");
+            //     } else {
+            //       // Handle other statuses or errors if needed
+            //       notify("حدث مشكلة في الاضافة", "error");
+            //   }
+            // }
       
-            }
-              }, [isLoadingElderDown,elderDown]);
+            // }
+            //   }, [isLoadingElderDown,elderDown]);
   return (
 
 
@@ -471,7 +474,7 @@ console.log(getDataOne);
                       {" "}
                       {getDataOne.data.name}
                     </h5>
-                    <p> <img src={audioWhiteIcon} /> {getDataOne.data.count_audios} مقطع صوتي</p>
+                    <p> <img src={audioWhiteIcon} /> {getDataOne.data.count_audios}  {t('audio')}</p>
                   </div>
                 </Col>
 
@@ -519,9 +522,15 @@ console.log(getDataOne);
           </div>
         </Col>
       </Row>
-    ) : null
-  ) : null
-) : null}
+    ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
+    <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+    <span>{t('nodata2')}</span></div>
+  ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
+  <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+  <span>{t('nodata2')}</span></div>
+) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
+<span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+<span>{t('nodata2')}</span></div>}
 
       </Container>
 
@@ -562,8 +571,9 @@ console.log(getDataOne);
                     color: "rgb(219, 176, 134)",
                   }} src={arrowsIcon} />
 
+
 <NavDropdown
-        title="الترتيب حسب"
+        title={t('sortBy')}
         id="collapsible-nav-dropdown"
         style={{
           background:
@@ -577,10 +587,10 @@ console.log(getDataOne);
         }}
       >
         <NavDropdown.Item onClick={handleSortByLatest}>
-          الأحدث اضافة
+        {t('latestAdded')}
         </NavDropdown.Item>
         <NavDropdown.Item onClick={handleSortAlphabetically}>
-          الابجدية
+        {t('alphabetical')}
         </NavDropdown.Item>
       </NavDropdown>
               </div>
@@ -593,7 +603,7 @@ console.log(getDataOne);
       {!isLoading ? (
   getDataOne ? (
     getDataOne.data ? (
-      getDataOne.data.Audio ? (
+      getDataOne.data.Audio && getDataOne > 0 ? (
         [...getDataOne.data.Audio].sort(sortFunction).map((item, index) => {
           return (
             <React.Fragment key={index}>
@@ -650,7 +660,7 @@ console.log(getDataOne);
     padding: "15px",
   }}
 >
-  {durations[index] ? formatDuration(durations[index]) : 'Loading...'} دقيقه
+  {durations[index] ? formatDuration(durations[index]) : 'Loading...'} {t('minutes')}
 </p>
 
                 </Col>
@@ -736,18 +746,18 @@ console.log(getDataOne);
         })
       ) : (
         <div style={{height:'280px'}}><img src={nodata}/> <br/>
-        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
       )
     ) : (
       <div style={{height:'280px'}}><img src={nodata}/> <br/>
-      <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-      <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
     )
   ) : (
     <div style={{height:'280px'}}><img src={nodata}/> <br/>
-    <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-    <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
   )
 ) : (
   <div style={{ height: "280px" }}>

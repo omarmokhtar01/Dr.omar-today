@@ -2,8 +2,10 @@ import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import footer from "../../images/footer.png";
 import "./footer.css";
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t } = useTranslation('footer')
   return (
     <>
       <div
@@ -24,17 +26,17 @@ const Footer = () => {
                 <div className="d-flex justify-content-center align-items-center d-flex-menu ">
       <div className="all-footer  d-flex ">
           <div className="footer-1 mt-3 mb-3" >
-                <a href="/">الرئيسيه</a> 
-                <a href="/audios">صوتيات</a>
-                <a href="/Books">كتب</a> 
-                <a href="/articles">مقالات</a>
+                <a href="/">{t('home')}</a> 
+                <a href="/audios">{t('audios')}</a>
+                <a href="/Books">{t('books')}</a> 
+                <a href="/articles">{t('articles')}</a>
                 </div>
                 
                 <div className="footer-2 mt-3 mb-3">
                
-                <a href="/pictures">صور</a>
-                <a href="/contact-us">تواصل معنا</a>
-                <a href="/conditionandroles">شروط واحكام</a>
+                <a href="/pictures">{t('photos')}</a>
+                <a href="/contact-us">{t('contactUs')}</a>
+                <a href="/conditionandroles">{t('termsAndConditions')}</a>
                  </div>
       </div>
                
@@ -62,7 +64,7 @@ const Footer = () => {
         className="bluefooter"
       >
         {" "}
-        حقوق الطبع والنشر @ 2023. جميع الحقوق محفوظة د/عمر كامل.{" "}
+        {t('copyright')} {t('allRightsReserved')} {t('byDrOmarKamel')}{" "}{" "}
       </div>
     </>
   );

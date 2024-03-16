@@ -12,8 +12,11 @@ import notify from "../UseNotifications/useNotification";
 import Cookies from "js-cookie";
 import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineMail, MdOutlinePhoneIphone } from "react-icons/md";
+import { useTranslation } from 'react-i18next';
 
 const RegisterPage = () => {
+  const { t } = useTranslation('register');
+
   const dispatch = useDispatch();
   //to make modal
   const [showw, setShoww] = useState(false);
@@ -45,34 +48,34 @@ const RegisterPage = () => {
   const submitRegister = async (e) => {
     e.preventDefault();
     if (!name.trim()) {
-      return notify("اسم المستخدم مطلوب", "error");
+      return notify(t('nameRequired'), "error");
     } else if (name.trim().length < 2) {
-      return notify("يجب أن يكون طول كلمة المرور على الأقل 2 أحرف", "error");
+      return notify(t('nameLength'), "error");
     }
     // Check if phonenumber is empty or has incorrect format
     if (!phonenumber.trim()) {
-      return notify("رقم الهاتف مطلوب", "error");
+      return notify(t('phoneNumberRequired'), "error");
     } else if (!isValidPhoneNumber(phonenumber)) {
-      return notify("الرجاء إدخال رقم هاتف صحيح المكون من 10 ارقام", "error");
+      return notify(t('invalidPhoneNumber'), "error");
     }
 
     // Check if email is empty or has incorrect format
     if (!email.trim()) {
-      return notify("أيميل المستخدم مطلوب", "error");
+      return notify(t('emailRequired'), "error");
     } else if (!isValidEmail(email)) {
-      return notify("الرجاء إدخال بريد إلكتروني صحيح", "error");
+      return notify(t('invalidEmail'), "error");
     }
 
     // Check if password is empty or less than 8 characters long
     if (!password.trim()) {
-      return notify("باسورد المستخدم مطلوب", "error");
+      return notify(t('passwordRequired'), "error");
     } else if (password.trim().length < 8) {
-      return notify("يجب أن يكون طول كلمة المرور على الأقل 8 أحرف", "error");
+      return notify(t('passwordLength'), "error");
     }
 
     // Check if confirm_password matches password
     if (confirm_password !== password) {
-      return notify("كلمة المرور التأكيدية غير متطابقة", "error");
+      return notify(t('confirmPasswordMismatch'), "error");
     }
 
     // Function to validate email format
@@ -171,12 +174,12 @@ const RegisterPage = () => {
                 style={{ fontWeight: "700", color: "rgba(209, 155, 111, 1)" }}
               >
                 {" "}
-                تسجيل جديد{" "}
+                {t('signup')}{" "}
               </h4>
               <Form>
                 <Form.Group className="mb-1">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    الاسم بالكامل
+                  {t('fullName')}
                   </Form.Label>
                   <FaRegUser
                     style={{
@@ -192,7 +195,7 @@ const RegisterPage = () => {
                     onChange={handleInputChange("name")}
                     value={name}
                     type="text"
-                    placeholder="محمد خالد"
+                    placeholder={t('fullName')}
                     style={{
                       background: "rgba(245, 245, 245, 1)",
                       borderRadius: "10px",
@@ -203,7 +206,7 @@ const RegisterPage = () => {
 
                 <Form.Group className="mb-1">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    رقم الموبيل
+                  {t('mobileNumber')}
                   </Form.Label>
                   <div>
                     <MdOutlinePhoneIphone
@@ -245,7 +248,7 @@ const RegisterPage = () => {
 
                 <Form.Group className="mb-1">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    البريد الالكتروني{" "}
+                  {t('email')} {" "}
                   </Form.Label>
                   <MdOutlineMail
                     style={{
@@ -273,7 +276,7 @@ const RegisterPage = () => {
                 <Form.Group className="mb-1">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
                     {" "}
-                    كلمه المرور{" "}
+                    {t('password')}{" "}
                   </Form.Label>
 
                   <Form.Control
@@ -290,7 +293,7 @@ const RegisterPage = () => {
 
                 <Form.Group className="mb-1">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    تاكيد كلمه المرور{" "}
+                  {t('confirmPassword')}{" "}
                   </Form.Label>
 
                   <Form.Control
@@ -312,7 +315,7 @@ const RegisterPage = () => {
                       style={{ marginLeft: "10px", marginTop: "10px" }}
                       type="checkbox"
                     />
-                    لقد قرأت و أوافق على{" "}
+                      {t('agreeTerms')}  {" "}
                   </p>
 
                   <Link
@@ -327,7 +330,7 @@ const RegisterPage = () => {
                       }}
                     >
                       {" "}
-                      الشروط والاحكام{" "}
+                      {t('termsAndConditions')}{" "}
                     </p>
                   </Link>
                 </div>
@@ -353,7 +356,7 @@ const RegisterPage = () => {
                         {/* Add spinner component here */}{" "}
                       </Spinner>
                     ) : (
-                      "تسجيل"
+                      `${t('register')}`
                     )}
                   </button>
                 </div>

@@ -1,0 +1,14 @@
+{
+  "home": "الرئيسية",
+  "audios": "صوتيات",
+  "books": "كتب",
+  "articles": "مقالات",
+  "photos": "صور",
+  "contactUs": "تواصل معنا",
+  "profile": "الملف الشخصي",
+  "termsAndConditions": "الشروط والأحكام",
+  "logout": "تسجيل الخروج",
+  "login":"تسجيل",
+  "logoutSuccess": "تم تسجيل الخروج بنجاح"
+
+}

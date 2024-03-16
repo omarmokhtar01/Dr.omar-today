@@ -17,8 +17,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { createContactUs } from "../../features/contactUs/contactSlice";
 import { ToastContainer } from "react-toastify";
 import notify from "../UseNotifications/useNotification";
+import { useTranslation } from 'react-i18next';
 
 const ContactUs = () => {
+  const { t } = useTranslation('contact');
+
   const dispatch = useDispatch();
   const res = useSelector((state) => state.contact.data);
 
@@ -47,28 +50,28 @@ const ContactUs = () => {
     e.preventDefault();
 
     if (!first_name.trim()) {
-      return notify("اسم المستخدم مطلوب", "error");
+      return notify(t('nameRequired'), "error");
     } else if (first_name.trim().length < 2) {
-      return notify("يجب أن يكون طول كلمة المرور على الأقل 2 أحرف", "error");
+      return notify(t('nameLength'), "error");
     }
     if (!phone.trim()) {
-      return notify("رقم الهاتف مطلوب", "error");
+      return notify(t('phoneRequired'), "error");
     } else if (!isValidPhoneNumber(phone)) {
-      return notify("الرجاء إدخال رقم هاتف صحيح من 10 ارقام", "error");
+      return notify(t('invalidPhone'), "error");
     }
 
     // Check if email is empty or has incorrect format
     if (!email.trim()) {
-      return notify("أيميل المستخدم مطلوب", "error");
+      return notify(t('emailRequired'), "error");
     } else if (!isValidEmail(email)) {
-      return notify("الرجاء إدخال بريد إلكتروني صحيح", "error");
+      return notify(t('invalidEmail'), "error");
     }
 
     // Check if password is empty or less than 8 characters long
     if (!subject.trim()) {
-      return notify("برجاء كتابة الملاحظات المطلوبة", "error");
+      return notify(t('subjectRequired'), "error");
     } else if (subject.trim().length < 2) {
-      return notify("برجاء كتابة الملاحظات المطلوبة", "error");
+      return notify(t('subjectRequired'), "error");
     }
 
     // Function to validate email format
@@ -130,7 +133,7 @@ const ContactUs = () => {
                 }}
                 className=" background-image"
               >
-                تواصل معنا{" "}
+                {t('contactUs')}{" "}
               </h1>
             </div>
           </Col>
@@ -166,7 +169,7 @@ const ContactUs = () => {
               <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    الاسم بالكامل
+                  {t('fullName')}
                   </Form.Label>
 
                  
@@ -181,7 +184,7 @@ const ContactUs = () => {
 
                   <Form.Control
                     type="text"
-                    placeholder="محمد خالد"
+                    placeholder={t('writeYourNameHere')}
                     style={{
                       background: "rgba(245, 245, 245, 1)",
                       borderRadius: "10px",
@@ -195,7 +198,7 @@ const ContactUs = () => {
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    رقم الموبيل
+                  {t('mobileNumber')}
                   </Form.Label>
                 
                   <img src={phoneIcon}  style={{
@@ -223,7 +226,7 @@ const ContactUs = () => {
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    البريد الالكتروني{" "}
+                  {t('emailAddress')}{" "}
                   </Form.Label>
 
                  
@@ -252,11 +255,11 @@ const ContactUs = () => {
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    ملاحظاتك{" "}
+                  {t('yourNotes')}{" "}
                   </Form.Label>
                   <Form.Control
                     as="textarea"
-                    placeholder="اكتب ملاحظاتك هنا"
+                    placeholder={t('writeYourNotesHere')}
                     style={{
                       height: "150px",
                       background: "rgba(245, 245, 245, 1)",
@@ -287,7 +290,7 @@ const ContactUs = () => {
                         {/* Add spinner component here */}{" "}
                       </Spinner>
                     ) : (
-                      "ارسال"
+                      `${t('send')}`
                     )}
                   </button>
                 </div>

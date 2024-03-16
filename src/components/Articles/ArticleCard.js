@@ -19,8 +19,11 @@ import clockIcon from "../../images/clock.svg";
 import eyeIcon from "../../images/eye.svg";
 import notify from "../UseNotifications/useNotification";
 import nodata from "../../images/nodata.svg";
+import { useTranslation } from 'react-i18next';
 
 const ArticleCard = () => {
+  const { t } = useTranslation('articles');
+
   const handleCheckLogin = () => {
     const token = Cookies.get("token");
 
@@ -133,7 +136,7 @@ const ArticleCard = () => {
                         }}
                       />{" "}
                     </div>
-                    {getDataOne.visit_count} مشاهدة
+                    {getDataOne.visit_count} {t('view')}
                   </p>
 
                   <p style={{ margin: "5px 35px 35px 50px" }}>
@@ -179,7 +182,7 @@ const ArticleCard = () => {
                       }}
                     >
                       <h6 style={{ color: "rgba(130, 130, 130, 1)" }}>
-                        المقال بواسطه
+                      {t('articleBy')}
                       </h6>
                       <h6 style={{ marginLeft: "-30px" }}>
                         {getDataOne.elder.name}
@@ -200,7 +203,7 @@ const ArticleCard = () => {
                     }}
                   >
                     <h6 className="d-flex justify-content-center align-items-center">
-                      مشاركه المقال
+                    {t('shareArticle')}
                     </h6>
 
                     <div>
@@ -237,16 +240,16 @@ const ArticleCard = () => {
                 </Col>
               ) : (
                 <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
               )
             ) : (
               <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
             )
           ) : (
-            <div style={{ height: "280px" }}>
+            <div style={{ height: "320px" }}>
               {" "}
               <Spinner animation="border" variant="primary" />
             </div>

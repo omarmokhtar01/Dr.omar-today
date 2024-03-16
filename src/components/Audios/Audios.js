@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap"; 
 import { Coordinates, CalculationMethod, PrayerTimes } from 'adhan';
 import nodata from "../../images/nodata.svg";
+import { useTranslation } from 'react-i18next';
 
 import group from "../../images/Group.png";
 import searchIcon from "../../images/search.svg";
@@ -49,6 +50,7 @@ const Audios = () => {
 
 const navigate = useNavigate()
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
+  const { t } = useTranslation('audios');
 
   // Event handler for sorting by latest addition
   const handleSortByLatest = () => {
@@ -99,7 +101,7 @@ console.log(elderDown);
 
   function downloadAudiosAsZip(idElder) {
     if (!token) {
-      return notify("من فضلك قم بتسجيل الدخول أولاً", "error");
+      return notify(t('loginRequired'), "error");
     }
   
     const formData = {
@@ -308,7 +310,7 @@ console.log(elderDown);
                 className=" background-image"
               >
                 {" "}
-                الصوتيات{" "}
+                {t('audios')}{" "}
               </h1>
             </div>
           </Col>
@@ -350,7 +352,7 @@ console.log(elderDown);
                   fontWeight: "bold",
                 }}
               >
-                الكل
+                {t('all')}
               </p>
             </div>
           </Col>
@@ -406,8 +408,8 @@ console.log(elderDown);
               ))}
             </>
           ) :   <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
           ):(
             null
             )
@@ -430,7 +432,7 @@ console.log(elderDown);
               <Form>
                 <FormControl
                   type="search"
-                  placeholder="ابحث..."
+                  placeholder={t('search')}
                   className="me-2 w-100  search-audio"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
@@ -473,7 +475,7 @@ console.log(elderDown);
                   }} src={arrowsIcon} />
 
 <NavDropdown
-        title="الترتيب حسب"
+        title={t('sortBy')}
         id="collapsible-nav-dropdown"
         style={{
           background:
@@ -487,10 +489,10 @@ console.log(elderDown);
         }}
       >
         <NavDropdown.Item onClick={handleSortByLatest}>
-          الأحدث اضافة
+        {t('latestAdded')}
         </NavDropdown.Item>
         <NavDropdown.Item onClick={handleSortAlphabetically}>
-          الابجدية
+        {t('alphabetical')}
         </NavDropdown.Item>
       </NavDropdown>
 
@@ -538,7 +540,7 @@ console.log(elderDown);
                 id="img-card-audio"
               />
             </Link>
-            <div
+            <div className="card-namee"
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -546,15 +548,15 @@ console.log(elderDown);
                 padding: "20px",
               }}
             >
-              <h5>{item.name}</h5>
-              <p
+              <h5 className="card-namee-details">{item.name}</h5>
+              <p className="card-namee-details"
                 style={{
                   color: "rgb(130, 130, 130)",
                   fontWeight: "bold",
                 }}
               >
                 {" "}
-                {item.count_audios} مقطع صوتي   
+                {item.count_audios} {t('audio')}
               </p>
             </div>
           </div>
@@ -593,8 +595,8 @@ console.log(elderDown);
     ))
   ) : searchResults.length === 0 ? (
     <div style={{height:'280px'}}><img src={nodata}/> <br/>
-    <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-    <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
   ) : id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? 
@@ -621,7 +623,7 @@ console.log(elderDown);
                     style={{borderRadius:'0px 15px 15px 0px'}}
                   />
                 </Link>
-                <div
+                <div className="card-namee"
                   style={{
                     display: "flex",
                     justifyContent: "center",
@@ -629,15 +631,15 @@ console.log(elderDown);
                     padding: "20px",
                   }}
                 >
-                  <h5>{item.name}</h5>
-                  <p
+                  <h5 className="card-namee-details">{item.name}</h5>
+                  <p className="card-namee-details"
                     style={{
                       color: "rgb(130, 130, 130)",
                       fontWeight: "bold",
                     }}
                   >
                     {" "}
-                    <img src={audioIcon} />    {item.count_audios} مقطع صوتي  
+                    <img src={audioIcon} />    {item.count_audios} {t('audio')}  
                   </p>
                 </div>
               </div>
@@ -676,8 +678,8 @@ console.log(elderDown);
         );
       })) : (
         <div style={{height:'280px'}}><img src={nodata}/> <br/>
-        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
       )
     ) : (
       <div style={{ height: "280px" }}>
@@ -708,7 +710,7 @@ console.log(elderDown);
                   id="img-card-audio"
                 />
               </Link>
-              <div
+              <div className="card-namee"
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -716,15 +718,15 @@ console.log(elderDown);
                   padding: "20px",
                 }}
               >
-                <h5>{item.name}</h5>
-                <p
+                <h5 className="card-namee-details">{item.name}</h5>
+                <p className="card-namee-details"
                   style={{
                     color: "rgb(130, 130, 130)",
                     fontWeight: "bold",
                   }}
                 >
                   {" "}
-                  <img src={audioIcon} />  {item.count_audios} مقطع صوتي
+                  <img src={audioIcon} />  {item.count_audios} {t('audio')}
                 </p>
               </div>
             </div>
@@ -787,23 +789,25 @@ console.log(elderDown);
                     style={{borderRadius:'0px 15px 15px 0px'}}
                   />
                 </Link>
-                <div
+                <div className="card-namee"
                   style={{
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
                     padding: "20px",
                   }}
+                  
                 >
-                  <h5>{item.name}</h5>
+                  <h5 className="card-namee-details">{item.name}</h5>
                   <p
+                  className="card-namee-details"
                     style={{
                       color: "rgb(130, 130, 130)",
                       fontWeight: "bold",
                     }}
                   >
                     {" "}
-                    <img src={audioIcon} />  {item.count_audios} مقطع صوتي
+                    <img src={audioIcon} />  {item.count_audios} {t('audio')}
                   </p>
                 </div>
               </div>
@@ -842,8 +846,8 @@ console.log(elderDown);
         ))
       ) : (
         <div style={{height:'280px'}}><img src={nodata}/> <br/>
-        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
       )
     )
   ) : (

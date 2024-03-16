@@ -18,9 +18,11 @@ import {
 import { useDispatch } from 'react-redux';
 import { showBook } from "../../features/books/booksSlice";
 import { useSelector } from 'react-redux';
+import { useTranslation } from "react-i18next";
 
 const ViewBook = () => {
     const params = useParams();
+    const { t } = useTranslation('books');
 
     // Now you can access the parameters using the keys defined in your route
     const { id } = params;
@@ -58,8 +60,8 @@ dispatch(showBook(id))
     ></iframe>
   ) : 
   <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
   
 ) : (
     <div style={{ height: "280px" }}>

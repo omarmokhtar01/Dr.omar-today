@@ -8,7 +8,7 @@
   background-image: url('../../images/Vector\ \(4\).png');
   background-size: cover;
 }
-
+ 
 @media (min-width: 992px) and (max-width: 1199.98px) {
 #audioInfo{
   width: 130%;
@@ -110,6 +110,37 @@ width: 100%
     
   }
  }
+
+
+
+ .card-namee{
+ 
+  padding: 20px;
+      
+    }
+@media (max-width: 576px) { 
+  .card-namee{
+/* background: red !important; */
+width: 170px !important;
+padding: 0px;
+    
+  }
+ }
+@media (max-width: 576px) { 
+  .card-namee-details{
+margin-left: 25px !important;
+    
+  }
+ }
+
+ @media (max-width: 576px) { 
+  #sounds-icons{
+ 
+    margin-right: -20px;
+  }
+ }
+
+
 
  @media (min-width: 576px) and (max-width: 767.98px) { 
   .icons-div{

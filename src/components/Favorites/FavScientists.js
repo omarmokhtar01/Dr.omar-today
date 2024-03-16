@@ -11,10 +11,12 @@ import Cookies from "js-cookie";
 import { IoIosHeart } from "react-icons/io";
 import audioIcon from "../../images/audio.svg"; 
 import nodata from "../../images/nodata.svg";
+import { useTranslation } from "react-i18next";
 
 const FavScientists = () => {
   const token = Cookies.get("token");
-  
+  const { t } = useTranslation('favaudio');
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -64,7 +66,7 @@ const FavScientists = () => {
                 className=" background-image"
               >
                 {" "}
-                المفضله{" "}
+                {t('favourite')}{" "}
               </h1>
             </div>
           </Col>
@@ -102,7 +104,7 @@ const FavScientists = () => {
                   }}
                 >
                   {" "}
-                  العلماء{" "}
+                  {t('elder')}{" "}
                 </h6>
               </Link>
             </div>
@@ -133,7 +135,7 @@ const FavScientists = () => {
                   }}
                 >
                   {" "}
-                  صوتيات{" "}
+                  {t('audios')}{" "}
                 </h6>
               </Link>
             </div>
@@ -164,7 +166,7 @@ const FavScientists = () => {
                   }}
                 >
                   {" "}
-                  كتب{" "}
+                  {t('books')}{" "}
                 </h6>
               </Link>
             </div>
@@ -226,7 +228,7 @@ const FavScientists = () => {
                   }}
                 >
                   {" "}
-                  صور{" "}
+                  {t('photos')}{" "}
                 </h6>
               </Link>
             </div>
@@ -293,7 +295,7 @@ const FavScientists = () => {
               </div>
 
               <h5 style={{marginTop:'15px'}}>  {item.name}</h5>
-              <p style={{ marginTop: "-5px", color:'#828282' }}>  <img src={audioIcon} />  {item.count_audios} مقطع صوتي</p>
+              <p style={{ marginTop: "-5px", color:'#828282' }}>  <img src={audioIcon} />  {item.count_audios}                   {t('audios')}{" "} </p>
             </div>
           </div>
             ))}

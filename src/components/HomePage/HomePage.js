@@ -6,7 +6,7 @@ import {
   Row,
   Spinner,
   Carousel,
-  Button,
+  Button,Modal,Form
 } from "react-bootstrap";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -29,11 +29,14 @@ import articlesIcon from "../../images/articles.svg";
 import picIcon from "../../images/pic.svg";
 import progressimg from "../../images/progress.png";
 import PauseIconMostListen from "../../images/pause.svg";
-import PauseIcon from "../../images/progress.png";
+import PauseIcon from "../../images/progress.png"; 
+import googleApp from "../../images/googleApp.svg";
+import googlePlay from "../../images/googlePlay.svg";
 // import { Carousel } from '@trendyol-js/react-carousel';
 import mobile from "../../images/mobile.png";
 import vector4 from "../../images/Vector (4).png";
 import google from "../../images/google.png";
+import { useTranslation } from 'react-i18next';
 
 import { Link } from "react-router-dom";
 import lastVerIcon from "../../images/newVer.svg";
@@ -61,6 +64,8 @@ import "swiper/css/free-mode";
 const Adhan = require("adhan");
 
 const HomePage = () => {
+  const { t } = useTranslation('home');
+
   const [data, setData] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   // const handleNextCarousel = () => {
@@ -93,7 +98,7 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(mostListened());
   }, [dispatch]);
-
+  const [smShowImg, setSmShowImg] = useState(false);
   console.log(mostListenedData);
   const [isPressed, setIsPressed] = useState(false);
   let timeoutId;
@@ -101,7 +106,7 @@ const HomePage = () => {
   const handleMouseDown = () => {
     timeoutId = setTimeout(() => {
       setIsPressed(true);
-      notify("الوضع الخاص", "success");
+      // notify("الوضع الخاص", "success");
     }, 2000);
   };
 
@@ -310,7 +315,7 @@ const HomePage = () => {
 
 
 
-  
+  let lang = localStorage.getItem('lang');
 
   let token = Cookies.get("token");
 
@@ -325,16 +330,16 @@ console.log(checkAddToFav);
     if (!token) {
       // Token exists, perform the download action
       // Add your download logic here
-      return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+      return notify(`${t('loginRequired')}`, "error");
     }
-    notify("تم الأضافة للمفضلة بنجاح", "success");
+    notify(`${t('addedToFavorites')}`, "success");
 localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
     dispatch(favOneAudio({ formData, token }));
 
     setTimeout(() => {
       navigate("/favAudios");
     }, 1500);
-  };
+  }; 
 
   // useEffect(() => {
   //   if (isLoadingFav === false ) {
@@ -379,7 +384,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
     if (!token) {
       // Token exists, perform the download action
       // Add your download logic here
-      return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+      return notify(`${t('loginRequired')}`, "error");
     }
     localStorage.setItem("audiodown","تم تحميل صوت بنجاح")
 
@@ -461,30 +466,29 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
               }}
             >
               <span
-                id="dr-responsive"
-                style={{
-                  color: "#FFFFFF",
-                  width: "72px",
-                  marginLeft: "90px",
-                  fontSize: "28.96px",
-                }}
-              >
-                الدكتور
-              </span>
+        id="dr-responsive"
+        style={{
+          color: "#FFFFFF",
+          width: "72px",
+          marginLeft: "90px",
+          fontSize: "28.96px",
+        }}
+      >
+        {t('doctor')}
+      </span>
 
-              <span
-                style={{
-                  backgroundImage:
-                    "linear-gradient(235.96deg, #384659 0%, #051427 65.49%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  fontSize: "49.4px",
-                  fontWeight: "700",
-                }}
-              >
-                عُــمــر كامـــل
-              </span>
-
+      <span
+        style={{
+          backgroundImage:
+            "linear-gradient(235.96deg, #384659 0%, #051427 65.49%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          fontSize: "49.4px",
+          fontWeight: "700",
+        }}
+      >
+        {t('fullName')}
+      </span>
               <span
                 style={{
                   color: "#7A808A",
@@ -492,11 +496,11 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                   fontSize: "25.55px",
                 }}
               >
-                الصلاه القادمه :{" "}
+                        {t('nextPrayer')}{" "}
                 <span style={{ color: "#FFFFFF" }}>
-                  {arabicNextPrayer ? arabicNextPrayer : "الفجر"}
+                {lang == "ar" ? (arabicNextPrayer ? arabicNextPrayer : "الفجر") : (nextPrayer ? nextPrayer : "Fajr")}
                 </span>
-              </span>
+              </span> 
               <span
                 style={{
                   color: "#FFFFFF",
@@ -505,7 +509,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                 }}
               >
                 {" "}
-                الموعد بعد : {formattedTime} ساعة
+                {t('nextAppointment')}: {formattedTime} {t('hour')}
               </span>
 
               <div
@@ -518,12 +522,41 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                   id="quran-img"
                   onMouseDown={handleMouseDown}
                   onMouseUp={handleMouseUp}
+                  onClick={() => setSmShowImg(true)}
                 />
                 <img src={vector2} alt="" className="responsive-image " />
               </div>
             </div>
           </Col>
+          <Modal
+        size="sm"
+        show={smShowImg}
+        onHide={() => setSmShowImg(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+     
+      >
+          <Modal.Header closeButton>
+          
+        </Modal.Header>
+        <Modal.Body>
+        <Form.Group className="mb-3" >
+                  <Form.Label style={{ fontWeight: "600", display: "flex" }}>
+                    {" "}
+                    ادخال رمز الدخول {" "}
+                  </Form.Label>
 
+                  <Form.Control
+                    type="password"
+                    style={{
+                      background: "#FFFFFF",
+                      borderRadius: "10px",
+                      padding: "15px",
+                    }}
+                   
+                  />
+                </Form.Group>
+        </Modal.Body>
+      </Modal>
           <Col sm="2" className="d-flex align-items-center ">
             <img src={vector} alt="" />
           </Col>
@@ -539,65 +572,63 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
       </Container>
 
       <Container>
-        <Row className="d-flex justify-content-between align-items-center m-auto ">
-          <Col sm="6 p-1 " md={6} lg={3} xs={6}>
-            <Link to="/audios" style={{ textDecoration: "none" }}>
-              <div className="box-Audio">
-                <img src={audiossIcon} alt="" style={{ marginTop: "15px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
-                  صوتيات
-                </p>
-              </div>
-            </Link>
-          </Col>
-
-          <Col sm="6 p-1 " md={6} lg={3} xs={6}>
-            <Link to="/Books" style={{ textDecoration: "none" }}>
-              <div className="box-Book">
-                <img src={booksIcon} alt="" style={{ marginTop: "15px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
-                  كتب
-                </p>
-              </div>
-            </Link>
-          </Col>
-
-          <Col sm="6 p-1 " md={6} lg={3} xs={6}>
-            <Link to="/articles" style={{ textDecoration: "none" }}>
-              <div className="box-Aritcle">
-                <img src={articlesIcon} alt="" style={{ marginTop: "15px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
-                  مقالات
-                </p>
-              </div>
-            </Link>
-          </Col>
-
-          <Col sm="6 p-1 " md={6} lg={3} xs={6}>
-            <Link to="/pictures" style={{ textDecoration: "none" }}>
-              <div className="box-Pic">
-                <img src={picIcon} alt="" style={{ marginTop: "20px" }} />
-                <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
-                  صور
-                </p>
-              </div>
-            </Link>
-          </Col>
-
-          <div className="d-flex justify-content-between mt-3">
-            <p
-              style={{ color: "#051427", fontSize: "18px", fontWeight: "700" }}
-            >
-              <img src={lastVerIcon} alt="" style={{ marginLeft: "5px" }} />
-              اصدارات جديدة{" "}
+      <Row className="d-flex justify-content-between align-items-center m-auto">
+      <Col sm="6 p-1" md={6} lg={3} xs={6}>
+        <Link to="/audios" style={{ textDecoration: "none" }}>
+          <div className="box-Audio">
+            <img src={audiossIcon} alt="" style={{ marginTop: "15px" }} />
+            <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
+              {t('audios')}
             </p>
-            {/* <p
-              style={{ color: "#D19B6F", fontSize: "16px", fontWeight: "400" }}
-            >
-              عرض المزيد
-            </p> */}
           </div>
-        </Row>
+        </Link>
+      </Col>
+
+      <Col sm="6 p-1" md={6} lg={3} xs={6}>
+        <Link to="/books" style={{ textDecoration: "none" }}>
+          <div className="box-Book">
+            <img src={booksIcon} alt="" style={{ marginTop: "15px" }} />
+            <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
+              {t('books')}
+            </p>
+          </div>
+        </Link>
+      </Col>
+
+      <Col sm="6 p-1" md={6} lg={3} xs={6}>
+        <Link to="/articles" style={{ textDecoration: "none" }}>
+          <div className="box-Aritcle">
+            <img src={articlesIcon} alt="" style={{ marginTop: "15px" }} />
+            <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
+              {t('articles')}
+            </p>
+          </div>
+        </Link>
+      </Col>
+
+      <Col sm="6 p-1" md={6} lg={3} xs={6}>
+        <Link to="/pictures" style={{ textDecoration: "none" }}>
+          <div className="box-Pic">
+            <img src={picIcon} alt="" style={{ marginTop: "20px" }} />
+            <p style={{ marginTop: "5px", color: "rgba(26, 35, 43, 1)" }}>
+              {t('photos')}
+            </p>
+          </div>
+        </Link>
+      </Col>
+
+      <div className="d-flex justify-content-between mt-3">
+        <p style={{ color: "#051427", fontSize: "18px", fontWeight: "700" }}>
+          <img src={lastVerIcon} alt="" style={{ marginLeft: "5px" }} />
+          {t('newReleases')}
+        </p>
+        <p
+          style={{ color: "#D19B6F", fontSize: "16px", fontWeight: "400" }}
+        >
+          {t('showMore')}
+        </p>
+      </div>
+    </Row>
       </Container>
 
       {/* <Container>
@@ -750,12 +781,9 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                     ))}
                 </>
               ) : (
-                <div style={{ height: "280px" }}>
-                  <img src={nodata} /> <br />
-                  <span style={{ fontWeight: "700" }}>لا توجد عناصر بعد</span>
-                  <br />
-                  <span>لا توجد بيانات على هذه الصفحة حتى الآن</span>
-                </div>
+                <div style={{height:'280px'}}><img src={nodata}/> <br/>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
               )
             ) : (
               <div style={{ height: "280px" }}>
@@ -828,7 +856,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                 }}
               >
                 <img src={lastVerIcon} alt="" style={{ marginLeft: "5px" }} />
-                الاكثر استماعاً
+                {t('mostListenedTo')} 
               </p>
               {/* <p
                 style={{
@@ -939,7 +967,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                   fontWeight: "700",
                 }}
               >
-                متابعه الاستماع
+               {t('listenToAudio')}
               </h2>
               {!isLoadingMostListen ? (
                 mostListenedData && mostListenedData.length > 0 ? (
@@ -1145,7 +1173,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                   fontWeight: "700",
                 }}
               >
-                تنزيل التطبيق مجاناً
+{t('downloadApp')}
               </h1>
               <p
                 style={{
@@ -1157,7 +1185,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                   marginBottom: "40px",
                 }}
               >
-                تصفح جميع الكتب والصوتيات المفضله لك
+{t('browseFavorites')}
               </p>
 
               <div
@@ -1168,7 +1196,8 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                   justifyContent: "center",
                 }}
               >
-                <img src={google} alt="" style={{}} className="google-img" />
+                <img src={googlePlay} alt="" style={{cursor:'pointer'}} className="google-img" />
+                <img src={googleApp} alt="" style={{cursor:'pointer'}} className="google-img" />
               </div>
             </div>
           </Col>
@@ -1183,7 +1212,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                 zIndex: "-1",
                 marginTop: "-330px",
               }}
-              className="responsive-image"
+              className="responsive-image  responsive-image-ground "
             />
           </div>
         </Row>

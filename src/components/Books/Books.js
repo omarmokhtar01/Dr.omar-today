@@ -30,10 +30,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToFavBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
+import { useTranslation } from 'react-i18next';
 
 import notify from "../UseNotifications/useNotification";
 const Books = () => {
   const navigate = useNavigate()
+  const { t } = useTranslation('books');
 
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
 
@@ -129,10 +131,10 @@ const Books = () => {
     if (token) {
       // Token exists, perform the download action
       // Add your download logic here
-      notify("تم الاضافة للمفضلة", "success");
+      notify(t('addToFavoritesSuccess'), "success");
     } else {
       // Token doesn't exist, notify the user
-      notify("من فضلك قم بتسجيل الدخول اولا", "error");
+      return notify(t('loginRequired'), "error");
     }
   };
 
@@ -167,13 +169,13 @@ const Books = () => {
     if (!token) {
       // Token exists, perform the download action
       // Add your download logic here
-     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+      return notify(t('loginRequired'), "error");
     }
 
     dispatch(addToFavBook({ formData, token }))
     localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
 
-    notify(" تم الأضافة للمفضلة بنجاح", "success");
+    notify(t('addToFavoritesSuccess'), "success");
 
     setTimeout(() => {
 
@@ -216,7 +218,7 @@ const Books = () => {
                 className=" background-image"
               >
                 {" "}
-                كتب{" "}
+                {t('book')}{" "}
               </h1>
             </div>
           </Col>
@@ -247,7 +249,7 @@ const Books = () => {
     ? "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)": "none"
   }}
 >
-  <p style={{color: id === null ? 'white' :  'black', fontWeight: "bold" }}>الكل</p>
+  <p style={{color: id === null ? 'white' :  'black', fontWeight: "bold" }}>{t('all')}</p>
 </div>
 
           </Col>
@@ -328,7 +330,7 @@ const Books = () => {
                 }}
               >
                 <h4 style={{ color: "rgba(4, 32, 48, 1)", fontWeight: "bold" }}>
-                  الفئات
+                {t('categories')}
                 </h4>
                 {/* <p style={{ color: "rgba(122, 128, 138, 1)" }}>مسح الكل</p> */}
               </div>
@@ -379,7 +381,7 @@ const Books = () => {
               <Form>
                 <FormControl
                   type="search"
-                  placeholder="ابحث..."
+                  placeholder={t('search')}
                   className="me-2 w-100  search-book"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
@@ -403,7 +405,7 @@ required
                   }} src={arrowsIcon} />
 
 <NavDropdown
-        title="الترتيب حسب"
+        title={t('sortBy')}
         id="collapsible-nav-dropdown"
         style={{
           background:
@@ -417,10 +419,10 @@ required
         }}
       >
         <NavDropdown.Item onClick={handleSortByLatest}>
-          الأحدث اضافة
+        {t('latestAdded')}
         </NavDropdown.Item>
         <NavDropdown.Item onClick={handleSortAlphabetically}>
-          الابجدية
+        {t('alphabetical')}
         </NavDropdown.Item>
       </NavDropdown>
 
@@ -460,28 +462,33 @@ required
             }}
           >
             <Link to={`/book/${item.id}`}>
-              <div
-                style={{
-                  position: "relative",
-                  cursor: "pointer",
-                }}
-              >
-              
-                <div
+            <div
                   style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    color: "#fff",
-                    padding: "10px",
-                    borderRadius: "5px",
+                    position: "relative",
+                    cursor: "pointer",
                   }}
                 >
-                  Click to view book
+                  <img
+                    src={item.image}
+                    alt=""
+                    height={164}
+                    width={134} style={{borderRadius:'0px 12.32px 12.32px 0px'}}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      color: "#fff",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    Click to view book
+                  </div>
                 </div>
-              </div>
             </Link>
             <div
               style={{
@@ -518,8 +525,8 @@ required
     ))
   ) : searchResults.length === 0 ? (
     <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
   ) : id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? 
@@ -609,8 +616,8 @@ required
         </Col>
       ))
       : <div style={{height:'280px'}}><img src={nodata}/> <br/>
-      <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-      <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+      <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+      <span>{t('nodata2')}</span></div>
     ) : (
       <div style={{ height: "280px" }}>
       <Spinner animation="border" variant="primary" />
@@ -776,8 +783,8 @@ required
         ))
       ) : (
         <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
       )
     )
   ) : (

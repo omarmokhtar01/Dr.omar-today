@@ -28,14 +28,15 @@ import { useTranslation } from 'react-i18next';
 const NavBar = () => {
 
 
-  const { t, i18n } = useTranslation();
+  const {  i18n } = useTranslation();
+  const { t } = useTranslation('navbar');
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     localStorage.setItem('lang', lng); // Save selected language to localStorage
   };
 
-
+let lang = localStorage.getItem('lang');
 
 
 
@@ -75,8 +76,9 @@ const NavBar = () => {
           const { latitude, longitude } = position.coords;
           try {
             // Fetch address using reverse geocoding with language set to Arabic
-            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=ar`);
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=${lang}`);
             const data = await response.json();
+            console.log(data);
             // Extract city and country from the address
             const city = data.address.city || data.address.town || data.address.village || data.address.hamlet || data.address.county;
             const country = data.address.country;
@@ -94,7 +96,7 @@ const NavBar = () => {
     } else {
       setLocation('Geolocation is not supported by your browser');
     }
-  }, []);
+  }, [lang,location]);
 
 
   useEffect(() => {
@@ -102,7 +104,7 @@ const NavBar = () => {
     if (location) {
       sessionStorage.setItem('userLocation', location);
     }
-  }, []);
+  }, [lang,location]);
 let getLocation=sessionStorage.getItem('userLocation')
   // Check if token exists in cookies
   const checkToken = () => {
@@ -122,8 +124,8 @@ let getLocation=sessionStorage.getItem('userLocation')
             window.location.href="/";
         }, 1500);
 
-        notify("تم تسجيل الخروج بنجاح   ", "success");
-   }
+        notify(t('logoutSuccess'), "success");
+      }
 
     const navbarStyle = {
         backgroundImage: `url(${backgroundImage})`,
@@ -161,42 +163,42 @@ let getLocation=sessionStorage.getItem('userLocation')
                 to="/"
                 style={{ color: activeLink === '/' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                الرئيسيه
+                {t('home')}
             </Nav.Link>
             <Nav.Link
                 as={Link}
                 to="/audios"
                 style={{ color: activeLink === '/audios' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                صوتيات
+                {t('audios')}
             </Nav.Link>
             <Nav.Link
                 as={Link}
                 to="/Books"
                 style={{ color: activeLink === '/Books' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                كتب
+                {t('books')}
             </Nav.Link>
             <Nav.Link
                 as={Link}
                 to="/articles"
                 style={{ color: activeLink === '/articles' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                مقالات
+                {t('articles')}
             </Nav.Link>
             <Nav.Link
                 as={Link}
                 to="/pictures"
                 style={{ color: activeLink === '/pictures' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                صور
+                {t('photos')}
             </Nav.Link>
             <Nav.Link
                 as={Link}
                 to="/contact-us"
                 style={{ color: activeLink === '/contact-us' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                تواصل معنا
+                {t('contactUs')}
             </Nav.Link>
         </Nav>
 
@@ -258,11 +260,11 @@ let getLocation=sessionStorage.getItem('userLocation')
          
           
         <NavDropdown title={ <img src={personal} style={{ color: '#FFFFFF', fontSize: '30px' }} /> } className='pp'    >
-            <NavDropdown.Item    href='/personaLinformation'>الملف الشخصي</NavDropdown.Item>
-            <NavDropdown.Item   href='/conditionandroles'>الشروط والاحكام </NavDropdown.Item>
+            <NavDropdown.Item    href='/personaLinformation'>{t('profile')}</NavDropdown.Item>
+            <NavDropdown.Item   href='/conditionandroles'>{t('termsAndConditions')}</NavDropdown.Item>
             <NavDropdown.Item 
              onClick={logOut}
-            style={{color:'rgba(255, 53, 53, 1)' }} eventKey="4.3">  تسجيل الخروج</NavDropdown.Item>
+            style={{color:'rgba(255, 53, 53, 1)' }} eventKey="4.3">{t('logout')}</NavDropdown.Item>
           </NavDropdown> 
           </div>
         </Navbar.Collapse>
@@ -294,42 +296,42 @@ let getLocation=sessionStorage.getItem('userLocation')
                 to="/"
                 style={{ color: activeLink === '/' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                الرئيسيه
+                {t('home')}
             </Nav.Link>
             <Nav.Link
                 as={Link}
                 to="/audios"
                 style={{ color: activeLink === '/audios' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                صوتيات
+                {t('audios')}
             </Nav.Link>
             <Nav.Link
                 as={Link}
                 to="/Books"
                 style={{ color: activeLink === '/Books' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                كتب
+                {t('books')}
             </Nav.Link>
             <Nav.Link
                 as={Link}
                 to="/articles"
                 style={{ color: activeLink === '/articles' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                مقالات
+                {t('articles')}
             </Nav.Link>
             <Nav.Link
                 as={Link}
                 to="/pictures"
                 style={{ color: activeLink === '/pictures' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                صور
+                {t('photos')}
             </Nav.Link>
             <Nav.Link
                 as={Link}
                 to="/contact-us"
                 style={{ color: activeLink === '/contact-us' ? '#D19B6F' : '#FFFFFF', marginLeft: '20px' }}
             >
-                تواصل معنا
+                {t('contactUs')}
             </Nav.Link>
         </Nav>
 
@@ -338,6 +340,28 @@ let getLocation=sessionStorage.getItem('userLocation')
             className="me-auto mb-2"
             style={{ position: "relative", left: "5px" }}
           >
+             <div className="dropdown">
+        <div
+          className="dropdown-btn"
+          style={{
+            border: '1px solid white',
+            width: '50px',
+            borderRadius: '20px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '35px',
+            marginLeft: '5px',
+            cursor: 'pointer',
+          }}
+        >
+    <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'En' : 'Ar'}</span>
+        </div>
+        <div className="dropdown-content">
+          <button onClick={() => changeLanguage('en')}>English</button>
+          <button onClick={() => changeLanguage('ar')}>العربية</button>
+        </div>
+      </div>
             <Button
               style={{
                 color: "#FFFFFF",
@@ -385,7 +409,7 @@ let getLocation=sessionStorage.getItem('userLocation')
               >
 
                 <img src={vector} style={{ marginLeft: "5px", fontSize:'20px' }} />
-            تسجيل
+                {t('login')}
               </Button>
 
               <Modal

@@ -12,8 +12,11 @@ import { useDispatch } from 'react-redux';
 import { delAcc, getProfile } from "../../features/auth/authSlice";
 import Cookies from "js-cookie";
 import notify from "../UseNotifications/useNotification";
+import { useTranslation } from "react-i18next";
 
 const PersonalinFormation = () => {
+  const { t } = useTranslation('personal');
+
   const [smShow, setSmShow] = useState(false);
   const dispatch = useDispatch()
   let token = Cookies.get("token");
@@ -65,7 +68,7 @@ console.log(dataProfile);
                 className=" background-image"
               >
                 {" "}
-                الملف الشخصي{" "}
+                {t('profile')}{" "}
               </h1>
             </div>
           </Col>
@@ -92,7 +95,7 @@ console.log(dataProfile);
               className="personal-box"
             >
               <h6 style={{ color: "#FFFFFF", paddingTop: "4px" }}>
-                البيانات الاساسيه
+              {t('basicData')}
               </h6>
             </div>
           </Col>
@@ -153,8 +156,8 @@ console.log(dataProfile);
               <Form style={{ marginBottom: "35px" }}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    الاسم بالكامل
-                  </Form.Label>
+                  {t('fullName')}
+                                    </Form.Label>
                   <img
                     className="icon-input"
                     src={name}
@@ -168,7 +171,7 @@ console.log(dataProfile);
                   />
                  <Form.Control
   type="text"
-  placeholder="محمد خالد"
+  placeholder={t('fullName')}
   style={{
     background: "rgba(245, 245, 245, 1)",
     borderRadius: "10px",
@@ -181,7 +184,7 @@ console.log(dataProfile);
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    رقم الموبيل
+                  {t('mobileNumber')}
                   </Form.Label>
 
                   <div>
@@ -228,7 +231,7 @@ console.log(dataProfile);
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    البريد الالكتروني{" "}
+                  {t('email')} {" "}
                   </Form.Label>
                   <img
                     className="icon-input"
@@ -267,7 +270,7 @@ console.log(dataProfile);
                     className="deleteButton "
                     onClick={() => setSmShow(true)}
                   >
-                    حذف الحساب
+                    {t('deleteAccount')}
                   </Button>
                 </div>
 
@@ -304,7 +307,7 @@ console.log(dataProfile);
 
                         <h5 style={{ color: "rgba(255, 53, 53, 1)" }}>
                           {" "}
-                          حذف الحساب{" "}
+                          {t('deleteAccount')}{" "}
                         </h5>
                         <p
                           style={{
@@ -313,7 +316,7 @@ console.log(dataProfile);
                             textAlign: "center",
                           }}
                         >
-                          يرجى ملاحظة أنه عند حذف الحساب سيتم حذف جميع بياناتك
+                         {t('deleteConfirmation')}
                         </p>
                       </div>
 
@@ -332,7 +335,7 @@ console.log(dataProfile);
                           className="profileButton"
                           onClick={delFunc}
                         >
-                          حذف الحساب
+                          {t('confirmDelete')}
                         </button>
                       </div>
                     </div>

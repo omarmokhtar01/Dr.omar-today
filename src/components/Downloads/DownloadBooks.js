@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import delIcon from "../../images/del.svg";
 import nodata from "../../images/nodata.svg";
+import { useTranslation } from "react-i18next";
 
 const DownloadBooks = () => {
   const token = Cookies.get("token");
@@ -24,6 +25,7 @@ const DownloadBooks = () => {
 
   const isLoading = useSelector((state) => state.download.isLoading);
   const error = useSelector((state) => state.articles.error);
+  const { t } = useTranslation('downbook');
 
   useEffect(() => {
     if (!token) {
@@ -68,7 +70,7 @@ const DownloadBooks = () => {
                 className=" background-image-2"
               >
                 {" "}
-                التحميلات{" "}
+                {t('downloads')}{" "}
               </h1>
             </div>
           </Col>
@@ -117,7 +119,7 @@ const DownloadBooks = () => {
                   }}
                 >
                   {" "}
-                  العلماء{" "}
+                  {t('elder')}{" "}
                 </h6>
               </Link>
             </div>
@@ -151,7 +153,7 @@ const DownloadBooks = () => {
                   }}
                 >
                   {" "}
-                  صوتيات{" "}
+                  {t('audios')}{" "}
                 </h6>
               </Link>
             </div>
@@ -186,7 +188,7 @@ const DownloadBooks = () => {
                   }}
                 >
                   {" "}
-                  كتب{" "}
+                  {t('books')}{" "}
                 </h6>
               </Link>
             </div>
@@ -220,7 +222,7 @@ const DownloadBooks = () => {
                   }}
                 >
                   {" "}
-                  صور{" "}
+                  {t('photos')}{" "}
                 </h6>
               </Link>
             </div>
@@ -270,8 +272,8 @@ const DownloadBooks = () => {
               ))}
             </>
           ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
         
           ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
         }

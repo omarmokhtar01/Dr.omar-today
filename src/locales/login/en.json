@@ -1,0 +1,20 @@
+{
+  "login": "Login",
+  "email": "Email",
+  "userEmail": "user@email.com",
+  "password": "Password",
+  "rememberMe": "Remember Me",
+  "forgotPassword": "Forgot Password?",
+  "signIn": "Sign In",
+  "noAccount": "Don't have an account?",
+  "createAccount": "Create Account",
+  "orVia": "Or via",
+  "loginSuccess":"login successfully",
+  "loginFail":"login failed",
+  "emailRequired": "Email is required",
+    "invalidEmail": "Please enter a valid email address",
+    "passwordRequired": "Password is required",
+    "passwordLength": "Password must be at least 8 characters long"
+
+
+}

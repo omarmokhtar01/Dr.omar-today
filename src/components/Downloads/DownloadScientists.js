@@ -12,6 +12,7 @@ import audioIcon from "../../images/audio.svg";
 import deletGroundIcon from "../../images/deletground.svg"; 
 import Cookies from "js-cookie";
 import nodata from "../../images/nodata.svg";
+import { useTranslation } from "react-i18next";
 
 const DownloadScientists = () => {
   const navigate = useNavigate();
@@ -23,8 +24,10 @@ const DownloadScientists = () => {
 
   const isLoading = useSelector((state) => state.download.isLoading);
   const error = useSelector((state) => state.articles.error);
-console.log(getData);
+  const { t } = useTranslation('downseci');
+
   useEffect(() => {
+
     if (!token) {
       navigate("/login");
     } else {
@@ -53,7 +56,7 @@ console.log(getData);
       <NavBar />
 
       <Container>
-        <Row>
+      <Row>
           <Col>
             <div style={{ position: "relative", marginTop: "-35px" }}>
               <h1
@@ -67,7 +70,7 @@ console.log(getData);
                 className=" background-image-2"
               >
                 {" "}
-                التحميلات{" "}
+                {t('downloads')}{" "}
               </h1>
             </div>
           </Col>
@@ -105,7 +108,7 @@ console.log(getData);
                   }}
                 >
                   {" "}
-                  العلماء{" "}
+                  {t('elder')}{" "}
                 </h6>
               </Link>
             </div>
@@ -140,7 +143,7 @@ console.log(getData);
                   }}
                 >
                   {" "}
-                  صوتيات{" "}
+                  {t('audios')}{" "}
                 </h6>
               </Link>
             </div>
@@ -175,7 +178,7 @@ console.log(getData);
                   }}
                 >
                   {" "}
-                  كتب{" "}
+                  {t('books')}{" "}
                 </h6>
               </Link>
             </div>
@@ -209,7 +212,7 @@ console.log(getData);
                   }}
                 >
                   {" "}
-                  صور{" "}
+                  {t('photos')}{" "}
                 </h6>
               </Link>
             </div>
@@ -250,7 +253,7 @@ console.log(getData);
               </div>
 
               <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
+              <p style={{ marginTop: "-5px" }}>20 {t('audioClips')}</p>
             </div>
           </div> */}
      {
@@ -285,14 +288,14 @@ console.log(getData);
               </div>
 
               <h5 style={{marginTop:'15px'}}>{item.name}  </h5>
-              <p style={{ marginTop: "-5px", color:'#828282', fontWeight:'400' }}>  <img src={audioIcon} /> {item.count_audios}  مقطع صوتي</p>
+              <p style={{ marginTop: "-5px", color:'#828282', fontWeight:'400' }}>  <img src={audioIcon} /> {item.count_audios}  {t('audioClips')}</p>
             </div>
           </div>
               ))}
             </>
           ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
           ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
 
           }
@@ -323,7 +326,7 @@ console.log(getData);
               </div>
 
               <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
+              <p style={{ marginTop: "-5px" }}>20 {t('audioClips')}</p>
             </div>
           </div>
 
@@ -355,7 +358,7 @@ console.log(getData);
               </div>
 
               <h5>محمد صالح المنجد</h5>
-              <p style={{ marginTop: "-5px" }}>20 مقطع صوتي</p>
+              <p style={{ marginTop: "-5px" }}>20 {t('audioClips')}</p>
             </div>
           </div> */}
 

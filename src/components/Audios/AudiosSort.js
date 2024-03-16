@@ -25,8 +25,11 @@ import { useDispatch } from "react-redux";
 import { getAudioCategory, getAudioCategoryById, getAudios, searchListened } from "../../features/audios/audioSlice";
 import { LuArrowUpDown } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
+import { useTranslation } from 'react-i18next';
+
 const AudiosSort = () => {
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
+  const { t } = useTranslation('audios');
 
   // Event handler for sorting by latest addition
   const handleSortByLatest = () => {
@@ -121,7 +124,7 @@ useEffect(() => {
                 className=" background-image"
               >
                 {" "}
-                الصوتيات{" "}
+                {t('audios')}{" "}
               </h1>
             </div>
           </Col>
@@ -152,7 +155,8 @@ useEffect(() => {
     ? "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)": "none"
   }}
 >
-  <p style={{color: id === null ? 'white' :  'black', fontWeight: "bold" }}>الكل</p>
+  <p style={{color: id === null ? 'white' :  'black', fontWeight: "bold" }}>        {t('all')}
+</p>
 </div>
 
           </Col>
@@ -223,7 +227,7 @@ useEffect(() => {
               <Form>
                 <FormControl
                   type="search"
-                  placeholder="ابحث..."
+                  placeholder={t('search')}
                   className="me-2 w-100  search-audio"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
@@ -251,7 +255,7 @@ useEffect(() => {
                   }} src={arrowsIcon} />
 
 <NavDropdown
-        title="الترتيب حسب"
+        title={t('sortBy')}
         id="collapsible-nav-dropdown"
         style={{
           background:
@@ -262,13 +266,13 @@ useEffect(() => {
           color: "rgba(209, 155, 111, 1)",
           fontWeight: "bold",
           fontSize: "13px",
-        }}
+        }} 
       >
         <NavDropdown.Item onClick={handleSortByLatest}>
-          الأحدث اضافة
+        {t('latestAdded')}
         </NavDropdown.Item>
         <NavDropdown.Item onClick={handleSortAlphabetically}>
-          الابجدية
+        {t('alphabetical')}
         </NavDropdown.Item>
       </NavDropdown>
 
@@ -307,7 +311,7 @@ useEffect(() => {
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12">
             <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
-            <img src={audioIcon} />   {item.count_audios} مقطع صوتي
+            <img src={audioIcon} />   {item.count_audios} {t('audio')}
             </p>
           </div>
         </div>
@@ -316,8 +320,8 @@ useEffect(() => {
     ))
   ) : searchResults.length === 0 ? (
     <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
   ) : id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? 
@@ -334,7 +338,7 @@ useEffect(() => {
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
-                <img src={audioIcon} />   {item.count_audios} مقطع صوتي
+                <img src={audioIcon} />   {item.count_audios}{t('audio')}
                 </p>
               </div>
             </div>
@@ -343,8 +347,8 @@ useEffect(() => {
         );
       })) : (
         <div style={{height:'280px'}}><img src={nodata}/> <br/>
-        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
       )
     ) : (
       <div style={{ height: "280px" }}>
@@ -366,7 +370,7 @@ useEffect(() => {
             </div>
             <div className="col-lg-12 col-md-12 col-sm-12">
               <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
-              <img src={audioIcon} />   {item.count_audios} مقطع صوتي
+              <img src={audioIcon} />   {item.count_audios}{t('audio')}
               </p>
             </div>
           </div>
@@ -389,7 +393,7 @@ useEffect(() => {
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
-                <img src={audioIcon} />   {item.count_audios} مقطع صوتي
+                <img src={audioIcon} />   {item.count_audios}{t('audio')}
                 </p>
               </div>
             </div>
@@ -398,8 +402,8 @@ useEffect(() => {
         ))
       ) : (
         <div style={{height:'280px'}}><img src={nodata}/> <br/>
-        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
       )
     )
   ) : (

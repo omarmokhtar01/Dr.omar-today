@@ -20,9 +20,11 @@ import PlayIcon from "../../images/play.svg";
 import PauseIcon from "../../images/pause.svg";
 import downloadIcon from "../../images/download.svg";
 import nodata from "../../images/nodata.svg";
+import { useTranslation } from "react-i18next";
 
 const FavAudios = () => {
   const token = Cookies.get("token");
+  const { t } = useTranslation('favaudio');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -201,7 +203,7 @@ console.log(getData);
                 className=" background-image"
               >
                 {" "}
-                المفضله{" "}
+                {t('favourite')}{" "}
               </h1>
             </div>
           </Col>
@@ -239,7 +241,7 @@ console.log(getData);
                   }}
                 >
                   {" "}
-                  العلماء{" "}
+                  {t('elder')}{" "}
                 </h6>
               </Link>
             </div>
@@ -270,7 +272,7 @@ console.log(getData);
                   }}
                 >
                   {" "}
-                  صوتيات{" "}
+                  {t('audios')}{" "}
                 </h6>
               </Link>
             </div>
@@ -301,7 +303,7 @@ console.log(getData);
                   }}
                 >
                   {" "}
-                  كتب{" "}
+                  {t('books')}{" "}
                 </h6>
               </Link>
             </div>
@@ -363,7 +365,7 @@ console.log(getData);
                   }}
                 >
                   {" "}
-                  صور{" "}
+                  {t('photos')}{" "}
                 </h6>
               </Link>
             </div>
@@ -413,7 +415,7 @@ console.log(getData);
                 padding: "15px",
               }}
             >
-              محمد صالح المنجد
+              {/* محمد صالح المنجد */}
             </p>
           </Col>
 
@@ -428,7 +430,7 @@ console.log(getData);
                 padding: "15px",
               }}
             >
-  {durations[index] ? formatDuration(durations[index]) : 'Loading...'} دقيقه
+  {durations[index] ? formatDuration(durations[index]) : 'Loading...'} {t('minute')}
             </p>
           </Col>
 
@@ -499,8 +501,8 @@ console.log(getData);
               ))}
               </>
             ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
-            <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-            <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+            <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+            <span>{t('nodata2')}</span></div>
           
             ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
           }

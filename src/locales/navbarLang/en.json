@@ -1,0 +1,16 @@
+{
+  "home": "Home",
+  "audios": "Audios",
+  "books": "Books",
+  "articles": "Articles",
+  "photos": "Photos",
+  "contactUs": "Contact Us",
+  "profile": "Profile",
+  "termsAndConditions": "Terms and Conditions",
+  "logout": "Logout",
+  "login":"login",
+  "logoutSuccess": "Logged out successfully"
+
+
+}
+

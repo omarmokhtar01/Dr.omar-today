@@ -223,7 +223,7 @@ const Articles = () => {
               <Form>
                 <FormControl
                   type="search"
-                  placeholder="ابحث..."
+                  placeholder={t('search')}
                   className="me-2 w-100  search-audio"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
@@ -250,7 +250,7 @@ const Articles = () => {
 
 
                 <NavDropdown
-        title="الترتيب حسب"
+        title={t('sortBy')}
         id="collapsible-nav-dropdown"
         style={{
           background:
@@ -264,10 +264,10 @@ const Articles = () => {
         }}
       >
         <NavDropdown.Item onClick={handleSortByLatest}>
-          الأحدث اضافة
+        {t('latestAdded')}
         </NavDropdown.Item>
         <NavDropdown.Item onClick={handleSortAlphabetically}>
-          الابجدية
+        {t('alphabetical')}
         </NavDropdown.Item>
       </NavDropdown>
               </div>
@@ -293,7 +293,7 @@ const Articles = () => {
                             </p>
                             <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
                               <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                              {item.visit_count} مشاهدة
+                              {item.visit_count} {t('view')}
                             </p>
                           </Card.Text>
                         </Card.Body>
@@ -303,8 +303,8 @@ const Articles = () => {
     ))
   ) : searchResults.length === 0 ? (
     <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
   ) : id == null ? (
     !isLoading ? (
       getData && getData.length > 0 ? 
@@ -322,7 +322,7 @@ const Articles = () => {
                             </p>
                             <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
                               <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                              {item.visit_count} مشاهدة
+                              {item.visit_count} {t('view')}
                             </p>
               </Card.Text>
             </Card.Body>
@@ -352,7 +352,7 @@ const Articles = () => {
                             </p>
                             <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
                               <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                              {item.visit_count} مشاهدة
+                              {item.visit_count} {t('view')}
                             </p>
               </Card.Text>
             </Card.Body>
@@ -378,7 +378,7 @@ const Articles = () => {
                             </p>
                             <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
                               <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
-                              {item.visit_count} مشاهدة
+                              {item.visit_count} {t('view')}
                             </p>
                 </Card.Text>
               </Card.Body>
@@ -388,8 +388,8 @@ const Articles = () => {
         ))
       ) : (
         <div style={{height:'280px'}}><img src={nodata}/> <br/>
-        <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-        <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
 
       )
     )

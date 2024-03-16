@@ -7,8 +7,11 @@ import picNotifcation from "../../images/pic-noti.png";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { FaBell } from "react-icons/fa6";
 import nodata from "../../images/nodata.svg";
+import { useTranslation } from "react-i18next";
 
 const NotificationPage = () => {
+  const { t } = useTranslation('notifi');
+
   const [notifications, setNotifications] = useState({
     photofav: localStorage.getItem("photofav"),
     elderdown: localStorage.getItem("elderdown"),
@@ -45,7 +48,7 @@ const NotificationPage = () => {
                 className=" background-image"
               >
                 {" "}
-                الاشعارات{" "}
+                {t('notifi')}{" "}
               </h1>
             </div>
           </Col>
@@ -83,11 +86,9 @@ const NotificationPage = () => {
           )}
           {Object.values(notifications).every((val) => val === null) && (
             <div style={{ height: '280px', textAlign: 'center', marginTop: '20px' }}>
-              <img src={nodata} alt="No Data" />
-              <br />
-              <span style={{ fontWeight: '700' }}>لا توجد عناصر بعد</span>
-              <br />
-              <span>لا توجد بيانات على هذه الصفحة حتى الآن</span>
+              <img src={nodata}/> <br/>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span>
             </div>
           )}
         </Row>

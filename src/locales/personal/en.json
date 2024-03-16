@@ -1,0 +1,10 @@
+{
+  "profile": "Profile",
+  "basicData": "Personal Information",
+  "fullName": "Full Name",
+  "mobileNumber": "Mobile Number",
+  "email": "Email",
+  "deleteAccount": "Delete Account",
+  "deleteConfirmation": "Please note that when you delete your account, all your data will be deleted.",
+  "confirmDelete": "Delete Account"
+}

@@ -14,8 +14,11 @@ import notify from "../UseNotifications/useNotification";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import emailIcon from "../../images/email.svg";
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
+  const { t } = useTranslation('login');
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [state, setState] = useState({
@@ -52,16 +55,16 @@ const LoginPage = () => {
       return emailRegex.test(email);
     }
     if (!email.trim()) {
-      notify("أيميل المستخدم مطلوب", "error");
+      notify(t('emailRequired'), "error");
     } else if (!isValidEmail(email)) {
-      notify("الرجاء إدخال بريد إلكتروني صحيح", "error");
+      notify(t('invalidEmail'), "error");
     }
 
     // Check if password is empty or less than 8 characters long
     if (!password.trim()) {
-      notify("باسورد المستخدم مطلوب", "error");
+      notify(t('passwordRequired'), "error");
     } else if (password.trim().length < 8) {
-      notify("يجب أن يكون طول كلمة المرور على الأقل 8 أحرف", "error");
+      notify(t('passwordLength'), "error");
     }
     await dispatch(
       createLoginUser({
@@ -86,13 +89,13 @@ const LoginPage = () => {
           Cookies.remove("token");
         }
         if (res.message === "register successfully") {
-          notify("تم تسجيل الدخول بنجاح", "success");
+          notify(t('loginSuccess'), "success");
           setTimeout(() => {
             navigate("/personaLinformation");
           }, 1500);
         }
         if (res.error === "unauthorised") {
-          notify("   هناك خطأ في تسجيل الدخول", "error");
+          notify(t('loginFail'), "error");
         }
       }
     }
@@ -128,13 +131,13 @@ const LoginPage = () => {
                 style={{ fontWeight: "700", color: "rgba(209, 155, 111, 1)" }}
               >
                 {" "}
-                تسجيل الدخول{" "}
+                {t('login')}{" "}
               </h4>
               <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
                     {" "}
-                    الأيميل
+                    {t('email')}
                   </Form.Label>
 
                   <img src={emailIcon}
@@ -164,7 +167,7 @@ const LoginPage = () => {
                 <Form.Group className="mb-3" >
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
                     {" "}
-                    كلمه المرور{" "}
+                    {t('password')} {" "}
                   </Form.Label>
 
                   <Form.Control
@@ -192,14 +195,14 @@ const LoginPage = () => {
                       style={{ marginLeft: "10px", marginTop: "10px" }}
                       type="checkbox"
                     />
-                    تذكرني{" "}
+                    {t('rememberMe')}{" "}
                   </p>
                   <p
                     style={{ color: "rgba(235, 60, 60, 1)", cursor: "pointer" }}
                     onClick={handleShow}
                   >
                     {" "}
-                    نسيت كلمة المرور؟{" "}
+                    {t('forgotPassword')}{" "}
                   </p>
 
                   <Modal
@@ -232,14 +235,14 @@ const LoginPage = () => {
                         {/* Add spinner component here */}{" "}
                       </Spinner>
                     ) : (
-                      "دخول"
+                      `${t('signIn')}`
                     )}
                   </button>
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   {" "}
-                  <p> لا تمتلك حساب ؟ </p>
+                  <p>   {t('noAccount')} </p>
                   <div>
                     <p
                       style={{
@@ -250,7 +253,7 @@ const LoginPage = () => {
                       onClick={handleShowReg}
                     >
                       {" "}
-                      قم بإنشاء حساب{" "}
+                      {t('createAccount')}{" "}
                     </p>
                   </div>
                   <Modal
@@ -264,7 +267,7 @@ const LoginPage = () => {
                 </div>
 
                 <div>
-                  <p>او من خلال</p>
+                  <p>{t('orVia')}</p>
                   <div className="d-flex justify-content-center align-items-center">
                     <a href="https://www.messenger.com/">
                       <img style={{ padding: "10px" }} src={apple} alt="" />

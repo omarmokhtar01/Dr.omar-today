@@ -20,8 +20,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPicturesDownload } from "../../features/allDownload/allDownloadSlice";
 import Cookies from "js-cookie";
 import delIcon from "../../images/del.svg";
+import { useTranslation } from "react-i18next";
 const DownloadPictures = () => {
   const token = Cookies.get("token");
+  const { t } = useTranslation('downphoto');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -74,7 +76,7 @@ const DownloadPictures = () => {
                 className=" background-image-2"
               >
                 {" "}
-                التحميلات{" "}
+                {t('downloads')}{" "}
               </h1>
             </div>
           </Col>
@@ -112,7 +114,7 @@ const DownloadPictures = () => {
                   }}
                 >
                   {" "}
-                  العلماء{" "}
+                  {t('elder')}{" "}
                 </h6>
               </Link>
             </div>
@@ -146,7 +148,7 @@ const DownloadPictures = () => {
                   }}
                 >
                   {" "}
-                  صوتيات{" "}
+                  {t('audios')}{" "}
                 </h6>
               </Link>
             </div>
@@ -181,7 +183,7 @@ const DownloadPictures = () => {
                   }}
                 >
                   {" "}
-                  كتب{" "}
+                  {t('books')}{" "}
                 </h6>
               </Link>
             </div>
@@ -215,7 +217,7 @@ const DownloadPictures = () => {
                   }}
                 >
                   {" "}
-                  صور{" "}
+                  {t('photos')}{" "}
                 </h6>
               </Link>
             </div>
@@ -262,8 +264,8 @@ const DownloadPictures = () => {
               ))}
             </>
           ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
           ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
 
         }

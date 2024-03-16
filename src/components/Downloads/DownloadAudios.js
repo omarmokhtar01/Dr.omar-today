@@ -15,6 +15,7 @@ import favIcon from "../../images/fav.svg";
 import PauseIcon from "../../images/pause.svg";
 import Cookies from "js-cookie";
 import nodata from "../../images/nodata.svg";
+import { useTranslation } from "react-i18next";
 
 const DownloadAudios = () => {
   const token = Cookies.get("token");
@@ -26,6 +27,7 @@ const DownloadAudios = () => {
 
   const isLoading = useSelector((state) => state.download.isLoading);
   const error = useSelector((state) => state.articles.error);
+  const { t } = useTranslation('downaudio');
 
   useEffect(() => {
     if (!token) {
@@ -136,7 +138,7 @@ const DownloadAudios = () => {
                 className=" background-image-2"
               >
                 {" "}
-                التحميلات{" "}
+                {t('downloads')}{" "}
               </h1>
             </div>
           </Col>
@@ -173,7 +175,7 @@ const DownloadAudios = () => {
                   }}
                 >
                   {" "}
-                  العلماء{" "}
+                  {t('elder')}{" "}
                 </h6>
               </Link>
             </div>
@@ -207,7 +209,7 @@ const DownloadAudios = () => {
                   }}
                 >
                   {" "}
-                  صوتيات{" "}
+                  {t('audios')}{" "}
                 </h6>
               </Link>
             </div>
@@ -241,7 +243,7 @@ const DownloadAudios = () => {
                   }}
                 >
                   {" "}
-                  كتب{" "}
+                  {t('books')}{" "}
                 </h6>
               </Link>
             </div>
@@ -275,7 +277,7 @@ const DownloadAudios = () => {
                   }}
                 >
                   {" "}
-                  صور{" "}
+                  {t('photos')}{" "}
                 </h6>
               </Link>
             </div>
@@ -339,7 +341,7 @@ const DownloadAudios = () => {
                   padding: "15px",
                 }}
               >
-  {durations[index] ? formatDuration(durations[index]) : 'Loading...'} دقيقه
+  {durations[index] ? formatDuration(durations[index]) : 'Loading...'} {t('minute')}
               </p>
             </Col>
 
@@ -400,8 +402,8 @@ const DownloadAudios = () => {
     })
   ) : (
     <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
   )
 ) :<div style={{ height: "280px" }}> <Spinner animation="border" variant="primary" /> </div>}
 

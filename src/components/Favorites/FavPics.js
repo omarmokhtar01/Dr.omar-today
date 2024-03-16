@@ -19,6 +19,7 @@ import { IoIosHeart } from "react-icons/io";
 import nodata from "../../images/nodata.svg";
 
 import favredicon from "../../images/redfav.svg";
+import { useTranslation } from "react-i18next";
 const FavPics = () => {
   const token = Cookies.get("token");
 
@@ -37,6 +38,7 @@ const FavPics = () => {
       dispatch(getPicturesFavorite(token));
     }
   }, [token, navigate, dispatch]);
+  const { t } = useTranslation('favaudio');
 
   console.log(getData);
   console.log(getData.message);
@@ -73,7 +75,7 @@ const FavPics = () => {
                 className=" background-image"
               >
                 {" "}
-                المفضله{" "}
+                {t('favourite')}{" "}
               </h1>
             </div>
           </Col>
@@ -111,7 +113,7 @@ const FavPics = () => {
                   }}
                 >
                   {" "}
-                  العلماء{" "}
+                  {t('elder')}{" "}
                 </h6>
               </Link>
             </div>
@@ -142,7 +144,7 @@ const FavPics = () => {
                   }}
                 >
                   {" "}
-                  صوتيات{" "}
+                  {t('audios')}{" "}
                 </h6>
               </Link>
             </div>
@@ -173,7 +175,7 @@ const FavPics = () => {
                   }}
                 >
                   {" "}
-                  كتب{" "}
+                  {t('books')}{" "}
                 </h6>
               </Link>
             </div>
@@ -235,7 +237,7 @@ const FavPics = () => {
                   }}
                 >
                   {" "}
-                  صور{" "}
+                  {t('photos')}{" "}
                 </h6>
               </Link>
             </div>
@@ -289,8 +291,8 @@ const FavPics = () => {
               ))}
               </>
             ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
-            <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-            <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+            <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+            <span>{t('nodata2')}</span></div>
           
             ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
           }

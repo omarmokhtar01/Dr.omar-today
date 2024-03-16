@@ -29,6 +29,7 @@ import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 
 import notify from "../UseNotifications/useNotification";
+import { useTranslation } from "react-i18next";
 const BooksSort = () => {
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
 
@@ -60,6 +61,7 @@ const BooksSort = () => {
   };
   const navigate = useNavigate()
 
+  const { t } = useTranslation('books');
 
   const [id,setId]=useState(null)
 
@@ -198,7 +200,7 @@ const BooksSort = () => {
                 className=" background-image"
               >
                 {" "}
-                كتب{" "}
+                {t('book')}{" "}
               </h1>
             </div>
           </Col>
@@ -229,7 +231,7 @@ const BooksSort = () => {
     ? "0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)": "none"
   }}
 >
-  <p style={{color: id === null ? 'white' :  'black', fontWeight: "bold" }}>الكل</p>
+  <p style={{color: id === null ? 'white' :  'black', fontWeight: "bold" }}>{t('all')}</p>
 </div>
 
           </Col>
@@ -310,9 +312,9 @@ const BooksSort = () => {
                 }}
               >
                 <h4 style={{ color: "rgba(4, 32, 48, 1)", fontWeight: "bold" }}>
-                  الفئات
+                {t('categories')}
                 </h4>
-                <p style={{ color: "rgba(122, 128, 138, 1)" }}>مسح الكل</p>
+                {/* <p style={{ color: "rgba(122, 128, 138, 1)" }}>مسح الكل</p> */}
               </div>
               {getMainCategory
                 ? getMainCategory.map((item, index) => (
@@ -359,7 +361,7 @@ const BooksSort = () => {
               <Form>
                 <FormControl
                   type="search"
-                  placeholder="ابحث..."
+                  placeholder={t('search')}
                   className="me-2 w-100  search-book"
                   aria-label="Search"
                   style={{ borderRadius: "25px" }}
@@ -389,7 +391,7 @@ const BooksSort = () => {
                   }}
                 />
                      <NavDropdown
-        title="الترتيب حسب"
+        title={t('sortBy')}
         id="collapsible-nav-dropdown"
         style={{
           background:
@@ -403,10 +405,10 @@ const BooksSort = () => {
         }}
       >
         <NavDropdown.Item onClick={handleSortByLatest}>
-          الأحدث اضافة
+        {t('latestAdded')}
         </NavDropdown.Item>
         <NavDropdown.Item onClick={handleSortAlphabetically}>
-          الابجدية
+        {t('alphabetical')}
         </NavDropdown.Item>
       </NavDropdown>
                 <Link to="/bookSort">
@@ -437,19 +439,14 @@ const BooksSort = () => {
             height: "300px",
           }}
         >
+          <Link to={`/book/${item.id}`}>
           <div
             className="card-book-pdf"
             style={{
               position: "relative",
               cursor: "pointer",
             }}
-            onClick={() =>
-              window.open(
-                `https://docs.google.com/viewer?url=${encodeURIComponent(
-                  item.Book
-                )}&embedded=true`
-              )
-            }
+          
           >
             <img
               className="card-book-img"
@@ -472,7 +469,7 @@ const BooksSort = () => {
             >
               Click to view book
             </div>
-          </div>
+          </div></Link>
           <div
             style={{
               position: "absolute",
@@ -491,15 +488,15 @@ const BooksSort = () => {
             
           </div>
           <h5>{item.name}</h5>
-          <p style={{ marginTop: "-5px" }}>20 صفحه</p>
+          {/* <p style={{ marginTop: "-5px" }}>20 صفحه</p> */}
         </div>
       </div>
     </Col>
     ))
   ) : searchResults.length === 0 ? (
     <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
   ) : id == null ? (
     !isLoading ? (
       getAll && getAll.length > 0 ? 
@@ -515,19 +512,14 @@ const BooksSort = () => {
               height: "300px",
             }}
           >
+            <Link to={`/book/${item.id}`}>
             <div
               className="card-book-pdf"
               style={{
                 position: "relative",
                 cursor: "pointer",
               }}
-              onClick={() =>
-                window.open(
-                  `https://docs.google.com/viewer?url=${encodeURIComponent(
-                    item.Book
-                  )}&embedded=true`
-                )
-              }
+              
             >
               <img
                 className="card-book-img"
@@ -551,7 +543,7 @@ const BooksSort = () => {
               >
                 Click to view book
               </div>
-            </div>
+            </div></Link>
             <div
               style={{
                 position: "absolute",
@@ -571,14 +563,14 @@ const BooksSort = () => {
               
             </div>
             <h5>{item.name}</h5>
-            <p style={{ marginTop: "-5px" }}>20 صفحه</p>
+            {/* <p style={{ marginTop: "-5px" }}>20 صفحه</p> */}
           </div>
         </div>
       </Col>
       ))
       :  <div style={{height:'280px'}}><img src={nodata}/> <br/>
-      <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-      <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+      <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+      <span>{t('nodata2')}</span></div>
     ) : (
       <div style={{ height: "280px" }}>
         <Spinner animation="border" variant="primary" />
@@ -598,19 +590,14 @@ const BooksSort = () => {
                 height: "300px",
               }}
             >
+              <Link to={`/book/${item.id}`}>
               <div
                 className="card-book-pdf"
                 style={{
                   position: "relative",
                   cursor: "pointer",
                 }}
-                onClick={() =>
-                  window.open(
-                    `https://docs.google.com/viewer?url=${encodeURIComponent(
-                      item.Book
-                    )}&embedded=true`
-                  )
-                }
+               
               >
                 <img
                   className="card-book-img"
@@ -635,6 +622,7 @@ const BooksSort = () => {
                   Click to view book
                 </div>
               </div>
+              </Link>
               <div
                 style={{
                   position: "absolute",
@@ -654,7 +642,7 @@ const BooksSort = () => {
                 
               </div>
               <h5>{item.name}</h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه</p>
+              {/* <p style={{ marginTop: "-5px" }}>20 صفحه</p> */}
             </div>
           </div>
         </Col>
@@ -675,19 +663,14 @@ const BooksSort = () => {
                 height: "300px",
               }}
             >
+              <Link to={`/book/${item.id}`}>
               <div
                 className="card-book-pdf"
                 style={{
                   position: "relative",
                   cursor: "pointer",
                 }}
-                onClick={() =>
-                  window.open(
-                    `https://docs.google.com/viewer?url=${encodeURIComponent(
-                      item.Book
-                    )}&embedded=true`
-                  )
-                }
+             
               >
                 <img
                   className="card-book-img"
@@ -711,7 +694,7 @@ const BooksSort = () => {
                 >
                   Click to view book
                 </div>
-              </div>
+              </div></Link>
               <div
                 style={{
                   position: "absolute",
@@ -731,15 +714,15 @@ const BooksSort = () => {
                 
               </div>
               <h5>{item.name}</h5>
-              <p style={{ marginTop: "-5px" }}>20 صفحه</p>
+              {/* <p style={{ marginTop: "-5px" }}>20 صفحه</p> */}
             </div>
           </div>
         </Col>
         ))
       ) : (
         <div style={{height:'280px'}}><img src={nodata}/> <br/>
-          <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
-          <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
+          <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+          <span>{t('nodata2')}</span></div>
       )
     )
   ) : (

@@ -1,0 +1,19 @@
+ {
+  "contactUs": "Contact Us",
+  "fullName": "Full Name",
+  "mobileNumber": "Mobile Number",
+  "writeYourNameHere": "Write your name here",
+  "emailAddress": "Email Address",
+  "yourNotes": "Your Notes",
+  "writeYourNotesHere": "Write your notes here",
+  "send": "Send",
+  "nodata1": "No items yet",
+  "nodata2": "No data on this page yet",
+  "nameRequired": "Username is required",
+  "nameLength": "Username must be at least 2 characters long",
+  "phoneRequired": "Phone number is required",
+  "invalidPhone": "Please enter a valid 10-digit phone number",
+  "emailRequired": "Email is required",
+  "invalidEmail": "Please enter a valid email address",
+  "subjectRequired": "Please write the required notes"
+}

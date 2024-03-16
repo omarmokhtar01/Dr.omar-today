@@ -1,0 +1,20 @@
+{
+  "loginRequired": "Please login first",
+  "audios":"Audios",
+
+  "all": "All",
+    "sortBy": "Sort By",
+    "latestAdded": "Latest Added",
+    "alphabetical": "Alphabetical",
+    "audio": "Audios",
+    "search": "Search",
+    "minutes":"minutes",
+    "nodata1": "No items yet",
+    "nodata2": "No data on this page yet",
+    "Downloadedsuccessfully":"Downloaded successfully",
+    "audioUnavailable": "Sorry, audio is currently unavailable",
+    "addToFavoritesSuccess": "Added to favorites successfully",
+    "addToFavoritesError": "There was a problem adding to favorites"
+
+
+}

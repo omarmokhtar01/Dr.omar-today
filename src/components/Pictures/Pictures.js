@@ -19,8 +19,12 @@ import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 import favGroundIcon from "../../images/favground.svg";
 import notify from "../UseNotifications/useNotification";
- 
+import { useTranslation } from 'react-i18next';
+import nodata from "../../images/nodata.svg";
+
 const Pictures = () => {
+  const { t } = useTranslation('image');
+
   let token = Cookies.get("token");
   const navigate = useNavigate()
 
@@ -55,10 +59,6 @@ const handleShow = (image) => {
   const getAllPicturesData = useSelector(state => state.pictures.allPicturesData);
   const isLoadingAllPictures = useSelector(state => state.pictures.isLoading);
   const errorAllPictures = useSelector(state => state.pictures.error);
-  
-  const getAllImgData = useSelector(state => state.imgCategory.allImgsData);
-  const isLoadingAllImgCategory = useSelector(state => state.imgCategory.isLoading);
-  const errorAllImgCategory = useSelector(state => state.imgCategory.error);
   
 
 const handleDownload = (picId) => {
@@ -124,6 +124,12 @@ const handleDownload = (picId) => {
     (state) => state.imgCategory.isLoading
   );
 
+  const getAllImgData = useSelector(state => state.imgCategory.allImgsData);
+  const isLoadingAllImgCategory = useSelector(state => state.imgCategory.isLoading);
+  const errorAllImgCategory = useSelector(state => state.imgCategory.error);
+  
+console.log(getAllImgData);
+
   useEffect(() => {
       dispatch(getAllPicuture());
       dispatch(getAllImgCategory());
@@ -182,7 +188,7 @@ const handleDownload = (picId) => {
         <Row>
             <Col>
              <div style={{position:'relative' , marginTop:'-35px'}}>
-               <h1 style={{color: 'rgba(255, 255, 255, 1)' , fontWeight:'500' , paddingBottom :'25px', paddingTop:'15px' , borderRadius:'25px'}} className=" background-image"> صور  </h1>
+               <h1 style={{color: 'rgba(255, 255, 255, 1)' , fontWeight:'500' , paddingBottom :'25px', paddingTop:'15px' , borderRadius:'25px'}} className=" background-image"> {t('photos')}  </h1>
             </div>
             </Col>
         </Row>
@@ -223,7 +229,7 @@ const handleDownload = (picId) => {
                   fontWeight: "bold",
                 }}
               >
-                الكل
+                {t('all')}
               </p>
             </div>
           </Col>
@@ -287,65 +293,84 @@ const handleDownload = (picId) => {
 
 
      <Container> 
-     <div style={{marginLeft:'-55px', marginBottom: '15px', borderBottom:'1.5px solid #EEEEEE ', width:'100%' }}></div>
+     <div style={{marginLeft:'-55px', marginBottom: '150px', borderBottom:'1.5px solid #EEEEEE ', width:'100%' }}></div>
      </Container>
 
      <Container>
   <Row className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3" style={{ margin: '35px' }}>
   { id == null ? (
-    !isLoadingAllPictures ? (
-      getAllPicturesData.length > 0 ? (
-        getAllPicturesData.map((image, index) => (
-          <Col key={index} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
-            {/* Placeholder for heartImg */}
-            <div style={{ position: 'relative', top: '40px', right: '-80px', zIndex: '1' }}>
-              <img src={favGroundIcon}  onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
-            </div>
-            {image && image.image && (
-              <img
-                src={image.image}
-               
-                alt={`pic${index + 1}`}
-                style={{ marginBottom: '35px', borderRadius: '15px', cursor: 'pointer',maxHeight:'350px',maxWidth:'450px' }}
-                onClick={() => handleShow(image.image)}
-                id='img-responsive-pic'
-              />
-            )}
-          </Col>
-        ))
-      ) : <div style={{ height: '240px' }}></div>
-    ) : <div style={{ height: '240px' }}> <Spinner animation="border" variant="primary" /></div>
-  ) : (
-    !isLoadingOneImgCategory ? (
-      getOneData[0]?.image?.map((image, index) => (
-        <Col key={image.id} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
-        {/* Placeholder for heartImg */}
-          <div style={{ position: 'relative', top: '40px', right: '-70px', zIndex: '1' }}>
-            <img src={favGroundIcon}  onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+  !isLoadingAllPictures ? (
+    getAllPicturesData.length > 0 ? (
+      getAllPicturesData.map((image, index) => (
+        <Col key={index} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
+          {/* Placeholder for heartImg */}
+          <div style={{ position: 'relative', top: '40px', right: '-80px', zIndex: '1' }}>
+            <img src={favGroundIcon} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
-          {image && (
-  <img
-    src={image.image}
-    alt={`pic${index + 1}`}
-    style={{
-      marginBottom: '35px',
-      borderRadius: '15px',
-      cursor: 'pointer',
-      maxHeight: '350px',
-      maxWidth: '450px'
-    }}
-    onClick={() => {
-      handleShow(image.image);
-    }}
-    id='img-responsive-pic'
-  />
-)}
-
+          {image && image.image && (
+            <img
+              src={image.image}
+              alt={`pic${index + 1}`}
+              style={{ marginBottom: '35px', borderRadius: '15px', cursor: 'pointer', maxHeight:'350px', maxWidth:'450px' }}
+              onClick={() => handleShow(image.image)}
+              id='img-responsive-pic'
+            />
+          )}
         </Col>
       ))
-    ) : <div style={{ height: '240px' }}> <Spinner animation="border" variant="primary" /></div>
+    ) : (
+      <div style={{height:'280px'}}>
+        <img src={nodata} alt="No data" /> <br/>
+        <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+        <span>{t('nodata2')}</span>
+      </div>
+    )
+  ) : (
+    <div style={{ height: '240px' }}> 
+      <Spinner animation="border" variant="primary" />
+    </div>
   )
-}
+) : (
+  !isLoadingOneImgCategory ? (
+    getOneData && getOneData.length > 0 ? (
+      getOneData[0]?.image?.map((image, index) => (
+        <Col key={image.id} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
+
+          {/* Placeholder for heartImg */}
+          <div style={{ position: 'relative', top: '40px', right: '-70px', zIndex: '1' }}>
+            <img src={favGroundIcon} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+          </div>
+          {image && (
+            <img
+              src={image.image}
+              alt={`pic${index + 1}`}
+              style={{
+                marginBottom: '35px',
+                borderRadius: '15px',
+                cursor: 'pointer',
+                maxHeight: '350px',
+                maxWidth: '450px'
+              }}
+              onClick={() => handleShow(image.image)}
+              id='img-responsive-pic'
+            />
+          )}
+        </Col>
+      ))
+    ) : (
+      <div style={{height:'280px'}}>
+        <img src={nodata} alt="No data" /> <br/>
+        <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+        <span>{t('nodata2')}</span>
+      </div>
+    )
+  ) : (
+    <div style={{ height: '240px' }}>
+      <Spinner animation="border" variant="primary" />
+    </div>
+  )
+)}
+
 
 
   </Row>

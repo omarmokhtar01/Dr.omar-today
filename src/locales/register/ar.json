@@ -1,0 +1,20 @@
+{
+  "signup": "تسجيل جديد",
+  "fullName": "الاسم بالكامل",
+  "mobileNumber": "رقم الموبيل",
+  "email": "البريد الالكتروني",
+  "password": "كلمة المرور",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "agreeTerms": "لقد قرأت وأوافق على",
+  "termsAndConditions": "الشروط والأحكام",
+  "register": "تسجيل",
+  "nameRequired": "اسم المستخدم مطلوب",
+    "nameLength": "يجب أن يكون طول اسم المستخدم على الأقل 2 أحرف",
+    "phoneNumberRequired": "رقم الهاتف مطلوب",
+    "invalidPhoneNumber": "الرجاء إدخال رقم هاتف صحيح المكون من 10 أرقام",
+    "emailRequired": "أيميل المستخدم مطلوب",
+    "invalidEmail": "الرجاء إدخال بريد إلكتروني صحيح",
+    "passwordRequired": "باسورد المستخدم مطلوب",
+    "passwordLength": "يجب أن يكون طول كلمة المرور على الأقل 8 أحرف",
+    "confirmPasswordMismatch": "كلمة المرور التأكيدية غير متطابقة"
+}

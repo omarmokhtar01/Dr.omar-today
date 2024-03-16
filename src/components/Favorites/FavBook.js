@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 import { IoIosHeart } from "react-icons/io";
 import favredicon from "../../images/redfav.svg";
 import nodata from "../../images/nodata.svg";
+import { useTranslation } from "react-i18next";
 
 const FavBook = () => {
   const token = Cookies.get("token");
@@ -36,6 +37,7 @@ const FavBook = () => {
   }, [token, navigate, dispatch]);
   console.log(getData);
   console.log(getData.message);
+  const { t } = useTranslation('favaudio');
 
   useEffect(() => {
     if (isLoading === false) {
@@ -68,7 +70,7 @@ const FavBook = () => {
                 className=" background-image"
               >
                 {" "}
-                المفضله{" "}
+                {t('favourite')}{" "}
               </h1>
             </div>
           </Col>
@@ -106,7 +108,7 @@ const FavBook = () => {
                   }}
                 >
                   {" "}
-                  العلماء{" "}
+                  {t('elder')}{" "}
                 </h6>
               </Link>
             </div>
@@ -137,7 +139,7 @@ const FavBook = () => {
                   }}
                 >
                   {" "}
-                  صوتيات{" "}
+                  {t('audios')}{" "}
                 </h6>
               </Link>
             </div>
@@ -168,7 +170,7 @@ const FavBook = () => {
                   }}
                 >
                   {" "}
-                  كتب{" "}
+                  {t('books')}{" "}
                 </h6>
               </Link>
             </div>
@@ -230,7 +232,7 @@ const FavBook = () => {
                   }}
                 >
                   {" "}
-                  صور{" "}
+                  {t('photos')}{" "}
                 </h6>
               </Link>
             </div>
