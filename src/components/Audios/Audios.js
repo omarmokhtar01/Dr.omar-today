@@ -545,7 +545,6 @@ console.log(elderDown);
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
-                padding: "20px",
               }}
             >
               <h5 className="card-namee-details">{item.name}</h5>
@@ -628,7 +627,6 @@ console.log(elderDown);
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
-                    padding: "20px",
                   }}
                 >
                   <h5 className="card-namee-details">{item.name}</h5>
@@ -715,7 +713,6 @@ console.log(elderDown);
                   display: "flex",
                   justifyContent: "center",
                   flexDirection: "column",
-                  padding: "20px",
                 }}
               >
                 <h5 className="card-namee-details">{item.name}</h5>
@@ -794,7 +791,6 @@ console.log(elderDown);
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
-                    padding: "20px",
                   }}
                   
                 >
