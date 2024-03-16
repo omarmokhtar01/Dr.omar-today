@@ -23,10 +23,17 @@ import LoginPage from '../Auth/LoginPage';
 import { HiOutlineUser } from 'react-icons/hi2';
 import { SlLocationPin } from 'react-icons/sl';
 import backgroundImageee from "../../images/ground-home.png";
+import { useTranslation } from 'react-i18next';
 
 const NavBar = () => {
 
 
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem('lang', lng); // Save selected language to localStorage
+  };
 
 
 
