@@ -38,7 +38,7 @@ const Pictures = () => {
 
     } else {
         // Token doesn't exist, notify the user
-        notify("من فضلك قم بتسجيل الدخول اولا", "error");
+        notify(t('loginRequired'), "error");
     }
 };
   const [id,setId]=useState(null)
@@ -70,7 +70,7 @@ const handleDownload = (picId) => {
   if (!token) {
     // Token exists, perform the download action
     // Add your download logic here
-   return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+   return notify(t('loginRequired'), "error");
   }
 
   dispatch(downOnePic({ formData, token }))
@@ -150,13 +150,13 @@ console.log(getAllImgData);
     if (!token) {
       // Token exists, perform the download action
       // Add your download logic here
-     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+     return notify(t('loginRequired'), "error");
     }
     localStorage.setItem("photofav","تم اضافة  الصورة بنجاح")
 
 
     dispatch(favOnePic({ formData, token }))
-                notify(" تم الأضافة للمفضلة بنجاح", "success");
+                notify(t('addToFavoritesSuccess'), "success");
 
     setTimeout(() => {
 

@@ -8,5 +8,10 @@
   "categories": "الفئات",
   "clearAll": "مسح الكل",
   "nodata1":"لا توجد عناصر بعد",
-  "nodata2":"لا توجد بيانات على هذه الصفحة حتى الآن"
+  "nodata2":"لا توجد بيانات على هذه الصفحة حتى الآن",
+  "loginRequired": "من فضلك قم بتسجيل الدخول أولاً",
+  "Downloadedsuccessfully":"تم التحميل بنجاح",
+  "audioUnavailable": "عذرًا، الصوت غير متاح حاليًا",
+  "addToFavoritesSuccess": "تم الأضافة للمفضلة بنجاح",
+  "addToFavoritesError": "حدث مشكلة في الاضافة للمفضلة"
 }

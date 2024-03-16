@@ -223,11 +223,11 @@ console.log(elderDown);
     if (!token) {
       // Token exists, perform the download action
       // Add your download logic here
-     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+     return notify(t('loginRequired'), "error");
     }
 
     dispatch(favOneElder({ formData, token }))
-    notify(" تم الأضافة للمفضلة بنجاح", "success");
+    notify(t('addToFavoritesSuccess'), "success");
     localStorage.setItem("elderfav","تمت اضافة عالم بنجاح")
 
     setTimeout(() => {
@@ -258,20 +258,20 @@ console.log(elderDown);
 
 
 
-        useEffect(() => {
-          if (isLoadingElderDown === false) {
-            if(elderDown && elderDown.success) {
-          if (elderDown.success === true) {
-            // Notify "تم الاضافة بنجاح"
-            notify(" تم الأضافة للمفضلة بنجاح", "success");
-          } else {
-            // Handle other statuses or errors if needed
-            notify("حدث مشكلة في الاضافة", "error");
-        }
-      }
+      //   useEffect(() => {
+      //     if (isLoadingElderDown === false) {
+      //       if(elderDown && elderDown.success) {
+      //     if (elderDown.success === true) {
+      //       // Notify "تم الاضافة بنجاح"
+      //       notify(" تم الأضافة للمفضلة بنجاح", "success");
+      //     } else {
+      //       // Handle other statuses or errors if needed
+      //       notify("حدث مشكلة في الاضافة", "error");
+      //   }
+      // }
 
-      }
-        }, [isLoadingElderDown,elderDown]);
+      // }
+      //   }, [isLoadingElderDown,elderDown]);
 
 
 
