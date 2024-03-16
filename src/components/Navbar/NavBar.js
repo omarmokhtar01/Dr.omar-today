@@ -357,7 +357,7 @@ let getLocation=sessionStorage.getItem('userLocation')
             backgroundColor:'#FFFFFF',
           }}>
   <Dropdown.Toggle variant="success" id="language-dropdown" style={{backgroundColor:'#54abc8'}}>
-  <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'En' : 'Ar'}</span>
+  <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'en' : 'ar'}</span>
   </Dropdown.Toggle>
   <Dropdown.Menu>
     <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
