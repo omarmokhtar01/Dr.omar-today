@@ -93,7 +93,7 @@ const NavBar = () => {
     } else {
       setLocation('Geolocation is not supported by your browser');
     }
-  }, [changeLanguage]);
+  }, []);
   
 
 
@@ -202,28 +202,26 @@ let getLocation=sessionStorage.getItem('userLocation')
 
          <div  className=" nav-menu  d-flex">
           
-         <div className="dropdown">
-        <div
-          className="dropdown-btn"
-          style={{
-            border: '1px solid white',
-            width: '50px',
-            borderRadius: '20px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '35px',
-            marginLeft: '5px',
-            cursor: 'pointer',
-          }}
-        >
-    <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'En' : 'Ar'}</span>
-        </div>
-        <div className="dropdown-content">
-          <button onClick={() => changeLanguage('en')}>English</button>
-          <button onClick={() => changeLanguage('ar')}>العربية</button>
-        </div>
-      </div>          <Button
+         <Dropdown style={{
+        border: '1px solid white',
+        width: '50px',
+        borderRadius: '20px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '35px',
+        marginLeft: '5px',
+        cursor: 'pointer',
+        backgroundColor:'#FFFFFF',
+      }}>
+      <Dropdown.Toggle variant="success" id="language-dropdown" style={{backgroundColor:'#54abc8'}}>
+        <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'en' : 'ar'}</span>
+      </Dropdown.Toggle>
+      <Dropdown.Menu className="custom-dropdown-menu"> {/* Add custom class */}
+        <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
+        <Dropdown.Item onClick={() => changeLanguage('ar')}>العربية</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>         <Button
               style={{
                 color: "#FFFFFF",
                 backgroundColor: "rgba(209, 155, 111, 0.3)",
@@ -345,25 +343,25 @@ let getLocation=sessionStorage.getItem('userLocation')
         >
         </div>
         <Dropdown style={{
-            border: '1px solid white',
-            width: '50px',
-            borderRadius: '20px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '35px',
-            marginLeft: '5px',
-            cursor: 'pointer',
-            backgroundColor:'#FFFFFF',
-          }}>
-  <Dropdown.Toggle variant="success" id="language-dropdown" style={{backgroundColor:'#54abc8'}}>
-  <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'en' : 'ar'}</span>
-  </Dropdown.Toggle>
-  <Dropdown.Menu>
-    <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
-    <Dropdown.Item onClick={() => changeLanguage('ar')}>العربية</Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown>
+        border: '1px solid white',
+        width: '50px',
+        borderRadius: '20px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '35px',
+        marginLeft: '5px',
+        cursor: 'pointer',
+        backgroundColor:'#FFFFFF',
+      }}>
+      <Dropdown.Toggle variant="success" id="language-dropdown" style={{backgroundColor:'#54abc8'}}>
+        <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'en' : 'ar'}</span>
+      </Dropdown.Toggle>
+      <Dropdown.Menu className="custom-dropdown-menu"> {/* Add custom class */}
+        <Dropdown.Item onClick={() => changeLanguage('en')}>English</Dropdown.Item>
+        <Dropdown.Item onClick={() => changeLanguage('ar')}>العربية</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
       </div>
             <Button
               style={{

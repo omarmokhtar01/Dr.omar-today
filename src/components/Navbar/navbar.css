@@ -116,3 +116,9 @@ width: 820px;
 .dropdown:hover .dropdown-content {
   display: block;
 }
+@media (max-width: 768px) {
+  .custom-dropdown-menu {
+    right: 0;
+    left: auto !important;
+  }
+}
