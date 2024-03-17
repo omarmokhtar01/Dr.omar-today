@@ -27,7 +27,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
-
+import searchIcon from "../../images/search.svg";
+import arrowsIcon from "../../images/twoArr.svg";
 import notify from "../UseNotifications/useNotification";
 import { useTranslation } from "react-i18next";
 const BooksSort = () => {
@@ -368,28 +369,21 @@ const BooksSort = () => {
                   onChange={(e)=>setSearchState(e.target.value)}
 
                 />
-                <img
-                  src={search}
-                  alt=""
-                  className="search-icon"
-                  width="20px"
-                  height="20px"
-                  style={{
+                <img src={searchIcon}   className="img-search" style={{
                     position: "absolute",
                     marginTop: "-30px",
                     marginRight: "70px",
-                  }}
-                />
+                    fontSize: "25px",
+                    color: "#00000082",
+                  }} />
               </Form>
               <div style={{ display: "flex", gap: "10px" }}>
-                <LuArrowUpDown
-                  style={{
+              <img style={{
                     marginRight: "5px",
                     position: "absolute",
                     marginTop: "10px",
                     color: "rgb(219, 176, 134)",
-                  }}
-                />
+                  }} src={arrowsIcon} />
                      <NavDropdown
         title={t('sortBy')}
         id="collapsible-nav-dropdown"
