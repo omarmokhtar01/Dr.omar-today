@@ -8,6 +8,13 @@ const initialState = {
     allBooksFavorite: [],
     allAudiosFavorite: [],
     // allPicturesData: [],
+
+    delAudio:{},
+    delBook:{},
+    delElder:{},
+    delImg:{},
+
+
     isLoading: false,
     error: null,
   };
@@ -60,9 +67,68 @@ const initialState = {
 
 
 
+
+    const removeOneAudiosFav = createAsyncThunk('del/OneAudiosFav', async ({token,id}, thunkAPI) => {
+      try {
+        const response = await baseUrl.get(
+          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          );
+          console.log(response.data);
+        return response.data;
+      } catch (error) {
+        return error
+      }
+    });
+
+
+    const removeOneElderFav = createAsyncThunk('del/OneElderFav', async ({token,id}, thunkAPI) => {
+      try {
+        const response = await baseUrl.get(
+          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          );
+          console.log(response.data);
+        return response.data;
+      } catch (error) {
+        return error
+      }
+    });
+
+    const removeOneBookFav = createAsyncThunk('del/OneBookFav', async ({token,id}, thunkAPI) => {
+      try {
+        const response = await baseUrl.get(
+          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          );
+          console.log(response.data);
+        return response.data;
+      } catch (error) {
+        return error
+      }
+    });
+
+    const removeOneImgFav = createAsyncThunk('del/OneImgFav', async ({token,id}, thunkAPI) => {
+      try {
+        const response = await baseUrl.get(
+          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          );
+          console.log(response.data);
+        return response.data;
+      } catch (error) {
+        return error
+      }
+    });
+
+
+
+
+
+
+
+
+
+
     const FavoriteSlice = createSlice({
         // name: 'getAllPicuture',
-        name: 'getAllEldersDownload',
+        name: 'getFav',
       
         initialState,
         reducers: {},
@@ -126,10 +192,71 @@ const initialState = {
                 state.isLoading = false;
                 state.error = action.payload;
               })
-  
 
+
+              .addCase(removeOneAudiosFav.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+              })
+              .addCase(removeOneAudiosFav.fulfilled, (state, action) => {
+                state.delAudio = action.payload;
+                state.isLoading = false;
+                state.error = null;
+              })
+              .addCase(removeOneAudiosFav.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+              })
+
+
+              .addCase(removeOneBookFav.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+              })
+              .addCase(removeOneBookFav.fulfilled, (state, action) => {
+                state.delBook = action.payload;
+                state.isLoading = false;
+                state.error = null;
+              })
+              .addCase(removeOneBookFav.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+              })
+
+
+
+              .addCase(removeOneElderFav.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+              })
+              .addCase(removeOneElderFav.fulfilled, (state, action) => {
+                state.delElder = action.payload;
+                state.isLoading = false;
+                state.error = null;
+              })
+              .addCase(removeOneElderFav.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+              })
+
+
+              .addCase(removeOneImgFav.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+              })
+              .addCase(removeOneImgFav.fulfilled, (state, action) => {
+                state.delImg = action.payload;
+                state.isLoading = false;
+                state.error = null;
+              })
+              .addCase(removeOneImgFav.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+              })
             }}
             );
-      export { getAllEldersFavorite , getPicturesFavorite , getBooksFavorite ,getAudiosFavorite  };
+      export { getAllEldersFavorite , getPicturesFavorite , getBooksFavorite ,getAudiosFavorite  
+        ,removeOneAudiosFav,removeOneBookFav,removeOneElderFav,removeOneImgFav
+      };
       
       export default FavoriteSlice.reducer;

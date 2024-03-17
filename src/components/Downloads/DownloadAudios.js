@@ -2,15 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom"; 
-import audioProfile from "../../images/audio-profile.png";
 import trashIcon from "../../images/trash.svg";
 import PlayIcon from "../../images/play.svg";
-import { RiDeleteBin5Line } from "react-icons/ri";
-import { IoHeartCircleSharp } from "react-icons/io5";
-import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
+
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAudiosDownload } from "../../features/allDownload/allDownloadSlice";
+import { getAudiosDownload, removeOneAudiosDownload, removeOneElderDownload } from "../../features/allDownload/allDownloadSlice";
 import favIcon from "../../images/fav.svg";
 import PauseIcon from "../../images/pause.svg";
 import Cookies from "js-cookie";
@@ -117,6 +114,12 @@ const DownloadAudios = () => {
     const seconds = Math.floor(duration % 60);
     return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
+
+  const removeData = useSelector((state) => state.download.delAudio);
+
+  const removeDataById=(id)=>{
+    removeOneAudiosDownload({token,id})
+  }
 
 
   return (
@@ -355,7 +358,8 @@ const DownloadAudios = () => {
                   gap: "5px",
                 }}
               >
-                <img src={trashIcon} style={{ marginLeft:'10px' }} />
+                <img src={trashIcon} style={{ marginLeft:'10px' }}                onClick={()=>removeDataById(item.id)}
+/>
 
                 <img src={favIcon}
                   style={{

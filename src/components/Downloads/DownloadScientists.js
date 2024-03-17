@@ -6,7 +6,7 @@ import img1 from "../../images/img1.png";
 import "./download.css";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllEldersDownload } from "../../features/allDownload/allDownloadSlice";
+import { getAllEldersDownload, removeOneElderDownload } from "../../features/allDownload/allDownloadSlice";
 import { useNavigate } from "react-router-dom";
 import audioIcon from "../../images/audio.svg"; 
 import deletGroundIcon from "../../images/deletground.svg"; 
@@ -50,6 +50,13 @@ const DownloadScientists = () => {
       }
     }
   }, [isLoading]);
+
+  const removeData = useSelector((state) => state.download.delElder);
+
+  const removeDataById=(id)=>{
+    removeOneElderDownload({token,id})
+  }
+
 
   return (
     <>
@@ -279,6 +286,8 @@ const DownloadScientists = () => {
                
               >
                 <img src={deletGroundIcon}
+                               onClick={()=>removeDataById(item.id)}
+
                   style={{
                     paddingLeft: "10px",
               

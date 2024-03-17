@@ -214,7 +214,7 @@ let getLocation=sessionStorage.getItem('userLocation')
         cursor: 'pointer',
         backgroundColor:'#FFFFFF',
       }}>
-      <Dropdown.Toggle variant="success" id="language-dropdown" style={{backgroundColor:'#54abc8'}}>
+      <Dropdown.Toggle variant="success" id="language-dropdown" style={{backgroundColor:'#d3a074',border:'0px',borderRadius:'20px'}}>
         <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'en' : 'ar'}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu className="custom-dropdown-menu"> {/* Add custom class */}
@@ -354,7 +354,7 @@ let getLocation=sessionStorage.getItem('userLocation')
         cursor: 'pointer',
         backgroundColor:'#FFFFFF',
       }}>
-      <Dropdown.Toggle variant="success" id="language-dropdown" style={{backgroundColor:'#54abc8'}}>
+      <Dropdown.Toggle variant="success" id="language-dropdown" style={{backgroundColor:'#d3a074',border:'0px',borderRadius:'20px'}}>
         <span style={{ color: 'white' }}>{i18n.language === 'en' ? 'en' : 'ar'}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu className="custom-dropdown-menu"> {/* Add custom class */}

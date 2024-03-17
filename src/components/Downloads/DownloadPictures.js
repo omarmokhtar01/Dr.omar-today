@@ -17,7 +17,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import "./download.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPicturesDownload } from "../../features/allDownload/allDownloadSlice";
+import { getPicturesDownload, removeOneImgDownload } from "../../features/allDownload/allDownloadSlice";
 import Cookies from "js-cookie";
 import delIcon from "../../images/del.svg";
 import { useTranslation } from "react-i18next";
@@ -56,6 +56,13 @@ const DownloadPictures = () => {
       }
     }
   }, [isLoading]);
+
+  const removeData = useSelector((state) => state.download.delImg);
+
+  const removeDataById=(id)=>{
+    removeOneImgDownload({token,id})
+  }
+
 
   return (
     <>
@@ -246,6 +253,8 @@ const DownloadPictures = () => {
              </div> */}
 
             <img src={delIcon}
+                           onClick={()=>removeDataById(item.id)}
+
               style={{
                 fontSize: "35px",
                 color: "gray",

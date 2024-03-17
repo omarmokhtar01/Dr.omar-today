@@ -10,7 +10,7 @@ import bookSort1 from "../../images/book-sort1.png";
 import bookSort2 from "../../images/book-sort2.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getBooksFavorite } from "../../features/allFavorites/allFavoritesSlice";
+import { getBooksFavorite, removeOneBookFav } from "../../features/allFavorites/allFavoritesSlice";
 import Cookies from "js-cookie";
 import { IoIosHeart } from "react-icons/io";
 import favredicon from "../../images/redfav.svg";
@@ -51,6 +51,13 @@ const FavBook = () => {
       }
     }
   }, [isLoading]);
+
+  const removeData = useSelector((state) => state.favorite.delBook);
+
+  const removeDataById=(id)=>{
+    removeOneBookFav({token,id})
+  }
+
   return (
     <>
       <NavBar />
@@ -278,6 +285,8 @@ const FavBook = () => {
                 }}
               >
                 <img src={favredicon}
+                onClick={()=>removeDataById(item.id)}
+alt=""
                   style={{
                   
                     cursor: "pointer",

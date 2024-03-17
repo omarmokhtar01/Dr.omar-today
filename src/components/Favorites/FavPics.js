@@ -11,7 +11,7 @@ import pic7 from "../../images/pic7.png";
 import pic8 from "../../images/pic8.png";
 import { Link } from "react-router-dom";
 import NavBar from "../Navbar/NavBar";
-import { getPicturesFavorite } from "../../features/allFavorites/allFavoritesSlice";
+import { getPicturesFavorite, removeOneImgFav } from "../../features/allFavorites/allFavoritesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -55,6 +55,12 @@ const FavPics = () => {
       }
     }
   }, [isLoading]);
+
+  const removeData = useSelector((state) => state.favorite.delImg);
+
+  const removeDataById=(id)=>{
+    removeOneImgFav({token,id})
+  }
 
   return (
     <>
@@ -272,6 +278,8 @@ const FavPics = () => {
               {getData.map((item, index) => (
                 <Col xl={6} lg={12} md={12} sm={12} xs={12} >
                 <img  src={favredicon}
+                onClick={()=>removeDataById(item.id)}
+alt=""
                   style={{
                    position:'absolute',
                     cursor: "pointer",

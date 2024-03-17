@@ -4,7 +4,7 @@ import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import favredicon from "../../images/redfav.svg";
 import heart1 from "../../images/redhearticon.png";
-import { getAllEldersFavorite } from "../../features/allFavorites/allFavoritesSlice";
+import { getAllEldersFavorite, removeOneElderFav } from "../../features/allFavorites/allFavoritesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -47,6 +47,13 @@ const FavScientists = () => {
       }
     }
   }, [isLoading]);
+
+  const removeData = useSelector((state) => state.favorite.delElder);
+
+  const removeDataById=(id)=>{
+    removeOneElderFav({token,id})
+  }
+
   return (
     <>
       <NavBar />
@@ -285,6 +292,8 @@ const FavScientists = () => {
                 }}
               >
                <img src={favredicon}
+               onClick={()=>removeDataById(item.id)}
+alt=""
                   style={{
                     
                    
@@ -295,12 +304,12 @@ const FavScientists = () => {
               </div>
 
               <h5 style={{marginTop:'15px'}}>  {item.name}</h5>
-              <p style={{ marginTop: "-5px", color:'#828282' }}>  <img src={audioIcon} />  {item.count_audios}                   {t('audios')}{" "} </p>
+              <p style={{ marginTop: "-5px", color:'#828282' }}>  <img src={audioIcon} alt=""/>  {item.count_audios}                   {t('audios')}{" "} </p>
             </div>
           </div>
             ))}
             </>
-          ) :<div style={{height:'280px'}}><img src={nodata}/> <br/>
+          ) :<div style={{height:'280px'}}><img src={nodata} alt=""/> <br/>
           <span style={{fontWeight:'700'}}>لا توجد عناصر بعد</span><br/>
           <span>لا توجد بيانات على هذه الصفحة حتى الآن</span></div>
         

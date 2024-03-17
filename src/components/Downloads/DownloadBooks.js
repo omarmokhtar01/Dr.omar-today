@@ -7,7 +7,7 @@ import bookSort1 from "../../images/book-sort1.png";
 import bookSort2 from "../../images/book-sort2.png";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import "./download.css";
-import { getBooksDownload } from "../../features/allDownload/allDownloadSlice";
+import { getBooksDownload, removeOneBookDownload } from "../../features/allDownload/allDownloadSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -50,6 +50,13 @@ const DownloadBooks = () => {
       }
     }
   }, [isLoading]);
+
+  const removeData = useSelector((state) => state.download.delBook);
+
+  const removeDataById=(id)=>{
+    removeOneBookDownload({token,id})
+  }
+
 
   return (
     <>
@@ -257,6 +264,8 @@ const DownloadBooks = () => {
                 }}
               >
                 <img src={delIcon}
+                               onClick={()=>removeDataById(item.id)}
+
                   style={{
                     paddingLeft: "10px",
                    

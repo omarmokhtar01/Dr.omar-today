@@ -6,7 +6,7 @@ import audioProfile from "../../images/audio-profile.png";
 import play from "../../images/play.png";
 import heart from "../../images/redheart.png";
 import download from "../../images/download.png";
-import { getAudiosFavorite } from "../../features/allFavorites/allFavoritesSlice";
+import { getAudiosFavorite, removeOneAudiosFav } from "../../features/allFavorites/allFavoritesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -184,6 +184,13 @@ console.log(getData);
     const seconds = Math.floor(duration % 60);
     return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
+
+
+  const removeData = useSelector((state) => state.favorite.delAudio);
+
+  const removeDataById=(id)=>{
+    removeOneAudiosFav({token,id})
+  }
   return (
     <>
       <NavBar />
@@ -447,6 +454,8 @@ console.log(getData);
               {token ? (
                       <a href={`${item.audio}?download=true`} target="_blank">
                         <img src={downloadIcon}
+                                                alt=""
+
                           style={{
                             color: "rgb(209, 155, 111)",
                             fontSize: "30px",
@@ -458,6 +467,7 @@ console.log(getData);
                       </a>
                     ) : (
                       <img src={downloadIcon}
+                      alt=""
                         style={{
                           color: "rgb(209, 155, 111)",
                           fontSize: "30px",
@@ -466,12 +476,15 @@ console.log(getData);
                         onClick={handleCheckLogin}
                         download="audio_file"
                       />
+                      
                     )}
               <img src={favrediconwith}
                   style={{
                     
                     cursor: "pointer",
                   }}
+onClick={()=>removeDataById(item.id)}
+                  alt=""
                 />
            <button
                       onClick={() => handlePlay(index)}
@@ -479,11 +492,13 @@ console.log(getData);
                     >
                       {isPlaying[index] ? (
                         <img src={PauseIcon}
+                        alt=""
                           
                         />
                       ) : (
                         <img src={PlayIcon}
-                        
+                        alt=""
+
                         />
                       )}
                     </button>
@@ -500,7 +515,8 @@ console.log(getData);
         </Row>
               ))}
               </>
-            ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
+            ) : <div style={{height:'280px'}}><img src={nodata}                         alt=""
+            /> <br/>
             <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
             <span>{t('nodata2')}</span></div>
           
