@@ -124,5 +124,37 @@ width: 820px;
 }
 
 @media (min-width: 991.98px) and (max-width: 1024px) {
+.navUnLogin{
+  margin-left: 50px;
+}
+ }
 
+ @media (min-width: 1003px) and (max-width: 1082px) {
+
+  .nav-menu {
+   
+   position: relative;
+   left: 75px;
+  }
+ }
+ @media (min-width:1082px ) and (max-width: 1153px) {
+  .nav-menu {
+   
+    position: relative;
+    left: 50px;
+   }
+ }
+
+ @media (min-width: 991.98px) and (max-width: 1002px) {
+  .navbar-nav{
+    position: relative;
+    left: 40px !important;
+  } 
+  .navLogin{
+    /* margin-left: 50px !important; */
+  }
+  .nav-menu {
+position: relative;
+left: 105px;
+  }
  }

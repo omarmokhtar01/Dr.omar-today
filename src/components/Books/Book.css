@@ -30,7 +30,7 @@
 
 @media (min-width: 576px) and (max-width: 767.98px) { 
     .search-book{
-        width: 150px !important;
+        /* width: 150px !important; */
     }
     .search-icon{
         position:'relative' ; margin-Top:'-30px' ; margin-Right:'50px';

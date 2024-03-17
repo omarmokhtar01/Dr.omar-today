@@ -148,7 +148,7 @@ let getLocation=sessionStorage.getItem('userLocation')
    <>
 
     <Navbar expand="lg" style={navbarStyle} className='navLogin'>
-      <Container style={{marginBottom:'50px '}} >
+      <Container className='navLogin' style={{marginBottom:'50px '}} >
         <Navbar.Brand >
         <Link to='/'>
               <img  src={logo} alt=""  style={{width:'110px' , height:'110px'}}/>
@@ -271,7 +271,7 @@ let getLocation=sessionStorage.getItem('userLocation')
       <>
 
       <Navbar expand="lg" className="navbarStyle" style={navbarStyleUnLogin}>
-      <Container className="nav-responsive" style={{ marginTop: "-120px" }}>
+      <Container className="nav-responsive navUnLogin" style={{ marginTop: "-120px" }}>
         <Navbar.Brand>
           <Link to="/">
             <img

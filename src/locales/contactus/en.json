@@ -12,7 +12,7 @@
   "nameRequired": "Username is required",
   "nameLength": "Username must be at least 2 characters long",
   "phoneRequired": "Phone number is required",
-  "invalidPhone": "Please enter a valid 10-digit phone number",
+  "invalidPhone": "Please enter a valid 11-digit phone number",
   "emailRequired": "Email is required",
   "invalidEmail": "Please enter a valid email address",
   "subjectRequired": "Please write the required notes"

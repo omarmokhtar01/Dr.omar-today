@@ -11,7 +11,7 @@
   "nameRequired": "اسم المستخدم مطلوب",
     "nameLength": "يجب أن يكون طول اسم المستخدم على الأقل 2 أحرف",
     "phoneNumberRequired": "رقم الهاتف مطلوب",
-    "invalidPhoneNumber": "الرجاء إدخال رقم هاتف صحيح المكون من 10 أرقام",
+    "invalidPhoneNumber": "الرجاء إدخال رقم هاتف صحيح المكون من 11 أرقام",
     "emailRequired": "أيميل المستخدم مطلوب",
     "invalidEmail": "الرجاء إدخال بريد إلكتروني صحيح",
     "passwordRequired": "باسورد المستخدم مطلوب",

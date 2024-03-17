@@ -328,6 +328,22 @@ const HomePage = () => {
 
 
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'PrintScreen') {
+        event.preventDefault();
+        // Optionally, display a message or take action when print screen is pressed.
+        console.log('Print screen key pressed');
+      }
+      
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
 
 

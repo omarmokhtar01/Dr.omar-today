@@ -11,7 +11,7 @@
   "nameRequired": "Username is required",
     "nameLength": "Username must be at least 2 characters long",
     "phoneNumberRequired": "Phone number is required",
-    "invalidPhoneNumber": "Please enter a valid 10-digit phone number",
+    "invalidPhoneNumber": "Please enter a valid 11-digit phone number",
     "emailRequired": "Email is required",
     "invalidEmail": "Please enter a valid email address",
     "passwordRequired": "Password is required",

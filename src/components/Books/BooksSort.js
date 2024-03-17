@@ -300,10 +300,11 @@ const BooksSort = () => {
               id="box-books"
               style={{
                 background: "rgba(244, 245, 247, 1)",
-                height: "400px",
+                height: "auto",
                 borderRadius: "15px",
-                marginBottom: "20px",
-              }}
+                marginBottom: "25px",
+                paddingBottom:'25px'
+              }}
             >
               <div
                 style={{

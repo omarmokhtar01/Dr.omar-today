@@ -84,7 +84,7 @@ const ContactUs = () => {
     // Function to validate phone number format
     function isValidPhoneNumber(phonenumber) {
       // Regular expression for phone number validation
-      const phoneNumberRegex = /^\d{10}$/;
+      const phoneNumberRegex = /^\d{11}$/;
       return phoneNumberRegex.test(phonenumber);
     }
     const contactData = {
