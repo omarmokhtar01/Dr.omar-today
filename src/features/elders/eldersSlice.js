@@ -44,6 +44,7 @@ const getEldersByIdAudios = createAsyncThunk('post/elders/id/audio', async (id, 
 
     const response = await baseUrl.post(
       `Elders/Get_Audio_Id_Elder?id=${id}`);
+      console.log(response.data);
     return response.data;
   } catch (error) {
     return error

@@ -603,10 +603,11 @@ console.log(getDataOne);
       {!isLoading ? (
   getDataOne ? (
     getDataOne.data ? (
-      getDataOne.data.Audio && getDataOne > 0 ? (
+      getDataOne.data.Audio  ? (
         [...getDataOne.data.Audio].sort(sortFunction).map((item, index) => {
           return (
             <React.Fragment key={index}>
+              {console.log(getDataOne)}
               <Row className="me-auto" md={4}>
                 <Col>
                   <div style={{ display: "flex" }}>
@@ -644,8 +645,8 @@ console.log(getDataOne);
                     }}
                   >
                     {" "}
-                    {/* {item.name}{" "} */}
-                    محمد صالح المنجد
+                    {item.elder?.name}{" "}
+                    {/* محمد صالح المنجد */}
                   </p>
                 </Col>
 
