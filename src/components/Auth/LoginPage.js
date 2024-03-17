@@ -110,11 +110,13 @@ const LoginPage = () => {
 
   const handleClosee = () => setShowRwg(false);
   const handleShowReg = () => setShowRwg(true);
+  let lang = localStorage.getItem('lang')
+  const containerStyle = { direction: lang === 'ar' ? 'rtl' : 'ltr' };
 
   return (
     <>
     
-      <Container>
+    <Container >
         <Row>
           <Col
             className=" d-flex justify-content-center text-center  "

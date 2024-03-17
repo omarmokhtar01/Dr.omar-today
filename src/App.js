@@ -41,9 +41,9 @@ import ViewBook from "./components/Books/ViewBook";
 import { useEffect } from "react";
 
 function App() {
-  useEffect(()=>{
-localStorage.setItem("i18nextLng","ar")
-  },[])
+//   useEffect(()=>{
+// localStorage.setItem("i18nextLng","ar")
+//   },[])
   return (
     <div className="App">
       <BrowserRouter>

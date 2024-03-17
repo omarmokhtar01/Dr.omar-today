@@ -270,7 +270,7 @@ let getLocation=sessionStorage.getItem('userLocation')
     </> ) : (
       <>
 
-      <Navbar expand="lg" className="navbarStyle " style={navbarStyleUnLogin}>
+      <Navbar expand="lg" className="navbarStyle" style={navbarStyleUnLogin}>
       <Container className="nav-responsive" style={{ marginTop: "-120px" }}>
         <Navbar.Brand>
           <Link to="/">

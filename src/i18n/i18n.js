@@ -122,7 +122,7 @@ favbook:arfavbook
 // Add other sections here
       },
     },
-    lng:'ar',
+    lng: localStorage.getItem('i18nextLng') || 'ar', // Use language from localStorage or default to 'ar'
     fallbackLng: 'en',
     debug: true,
     interpolation: {

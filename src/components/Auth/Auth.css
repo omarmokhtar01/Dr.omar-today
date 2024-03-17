@@ -64,3 +64,11 @@
       margin-left: -20px !important;
 }
 }
+
+.text-left {
+  direction: ltr;
+}
+
+.text-right {
+  direction: rtl;
+}

@@ -4,7 +4,7 @@
   }
 }
 
-
+ 
 
 @media (max-width: 768px) {
   .nav-responsive {
@@ -123,7 +123,7 @@ transition: .5s;
 
 @media (min-width: 992px) and (max-width: 1199.98px) { 
 #mobile-responsive{
-width: 280px !important;
+/* width: 280px !important; */
 height: 450px !important;
 }
 #img-mobile-responsive{
@@ -225,13 +225,13 @@ margin-left: 0px !important;
 
 @media (max-width: 1200px) {
   .responsive-image-ground {
-
+   /* background-color: red !important; */
   margin-top: -190px !important;
   }
 }
 @media  (min-width: 1200px)and (max-width: 1401px) { 
   .responsive-image-ground {
-   
+    /* background-color: green !important; */
     margin-top: -260px !important;
     }
    }
@@ -259,4 +259,29 @@ margin-left: 0px !important;
   }
   .rhap_container{
     box-shadow: none;
+  }
+
+  @media (max-width: 992px) {
+    #mobile-responsive {
+     width: 300px !important;
+    }
+    #img-mobile-responsive{
+      width: 250px !important;
+    }
+  }
+
+  .rhap_volume-controls{
+    display: none !important;
+  }
+  .rhap_main-controls{
+    /* margin-left: 30px !important; */
+  }
+
+  @media (min-width: 992px){
+    .rhap_main-controls{
+      margin-left: 30px !important;
+    }
+  }
+  .rhap_progress-section{
+    margin-right: 20px !important;
   }

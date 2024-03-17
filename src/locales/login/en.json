@@ -10,7 +10,7 @@
   "createAccount": "Create Account",
   "orVia": "Or via",
   "loginSuccess":"login successfully",
-  "loginFail":"login failed",
+  "loginFail":"Email or password incorrect",
   "emailRequired": "Email is required",
     "invalidEmail": "Please enter a valid email address",
     "passwordRequired": "Password is required",

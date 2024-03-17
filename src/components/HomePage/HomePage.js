@@ -273,28 +273,40 @@ const HomePage = () => {
 
   const [durationsNew, setDurationsNew] = useState([]);
   const [durationFormattedNew, setDurationFormattedNew] = useState("0:00");
-  const [isPlayingNew, setIsPlayingNew] = useState([]);
+  // const [isPlayingNew, setIsPlayingNew] = useState([]);
+  const NUM_OF_AUDIOS = 1; // Define the actual number of audios here
+
+  const [isPlayingNew, setIsPlayingNew] = useState(Array(NUM_OF_AUDIOS).fill(false)); // Initialize with the number of audios you have
 
   const handlePlayNew = (index) => {
-    const newIsPlayingNew = [...isPlayingNew];
-    newIsPlayingNew[index] = !isPlayingNew[index];
-    setIsPlayingNew(newIsPlayingNew);
-
-    const audioElement = audioRefsNew.current[index];
-    if (audioElement) {
-      if (newIsPlayingNew[index]) {
-        // Check if the audio is not already playing before calling play()
-        if (audioElement.paused) {
-          audioElement.play().catch((error) => console.error("Error playing audio:", error));
-        }
-      } else {
-        // Pause the audio if it's playing
-        audioElement.pause();
+    // Pause all other audios before playing the new one
+    
+    audioRefsNew.current.forEach((audioRef, idx) => {
+      if (idx !== index && audioRef && !audioRef.paused) {
+        audioRef.pause();
+        setIsPlayingNew((prev) => {
+          const newIsPlaying = [...prev];
+          newIsPlaying[idx] = false;
+          return newIsPlaying;
+        });
       }
+    })
+    const audioRef = audioRefsNew.current[index];
+    if (audioRef.paused) {
+      audioRef.play().catch((error) => console.error("Error playing audio:", error));
+    } else {
+      audioRef.pause();
     }
-  };
+    setIsPlayingNew((prev) => {
+      const newIsPlaying = [...prev];
+      newIsPlaying[index] = !newIsPlaying[index];
+      return newIsPlaying;
+    })
+  }
 
   
+
+
 
   const handleLoadedMetadataNew = (index) => {
     return (e) => {
@@ -851,7 +863,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
 
       <Container>
         <Row className="d-flex justify-content-between align-items-center me-auto  ">
-          <Col sm="12 " md="8">
+          <Col sm={12} md={7} xl={7} xs={12}>
             <div className="d-flex justify-content-between mt-3">
               <p
                 style={{
@@ -893,7 +905,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                           style={{ borderRadius: "5.81px" }}
                         />
 
-                        <h5 style={{ width: "100%" }}> {item.title} </h5>
+<h5 style={{ width: "100%" , marginRight:'7px'}}> {item.title} </h5>
                       </div>
                     </Col>
 
@@ -923,15 +935,15 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                           alt="" />
 
 <button
-  onClick={() => handlePlayNew(index)}
-  style={{ border: "none", background: "#FFFFFF" }}
->
-  {isPlayingNew[index] ? (
-    <img src={PauseIconMostListen} alt=""/>
-  ) : (
-    <img src={PlayIcon}  alt=""/>
-  )}
-</button>
+            onClick={() => handlePlayNew(index)}
+            style={{ border: "none", background: "#FFFFFF" }}
+          >
+            {isPlayingNew[index] ? (
+              <img src={PauseIconMostListen} alt="Pause Icon"/>
+            ) : (
+              <img src={PlayIcon} alt="Play Icon"/>
+            )}
+          </button>
 <audio
   key={index}
   ref={(el) => (audioRefsNew.current[index] = el)}
@@ -963,7 +975,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
             )}
           </Col>
 
-          <Col sm="12" md="4">
+          <Col sm={12} md={5} xl={5} xs={12}>
             <div style={{ width: "100%", marginTop: "15px" }}>
               <h2
                 style={{
@@ -1087,7 +1099,6 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                         /> */}
 
 <AudioPlayer
-    
     src={
       mostListenedData[indexMobileStateMost]?.audio ||
       null
@@ -1096,14 +1107,13 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
     ref={(el) =>
       (audioRefs.current[indexMobileStateMost] = el)
     }
-    onPlay={e => console.log("onPlay")}
+    // onPlay={handlePlayNew}
     onLoadedMetadata={handleLoadedMetadata(
       indexMobileStateMost
     )}   
     customIcons={customIcons}
     progressDirection="ltr" // Set progress direction to right-to-left
 
-    // other props here
   />
 
 
@@ -1143,6 +1153,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                             />
                           </a>
                         ) : (
+                          <div style={{marginTop:'22px', marginLeft:'15px'}}>
                           <img
                             src={downloadIcon}
                             color="rgb(209, 155, 111)"
@@ -1152,8 +1163,8 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                                 mostListenedData[indexMobileState]?.id || null
                               )
                             }
-                          />
-                        )}
+                          /></div>
+        )}
                       </Col>
                     </div>
                   </Col>
@@ -1239,9 +1250,9 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                 zIndex: "-1",
                 marginTop: "-330px",
               }}
-              className="responsive-image  responsive-image-ground "
+              className="responsive-image  responsive-image-ground "
             />
-          </div>
+          </div>
         </Row>
         <ToastContainer />
       </Container>

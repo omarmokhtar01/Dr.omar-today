@@ -122,3 +122,7 @@ width: 820px;
     left: auto !important;
   }
 }
+
+@media (min-width: 991.98px) and (max-width: 1024px) {
+
+ }
