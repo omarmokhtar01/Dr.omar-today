@@ -130,13 +130,13 @@ const RegisterPage = () => {
           Cookies.remove("token");
         }
         if (res.message === "register successfully") {
-          notify("تم تسجيل الحساب بنجاح", "success");
+          notify(t('registerSuss'), "success");
           // setTimeout(() => {
           //     navigate("/login");
           // }, 1500);
         }
         if (res.message === "Request failed with status code 422") {
-          notify("   هناك خطأ في تسجيل الحساب", "error");
+          notify(t('invalidRegister'), "error");
         }
       }
     }

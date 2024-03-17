@@ -16,5 +16,7 @@
     "invalidEmail": "الرجاء إدخال بريد إلكتروني صحيح",
     "passwordRequired": "باسورد المستخدم مطلوب",
     "passwordLength": "يجب أن يكون طول كلمة المرور على الأقل 8 أحرف",
-    "confirmPasswordMismatch": "كلمة المرور التأكيدية غير متطابقة"
-}
+    "confirmPasswordMismatch": "كلمة المرور التأكيدية غير متطابقة",
+    "invalidRegister":" هناك خطأ في تسجيل الحساب",
+    "registerSuss" :"تم تسجيل الحساب بنجاح"
+  }

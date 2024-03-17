@@ -16,5 +16,8 @@
     "invalidEmail": "Please enter a valid email address",
     "passwordRequired": "Password is required",
     "passwordLength": "Password must be at least 8 characters long",
-    "confirmPasswordMismatch": "Confirmed password does not match"
+    "confirmPasswordMismatch": "Confirmed password does not match",
+    "invalidRegister":"Invalid registering the account. Please try again later.",
+    "registerSuss" : "Register successfully"
+
 }
