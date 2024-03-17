@@ -80,7 +80,7 @@ const LoginPage = () => {
         console.log(res);
 
         if (res.data && res.data.token) {
-          const expirationTime = 7; // in days
+          const expirationTime = 30; // in days
           const expirationDate = new Date();
           expirationDate.setDate(expirationDate.getDate() + expirationTime);
           Cookies.set("token", res.data.token, { expires: expirationDate });
