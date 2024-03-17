@@ -24,6 +24,8 @@ import favGroundIcon from "../../images/favground.svg";
 import audioIcon from "../../images/audio.svg"; 
 import downGroundIcon from "../../images/downloadGround.svg";
 
+import fav2Icon from "../../images/fav2.svg";
+import favrediconwith from "../../images/favredWith.svg";
 
 
 
@@ -47,7 +49,8 @@ import { downloadOneElder, favOneElder } from "../../features/elders/eldersSlice
 import JSZip from 'jszip';
 
 const Audios = () => {
-
+  const favIconNot = fav2Icon; // Path to the normal icon
+  const favRedIcon = favrediconwith; // Path to the red/favorite icon
 const navigate = useNavigate()
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
   const { t } = useTranslation('audios');
@@ -211,6 +214,7 @@ console.log(elderDown);
 
 
 
+  const [isFavElder, setIsFavElder] = useState(false); // State to track favorite status
 
   const checkAddToFavElder = useSelector((state) => state.elders.favElder);
   const isLoadingFavElder = useSelector((state) => state.elders.isLoadingFavElder);
@@ -223,35 +227,36 @@ console.log(elderDown);
     if (!token) {
       // Token exists, perform the download action
       // Add your download logic here
-     return notify(t('loginRequired'), "error");
+      return notify(t('loginRequired'), "error");
     }
-
     dispatch(favOneElder({ formData, token }))
-    notify(t('addToFavoritesSuccess'), "success");
-    localStorage.setItem("elderfav","تمت اضافة عالم بنجاح")
+    localStorage.setItem("elderfav","تم حفظ  العالم بنجاح")
 
-    setTimeout(() => {
-      navigate("/favScientists")
-
-    }, 1000);
+    // setTimeout(() => {
+    //   navigate("/favScientists")
+    // }, 1000);
            
         }
 
 
-      //   useEffect(() => {
-      //     if (isLoadingFavElder === false) {
-      //       if(checkAddToFavElder && checkAddToFavElder.success) {
-      //     if (checkAddToFavElder.success === true) {
-      //       // Notify "تم الاضافة بنجاح"
-      //       notify(" تم الأضافة للمفضلة بنجاح", "success");
-      //     } else {
-      //       // Handle other statuses or errors if needed
-      //       notify("حدث مشكلة في الاضافة", "error");
-      //   }
-      // }
+        useEffect(() => {
+          if (isLoadingFavElder === false) {
+            if(checkAddToFavElder && checkAddToFavElder.success) {
+          if (checkAddToFavElder.message === "The elder has been added to your favorites") {
+            // Notify "تم الاضافة بنجاح"
+            // notify(t('addToFavoritesSuccess'), "success");
+            setIsFavElder(true);
+          } else if (checkAddToFavElder.message === "The elder has been removed from your favorites") {
+            setIsFavElder(false); // Toggle favorite status
 
-      // }
-      //   }, [isLoadingFavElder,checkAddToFavElder]);
+            // Handle other statuses or errors if needed
+            // notify(t('addToFavoritesError'), "error");
+        }
+      }
+
+      }
+        }, [isLoadingFavElder,checkAddToFavElder]);
+
 
 
 
@@ -571,8 +576,9 @@ console.log(elderDown);
             id="sounds-icons"
           >
             {" "}
-            <img src={favGroundIcon}
-              style={{
+            <img 
+                     src={isFavElder ? favRedIcon : favIconNot}
+                     style={{
                 color: "#878787bd",
                 fontSize: "40px",
                 cursor: "pointer",
@@ -654,7 +660,8 @@ console.log(elderDown);
                 id="sounds-icons"
               >
                 {" "}
-                <img src={favGroundIcon}
+                <img                      src={isFavElder ? favRedIcon : favIconNot}
+
                   style={{
                     color: "#878787bd",
                     fontSize: "40px",
@@ -823,7 +830,8 @@ console.log(elderDown);
                 id="sounds-icons"
               >
                 {" "}
-                <img src={favGroundIcon}
+                <img                      src={isFavElder ? favRedIcon : favIconNot}
+
                   style={{
                     color: "#878787bd",
                     fontSize: "40px",

@@ -21,7 +21,8 @@ import favGroundIcon from "../../images/favground.svg";
 import notify from "../UseNotifications/useNotification";
 import { useTranslation } from 'react-i18next';
 import nodata from "../../images/nodata.svg";
-
+import fav2Icon from "../../images/fav2.svg";
+import favrediconwith from "../../images/favredWith.svg";
 const Pictures = () => {
   const { t } = useTranslation('image');
 
@@ -139,6 +140,14 @@ console.log(getAllImgData);
     dispatch(getOneImgCategory(id));
   }, [dispatch, id]);
 
+  const favIconNot = fav2Icon; // Path to the normal icon
+  const favRedIcon = favrediconwith; // Path to the red/favorite icon
+  
+  
+  
+   const [isFav, setIsFav] = useState(false); // State to track favorite status
+
+
   const checkAddToFavPic = useSelector((state) => state.pictures.favPic);
   const isLoadingFavPic = useSelector((state) => state.pictures.isLoadingFavPic);
 
@@ -156,13 +165,32 @@ console.log(getAllImgData);
 
 
     dispatch(favOnePic({ formData, token }))
-                notify(t('addToFavoritesSuccess'), "success");
+                // notify(t('addToFavoritesSuccess'), "success");
 
-    setTimeout(() => {
+    // setTimeout(() => {
 
-      navigate("/favBook")
-    }, 1000);
+    //   navigate("/favBook")
+    // }, 1000);
         }
+
+        useEffect(() => {
+          if (isLoadingFavPic === false) {
+            if(checkAddToFavPic && checkAddToFavPic.success) {
+          if (checkAddToFavPic.message === "The image has been added to your favorites") {
+            // Notify "تم الاضافة بنجاح"
+            setIsFav(true); // Toggle favorite status
+
+            // notify(t('addToFavoritesSuccess'), "success");
+          } else if (checkAddToFavPic.message === "The image has been removed from your favorites") {
+            setIsFav(false); // Toggle favorite status
+
+            // Handle other statuses or errors if needed
+            // notify(t('addToFavoritesError'), "error");
+        }
+      }
+
+      }
+        }, [isLoadingFavPic,checkAddToFavPic]);
 
         console.log(checkAddToFavPic);
 
@@ -305,7 +333,7 @@ console.log(getAllImgData);
         <Col key={index} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
           {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '40px', right: '-80px', zIndex: '1' }}>
-            <img src={favGroundIcon} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+            <img src={isFav ? favRedIcon : fav2Icon} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
           {image && image.image && (
             <img
@@ -338,7 +366,7 @@ console.log(getAllImgData);
 
           {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '40px', right: '-70px', zIndex: '1' }}>
-            <img src={favGroundIcon} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+            <img src={isFav ? favRedIcon : fav2Icon} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
           {image && (
             <img
@@ -382,7 +410,7 @@ console.log(getAllImgData);
       {/* Your icons */}
       <img src={modalshare} style={{  marginTop: '12px', cursor: 'pointer' }} />
       <img src={modaldown}  style={{  cursor: 'pointer' }} onClick={()=>handleDownload(savedId)} />        
-      <img src={modalfav}  style={{ marginTop: '10px', cursor: 'pointer' }} onClick={()=>handelAddtoFavPic(savedId)} />
+      <img src={isFav ? favRedIcon : fav2Icon} style={{ marginTop: '10px', cursor: 'pointer' }} onClick={()=>handelAddtoFavPic(savedId)} />
     </div>
   </div>
 </Modal>

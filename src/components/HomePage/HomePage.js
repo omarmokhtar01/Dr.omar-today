@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import fav2Icon from "../../images/fav2.svg";
+import favrediconwith from "../../images/favredWith.svg";
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import "./home.css";
@@ -66,6 +68,9 @@ import "swiper/css/free-mode";
 const Adhan = require("adhan");
 
 const HomePage = () => {
+  const favIconNot = favIcon; // Path to the normal icon
+  const favRedIcon = favrediconwith; // Path to the red/favorite icon
+
   const { t } = useTranslation('home');
 
   const [data, setData] = useState([]);
@@ -356,6 +361,8 @@ const HomePage = () => {
   const checkAddToFav = useSelector((state) => state.audio.favAudio);
   const isLoadingFav = useSelector((state) => state.audio.isLoadingFav);
 console.log(checkAddToFav);
+const [isFav, setIsFav] = useState(false); // State to track favorite status
+
   const handelAddtoFav = (audioId) => {
     const formData = {
       audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
@@ -366,14 +373,32 @@ console.log(checkAddToFav);
       // Add your download logic here
       return notify(`${t('loginRequired')}`, "error");
     }
-    notify(`${t('addedToFavorites')}`, "success");
-localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
+//     notify(`${t('addedToFavorites')}`, "success");
+// localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
     dispatch(favOneAudio({ formData, token }));
 
-    setTimeout(() => {
-      navigate("/favAudios");
-    }, 1500);
+    // setTimeout(() => {
+    //   navigate("/favAudios");
+    // }, 1500);
   }; 
+  useEffect(() => {
+    if (isLoadingFav === false) {
+      if(checkAddToFav && checkAddToFav.success) {
+    if (checkAddToFav.message === "The Audio has been added to your favorites") {
+      // Notify "تم الاضافة بنجاح"
+      setIsFav(true); // Toggle favorite status
+
+      // notify(t('addToFavoritesSuccess'), "success");
+    } else if (checkAddToFav.message === "The Audio has been removed from your favorites") {
+      setIsFav(false); // Toggle favorite status
+
+      // Handle other statuses or errors if needed
+      // notify(t('addToFavoritesError'), "error");
+  }
+}
+
+}
+  }, [isLoadingFav,checkAddToFav]);
 
   // useEffect(() => {
   //   if (isLoadingFav === false ) {
@@ -945,8 +970,8 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                     <Col sm="4" className="responsive-sounds">
                       <div className="d-flex justify-content-center align-items-center  ">
                         <img
-                          src={favIcon}
-                          style={{ marginLeft: "10px", cursor: "pointer" }}
+                     src={isFav ? favRedIcon : fav2Icon}
+                     style={{ marginLeft: "10px", cursor: "pointer" }}
                           onClick={() => handelAddtoFav(item.id)}
                           alt="" />
 
@@ -1151,6 +1176,8 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                         )} */}
 
                         {token ? (
+                                                    <div style={{marginTop:'22px', marginLeft:'15px'}}>
+
                           <a
                             href={`${
                               mostListenedData[indexMobileState]?.audio || null
@@ -1168,6 +1195,7 @@ localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
                               }
                             />
                           </a>
+                          </div>
                         ) : (
                           <div style={{marginTop:'22px', marginLeft:'15px'}}>
                           <img

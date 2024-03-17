@@ -13,7 +13,8 @@ import {
 
 } from "react-bootstrap";
 import nodata from "../../images/nodata.svg";
-
+import fav2Icon from "../../images/fav2.svg";
+import favrediconwith from "../../images/favredWith.svg";
 
 import { Link,useNavigate } from "react-router-dom";
 import squareIcon from "../../images/squares.svg";
@@ -34,6 +35,12 @@ import { useTranslation } from 'react-i18next';
 
 import notify from "../UseNotifications/useNotification";
 const Books = () => {
+  const favIconNot = fav2Icon; // Path to the normal icon
+  const favRedIcon = favrediconwith; // Path to the red/favorite icon
+  
+  
+  
+   const [isFav, setIsFav] = useState(false); // State to track favorite status
   const navigate = useNavigate()
   const { t } = useTranslation('books');
 
@@ -175,14 +182,38 @@ const Books = () => {
     dispatch(addToFavBook({ formData, token }))
     localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
 
-    notify(t('addToFavoritesSuccess'), "success");
+  //   notify(t('addToFavoritesSuccess'), "success");
 
-    setTimeout(() => {
+  //   setTimeout(() => {
 
-    navigate("/favBook")
-  }, 1000);
+  //   navigate("/favBook")
+  // }, 1000);
+
+
+
+
+
 
         }
+
+        useEffect(() => {
+          if (isLoadingFavBook === false) {
+            if(checkAddToFavBook && checkAddToFavBook.success) {
+          if (checkAddToFavBook.message === "The Book has been added to your favorites") {
+            // Notify "تم الاضافة بنجاح"
+            setIsFav(true); // Toggle favorite status
+      
+            // notify(t('addToFavoritesSuccess'), "success");
+          } else if (checkAddToFavBook.message === "The Book has been removed from your favorites") {
+            setIsFav(false); // Toggle favorite status
+      
+            // Handle other statuses or errors if needed
+            // notify(t('addToFavoritesError'), "error");
+        }
+      }
+      
+      }
+        }, [isLoadingFavBook,checkAddToFavBook]);
       //   useEffect(() => {
       //     if (isLoadingFavBook === false) {
       //       if(checkAddToFavBook && checkAddToFavBook.success) {
@@ -603,7 +634,7 @@ required
                 gap: "20px",
               }}
             >
-              <img src={favGroundIcon}
+              <img  src={isFav ? favRedIcon : fav2Icon}
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -692,7 +723,7 @@ required
                 gap: "20px",
               }}
             >
-              <img src={favGroundIcon}
+              <img  src={isFav ? favRedIcon : fav2Icon}
                 style={{
                  
                   marginRight: "-30px",
@@ -769,7 +800,7 @@ required
                   gap: "20px",
                 }}
               >
-                <img src={favGroundIcon}
+                <img  src={isFav ? favRedIcon : fav2Icon}
                   style={{
                     color: "#878787bd",
                     fontSize: "30px",

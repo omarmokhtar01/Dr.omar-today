@@ -7,6 +7,7 @@ const initialState = {
   userDel:{},
 userData:{},
   userRegister:{},
+  changeUserPassword:{},
   isLoading: false,
   error: null,
 }; 
@@ -38,7 +39,7 @@ const register = createAsyncThunk('auth/register', async (formData, thunkAPI) =>
       const response = await baseUrl.get(
         'user/delete-account', {
           headers: {
-              Authorization: `Bearer ${token}` // Include token in the request headers
+              Authorization:` Bearer ${token}` // Include token in the request headers
           }
       });
         console.log(response.data);
@@ -54,7 +55,7 @@ const register = createAsyncThunk('auth/register', async (formData, thunkAPI) =>
       const response = await baseUrl.get(
         'user/Profile', {
           headers: {
-              Authorization: `Bearer ${token}` // Include token in the request headers
+              Authorization:` Bearer ${token}` // Include token in the request headers
           }
       });
       return response.data;
@@ -63,6 +64,35 @@ const register = createAsyncThunk('auth/register', async (formData, thunkAPI) =>
     }
   });
 
+
+ 
+
+  const changePasswordUser = createAsyncThunk(
+    'change/password',
+    async ({ formData, token }, thunkAPI) => {
+      try {
+        const response = await baseUrl.post(
+          'Auth/change-password',
+          formData,
+          {
+            params: {
+              current_password: formData.current_password,
+              new_password: formData.new_password,
+              new_password_confirmation: formData.new_password_confirmation
+            },
+            headers: {
+              Authorization:` Bearer ${token}` // Enclose the token interpolation in backticks
+            }
+          }
+        );
+        console.log(response);
+        return response.data;
+      } catch (error) {
+        // You might want to handle errors more appropriately here
+        return thunkAPI.rejectWithValue(error.message);
+      }
+    }
+  );
 
 
 
@@ -131,9 +161,25 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+
+
+      .addCase(changePasswordUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(changePasswordUser.fulfilled, (state, action) => {
+        state.changeUserPassword = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(changePasswordUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { createLoginUser , register,delAcc,getProfile};
+export { createLoginUser , register,delAcc,getProfile , changePasswordUser};
 
 export default authSlice.reducer;

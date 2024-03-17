@@ -100,7 +100,7 @@ console.log(dataProfile);
             </div>
           </Col>
 
-          {/* <Col
+          <Col
             xs="6"
             md="6"
             lg="6"
@@ -129,7 +129,7 @@ console.log(dataProfile);
                 </h6>
               </div>
             </Link>
-          </Col> */}
+          </Col>
         </Row>
       </Container>
 

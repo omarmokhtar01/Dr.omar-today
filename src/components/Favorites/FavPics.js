@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row,Spinner } from "react-bootstrap";
 import heart1 from "../../images/redhearticon.png";
 import pic1 from "../../images/pic1.png";
@@ -20,6 +20,10 @@ import nodata from "../../images/nodata.svg";
 
 import favredicon from "../../images/redfav.svg";
 import { useTranslation } from "react-i18next";
+import notify from "../UseNotifications/useNotification";
+import { favOnePic } from "../../features/allPictres/allPicturesSlice";
+import fav2Icon from "../../images/fav2.svg";
+import favrediconwith from "../../images/favredWith.svg";
 const FavPics = () => {
   const token = Cookies.get("token");
 
@@ -56,11 +60,53 @@ const FavPics = () => {
     }
   }, [isLoading]);
 
-  const removeData = useSelector((state) => state.favorite.delImg);
+  const [isFav, setIsFav] = useState(true); // State to track favorite status
+  const favIconNot = fav2Icon; // Path to the normal icon
+  const favRedIcon = favrediconwith; // Path to the red/favorite icon
 
-  const removeDataById=(id)=>{
-    removeOneImgFav({token,id})
-  }
+  const checkAddToFavPic = useSelector((state) => state.pictures.favPic);
+  const isLoadingFavPic = useSelector((state) => state.pictures.isLoadingFavPic);
+
+  const handelAddtoFavPic = (picId) => {
+    const formData = {
+      image_id: picId, // Replace 'your_audio_id_here' with the actual audio ID value
+        // other formData properties if any
+    };
+    if (!token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+     return notify(t('loginRequired'), "error");
+    }
+    localStorage.setItem("photofav","تم اضافة  الصورة بنجاح")
+
+
+    dispatch(favOnePic({ formData, token }))
+                // notify(t('addToFavoritesSuccess'), "success");
+
+    // setTimeout(() => {
+
+    //   navigate("/favBook")
+    // }, 1000);
+        }
+
+        useEffect(() => {
+          if (isLoadingFavPic === false) {
+            if(checkAddToFavPic && checkAddToFavPic.success) {
+          if (checkAddToFavPic.message === "The image has been added to your favorites") {
+            // Notify "تم الاضافة بنجاح"
+            setIsFav(true); // Toggle favorite status
+
+            // notify(t('addToFavoritesSuccess'), "success");
+          } else if (checkAddToFavPic.message === "The image has been added to your favorites") {
+            setIsFav(false); // Toggle favorite status
+
+            // Handle other statuses or errors if needed
+            // notify(t('addToFavoritesError'), "error");
+        }
+      }
+
+      }
+        }, [isLoadingFavPic,checkAddToFavPic]);
 
   return (
     <>
@@ -277,8 +323,8 @@ const FavPics = () => {
             <>
               {getData.map((item, index) => (
                 <Col xl={6} lg={12} md={12} sm={12} xs={12} >
-                <img  src={favredicon}
-                onClick={()=>removeDataById(item.id)}
+                <img  src={isFav ? favRedIcon : fav2Icon} 
+                onClick={()=>handelAddtoFavPic(item.id)}
 alt=""
                   style={{
                    position:'absolute',

@@ -92,7 +92,7 @@ function App() {
             path="/personaLinformation"
             element={<PersonalinFormation />}
           />
-          {/* <Route path="/personaLPassword" element={<UserPassword />} /> */}
+          <Route path="/personaLPassword" element={<UserPassword />} />
           <Route path="/login" element={<LoginPage />} />
           {/* <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
           <Route path="/forgetPass" element={<ForgetPass2 />} /> */}

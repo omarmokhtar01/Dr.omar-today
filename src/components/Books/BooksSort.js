@@ -31,6 +31,8 @@ import searchIcon from "../../images/search.svg";
 import arrowsIcon from "../../images/twoArr.svg";
 import notify from "../UseNotifications/useNotification";
 import { useTranslation } from "react-i18next";
+import fav2Icon from "../../images/fav2.svg";
+import favrediconwith from "../../images/favredWith.svg";
 const BooksSort = () => {
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
 
@@ -143,9 +145,15 @@ const BooksSort = () => {
 
   let token = Cookies.get("token");
 
-
+  const favIconNot = fav2Icon; // Path to the normal icon
+  const favRedIcon = favrediconwith; // Path to the red/favorite icon
+  
+  
+  
+   const [isFav, setIsFav] = useState(false); // State to track favorite status
   const checkAddToFavBook = useSelector((state) => state.books.favBook);
   const isLoadingFavBook = useSelector((state) => state.books.isLoadingBook);
+
 
   const handelAddtoFavBook = (bookId) => {
     const formData = {
@@ -155,18 +163,44 @@ const BooksSort = () => {
     if (!token) {
       // Token exists, perform the download action
       // Add your download logic here
-     return notify("من فضلك قم بتسجيل الدخول اولا", "error");
+      return notify(t('loginRequired'), "error");
     }
-    localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
 
     dispatch(addToFavBook({ formData, token }))
-                notify(" تم الأضافة للمفضلة بنجاح", "success");
+    localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
 
-    setTimeout(() => {
+  //   notify(t('addToFavoritesSuccess'), "success");
 
-    navigate("/favBook")
-  }, 1000);
+  //   setTimeout(() => {
+
+  //   navigate("/favBook")
+  // }, 1000);
+
+
+
+
+
+
         }
+
+        useEffect(() => {
+          if (isLoadingFavBook === false) {
+            if(checkAddToFavBook && checkAddToFavBook.success) {
+          if (checkAddToFavBook.message === "The Book has been added to your favorites") {
+            // Notify "تم الاضافة بنجاح"
+            setIsFav(true); // Toggle favorite status
+      
+            // notify(t('addToFavoritesSuccess'), "success");
+          } else if (checkAddToFavBook.message === "The Book has been removed from your favorites") {
+            setIsFav(false); // Toggle favorite status
+      
+            // Handle other statuses or errors if needed
+            // notify(t('addToFavoritesError'), "error");
+        }
+      }
+      
+      }
+        }, [isLoadingFavBook,checkAddToFavBook]);
       //   useEffect(() => {
       //     if (isLoadingFavBook === false) {
       //       if(checkAddToFavBook && checkAddToFavBook.success) {
@@ -475,10 +509,14 @@ const BooksSort = () => {
             }}
           >
             
-              <IoHeartCircleSharp
-                style={{ color: "gray", fontSize: "30px" ,cursor:'pointer' }}
-                onClick={()=>handelAddtoFavBook(item.id)}
-
+            <img  src={isFav ? favRedIcon : fav2Icon}
+                style={{
+                  color: "#878787bd",
+                  fontSize: "30px",
+                  marginRight: "-30px",
+                  cursor: 'pointer'
+                }}
+              onClick={()=>handelAddtoFavBook(item.id)}
               />
             
           </div>
@@ -549,12 +587,15 @@ const BooksSort = () => {
               }}
             >
               
-                <img src={favGroundIcon}
-                  style={{ cursor:'pointer' }}
-                                  onClick={()=>handelAddtoFavBook(item.id)}
-
-
-                />
+              <img  src={isFav ? favRedIcon : fav2Icon}
+                style={{
+                  color: "#878787bd",
+                  fontSize: "30px",
+                  marginRight: "-30px",
+                  cursor: 'pointer'
+                }}
+              onClick={()=>handelAddtoFavBook(item.id)}
+              />
               
             </div>
             <h5>{item.name}</h5>
@@ -628,12 +669,15 @@ const BooksSort = () => {
                 }}
               >
                 
-                  <img src={favGroundIcon}
-                    style={{ cursor:'pointer' }}
-                                    onClick={()=>handelAddtoFavBook(item.id)}
-
-
-                  />
+                <img  src={isFav ? favRedIcon : fav2Icon}
+                style={{
+                  color: "#878787bd",
+                  fontSize: "30px",
+                  marginRight: "-30px",
+                  cursor: 'pointer'
+                }}
+              onClick={()=>handelAddtoFavBook(item.id)}
+              />
                 
               </div>
               <h5>{item.name}</h5>
@@ -700,12 +744,15 @@ const BooksSort = () => {
                 }}
               >
                 
-                  <img src={favGroundIcon}
-                    style={{cursor:'pointer' }}
-                                    onClick={()=>handelAddtoFavBook(item.id)}
-
-
-                  />
+                <img  src={isFav ? favRedIcon : fav2Icon}
+                style={{
+                  color: "#878787bd",
+                  fontSize: "30px",
+                  marginRight: "-30px",
+                  cursor: 'pointer'
+                }}
+              onClick={()=>handelAddtoFavBook(item.id)}
+              />
                 
               </div>
               <h5>{item.name}</h5>

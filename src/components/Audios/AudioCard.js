@@ -10,6 +10,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import nodata from "../../images/nodata.svg";
+import favrediconwith from "../../images/favredWith.svg";
 
 import PlayIcon from "../../images/play.svg";
 import PauseIcon from "../../images/pause.svg";
@@ -277,30 +278,52 @@ console.log(getDataOne);
   const checkAddToFav = useSelector((state) => state.audio.favAudio);
   const isLoadingFav = useSelector((state) => state.audio.isLoadingFav);
 
-  const handelAddtoFav = (audioId) => {
-    const formData = {
-        audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
-        // other formData properties if any
-    };
-    if (!token) {
-      // Token exists, perform the download action
-      // Add your download logic here
-      return notify(t('loginRequired'), "error");
-    }
-    dispatch(favOneAudio({ formData, token }))
-           navigate("/favAudios")
-        }
+  
+  const [isFav, setIsFav] = useState(false); // State to track favorite status
 
+  // const favIconIs = isFav ? favrediconwith  :favIcon;
+  const favIconNot = favIcon; // Path to the normal icon
+  const favRedIcon = favrediconwith; // Path to the red/favorite icon
+
+  const handleAddtoFav = (audioId) => {
+    const formData = {
+      audio_id: audioId,
+      // other formData properties if any
+    };
+
+    if (!token) {
+      // Token doesn't exist, notify user and return
+      return notify('Login Required', 'error');
+    }
+
+    // Assuming you dispatch an action to add to favorites
+    dispatch(favOneAudio({ formData, token }))
+      // Handle success or error based on the API response
+      // if (checkAddToFav.message ===true) {
+
+      //   notify('Added to Favorites', 'success');
+      //   console.log(isFav);
+
+      // } else if(checkAddToFav.message ==="The Audio has been removed from your favorites"){
+      //   setIsFav(false);
+      //   notify('Remove from favorites', 'error');
+      // }
+    
+  };
 
         useEffect(() => {
           if (isLoadingFav === false) {
             if(checkAddToFav && checkAddToFav.success) {
-          if (checkAddToFav.success === true) {
+          if (checkAddToFav.message === "The Audio has been added to your favorites") {
             // Notify "تم الاضافة بنجاح"
-            notify(t('addToFavoritesSuccess'), "success");
-          } else {
+            setIsFav(true); // Toggle favorite status
+
+            // notify(t('addToFavoritesSuccess'), "success");
+          } else if (checkAddToFav.message === "The Audio has been removed from your favorites") {
+            setIsFav(false); // Toggle favorite status
+
             // Handle other statuses or errors if needed
-            notify(t('addToFavoritesError'), "error");
+            // notify(t('addToFavoritesError'), "error");
         }
       }
 
@@ -356,7 +379,9 @@ console.log(getDataOne);
 
 
 
+            const [isFavElder, setIsFavElder] = useState(false); // State to track favorite status
 
+  // const favIconElderIs = isFavElder ? favrediconwith  :favIcon;
 
         const checkAddToFavElder = useSelector((state) => state.elders.favElder);
         const isLoadingFavElder = useSelector((state) => state.elders.isLoadingFavElder);
@@ -374,9 +399,9 @@ console.log(getDataOne);
           dispatch(favOneElder({ formData, token }))
           localStorage.setItem("elderfav","تم حفظ  العالم بنجاح")
 
-          setTimeout(() => {
-            navigate("/favScientists")
-          }, 1000);
+          // setTimeout(() => {
+          //   navigate("/favScientists")
+          // }, 1000);
                  
               }
 
@@ -384,12 +409,15 @@ console.log(getDataOne);
               useEffect(() => {
                 if (isLoadingFavElder === false) {
                   if(checkAddToFavElder && checkAddToFavElder.success) {
-                if (checkAddToFavElder.success === true) {
+                if (checkAddToFavElder.message === "The elder has been added to your favorites") {
                   // Notify "تم الاضافة بنجاح"
-                  notify(t('addToFavoritesSuccess'), "success");
-                } else {
+                  // notify(t('addToFavoritesSuccess'), "success");
+                  setIsFavElder(true);
+                } else if (checkAddToFavElder.message === "The elder has been removed from your favorites") {
+                  setIsFavElder(false); // Toggle favorite status
+      
                   // Handle other statuses or errors if needed
-                  notify(t('addToFavoritesError'), "error");
+                  // notify(t('addToFavoritesError'), "error");
               }
             }
       
@@ -413,6 +441,8 @@ console.log(getDataOne);
       
             // }
             //   }, [isLoadingElderDown,elderDown]);
+
+
   return (
 
 
@@ -506,7 +536,8 @@ console.log(getDataOne);
 
                     />
                     {/* End of download functionality */}
-                    <img src={fav2Icon}
+                    <img 
+                     src={isFavElder ? favRedIcon : fav2Icon}
                       style={{
                       
                         cursor: "pointer",
@@ -705,14 +736,16 @@ console.log(getDataOne);
                       />
                     )}
 
-                    <img src={favIcon}
-                      style={{
-                        color: "#878787bd",
-                        fontSize: "30px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handelAddtoFav(item.id)} // Assuming 'audioId' is accessible in this scope
-                    />
+<img
+        src={isFav ? favRedIcon : favIconNot}
+        alt="Favorite Icon"
+        style={{
+          color: '#878787bd',
+          fontSize: '30px',
+          cursor: 'pointer',
+        }}
+        onClick={() => handleAddtoFav(item.id)}
+      />
 
                     <button
                       onClick={() => handlePlay(index)}

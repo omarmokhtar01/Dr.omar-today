@@ -1,12 +1,132 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./profile.css";
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import {  changePasswordUser } from "../../features/auth/authSlice";
+import notify from "../UseNotifications/useNotification";
+
+
+
+
+
 
 const UserPassword = () => {
+
+  let token = Cookies.get("token");
+
+  const dispatch = useDispatch();
+
+  // const [state, setState] = useState({
+  //   current_password: "",
+  //   new_password: "",
+  //   new_password_confirmation: "",   
+  // });           
+  
+  // // Destructure state object for easier access
+  // const { current_password, new_password,new_password_confirmation } = state;
+  
+  // // Function to handle input changes
+  // const handleInputChange = (fieldName) => (e) => {
+  //   setState((prevState) => ({ ...prevState, [fieldName]: e.target.value }));
+  // };
+
+  
+
+
+
+
+
+
+  // const [formData, setFormData] = useState({
+  //   current_password: '',
+  //   new_password: '',
+  //   new_password_confirmation: '',
+  // });
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
+
+
+
+
+
+  const res = useSelector((state) => state.auth.changeUserPassword);
+
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const error = useSelector((state) => state.auth.error);
+
+
+   const [currentPassState, setCurrentPassState] = useState("");
+   const [newPassState, setNewPassState] = useState("");
+   const [confirmPassState, setConfirmPassState] = useState("");
+   
+   const handleChangeCurrent = (e) => {
+     setCurrentPassState(e.target.value);
+   };
+   
+   const handleChangeNew = (e) => {
+     setNewPassState(e.target.value);
+   };
+   
+   const handleChangeConfirm = (e) => {
+     setConfirmPassState(e.target.value);
+   };
+   
+   const handleSubmit = (e) => {
+     e.preventDefault();
+     const formData = {
+       current_password: currentPassState,
+       new_password: newPassState,
+       new_password_confirmation: confirmPassState
+     };
+     dispatch(changePasswordUser({ formData, token }));
+   };
+   const navigate = useNavigate();
+
+   useEffect(() => {
+    if (isLoading === false) {
+      if (res) {
+        console.log(res.message);
+
+        if (res.message === "Password changed successfully.") {
+          notify("Password changed successfully!", "success");
+          Cookies.remove("token");
+          setTimeout(() => {
+            navigate("/");
+          }, 1500);
+          
+        }else if (res.message === "Current password is incorrect."){
+          notify("Current password is incorrect.", "error");
+
+        }else if (res.message === "The new password field must be at least 8 characters."){
+          notify("The new password field must be at least 8 characters.", "error");
+
+        }
+
+     
+      }
+    }
+  }, [isLoading]);
+
+  
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   dispatch(changePasswordUser({ 
+  //     current_password: '',
+  //        new_password: '',
+  //       new_password_confirmation: '',
+      
+  //      token }));
+  // };
+
+
   return (
-    <>
+    <> 
       <NavBar />
 
       <Container>
@@ -110,19 +230,21 @@ const UserPassword = () => {
           <Col className=" d-flex justify-content-center text-center ">
             <div style={{ width: "400px" }}>
               <Form style={{ marginBottom: "35px" }}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3" controlId="currentPassword">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
                     كلمه المرور الحاليه{" "}
                   </Form.Label>
 
                   <Form.Control
-                    type="password"
-                    style={{
-                      background: "rgba(245, 245, 245, 1)",
-                      borderRadius: "10px",
-                      padding: "15px",
-                    }}
-                  />
+  value={currentPassState} // Use state variable here
+  onChange={(e) => handleChangeCurrent(e)} // Pass the event object to handleChangeCurrent
+  type="password"
+  style={{
+    background: "rgba(245, 245, 245, 1)",
+    borderRadius: "10px",
+    padding: "15px",
+  }}
+/>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -131,6 +253,10 @@ const UserPassword = () => {
                   </Form.Label>
 
                   <Form.Control
+                   onChange={(e)=>handleChangeNew(e)}
+                   value={newPassState}
+                   
+                
                     type="password"
                     style={{
                       background: "rgba(245, 245, 245, 1)",
@@ -146,6 +272,8 @@ const UserPassword = () => {
                   </Form.Label>
 
                   <Form.Control
+                     onChange={(e)=>handleChangeConfirm(e)}
+                     value={confirmPassState}
                     type="password"
                     style={{
                       background: "rgba(245, 245, 245, 1)",
@@ -159,7 +287,7 @@ const UserPassword = () => {
                   className="d-flex justify-content-center align-items-center"
                   style={{ borderRadius: "30px" }}
                 >
-                  <button
+                  <button   onClick={handleSubmit}
                     style={{
                       color: " rgba(255, 255, 255, 1)",
                       fontWeight: "700",

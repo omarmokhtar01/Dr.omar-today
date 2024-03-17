@@ -14,14 +14,14 @@ import { IoIosHeart } from "react-icons/io";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 import { MdDownloadForOffline } from "react-icons/md";
 import notify from "../UseNotifications/useNotification";
-import { downloadOneAudio } from "../../features/audios/audioSlice";
+import { downloadOneAudio, favOneAudio } from "../../features/audios/audioSlice";
 import favrediconwith from "../../images/favredWith.svg";
 import PlayIcon from "../../images/play.svg";
 import PauseIcon from "../../images/pause.svg";
 import downloadIcon from "../../images/download.svg";
 import nodata from "../../images/nodata.svg";
 import { useTranslation } from "react-i18next";
-
+import fav2Icon from "../../images/fav2.svg";
 const FavAudios = () => {
   const token = Cookies.get("token");
   const { t } = useTranslation('favaudio');
@@ -186,11 +186,61 @@ console.log(getData);
   };
 
 
-  const removeData = useSelector((state) => state.favorite.delAudio);
+  const [isFav, setIsFav] = useState(true); // State to track favorite status
 
-  const removeDataById=(id)=>{
-    removeOneAudiosFav({token,id})
-  }
+  // const favIconIs = isFav ? favrediconwith  :favIcon;
+  const favIconNot = fav2Icon; // Path to the normal icon
+  const favRedIcon = favrediconwith; // Path to the red/favorite icon
+  const checkAddToFav = useSelector((state) => state.audio.favAudio);
+  const isLoadingFav = useSelector((state) => state.audio.isLoadingFav);
+
+  
+  const handleAddtoFav = (audioId) => {
+    console.log('clicked');
+    const formData = {
+      audio_id: audioId,
+      // other formData properties if any
+    };
+
+    if (!token) {
+      // Token doesn't exist, notify user and return
+      return notify('Login Required', 'error');
+    }
+
+    // Assuming you dispatch an action to add to favorites
+    dispatch(favOneAudio({ formData, token }))
+
+      // Handle success or error based on the API response
+      // if (checkAddToFav.message ===true) {
+
+      //   notify('Added to Favorites', 'success');
+      //   console.log(isFav);
+
+      // } else if(checkAddToFav.message ==="The Audio has been removed from your favorites"){
+      //   setIsFav(false);
+      //   notify('Remove from favorites', 'error');
+      // }
+    
+  };
+
+        useEffect(() => {
+          if (isLoadingFav === false) {
+            if(checkAddToFav && checkAddToFav.success) {
+          if (checkAddToFav.message === "The Audio has been added to your favorites") {
+            // Notify "تم الاضافة بنجاح"
+            setIsFav(true); // Toggle favorite status
+
+            // notify(t('addToFavoritesSuccess'), "success");
+          } else if (checkAddToFav.message === "The Audio has been removed from your favorites") {
+            setIsFav(false); // Toggle favorite status
+
+            // Handle other statuses or errors if needed
+            // notify(t('addToFavoritesError'), "error");
+        }
+      }
+
+      }
+        }, [isLoadingFav,checkAddToFav]);
   return (
     <>
       <NavBar />
@@ -478,12 +528,12 @@ console.log(getData);
                       />
                       
                     )}
-              <img src={favrediconwith}
+              <img  src={isFav ? favRedIcon : favIconNot}
                   style={{
                     
                     cursor: "pointer",
                   }}
-onClick={()=>removeDataById(item.id)}
+onClick={()=>handleAddtoFav(item.id)}
                   alt=""
                 />
            <button

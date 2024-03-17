@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -12,8 +12,12 @@ import { IoIosHeart } from "react-icons/io";
 import audioIcon from "../../images/audio.svg"; 
 import nodata from "../../images/nodata.svg";
 import { useTranslation } from "react-i18next";
-
+import { favOneElder } from "../../features/elders/eldersSlice";
+import fav2Icon from "../../images/fav2.svg";
+import favrediconwith from "../../images/favredWith.svg";
 const FavScientists = () => {
+  const favIconNot = fav2Icon; // Path to the normal icon
+  const favRedIcon = favrediconwith; // Path to the red/favorite icon
   const token = Cookies.get("token");
   const { t } = useTranslation('favaudio');
 
@@ -48,11 +52,49 @@ const FavScientists = () => {
     }
   }, [isLoading]);
 
-  const removeData = useSelector((state) => state.favorite.delElder);
 
-  const removeDataById=(id)=>{
-    removeOneElderFav({token,id})
-  }
+  const [isFavElder, setIsFavElder] = useState(true); // State to track favorite status
+
+  const checkAddToFavElder = useSelector((state) => state.elders.favElder);
+  const isLoadingFavElder = useSelector((state) => state.elders.isLoadingFavElder);
+
+  const handelAddtoFavElder = (elderId) => {
+    const formData = {
+      elder_id: elderId, // Replace 'your_audio_id_here' with the actual audio ID value
+        // other formData properties if any
+    };
+    if (!token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+      // return notify(t('loginRequired'), "error");
+    }
+    dispatch(favOneElder({ formData, token }))
+    localStorage.setItem("elderfav","تم حفظ  العالم بنجاح")
+
+    // setTimeout(() => {
+    //   navigate("/favScientists")
+    // }, 1000);
+           
+        }
+
+
+        useEffect(() => {
+          if (isLoadingFavElder === false) {
+            if(checkAddToFavElder && checkAddToFavElder.success) {
+          if (checkAddToFavElder.message === "The elder has been added to your favorites") {
+            // Notify "تم الاضافة بنجاح"
+            // notify(t('addToFavoritesSuccess'), "success");
+            setIsFavElder(true);
+          } else if (checkAddToFavElder.message === "The elder has been removed from your favorites") {
+            setIsFavElder(false); // Toggle favorite status
+
+            // Handle other statuses or errors if needed
+            // notify(t('addToFavoritesError'), "error");
+        }
+      }
+
+      }
+        }, [isLoadingFavElder,checkAddToFavElder]);
 
   return (
     <>
@@ -291,8 +333,8 @@ const FavScientists = () => {
                   
                 }}
               >
-               <img src={favredicon}
-               onClick={()=>removeDataById(item.id)}
+               <img src={isFavElder ? favRedIcon : favIconNot}
+              
 alt=""
                   style={{
                     
@@ -300,7 +342,9 @@ alt=""
                     cursor: "pointer"
                   
                     ,padding:'5px'
-                  }} />
+                  }} 
+                  onClick={()=>handelAddtoFavElder(item.id)}
+                  />
               </div>
 
               <h5 style={{marginTop:'15px'}}>  {item.name}</h5>

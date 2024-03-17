@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./fav.css";
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row,Spinner } from "react-bootstrap";
@@ -16,7 +16,10 @@ import { IoIosHeart } from "react-icons/io";
 import favredicon from "../../images/redfav.svg";
 import nodata from "../../images/nodata.svg";
 import { useTranslation } from "react-i18next";
-
+import fav2Icon from "../../images/fav2.svg";
+import favrediconwith from "../../images/favredWith.svg";
+import notify from "../UseNotifications/useNotification";
+import { addToFavBook } from "../../features/books/booksSlice";
 const FavBook = () => {
   const token = Cookies.get("token");
 
@@ -51,12 +54,62 @@ const FavBook = () => {
       }
     }
   }, [isLoading]);
+  const favIconNot = fav2Icon; // Path to the normal icon
+  const favRedIcon = favrediconwith; // Path to the red/favorite icon
+  
+  
+  
+   const [isFav, setIsFav] = useState(true); // State to track favorite status
 
-  const removeData = useSelector((state) => state.favorite.delBook);
+  const checkAddToFavBook = useSelector((state) => state.books.favBook);
+  const isLoadingFavBook = useSelector((state) => state.books.isLoadingBook);
 
-  const removeDataById=(id)=>{
-    removeOneBookFav({token,id})
-  }
+  const handelAddtoFavBook = (bookId) => {
+    const formData = {
+      book_id: bookId, // Replace 'your_audio_id_here' with the actual audio ID value
+        // other formData properties if any
+    };
+    if (!token) {
+      // Token exists, perform the download action
+      // Add your download logic here
+      return notify(t('loginRequired'), "error");
+    }
+
+    dispatch(addToFavBook({ formData, token }))
+    localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
+
+  //   notify(t('addToFavoritesSuccess'), "success");
+
+  //   setTimeout(() => {
+
+  //   navigate("/favBook")
+  // }, 1000);
+
+
+
+
+
+
+        }
+
+        useEffect(() => {
+          if (isLoadingFavBook === false) {
+            if(checkAddToFavBook && checkAddToFavBook.success) {
+          if (checkAddToFavBook.message === "The Book has been added to your favorites") {
+            // Notify "تم الاضافة بنجاح"
+            setIsFav(true); // Toggle favorite status
+      
+            // notify(t('addToFavoritesSuccess'), "success");
+          } else if (checkAddToFavBook.message === "The Book has been removed from your favorites") {
+            setIsFav(false); // Toggle favorite status
+      
+            // Handle other statuses or errors if needed
+            // notify(t('addToFavoritesError'), "error");
+        }
+      }
+      
+      }
+        }, [isLoadingFavBook,checkAddToFavBook]);
 
   return (
     <>
@@ -284,8 +337,9 @@ const FavBook = () => {
 
                 }}
               >
-                <img src={favredicon}
-                onClick={()=>removeDataById(item.id)}
+                <img src={isFav ? favRedIcon : fav2Icon}
+                              onClick={()=>handelAddtoFavBook(item.id)}
+
 alt=""
                   style={{
                   
