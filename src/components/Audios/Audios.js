@@ -577,6 +577,7 @@ console.log(elderDown);
                 fontSize: "40px",
                 cursor: "pointer",
               }}
+              className="icon-mob"
               onClick={()=>handelAddtoFavElder(item.id)}
             />
             <MdDownloadForOffline
@@ -660,6 +661,7 @@ console.log(elderDown);
                     cursor: "pointer",
                   }}
                   onClick={()=>handelAddtoFavElder(item.id)}
+                  className="icon-mob"
                 />
                 <img src={downGroundIcon}
                   style={{
@@ -668,6 +670,7 @@ console.log(elderDown);
                     paddingLeft: "5px",
                     cursor: "pointer",
                   }}
+                  className="icon-mob"
                   onClick={() => downloadAudiosAsZip(item.id)}
                 />
               </div>
@@ -755,6 +758,7 @@ console.log(elderDown);
                   paddingLeft: "5px",
                   cursor: "pointer",
                 }}
+                className="icon-mob"
               />
             </div>
           </div>
@@ -826,6 +830,7 @@ console.log(elderDown);
                     cursor: "pointer",
                   }}
                   onClick={()=>handelAddtoFavElder(item.id)}
+                  className="icon-mob"
                 />
                 <img src={downGroundIcon}
                   onClick={()=>downloadAudiosAsZip(item.id,item.id)}
@@ -835,6 +840,7 @@ console.log(elderDown);
                     paddingLeft: "5px",
                     cursor: "pointer",
                   }}
+                  className="icon-mob"
                 />
               </div>
             </div>

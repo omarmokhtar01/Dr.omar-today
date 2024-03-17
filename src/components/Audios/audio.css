@@ -155,3 +155,26 @@ margin-left: 25px !important;
       margin-right: -160px !important;
     }
   }
+
+
+
+
+
+  @media (min-width: 375px) and (max-width: 380px) {
+    #sounds-icons{
+     
+    }
+    .icon-mob{
+      width: 35px !important;
+    }
+  }
+  
+  @media (min-width: 354px) and (max-width: 377px) { 
+  #sounds-icons{
+
+  }.icon-mob{
+    width: 32px !important;
+  }#img-card-audio{
+    width: 132px !important;
+  }
+ }

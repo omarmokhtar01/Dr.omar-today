@@ -307,7 +307,7 @@ useEffect(() => {
             <img src={item.image} alt="pic" width={160} height={200} style={{borderRadius:'15px'}} />
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
-            <h5 className="text-center text-lg-center p-2">{item.name}</h5>
+            <h5 style={{fontSize:'18px'}} className="text-center text-lg-center p-2">{item.name}</h5>
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12">
             <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
@@ -334,7 +334,8 @@ useEffect(() => {
                 <img src={item.image} alt="pic" width={160} height={200} style={{borderRadius:'15px'}}/>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
-                <h5 className="text-center text-lg-center p-2">{item.name}</h5>
+                            <h5 style={{fontSize:'18px'}} className="text-center text-lg-center p-2">{item.name}</h5>
+
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
@@ -366,7 +367,8 @@ useEffect(() => {
               <img src={item.image} alt="pic" width={160} height={200} style={{borderRadius:'15px'}}/>
             </div>
             <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
-              <h5 className="text-center text-lg-center p-2">{item.name}</h5>
+                          <h5 style={{fontSize:'18px'}} className="text-center text-lg-center p-2">{item.name}</h5>
+
             </div>
             <div className="col-lg-12 col-md-12 col-sm-12">
               <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
@@ -389,7 +391,8 @@ useEffect(() => {
                 <img src={item.image} alt="pic" width={160} height={200} style={{borderRadius:'15px'}}/>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12 pt-2">
-                <h5 className="text-center text-lg-center p-2">{item.name}</h5>
+                            <h5 style={{fontSize:'18px'}} className="text-center text-lg-center p-2">{item.name}</h5>
+
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <p className="text-center text-lg-center" style={{ marginTop: "-5px", color: "rgb(130, 130, 130)", fontWeight: "bold" }}>
