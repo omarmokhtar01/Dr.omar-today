@@ -332,7 +332,7 @@ console.log(getAllImgData);
   !isLoadingAllPictures ? (
     getAllPicturesData.length > 0 ? (
       getAllPicturesData.map((image, index) => (
-        <Col key={index} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
+        <Col key={index} xl={6} lg={6} md={12} sm={12} xs={12} onClick={()=>setSavedId(image.id)}>
           {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '40px', right: '-80px', zIndex: '1' }}>
             <img src={favorites.includes(image.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
