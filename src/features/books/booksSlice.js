@@ -17,7 +17,7 @@ const initialState = {
   showOne:{},
   isLoading: false,
   isLoadingSearchBooks: false,
-
+  downBook:{},
 
   favBook:{},
   isLoadingBook: false,
@@ -125,6 +125,27 @@ const addToFavBook = createAsyncThunk('add-to-fav/book', async ({formData,token}
     return error
   }
 });
+
+
+
+
+const downBook = createAsyncThunk('add-down/book', async ({formData,token}, thunkAPI) => {
+  try {
+    const response = await baseUrl.post(
+      `download/Download-Book`,
+      formData, // Include formData in the request
+      {
+          headers: {
+              Authorization: `Bearer ${token}` // Include token in the request headers
+          }
+      });
+      console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return error
+  }
+});
+
 
 
 const booksSlice = createSlice({
@@ -254,9 +275,24 @@ const booksSlice = createSlice({
         state.isLoadingFav = false;
         state.error = action.payload;
       })
+
+
+      .addCase(downBook.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(downBook.fulfilled, (state, action) => {
+        state.downBook = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(downBook.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory,showBook,lastVersion,searchBooks,addToFavBook};
+export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory,showBook,lastVersion,searchBooks,addToFavBook,downBook};
 
 export default booksSlice.reducer;

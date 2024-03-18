@@ -28,12 +28,13 @@ import arrowsIcon from "../../images/twoArr.svg";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import { useSelector, useDispatch } from "react-redux";
-import { addToFavBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
+import { addToFavBook, downBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 import { useTranslation } from 'react-i18next';
 
 import notify from "../UseNotifications/useNotification";
+import { MdDownloadForOffline } from "react-icons/md";
 const Books = () => {
   const favIconNot = fav2Icon; // Path to the normal icon
   const favRedIcon = favrediconwith; // Path to the red/favorite icon
@@ -233,7 +234,21 @@ const Books = () => {
       // }
       //   }, [isLoadingFavBook,checkAddToFavBook]);
 
-
+      const handelDownBook = (bookId) => {
+        const formData = {
+          book_id: bookId, // Replace 'your_audio_id_here' with the actual audio ID value
+            // other formData properties if any
+        };
+        if (!token) {
+          // Token exists, perform the download action
+          // Add your download logic here
+          return notify(t('loginRequired'), "error");
+        }
+    
+        dispatch(downBook({ formData, token }))
+            }
+            const checkDownBook = useSelector((state) => state.books.downBook);
+console.log(checkDownBook);
   return (
     <>
       <NavBar />
@@ -556,6 +571,32 @@ required
                 }}
                 onClick={()=>handelAddtoFavBook(item.id)}
               />
+              {token ? (
+  <a
+    href={`${item.Book}`} // Provide the correct download link here
+    download={`${item.name}.pdf`} // Specify the desired filename for the downloaded PDF
+  >
+    <MdDownloadForOffline
+      style={{
+        color: "rgb(219, 176, 134)",
+        fontSize: "42px",
+        paddingLeft: "5px",
+        cursor: "pointer",
+      }}
+      onClick={() => handelDownBook(item.id)}
+    />
+  </a>
+) : (
+  <MdDownloadForOffline
+      style={{
+        color: "rgb(219, 176, 134)",
+        fontSize: "42px",
+        paddingLeft: "5px",
+        cursor: "pointer",
+      }}
+      onClick={() => handelDownBook(item.id)}
+    />
+)}
           </div>
         </div>
       </Col>
@@ -646,8 +687,35 @@ required
                   // marginRight: "-30px",
                   cursor: 'pointer'
                 }}
+                alt=""
               onClick={()=>handelAddtoFavBook(item.id)}
               />
+            {token ? (
+  <a
+    href={`${item.Book}`} // Provide the correct download link here
+    download={`${item.name}.pdf`} // Specify the desired filename for the downloaded PDF
+  >
+    <MdDownloadForOffline
+      style={{
+        color: "rgb(219, 176, 134)",
+        fontSize: "42px",
+        paddingLeft: "5px",
+        cursor: "pointer",
+      }}
+      onClick={() => handelDownBook(item.id)}
+    />
+  </a>
+) : (
+  <MdDownloadForOffline
+      style={{
+        color: "rgb(219, 176, 134)",
+        fontSize: "42px",
+        paddingLeft: "5px",
+        cursor: "pointer",
+      }}
+      onClick={() => handelDownBook(item.id)}
+    />
+)}
             </div>
           </div>
         </Col>
@@ -736,6 +804,32 @@ required
                 }}
               onClick={()=>handelAddtoFavBook(item.id)}
               />
+               {token ? (
+  <a
+    href={`${item.Book}`} // Provide the correct download link here
+    download={`${item.name}.pdf`} // Specify the desired filename for the downloaded PDF
+  >
+    <MdDownloadForOffline
+      style={{
+        color: "rgb(219, 176, 134)",
+        fontSize: "42px",
+        paddingLeft: "5px",
+        cursor: "pointer",
+      }}
+      onClick={() => handelDownBook(item.id)}
+    />
+  </a>
+) : (
+  <MdDownloadForOffline
+      style={{
+        color: "rgb(219, 176, 134)",
+        fontSize: "42px",
+        paddingLeft: "5px",
+        cursor: "pointer",
+      }}
+      onClick={() => handelDownBook(item.id)}
+    />
+)}
             </div>
           </div>
         </Col>
@@ -814,6 +908,32 @@ required
                   }}
                 onClick={()=>handelAddtoFavBook(item.id)}
                 />
+                {token ? (
+  <a
+    href={`${item.Book}`} // Provide the correct download link here
+    download={`${item.name}.pdf`} // Specify the desired filename for the downloaded PDF
+  >
+    <MdDownloadForOffline
+      style={{
+        color: "rgb(219, 176, 134)",
+        fontSize: "42px",
+        paddingLeft: "5px",
+        cursor: "pointer",
+      }}
+      onClick={() => handelDownBook(item.id)}
+    />
+  </a>
+) : (
+  <MdDownloadForOffline
+      style={{
+        color: "rgb(219, 176, 134)",
+        fontSize: "42px",
+        paddingLeft: "5px",
+        cursor: "pointer",
+      }}
+      onClick={() => handelDownBook(item.id)}
+    />
+)}
               </div>
             </div>
           </Col>
