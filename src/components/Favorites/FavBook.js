@@ -63,6 +63,7 @@ const FavBook = () => {
 
   const checkAddToFavBook = useSelector((state) => state.books.favBook);
   const isLoadingFavBook = useSelector((state) => state.books.isLoadingBook);
+  const [favorites, setFavorites] = useState([]);
 
   const handelAddtoFavBook = (bookId) => {
     const formData = {
@@ -77,7 +78,9 @@ const FavBook = () => {
 
     dispatch(addToFavBook({ formData, token }))
     localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
-
+    if (!favorites.includes(bookId)) {
+      setFavorites([...favorites, bookId]);
+    }
   //   notify(t('addToFavoritesSuccess'), "success");
 
   //   setTimeout(() => {
@@ -337,7 +340,7 @@ const FavBook = () => {
 
                 }}
               >
-                <img src={isFav ? favRedIcon : fav2Icon}
+                <img src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favRedIcon}
                               onClick={()=>handelAddtoFavBook(item.id)}
 
 alt=""

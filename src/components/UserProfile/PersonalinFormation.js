@@ -9,11 +9,11 @@ import deleteAcc from "../../images/deleteAccount.png";
 import { Link,useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { delAcc, getProfile } from "../../features/auth/authSlice";
+import { delAcc, getProfile, updateProfileUser } from "../../features/auth/authSlice";
 import Cookies from "js-cookie";
 import notify from "../UseNotifications/useNotification";
 import { useTranslation } from "react-i18next";
-
+ 
 const PersonalinFormation = () => {
   const { t } = useTranslation('personal');
 
@@ -25,7 +25,7 @@ const PersonalinFormation = () => {
   const delAccount = useSelector(state => state.auth.delAcc);
   const isLoadingAllPictures = useSelector(state => state.auth.isLoading);
 
-  console.log(delAccount);
+  //console.log(delAccount);
   const delFunc =()=>{
 if(!token){
   return notify("من فضلك قم بتسجيل الدخول اولا", "error");
@@ -40,15 +40,72 @@ if(!token){
 
   }
 
-  const dataProfile = useSelector(state => state.auth.userData);
-console.log(dataProfile);
+
   useEffect(()=>{
     if (!token) {
     return  navigate("/");
     }
-    dispatch(getProfile(token))
-  },[ dispatch])
+  },[token])
 
+
+
+
+ 
+  const [nameUser, setNameUser] = useState('');
+   const [phoneUser, setPhoneUser] = useState('');
+   const [emailUser, setEmailUser] = useState('');
+   
+   const handleChangeName = (e) => {
+    setNameUser(e.target.value);
+   };
+   
+   const handleChangePhone = (e) => {
+    setPhoneUser(e.target.value);
+   };
+   
+   const handleChangeEmail = (e) => {
+    setEmailUser(e.target.value);
+   };
+   
+   const res = useSelector((state) => state.auth.updateUserProfile);
+
+   const isLoading = useSelector((state) => state.auth.isLoading);
+   const error = useSelector((state) => state.auth.error);
+console.log(res);
+   useEffect(() => {
+    if (isLoading === false) {
+      if (res) {
+        console.log(res);
+
+        if (res.status === 200) {
+          console.log(res.status);
+          notify("تم تحديث البيانات بشكل ناجح", "success");
+          // setTimeout(() => {
+          //   navigate("/personaLinformation");
+          // }, 1500);
+        }
+        if (res.error === "unauthorised") {
+          notify(t('loginFail'), "error");
+        }
+      }
+    }
+  }, [isLoading]);
+ 
+  //  console.log(res)
+  //  console.log(res.status)
+
+   const handleEdit = (e) => {
+     e.preventDefault();
+     const formData = {
+       name: nameUser,
+       phonenumber: phoneUser,
+       email: emailUser
+     };
+     dispatch(updateProfileUser({ formData, token }));
+     
+   };
+
+ 
   return (
     <>
       <NavBar />
@@ -170,6 +227,8 @@ console.log(dataProfile);
                     }}
                   />
                  <Form.Control
+                 onChange={(e) => handleChangeName(e)}
+                 value={nameUser}
   type="text"
   placeholder={t('fullName')}
   style={{
@@ -177,7 +236,7 @@ console.log(dataProfile);
     borderRadius: "10px",
     padding: "15px 35px 15px 15px",
   }}
-  value={dataProfile?.data?.name || ''}
+ 
 />
 
                 </Form.Group>
@@ -217,6 +276,8 @@ console.log(dataProfile);
                   </div>
 
                   <Form.Control
+                    value={phoneUser}
+                  onChange={(e) => handleChangePhone(e)}
                     type="text"
                     placeholder=" 789 456 123"
                     style={{
@@ -224,7 +285,7 @@ console.log(dataProfile);
                       borderRadius: "10px",
                       padding: "15px 35px 15px 15px",
                     }}
-                    value={dataProfile?.data?.phone || ''}
+                  
 
                   />
                 </Form.Group>
@@ -245,6 +306,8 @@ console.log(dataProfile);
                     }}
                   />
                   <Form.Control
+                    value={emailUser}
+                  onChange={(e) => handleChangeEmail(e)}
                     type="text"
                     placeholder="username@mail.com"
                     style={{
@@ -252,7 +315,7 @@ console.log(dataProfile);
                       borderRadius: "10px",
                       padding: "15px 38px 15px 15px",
                     }}
-                    value={dataProfile?.data?.email || ''}
+                  
 
                   />
                 </Form.Group>
@@ -342,11 +405,12 @@ console.log(dataProfile);
                   </Modal.Body>
                 </Modal>
 
-                {/* <div
+                <div
                   className="d-flex justify-content-center align-items-center"
                   style={{ borderRadius: "30px" }}
                 >
                   <button
+                  onClick={handleEdit}
                     style={{
                       color: " rgba(255, 255, 255, 1)",
                       fontWeight: "700",
@@ -357,7 +421,7 @@ console.log(dataProfile);
                   >
                     حفظ
                   </button>
-                </div> */}
+                </div> 
               </Form>
             </div>
           </Col>

@@ -153,6 +153,7 @@ const BooksSort = () => {
    const [isFav, setIsFav] = useState(false); // State to track favorite status
   const checkAddToFavBook = useSelector((state) => state.books.favBook);
   const isLoadingFavBook = useSelector((state) => state.books.isLoadingBook);
+  const [favorites, setFavorites] = useState([]);
 
 
   const handelAddtoFavBook = (bookId) => {
@@ -168,7 +169,9 @@ const BooksSort = () => {
 
     dispatch(addToFavBook({ formData, token }))
     localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
-
+    if (!favorites.includes(bookId)) {
+      setFavorites([...favorites, bookId]);
+    }
   //   notify(t('addToFavoritesSuccess'), "success");
 
   //   setTimeout(() => {
@@ -509,7 +512,7 @@ const BooksSort = () => {
             }}
           >
             
-            <img  src={isFav ? favRedIcon : fav2Icon}
+            <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -587,7 +590,7 @@ const BooksSort = () => {
               }}
             >
               
-              <img  src={isFav ? favRedIcon : fav2Icon}
+              <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -669,7 +672,7 @@ const BooksSort = () => {
                 }}
               >
                 
-                <img  src={isFav ? favRedIcon : fav2Icon}
+                <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -744,7 +747,7 @@ const BooksSort = () => {
                 }}
               >
                 
-                <img  src={isFav ? favRedIcon : fav2Icon}
+                <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",

@@ -362,6 +362,7 @@ const HomePage = () => {
   const isLoadingFav = useSelector((state) => state.audio.isLoadingFav);
 console.log(checkAddToFav);
 const [isFav, setIsFav] = useState(false); // State to track favorite status
+const [favorites, setFavorites] = useState([]);
 
   const handelAddtoFav = (audioId) => {
     const formData = {
@@ -376,7 +377,9 @@ const [isFav, setIsFav] = useState(false); // State to track favorite status
 //     notify(`${t('addedToFavorites')}`, "success");
 // localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
     dispatch(favOneAudio({ formData, token }));
-
+    if (!favorites.includes(audioId)) {
+      setFavorites([...favorites, audioId]);
+    }
     // setTimeout(() => {
     //   navigate("/favAudios");
     // }, 1500);
@@ -970,7 +973,7 @@ const [isFav, setIsFav] = useState(false); // State to track favorite status
                     <Col sm="4" className="responsive-sounds">
                       <div className="d-flex justify-content-center align-items-center  ">
                         <img
-                     src={isFav ? favRedIcon : fav2Icon}
+                     src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
                      style={{ marginLeft: "10px", cursor: "pointer" }}
                           onClick={() => handelAddtoFav(item.id)}
                           alt="" />

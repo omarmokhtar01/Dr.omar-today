@@ -150,7 +150,7 @@ console.log(getAllImgData);
 
   const checkAddToFavPic = useSelector((state) => state.pictures.favPic);
   const isLoadingFavPic = useSelector((state) => state.pictures.isLoadingFavPic);
-
+  const [favorites, setFavorites] = useState([]);
   const handelAddtoFavPic = (picId) => {
     const formData = {
       image_id: picId, // Replace 'your_audio_id_here' with the actual audio ID value
@@ -166,7 +166,9 @@ console.log(getAllImgData);
 
     dispatch(favOnePic({ formData, token }))
                 // notify(t('addToFavoritesSuccess'), "success");
-
+                if (!favorites.includes(picId)) {
+                  setFavorites([...favorites, picId]);
+                }
     // setTimeout(() => {
 
     //   navigate("/favBook")
@@ -333,7 +335,7 @@ console.log(getAllImgData);
         <Col key={index} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
           {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '40px', right: '-80px', zIndex: '1' }}>
-            <img src={isFav ? favRedIcon : fav2Icon} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+            <img src={favorites.includes(image.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
           {image && image.image && (
             <img
@@ -366,7 +368,7 @@ console.log(getAllImgData);
 
           {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '40px', right: '-70px', zIndex: '1' }}>
-            <img src={isFav ? favRedIcon : fav2Icon} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+            <img src={favorites.includes(image.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
           {image && (
             <img
@@ -410,7 +412,7 @@ console.log(getAllImgData);
       {/* Your icons */}
       <img src={modalshare} style={{  marginTop: '12px', cursor: 'pointer' }} />
       <img src={modaldown}  style={{  cursor: 'pointer' }} onClick={()=>handleDownload(savedId)} />        
-      <img src={isFav ? favRedIcon : fav2Icon} style={{ marginTop: '10px', cursor: 'pointer' }} onClick={()=>handelAddtoFavPic(savedId)} />
+      <img src={favorites.includes(savedId) ? (isFav ? favRedIcon : favIconNot) : favIconNot} style={{ marginTop: '10px', cursor: 'pointer' }} onClick={()=>handelAddtoFavPic(savedId)} />
     </div>
   </div>
 </Modal>

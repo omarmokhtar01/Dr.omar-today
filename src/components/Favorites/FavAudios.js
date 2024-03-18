@@ -104,57 +104,6 @@ console.log(getData);
       notify("من فضلك قم بتسجيل الدخول أولاً", "error");
     }
   };
-
-  const audioRefs = useRef([]);
-  const [durations, setDurations] = useState([]);
-  const [durationFormatted, setDurationFormatted] = useState("0:00");
-  const [isPlaying, setIsPlaying] = useState([]);
-
-  useEffect(() => {
-    audioRefs.current = audioRefs.current.slice(0, durations.length);
-    setIsPlaying(new Array(durations.length).fill(false));
-  }, [durations]);
-
-  useEffect(() => {
-    if (durations.length > 0) {
-      const totalDuration = durations.reduce(
-        (accumulator, currentValue) => accumulator + currentValue,
-        0
-      );
-      const hours = Math.floor(totalDuration / 3600);
-      const minutes = Math.floor((totalDuration % 3600) / 60);
-      const seconds = Math.floor(totalDuration % 60);
-      setDurationFormatted(
-        `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
-          .toString()
-          .padStart(2, "0")}`
-      );
-    } else {
-      setDurationFormatted("0:00:00"); // Reset to initial state if there's no duration
-    }
-  }, [durations]);
-
-  const handlePlay = (index) => {
-    const newIsPlaying = [...isPlaying];
-    newIsPlaying[index] = !isPlaying[index];
-    setIsPlaying(newIsPlaying);
-    const audioElement = audioRefs.current[index];
-    if (audioElement) {
-      if (newIsPlaying[index]) {
-        // Check if the audio is not already playing before calling play()
-        if (audioElement.paused) {
-          audioElement
-            .play()
-            .catch((error) => console.error("Error playing audio:", error));
-        }
-      } else {
-        // Check if the audio is playing before calling pause()
-        if (!audioElement.paused) {
-          audioElement.pause();
-        }
-      }
-    }
-  };
   const handelDownloadAudio = (audioId) => {
     const formData = {
         audio_id: audioId, // Replace 'your_audio_id_here' with the actual audio ID value
@@ -169,22 +118,76 @@ console.log(getData);
     dispatch(downloadOneAudio({ formData, token }))
            
         }
-
-
-  const handleLoadedMetadata = (index) => {
-    return (e) => {
-      const newDurations = [...durations];
-      newDurations[index] = e.target.duration;
-      setDurations(newDurations);
-    };
-  };
-  const formatDuration = (duration) => {
-    const hours = Math.floor(duration / 3600);
-    const minutes = Math.floor((duration % 3600) / 60);
-    const seconds = Math.floor(duration % 60);
-    return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-  };
-
+        const audioRefs = useRef([]);
+        const [durations, setDurations] = useState([]);
+        const [durationFormatted, setDurationFormatted] = useState("0:00");
+        const NUM_OF_AUDIOS = 1; // Define the actual number of audios here
+      
+        const [isPlayingNew, setIsPlayingNew] = useState(Array(NUM_OF_AUDIOS).fill(false)); // Initialize with the number of audios you have
+      
+        useEffect(() => {
+          audioRefs.current = audioRefs.current.slice(0, durations.length);
+          setIsPlayingNew(new Array(durations.length).fill(false));
+        }, [durations]);
+      
+        useEffect(() => {
+          if (durations.length > 0) {
+            const totalDuration = durations.reduce(
+              (accumulator, currentValue) => accumulator + currentValue,
+              0
+            );
+            const hours = Math.floor(totalDuration / 3600);
+            const minutes = Math.floor((totalDuration % 3600) / 60);
+            const seconds = Math.floor(totalDuration % 60);
+            setDurationFormatted(
+              `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
+                .toString()
+                .padStart(2, "0")}`
+            );
+          } else {
+            setDurationFormatted("0:00:00"); // Reset to initial state if there's no duration
+          }
+        }, [durations]);
+      
+        const handlePlay = (index) => {
+      // Pause all other audios before playing the new one
+          
+      audioRefs.current.forEach((audioRef, idx) => {
+        if (idx !== index && audioRef && !audioRef.paused) {
+          audioRef.pause();
+          setIsPlayingNew((prev) => {
+            const newIsPlaying = [...prev];
+            newIsPlaying[idx] = false;
+            return newIsPlaying;
+          });
+        }
+      })
+      const audioRef = audioRefs.current[index];
+      if (audioRef.paused) {
+        audioRef.play().catch((error) => console.error("Error playing audio:", error));
+      } else {
+        audioRef.pause();
+      }
+      setIsPlayingNew((prev) => {
+        const newIsPlaying = [...prev];
+        newIsPlaying[index] = !newIsPlaying[index];
+        return newIsPlaying;
+      })
+        };
+      
+        const handleLoadedMetadata = (index) => {
+          return (e) => {
+            const newDurations = [...durations];
+            newDurations[index] = e.target.duration;
+            setDurations(newDurations);
+          };
+        };
+        const formatDuration = (duration) => {
+          const hours = Math.floor(duration / 3600);
+          const minutes = Math.floor((duration % 3600) / 60);
+          const seconds = Math.floor(duration % 60);
+          return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        };
 
   const [isFav, setIsFav] = useState(true); // State to track favorite status
 
@@ -194,7 +197,8 @@ console.log(getData);
   const checkAddToFav = useSelector((state) => state.audio.favAudio);
   const isLoadingFav = useSelector((state) => state.audio.isLoadingFav);
 
-  
+  const [favorites, setFavorites] = useState([]);
+
   const handleAddtoFav = (audioId) => {
     console.log('clicked');
     const formData = {
@@ -209,7 +213,9 @@ console.log(getData);
 
     // Assuming you dispatch an action to add to favorites
     dispatch(favOneAudio({ formData, token }))
-
+    if (!favorites.includes(audioId)) {
+      setFavorites([...favorites, audioId]);
+    }
       // Handle success or error based on the API response
       // if (checkAddToFav.message ===true) {
 
@@ -245,7 +251,7 @@ console.log(getData);
     <>
       <NavBar />
 
-      <Container>
+      <Container style={{marginBottom:'60px'}}>
         <Row>
           <Col>
             <div style={{ position: "relative", marginTop: "-35px" }}>
@@ -528,7 +534,7 @@ console.log(getData);
                       />
                       
                     )}
-              <img  src={isFav ? favRedIcon : favIconNot}
+              <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favRedIcon}
                   style={{
                     
                     cursor: "pointer",
@@ -540,7 +546,7 @@ onClick={()=>handleAddtoFav(item.id)}
                       onClick={() => handlePlay(index)}
                       style={{ border: "none", background: "#FFFFFF" }}
                     >
-                      {isPlaying[index] ? (
+                      {isPlayingNew[index] ? (
                         <img src={PauseIcon}
                         alt=""
                           

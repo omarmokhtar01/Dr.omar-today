@@ -66,7 +66,7 @@ const FavPics = () => {
 
   const checkAddToFavPic = useSelector((state) => state.pictures.favPic);
   const isLoadingFavPic = useSelector((state) => state.pictures.isLoadingFavPic);
-
+  const [favorites, setFavorites] = useState([]);
   const handelAddtoFavPic = (picId) => {
     const formData = {
       image_id: picId, // Replace 'your_audio_id_here' with the actual audio ID value
@@ -82,7 +82,9 @@ const FavPics = () => {
 
     dispatch(favOnePic({ formData, token }))
                 // notify(t('addToFavoritesSuccess'), "success");
-
+                if (!favorites.includes(picId)) {
+                  setFavorites([...favorites, picId]);
+                }
     // setTimeout(() => {
 
     //   navigate("/favBook")
@@ -323,7 +325,7 @@ const FavPics = () => {
             <>
               {getData.map((item, index) => (
                 <Col xl={6} lg={12} md={12} sm={12} xs={12} >
-                <img  src={isFav ? favRedIcon : fav2Icon} 
+                <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favRedIcon}
                 onClick={()=>handelAddtoFavPic(item.id)}
 alt=""
                   style={{

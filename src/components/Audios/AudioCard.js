@@ -279,61 +279,45 @@ console.log(getDataOne);
   const isLoadingFav = useSelector((state) => state.audio.isLoadingFav);
 
   
-  const [isFav, setIsFav] = useState(false); // State to track favorite status
+
+
+
 
   // const favIconIs = isFav ? favrediconwith  :favIcon;
   const favIconNot = favIcon; // Path to the normal icon
   const favRedIcon = favrediconwith; // Path to the red/favorite icon
+  const [favorites, setFavorites] = useState([]);
+  const [isFav, setIsFav] = useState(false);
 
-  const handleAddtoFav = (audioId) => {
+  const handleAddtoFav = (id) => {
     const formData = {
-      audio_id: audioId,
-      // other formData properties if any
+      audio_id: id,
     };
 
+    // Add logic to handle favoriting audio
     if (!token) {
-      // Token doesn't exist, notify user and return
       return notify('Login Required', 'error');
     }
 
-    // Assuming you dispatch an action to add to favorites
-    dispatch(favOneAudio({ formData, token }))
-      // Handle success or error based on the API response
-      // if (checkAddToFav.message ===true) {
-
-      //   notify('Added to Favorites', 'success');
-      //   console.log(isFav);
-
-      // } else if(checkAddToFav.message ==="The Audio has been removed from your favorites"){
-      //   setIsFav(false);
-      //   notify('Remove from favorites', 'error');
-      // }
-    
+    dispatch(favOneAudio({ formData, token }));
+    if (!favorites.includes(id)) {
+      setFavorites([...favorites, id]);
+    }
   };
 
-        useEffect(() => {
-          if (isLoadingFav === false) {
-            if(checkAddToFav && checkAddToFav.success) {
-          if (checkAddToFav.message === "The Audio has been added to your favorites") {
-            // Notify "تم الاضافة بنجاح"
-            setIsFav(true); // Toggle favorite status
-
-            // notify(t('addToFavoritesSuccess'), "success");
-          } else if (checkAddToFav.message === "The Audio has been removed from your favorites") {
-            setIsFav(false); // Toggle favorite status
-
-            // Handle other statuses or errors if needed
-            // notify(t('addToFavoritesError'), "error");
-        }
+  useEffect(() => {
+    if (!isLoading && checkAddToFav && checkAddToFav.success) {
+      if (checkAddToFav.message === "The Audio has been added to your favorites") {
+        setIsFav(true); // Toggle favorite status
+      } else if (checkAddToFav.message === "The Audio has been removed from your favorites") {
+        setIsFav(false); // Toggle favorite status
       }
-
-      }
-        }, [isLoadingFav,checkAddToFav]);
-
+    }
+  }, [isLoading, checkAddToFav]);
 
 
 
-
+        
 
 
 
@@ -737,15 +721,15 @@ console.log(getDataOne);
                     )}
 
 <img
-        src={isFav ? favRedIcon : favIconNot}
-        alt="Favorite Icon"
-        style={{
-          color: '#878787bd',
-          fontSize: '30px',
-          cursor: 'pointer',
-        }}
-        onClick={() => handleAddtoFav(item.id)}
-      />
+                src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+                alt="Favorite Icon"
+                style={{
+                  color: '#878787bd',
+                  fontSize: '30px',
+                  cursor: 'pointer',
+                }}
+                onClick={() => handleAddtoFav(item.id)}
+              />
 
                     <button
                       onClick={() => handlePlay(index)}

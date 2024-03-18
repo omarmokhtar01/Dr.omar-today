@@ -52,11 +52,13 @@ const DownloadAudios = () => {
   const audioRefs = useRef([]);
   const [durations, setDurations] = useState([]);
   const [durationFormatted, setDurationFormatted] = useState("0:00");
-  const [isPlaying, setIsPlaying] = useState([]);
+  const NUM_OF_AUDIOS = 1; // Define the actual number of audios here
+
+  const [isPlayingNew, setIsPlayingNew] = useState(Array(NUM_OF_AUDIOS).fill(false)); // Initialize with the number of audios you have
 
   useEffect(() => {
     audioRefs.current = audioRefs.current.slice(0, durations.length);
-    setIsPlaying(new Array(durations.length).fill(false));
+    setIsPlayingNew(new Array(durations.length).fill(false));
   }, [durations]);
 
   useEffect(() => {
@@ -79,25 +81,29 @@ const DownloadAudios = () => {
   }, [durations]);
 
   const handlePlay = (index) => {
-    const newIsPlaying = [...isPlaying];
-    newIsPlaying[index] = !isPlaying[index];
-    setIsPlaying(newIsPlaying);
-    const audioElement = audioRefs.current[index];
-    if (audioElement) {
-      if (newIsPlaying[index]) {
-        // Check if the audio is not already playing before calling play()
-        if (audioElement.paused) {
-          audioElement
-            .play()
-            .catch((error) => console.error("Error playing audio:", error));
-        }
-      } else {
-        // Check if the audio is playing before calling pause()
-        if (!audioElement.paused) {
-          audioElement.pause();
-        }
-      }
-    }
+// Pause all other audios before playing the new one
+    
+audioRefs.current.forEach((audioRef, idx) => {
+  if (idx !== index && audioRef && !audioRef.paused) {
+    audioRef.pause();
+    setIsPlayingNew((prev) => {
+      const newIsPlaying = [...prev];
+      newIsPlaying[idx] = false;
+      return newIsPlaying;
+    });
+  }
+})
+const audioRef = audioRefs.current[index];
+if (audioRef.paused) {
+  audioRef.play().catch((error) => console.error("Error playing audio:", error));
+} else {
+  audioRef.pause();
+}
+setIsPlayingNew((prev) => {
+  const newIsPlaying = [...prev];
+  newIsPlaying[index] = !newIsPlaying[index];
+  return newIsPlaying;
+})
   };
 
   const handleLoadedMetadata = (index) => {
@@ -107,13 +113,13 @@ const DownloadAudios = () => {
       setDurations(newDurations);
     };
   };
-
   const formatDuration = (duration) => {
     const hours = Math.floor(duration / 3600);
     const minutes = Math.floor((duration % 3600) / 60);
     const seconds = Math.floor(duration % 60);
     return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
+
 
   const removeData = useSelector((state) => state.download.delAudio);
 
@@ -371,7 +377,7 @@ const DownloadAudios = () => {
                               onClick={() => handlePlay(index)}
                               style={{ border: "none", background: "#FFFFFF" }}
                             >
-                              {isPlaying[index] ? (
+                              {isPlayingNew[index] ? (
                                 <img src={PauseIcon}
                                   style={{
                                     color: "rgb(209, 155, 111)",

@@ -41,6 +41,8 @@ const Books = () => {
   
   
    const [isFav, setIsFav] = useState(false); // State to track favorite status
+   const [favorites, setFavorites] = useState([]);
+
   const navigate = useNavigate()
   const { t } = useTranslation('books');
 
@@ -181,7 +183,9 @@ const Books = () => {
 
     dispatch(addToFavBook({ formData, token }))
     localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
-
+    if (!favorites.includes(bookId)) {
+      setFavorites([...favorites, bookId]);
+    }
   //   notify(t('addToFavoritesSuccess'), "success");
 
   //   setTimeout(() => {
@@ -542,15 +546,16 @@ required
               gap: "20px",
             }}
           >
-            <IoHeartCircleSharp
-              style={{
-                color: "#878787bd",
-                fontSize: "30px",
-                marginRight: "-30px",
-                cursor: 'pointer'
-              }}
-              onClick={()=>handelAddtoFavBook(item.id)}
-            />
+            <img
+     src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+                alt="Favorite Icon"
+                style={{
+                  color: '#878787bd',
+                  fontSize: '30px',
+                  cursor: 'pointer',
+                }}
+                onClick={()=>handelAddtoFavBook(item.id)}
+              />
           </div>
         </div>
       </Col>
@@ -634,7 +639,7 @@ required
                 gap: "20px",
               }}
             >
-              <img  src={isFav ? favRedIcon : fav2Icon}
+              <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -723,7 +728,7 @@ required
                 gap: "20px",
               }}
             >
-              <img  src={isFav ? favRedIcon : fav2Icon}
+              <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
                 style={{
                  
                   marginRight: "-30px",
@@ -800,7 +805,7 @@ required
                   gap: "20px",
                 }}
               >
-                <img  src={isFav ? favRedIcon : fav2Icon}
+                <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
                   style={{
                     color: "#878787bd",
                     fontSize: "30px",

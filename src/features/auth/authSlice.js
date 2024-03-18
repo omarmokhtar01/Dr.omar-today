@@ -5,9 +5,10 @@ import baseUrl from "../../Api/baseURL";
 const initialState = {
   userLogin:{},
   userDel:{},
-userData:{},
+  userData:{},
   userRegister:{},
   changeUserPassword:{},
+  updateUserProfile:{},
   isLoading: false,
   error: null,
 }; 
@@ -87,6 +88,34 @@ const register = createAsyncThunk('auth/register', async (formData, thunkAPI) =>
         );
         console.log(response);
         return response.data;
+      } catch (error) {
+        // You might want to handle errors more appropriately here
+        return thunkAPI.rejectWithValue(error.message);
+      }
+    }
+  );
+
+
+  const updateProfileUser = createAsyncThunk(
+    'update/profile',
+    async ({ formData, token }, thunkAPI) => {
+      try {
+        const response = await baseUrl.post(
+          'Auth/UpdateProfile',
+          formData,
+          {
+            params: {
+              name: formData.name,
+              email: formData.email,
+              phonenumber: formData.phonenumber
+            },
+            headers: {
+              Authorization:` Bearer ${token}` // Enclose the token interpolation in backticks
+            }
+          }
+        );
+        console.log(response);
+        return response;
       } catch (error) {
         // You might want to handle errors more appropriately here
         return thunkAPI.rejectWithValue(error.message);
@@ -178,8 +207,23 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 	  
+
+      .addCase(updateProfileUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateProfileUser.fulfilled, (state, action) => {
+        state.updateUserProfile = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(updateProfileUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+	  
 	  }}
       );
-export { createLoginUser , register,delAcc,getProfile , changePasswordUser};
+export { createLoginUser , register,delAcc,getProfile , changePasswordUser , updateProfileUser};
 
 export default authSlice.reducer;

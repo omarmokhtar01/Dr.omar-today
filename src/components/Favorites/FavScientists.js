@@ -54,7 +54,7 @@ const FavScientists = () => {
 
 
   const [isFavElder, setIsFavElder] = useState(true); // State to track favorite status
-
+  const [favorites, setFavorites] = useState([]);
   const checkAddToFavElder = useSelector((state) => state.elders.favElder);
   const isLoadingFavElder = useSelector((state) => state.elders.isLoadingFavElder);
 
@@ -74,7 +74,9 @@ const FavScientists = () => {
     // setTimeout(() => {
     //   navigate("/favScientists")
     // }, 1000);
-           
+    if (!favorites.includes(elderId)) {
+      setFavorites([...favorites, elderId]);
+    }
         }
 
 
@@ -333,7 +335,7 @@ const FavScientists = () => {
                   
                 }}
               >
-               <img src={isFavElder ? favRedIcon : favIconNot}
+               <img src={favorites.includes(item.id) ? (isFavElder ? favRedIcon : favIconNot) : favRedIcon}
               
 alt=""
                   style={{

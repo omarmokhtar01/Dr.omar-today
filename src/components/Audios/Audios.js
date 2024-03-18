@@ -215,7 +215,7 @@ console.log(elderDown);
 
 
   const [isFavElder, setIsFavElder] = useState(false); // State to track favorite status
-
+  const [favorites, setFavorites] = useState([]);
   const checkAddToFavElder = useSelector((state) => state.elders.favElder);
   const isLoadingFavElder = useSelector((state) => state.elders.isLoadingFavElder);
 
@@ -231,6 +231,9 @@ console.log(elderDown);
     }
     dispatch(favOneElder({ formData, token }))
     localStorage.setItem("elderfav","تم حفظ  العالم بنجاح")
+    if (!favorites.includes(elderId)) {
+      setFavorites([...favorites, elderId]);
+    }
 
     // setTimeout(() => {
     //   navigate("/favScientists")
@@ -577,7 +580,7 @@ console.log(elderDown);
           >
             {" "}
             <img 
-                     src={isFavElder ? favRedIcon : favIconNot}
+                     src={favorites.includes(item.id) ? (isFavElder ? favRedIcon : favIconNot) : favIconNot}
                      style={{
                 color: "#878787bd",
                 fontSize: "40px",
@@ -660,7 +663,7 @@ console.log(elderDown);
                 id="sounds-icons"
               >
                 {" "}
-                <img                      src={isFavElder ? favRedIcon : favIconNot}
+                <img                      src={favorites.includes(item.id) ? (isFavElder ? favRedIcon : favIconNot) : favIconNot}
 
                   style={{
                     color: "#878787bd",
@@ -830,7 +833,7 @@ console.log(elderDown);
                 id="sounds-icons"
               >
                 {" "}
-                <img                      src={isFavElder ? favRedIcon : favIconNot}
+                <img                      src={favorites.includes(item.id) ? (isFavElder ? favRedIcon : favIconNot) : favIconNot}
 
                   style={{
                     color: "#878787bd",
