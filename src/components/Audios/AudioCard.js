@@ -296,7 +296,7 @@ console.log(getDataOne);
 
     // Add logic to handle favoriting audio
     if (!token) {
-      return notify('Login Required', 'error');
+      return notify(t("loginRequired"), 'error');
     }
 
     dispatch(favOneAudio({ formData, token }));
