@@ -643,7 +643,7 @@ required
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
-                  marginRight: "-30px",
+                  // marginRight: "-30px",
                   cursor: 'pointer'
                 }}
               onClick={()=>handelAddtoFavBook(item.id)}
