@@ -954,7 +954,7 @@ const [favorites, setFavorites] = useState([]);
                     </Col>
 
                     <Col sm="4">
-                      {/* <div className="d-flex justify-content-center responsive-span-home">
+                      <div className="d-flex justify-content-center responsive-span-home">
               <img src={audioIcon} />
               <span
                 style={{
@@ -965,9 +965,9 @@ const [favorites, setFavorites] = useState([]);
                 }}
                 className="responsive-span-home"
               >
-                45 مقطع صوتي
+                {t("mostListenNum")} {index+1}
               </span>
-            </div> */}
+            </div>
                     </Col>
 
                     <Col sm="4" className="responsive-sounds">

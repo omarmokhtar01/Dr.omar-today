@@ -258,7 +258,7 @@ const RegisterPage = () => {
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
                   {t('email')} {" "}
                   </Form.Label>
-                  <MdOutlineMail
+                  {/* <MdOutlineMail
                     style={{
                       color: "gray",
                       position: "absolute",
@@ -267,7 +267,7 @@ const RegisterPage = () => {
                       paddingRight: "9px",
                       fontSize: "35px",
                     }}
-                  />
+                  /> */}
                   <Form.Control
                     type="email"
                     onChange={handleInputChange("email")}
