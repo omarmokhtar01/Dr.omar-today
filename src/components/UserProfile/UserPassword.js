@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import {  changePasswordUser } from "../../features/auth/authSlice";
 import notify from "../UseNotifications/useNotification";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -14,6 +15,7 @@ import notify from "../UseNotifications/useNotification";
 
 
 const UserPassword = () => {
+  const { t } = useTranslation('changepass');
 
   let token = Cookies.get("token");
 
@@ -91,20 +93,19 @@ const UserPassword = () => {
    useEffect(() => {
     if (isLoading === false) {
       if (res) {
-        console.log(res.message);
 
         if (res.message === "Password changed successfully.") {
-          notify("Password changed successfully!", "success");
+          notify(t('sucChange'), "success");
           Cookies.remove("token");
           setTimeout(() => {
             navigate("/");
           }, 1500);
           
         }else if (res.message === "Current password is incorrect."){
-          notify("Current password is incorrect.", "error");
+          notify(t("inCorrentChange"), "error");
 
         }else if (res.message === "The new password field must be at least 8 characters."){
-          notify("The new password field must be at least 8 characters.", "error");
+          notify(t("warnningPass"), "error");
 
         }
 
@@ -144,7 +145,7 @@ const UserPassword = () => {
                 className=" background-image"
               >
                 {" "}
-                الملف الشخصي{" "}
+                 {t("profile")}{" "}
               </h1>
             </div>
           </Col>
@@ -172,7 +173,7 @@ const UserPassword = () => {
                 className="personal-box"
               >
                 <h6 style={{ color: "rgba(5, 20, 39, 1)", paddingTop: "4px" }}>
-                  البيانات الاساسيه
+                   {t("basicData")}
                 </h6>
               </div>
             </Link>
@@ -202,7 +203,7 @@ const UserPassword = () => {
                   paddingTop: "5px",
                 }}
               >
-                كلمه المرور{" "}
+                 {t("password")}{" "}
               </h6>
             </div>
           </Col>
@@ -232,7 +233,7 @@ const UserPassword = () => {
               <Form style={{ marginBottom: "35px" }}>
                 <Form.Group className="mb-3" controlId="currentPassword">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    كلمه المرور الحاليه{" "}
+                  {t("currentPassword")}{" "}
                   </Form.Label>
 
                   <Form.Control
@@ -249,7 +250,7 @@ const UserPassword = () => {
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    كلمه المرور الجديده{" "}
+                  {t("newPassword")}{" "}
                   </Form.Label>
 
                   <Form.Control
@@ -268,7 +269,7 @@ const UserPassword = () => {
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={{ fontWeight: "600", display: "flex" }}>
-                    تاكيد كلمه المرور{" "}
+                  {t("confirmPassword")}  {" "}
                   </Form.Label>
 
                   <Form.Control
@@ -296,7 +297,7 @@ const UserPassword = () => {
                     }}
                     className="profileButton"
                   >
-                    حفظ
+                    {t("save")}
                   </button>
                 </div>
               </Form>

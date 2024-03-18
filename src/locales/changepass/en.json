@@ -1,0 +1,12 @@
+ {
+  "profile": "Profile",
+  "basicData": "Personal Information",
+  "password": "Password",
+  "currentPassword": "Current Password",
+  "newPassword": "New Password",
+  "confirmPassword": "Confirm Password",
+  "save": "Save",
+  "sucChange":"Password changed successfully!",
+  "inCorrentChange":"Current password is incorrect.",
+  "warnningPass":"The new password field must be at least 8 characters."
+}

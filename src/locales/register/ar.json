@@ -19,4 +19,7 @@
     "confirmPasswordMismatch": "كلمة المرور التأكيدية غير متطابقة",
     "invalidRegister":" هناك خطأ في تسجيل الحساب",
     "registerSuss" :"تم تسجيل الحساب بنجاح"
+    ,"numTaken":"هذا الرقم موجود بالفعل",
+"emailTaken":"هذا الحساب موجود بالفعل",
+"numAndEmailTaken":"هذا الرقم والحساب موجودين بالفعل"
   }

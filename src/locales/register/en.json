@@ -19,5 +19,8 @@
     "confirmPasswordMismatch": "Confirmed password does not match",
     "invalidRegister":"Invalid registering the account. Please try again later.",
     "registerSuss" : "Register successfully"
+    ,"numTaken":"This phone number is already taken.",
+"emailTaken":"This email is already taken.",
+"numAndEmailTaken":"This phone number and account are already taken."
 
 }

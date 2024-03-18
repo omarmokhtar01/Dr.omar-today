@@ -364,7 +364,7 @@ console.log(getAllImgData);
   !isLoadingOneImgCategory ? (
     getOneData && getOneData.length > 0 ? (
       getOneData[0]?.image?.map((image, index) => (
-        <Col key={image.id} xl={6} lg={6} md={12} sm={12} onClick={()=>setSavedId(image.id)}>
+        <Col key={image.id} xl={6} lg={6} md={12} sm={12} xs={12} onClick={()=>setSavedId(image.id)}>
 
           {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '40px', right: '-70px', zIndex: '1' }}>

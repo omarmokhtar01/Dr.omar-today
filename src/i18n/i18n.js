@@ -67,6 +67,9 @@ import arfavbook from '../locales/favbook/ar.json';
 
 import ennotifi from '../locales/notifi/en.json';
 import arnotifi from '../locales/notifi/ar.json';
+
+import enchangepass from '../locales/changepass/en.json';
+import archangepass from '../locales/changepass/ar.json';
 // Import other resources similarly
 
 i18n
@@ -94,7 +97,8 @@ downseci:endownseci
 ,favsec:enfavsec
 ,favphoto:enfavphoto,
 favbook:enfavbook
-,notifi:ennotifi
+,notifi:ennotifi,
+changepass:enchangepass
         // Add other sections here
       },
       ar: {
@@ -119,6 +123,8 @@ downseci:ardownseci
 favbook:arfavbook
 
 ,notifi:arnotifi
+,changepass:archangepass
+
 // Add other sections here
       },
     },

@@ -79,7 +79,7 @@ console.log(res);
 
         if (res.status === 200) {
           console.log(res.status);
-          notify("تم تحديث البيانات بشكل ناجح", "success");
+          notify(t('update'), "success");
           // setTimeout(() => {
           //   navigate("/personaLinformation");
           // }, 1500);

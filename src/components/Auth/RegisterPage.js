@@ -3,7 +3,7 @@ import "./Auth.css";
 
 import { Col, Container, Form, Modal, Row,Spinner } from "react-bootstrap";
 import ForgetPass4 from "./ForgetPass4";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import LoginPage from "./LoginPage";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../features/auth/authSlice";
@@ -28,6 +28,7 @@ const RegisterPage = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const navigate = useNavigate();
 
   const [state, setState] = useState({
     name: "",
@@ -131,12 +132,18 @@ const RegisterPage = () => {
         }
         if (res.message === "register successfully") {
           notify(t('registerSuss'), "success");
-          // setTimeout(() => {
-          //     navigate("/login");
-          // }, 1500);
+          setTimeout(() => {
+              navigate("/");
+          }, 1500);
         }
-        if (res.message === "Request failed with status code 422") {
-          notify(t('invalidRegister'), "error");
+        if (res.message === "The email has already been taken.") {
+          notify(t('emailTaken'), "error");
+        }
+        if (res.message === "The phonenumber has already been taken.") {
+          notify(t('numTaken'), "error");
+        }
+        if (res.message === "The phonenumber has already been taken. (and 1 more error)") {
+          notify(t('numAndEmailTaken'), "error");
         }
       }
     }
@@ -155,7 +162,7 @@ const RegisterPage = () => {
               style={{
                 background: "rgb(237 234 234)",
                 borderRadius: "15px",
-                padding: "25px",
+                padding: "15px",
                 marginTop: "-55px",
               }}
             >
@@ -315,6 +322,7 @@ const RegisterPage = () => {
                     <input
                       style={{ marginLeft: "10px", marginTop: "10px" }}
                       type="checkbox"
+                      checked
                     />
                       {t('agreeTerms')}  {" "}
                   </p>
