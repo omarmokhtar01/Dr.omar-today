@@ -329,7 +329,7 @@ console.log(checkDownBook);
                       border: "1.38px solid rgba(232, 232, 232, 1)",
                       borderRadius: "23px",
                       width: "124px",
-                      height: "33.74px",
+                      height: "auto",
                       background: id === item.id ? 'linear-gradient(331.41deg, rgb(209, 155, 111) 6.78%, rgb(246, 229, 195) 204.87%)' :  "linear-gradient(0deg, #E8E8E8, #E8E8E8),linear-gradient(0deg, #F5F5F5, #F5F5F5)"
                      , boxShadow: id === item.id ?"0px 3.6861166954040527px 3.6861166954040527px 0px rgba(209, 155, 111, 0.22)" :'none'
                     }}

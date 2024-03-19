@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row } from "react-bootstrap";
 import delIcon from "../../images/del.svg";
@@ -8,9 +8,20 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { FaBell } from "react-icons/fa6";
 import nodata from "../../images/nodata.svg";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getNotifi } from "../../features/notifiFeature/notifiSlice";
 
 const NotificationPage = () => {
   const { t } = useTranslation('notifi');
+
+  //   const dispatch = useDispatch()
+  // const termsAndCondition = useSelector((state) => state.notifi.notifiData);
+  // const isLoading = useSelector((state) => state.notifi.isLoading);
+
+  // useEffect(()=>{
+  //   getNotifi()
+  // },[])
 
   const [notifications, setNotifications] = useState({
     photofav: localStorage.getItem("photofav"),

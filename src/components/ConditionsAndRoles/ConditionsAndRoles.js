@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import NavBar from "../Navbar/NavBar";
 import { Col, Container, Row } from "react-bootstrap";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getTerms } from "../../features/termCondition/termSlice";
 
 const ConditionsAndRoles = () => {
+  // const dispatch = useDispatch()
+  // const termsAndCondition = useSelector((state) => state.terms.termsData);
+  // const isLoading = useSelector((state) => state.terms.isLoading);
+
+  // useEffect(()=>{
+  //   getTerms()
+  // },[])
   return (
     <>
       <NavBar />

@@ -52,6 +52,7 @@ const NavBar = () => {
   const [location, setLocation] = useState(null);
   const [activeLink, setActiveLink] = useState(null);
   const locationNav = useLocation();
+  const [countryState, setCountry] = useState(null);
 
   // Update activeLink when the location changes
   React.useEffect(() => {
@@ -79,7 +80,9 @@ const NavBar = () => {
             // Extract city and country from the address
             const city = data.address.city || data.address.town || data.address.village || data.address.hamlet || data.address.county;
             const country = data.address.country;
+            
             setLocation(`${city}, ${country}`);
+            setCountry(`${country}`)
           } catch (error) {
             console.error("Error getting location:", error);
             setLocation('Location not found');
@@ -93,14 +96,14 @@ const NavBar = () => {
     } else {
       setLocation('Geolocation is not supported by your browser');
     }
-  }, []);
+  }, [lang]);
   
 
 
   useEffect(() => {
     // Update session storage when location changes
     if (location) {
-      sessionStorage.setItem('userLocation', location);
+      sessionStorage.setItem('userLocation', countryState);
     }
   }, [lang,location]);
 let getLocation=sessionStorage.getItem('userLocation')
