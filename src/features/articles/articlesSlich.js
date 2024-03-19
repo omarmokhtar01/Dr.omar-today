@@ -4,6 +4,8 @@ import baseUrl from "../../Api/baseURL";
 
 const initialState = {
     articles: [],
+    articlesPrivate: [],
+
     articleCategory: [],
     articleCategoryId:[],
     oneArticale:{},
@@ -11,6 +13,8 @@ const initialState = {
     isLoadingSearchArticle: false,
 
     isLoading: false,
+    isLoadingPrivate: false,
+
     error: null,
   };
   
@@ -71,6 +75,18 @@ const initialState = {
       try {
         const response = await baseUrl.post(
           `Search/search_articles?title=${title}`);
+          console.log(response.data);
+        return response.data;
+      } catch (error) {
+        return error
+      }
+    });
+
+
+    const getArticlesPrivate = createAsyncThunk('get/articlesPrivate', async (_, thunkAPI) => {
+      try {
+        const response = await baseUrl.get(
+          `Articles/Get-Private`);
           console.log(response.data);
         return response.data;
       } catch (error) {
@@ -165,8 +181,25 @@ const initialState = {
             })
 
 
+
+
+            .addCase(getArticlesPrivate.pending, (state) => {
+              state.isLoadingPrivate = true;
+              state.error = null;
+            })
+            .addCase(getArticlesPrivate.fulfilled, (state, action) => {
+              state.articlesPrivate = action.payload;
+              state.isLoadingPrivate = false;
+              state.error = null;
+            })
+            .addCase(getArticlesPrivate.rejected, (state, action) => {
+              state.isLoadingPrivate = false;
+              state.error = action.payload;
+            })
+
+
             }}
             );
-      export { getArticles,getArticleCategory,getArticleCategoryById ,getArticleCategoryOne,searchArticle};
+      export { getArticles,getArticleCategory,getArticleCategoryById ,getArticleCategoryOne,searchArticle,getArticlesPrivate};
       
       export default articlesSlich.reducer;

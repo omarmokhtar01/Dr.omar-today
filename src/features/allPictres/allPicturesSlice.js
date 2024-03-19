@@ -4,7 +4,11 @@ import baseUrl from "../../Api/baseURL";
 
 const initialState = {
     allPicturesData: [],
+    allPicturesDataPrivate: [],
+
     isLoading: false,
+    isLoadingPrivate: false,
+
     error: null,
     favPic:{},
     isLoadingFavPic: false,
@@ -69,6 +73,17 @@ const initialState = {
             }
         });
 
+
+        const getAllPicuturePrivate = createAsyncThunk('get/AllPicPrivate', async (_, thunkAPI) => {
+          try {
+            const response = await baseUrl.get(
+              'Images/Get-Private');
+            return response.data;
+          } catch (error) {
+            return error
+          }
+        });
+
     const PicturesSlice = createSlice({
         name: 'getAllPicuture',
       
@@ -120,10 +135,25 @@ const initialState = {
               state.isLoadingDownPic = false;
               state.error = action.payload;
             })
+
+
+            .addCase(getAllPicuturePrivate.pending, (state) => {
+              state.isLoadingPrivate = true;
+              state.error = null;
+            })
+            .addCase(getAllPicuturePrivate.fulfilled, (state, action) => {
+              state.allPicturesDataPrivate = action.payload;
+              state.isLoadingPrivate = false;
+              state.error = null;
+            })
+            .addCase(getAllPicuturePrivate.rejected, (state, action) => {
+              state.isLoadingPrivate = false;
+              state.error = action.payload;
+            })
   
 
             }}
             );
-      export { getAllPicuture,favOnePic,downOnePic };
+      export { getAllPicuture,favOnePic,downOnePic,getAllPicuturePrivate };
       
       export default PicturesSlice.reducer;

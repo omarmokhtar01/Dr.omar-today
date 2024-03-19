@@ -6,6 +6,7 @@ import baseUrl from "../../Api/baseURL";
 
 const initialState = {
   booksData: [],
+  booksDataPrivate: [],
   lastVersionData: [],
   isLoadingLastVersion: false,
 
@@ -16,6 +17,7 @@ const initialState = {
 
   showOne:{},
   isLoading: false,
+  isLoadingPrivate: false,
   isLoadingSearchBooks: false,
   downBook:{},
 
@@ -145,6 +147,19 @@ const downBook = createAsyncThunk('add-down/book', async ({formData,token}, thun
     return error
   }
 });
+
+
+const getBooksPrivate = createAsyncThunk('get/booksPrivate', async (_, thunkAPI) => {
+  try {
+    const response = await baseUrl.get(
+      'Books/Get-Books-Private');
+      
+    return response.data;
+  } catch (error) {
+    return error
+  }
+});
+
 
 
 
@@ -290,9 +305,24 @@ const booksSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+
+      .addCase(getBooksPrivate.pending, (state) => {
+        state.booksDataPrivate = true;
+        state.error = null;
+      })
+      .addCase(getBooksPrivate.fulfilled, (state, action) => {
+        state.booksDataPrivate = action.payload;
+        state.booksDataPrivate = false;
+        state.error = null;
+      })
+      .addCase(getBooksPrivate.rejected, (state, action) => {
+        state.booksDataPrivate = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory,showBook,lastVersion,searchBooks,addToFavBook,downBook};
+export { getBooks,getBookMainCategory,getBookSubCategory ,getAllBooksCategory,showBook,lastVersion,searchBooks,addToFavBook,downBook,getBooksPrivate};
 
 export default booksSlice.reducer;
