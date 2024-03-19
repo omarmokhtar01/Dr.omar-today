@@ -40,7 +40,7 @@ const NavBar = () => {
     }
   };
 
-
+const langStorage = localStorage.getItem('lang');
 
 
 
@@ -74,7 +74,7 @@ const NavBar = () => {
           const { latitude, longitude } = position.coords;
           try {
             // Fetch address using reverse geocoding with language set to Arabic
-            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=en`);
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=${langStorage}`);
             const data = await response.json();
             console.log(data);
             // Extract city and country from the address
@@ -96,14 +96,16 @@ const NavBar = () => {
     } else {
       setLocation('Geolocation is not supported by your browser');
     }
-  }, [lang]);
+  }, [langStorage]);
   
 
 
   useEffect(() => {
     // Update session storage when location changes
     if (location) {
-      sessionStorage.setItem('userLocation', countryState);
+      sessionStorage.setItem('userLocation', location);
+      sessionStorage.setItem('termLocation', countryState);
+
     }
   }, [lang,location]);
 let getLocation=sessionStorage.getItem('userLocation')

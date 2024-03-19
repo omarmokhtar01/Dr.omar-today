@@ -47,10 +47,7 @@ const initialState = {
               state.isLoading = false;
               state.error = action.payload;
             })
-            
-  
-  
-           
+
 
             }}
             );
