@@ -7,7 +7,7 @@ import modaldown from "../../images/modaldown.svg";
 import modalshare from "../../images/modalshare.svg";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { downOnePic, favOnePic, getAllPicuture } from '../../features/allPictres/allPicturesSlice';
+import { downOnePic, favOnePic, getAllPicuture, getAllPicuturePrivate } from '../../features/allPictres/allPicturesSlice';
 import { Link,useNavigate } from 'react-router-dom';
 import { getAllImgCategory, getOneImgCategory } from '../../features/imgCategory/imgCategorySlice';
 import { IoHeartCircleSharp } from 'react-icons/io5';
@@ -211,6 +211,13 @@ console.log(getAllImgData);
       // }
       //   }, [isLoadingFavPic,checkAddToFavPic]);
   
+      const getAPictureDataPrivate = useSelector((state) => state.pictures.allPicturesDataPrivate);
+      const isLoadingPrivate = useSelector((state) => state.pictures.isLoadingPrivate);
+      
+      useEffect(()=>{
+        dispatch(getAllPicuturePrivate())
+      },[dispatch])
+
     return <>
      <NavBar />
 

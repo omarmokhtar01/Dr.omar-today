@@ -28,7 +28,7 @@ import arrowsIcon from "../../images/twoArr.svg";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import { useSelector, useDispatch } from "react-redux";
-import { addToFavBook, downBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
+import { addToFavBook, downBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, getBooksPrivate, searchBooks } from "../../features/books/booksSlice";
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 import { useTranslation } from 'react-i18next';
@@ -249,6 +249,16 @@ const Books = () => {
             }
             const checkDownBook = useSelector((state) => state.books.downBook);
 console.log(checkDownBook);
+
+
+
+
+const getBooksDataPrivate = useSelector((state) => state.books.booksDataPrivate);
+const isLoadingPrivate = useSelector((state) => state.books.isLoadingPrivate);
+
+useEffect(()=>{
+  dispatch(getBooksPrivate())
+},[dispatch])
   return (
     <>
       <NavBar />

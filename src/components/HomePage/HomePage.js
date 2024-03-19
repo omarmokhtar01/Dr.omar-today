@@ -65,6 +65,7 @@ import { Pagination, Navigation } from "swiper/modules";
 import { FreeMode } from "swiper/modules";
 
 import "swiper/css/free-mode";
+import { getSetting } from "../../features/settingFeatures/settingSlice";
 const Adhan = require("adhan");
 
 const HomePage = () => {
@@ -503,6 +504,13 @@ const [favorites, setFavorites] = useState([]);
     ]);
   };
 
+
+  const getSettingData = useSelector((state) => state.setting.settingData);
+  const isLoadingSetting = useSelector((state) => state.setting.isLoading);
+console.log(checkAddToFav);
+  useEffect(()=>{
+    dispatch(getSetting())
+  },[dispatch])
   return (
     <>
       <NavBar />

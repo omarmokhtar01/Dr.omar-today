@@ -22,7 +22,7 @@ import blackSquareIcon from "../../images/blackSquare.svg";
 import whiteRowsIcon from "../../images/whiteRows.svg";
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
-import { addToFavBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, searchBooks } from "../../features/books/booksSlice";
+import { addToFavBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, getBooksPrivate, searchBooks } from "../../features/books/booksSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
@@ -218,7 +218,12 @@ const BooksSort = () => {
 
       // }
       //   }, [isLoadingFavBook,checkAddToFavBook]);
-
+      const getBooksDataPrivate = useSelector((state) => state.books.booksDataPrivate);
+      const isLoadingPrivate = useSelector((state) => state.books.isLoadingPrivate);
+      
+      useEffect(()=>{
+        dispatch(getBooksPrivate())
+      },[dispatch])
   return (
     <>
       <NavBar />

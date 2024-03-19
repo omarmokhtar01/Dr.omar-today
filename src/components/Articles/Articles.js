@@ -18,6 +18,7 @@ import {
   getArticleCategory,
   getArticleCategoryById,
   getArticles,
+  getArticlesPrivate,
   searchArticle,
 } from "../../features/articles/articlesSlich";
 import {  IoSearch } from "react-icons/io5";
@@ -108,6 +109,16 @@ const Articles = () => {
     // Update searchResults whenever searchListen changes
     setSearchResults(searchListen);
   }, [searchListen]);
+
+
+
+  const getArticleDataPrivate = useSelector((state) => state.articles.articlesPrivate);
+const isLoadingPrivate = useSelector((state) => state.articles.isLoadingPrivate);
+
+useEffect(()=>{
+  dispatch(getArticlesPrivate())
+},[dispatch])
+
   return (
     <>
       <NavBar />

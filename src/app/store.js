@@ -12,6 +12,7 @@ import contactReducer from "../features/contactUs/contactSlice";
 import booksReducer from "../features/books/booksSlice";
 import termsReducer from "../features/termCondition/termSlice";
 import notifiReducer from "../features/notifiFeature/notifiSlice";
+import settingReducer from "../features/settingFeatures/settingSlice";
 
 const store = configureStore({
   reducer: {
@@ -28,7 +29,7 @@ const store = configureStore({
     books:booksReducer,
     terms:termsReducer,
     notifi:notifiReducer,
-
+setting:settingReducer
   },
 });
 
