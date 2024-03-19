@@ -799,7 +799,7 @@ required
               <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
                 style={{
                  
-                  marginRight: "-30px",
+                  // marginRight: "-30px",
                   cursor: 'pointer'
                 }}
               onClick={()=>handelAddtoFavBook(item.id)}
@@ -903,7 +903,7 @@ required
                   style={{
                     color: "#878787bd",
                     fontSize: "30px",
-                    marginRight: "-30px",
+                    // marginRight: "-30px",
                     cursor: 'pointer'
                   }}
                 onClick={()=>handelAddtoFavBook(item.id)}
