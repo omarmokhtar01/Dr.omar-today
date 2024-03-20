@@ -97,7 +97,7 @@ const Books = () => {
   const getAll = useSelector((state) => state.books.booksData);
   const isLoading = useSelector((state) => state.books.isLoading);
   const error = useSelector((state) => state.books.error);
-
+console.log(getAll);
   const getMainCategory = useSelector((state) => state.books.booksMainCategory);
 
   const getSubCategory = useSelector(
@@ -117,7 +117,7 @@ const Books = () => {
   // You can use this dummy data array to map over and generate your JSX elements dynamically
 
   useEffect(() => {
-    dispatch(getBooks());
+    dispatch(getBooks(token));
   }, [dispatch]);
   useEffect(() => {
     dispatch(getBookMainCategory());
@@ -184,6 +184,7 @@ const Books = () => {
 
     dispatch(addToFavBook({ formData, token }))
     localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
+
     if (!favorites.includes(bookId)) {
       setFavorites([...favorites, bookId]);
     }
@@ -207,11 +208,13 @@ const Books = () => {
           if (checkAddToFavBook.message === "The Book has been added to your favorites") {
             // Notify "تم الاضافة بنجاح"
             setIsFav(true); // Toggle favorite status
-      
+            navigate("/favBook")
+
             // notify(t('addToFavoritesSuccess'), "success");
           } else if (checkAddToFavBook.message === "The Book has been removed from your favorites") {
             setIsFav(false); // Toggle favorite status
-      
+            navigate("/favBook")
+
             // Handle other statuses or errors if needed
             // notify(t('addToFavoritesError'), "error");
         }
@@ -572,7 +575,11 @@ required
             }}
           >
             <img
-     src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+    src={
+      // favorites.includes(item.id) ? 
+    (item.is_Favourte ? favRedIcon : favIconNot) 
+    // : favIconNot
+  }
                 alt="Favorite Icon"
                 style={{
                   color: '#878787bd',
@@ -690,7 +697,11 @@ required
                 gap: "20px",
               }}
             >
-              <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+              <img  src={
+                // favorites.includes(item.id) ? 
+              (item.is_Favourte ? favRedIcon : favIconNot) 
+              // : favIconNot
+            }
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -909,7 +920,11 @@ required
                   gap: "20px",
                 }}
               >
-                <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+                <img  src={
+                // favorites.includes(item.id) ? 
+              (item.is_Favourte ? favRedIcon : favIconNot) 
+              // : favIconNot
+            }
                   style={{
                     color: "#878787bd",
                     fontSize: "30px",
@@ -967,6 +982,124 @@ required
 </Col>
 </Row>
       </Container>
+
+      {/* <Container >
+  <Row>
+    <div className="mb-2">المحتوي الخاص</div>
+{
+  !isLoadingPrivate ? (
+    getBooksDataPrivate && getBooksDataPrivate.length > 0 ? (
+      getBooksDataPrivate.map((item,index) => (
+        <>
+        <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              border: "2px solid rgba(236, 236, 236, 1)",
+              borderRadius: "15px",
+              width: "auto",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Link to={`/book/${item.id}`}>
+                <div
+                  style={{
+                    position: "relative",
+                    cursor: "pointer",
+                  }}
+                >
+                  <img
+                    src={item.image}
+                    alt=""
+                    height={164}
+                    width={134}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      color: "#fff",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    Click to view book
+                  </div>
+                </div>
+              </Link>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  padding: "20px",
+                }}
+              >
+                <h5 style={{ color: "black" }}>{item.name}</h5>
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                marginLeft: "60px",
+                gap: "20px",
+              }}
+            >
+              <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+                style={{
+                 
+                  // marginRight: "-30px",
+                  cursor: 'pointer'
+                }}
+              onClick={()=>handelAddtoFavBook(item.id)}
+              />
+               {token ? (
+  <a
+    href={`${item.Book}`} // Provide the correct download link here
+    download={`${item.name}.pdf`} // Specify the desired filename for the downloaded PDF
+  >
+    <MdDownloadForOffline
+      style={{
+        color: "rgb(219, 176, 134)",
+        fontSize: "42px",
+        paddingLeft: "5px",
+        cursor: "pointer",
+      }}
+      onClick={() => handelDownBook(item.id)}
+    />
+  </a>
+) : (
+  <MdDownloadForOffline
+      style={{
+        color: "rgb(219, 176, 134)",
+        fontSize: "42px",
+        paddingLeft: "5px",
+        cursor: "pointer",
+      }}
+      onClick={() => handelDownBook(item.id)}
+    />
+)}
+            </div>
+          </div>
+        </Col>
+</>
+))
+    ) : null
+  ) : null
+}
+</Row>
+</Container> */}
       <ToastContainer/>
     </>
   );

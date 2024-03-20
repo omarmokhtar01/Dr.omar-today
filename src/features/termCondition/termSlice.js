@@ -10,10 +10,10 @@ const initialState = {
   
   
   
-  const getTerms = createAsyncThunk('get/terms', async (_, thunkAPI) => {
+  const getTerms = createAsyncThunk('get/terms', async (country, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          'TermsConditions/Get-Term');
+          `TermsConditions/Get-Term?country=${country}`);
         return response.data;
       } catch (error) {
         return error

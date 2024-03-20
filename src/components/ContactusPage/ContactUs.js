@@ -18,6 +18,7 @@ import { createContactUs } from "../../features/contactUs/contactSlice";
 import { ToastContainer } from "react-toastify";
 import notify from "../UseNotifications/useNotification";
 import { useTranslation } from 'react-i18next';
+import { getSetting } from "../../features/settingFeatures/settingSlice";
 
 const ContactUs = () => {
   const { t } = useTranslation('contact');
@@ -115,6 +116,14 @@ const ContactUs = () => {
     }
   }, [isLoading]);
 
+
+
+  const getSettingData = useSelector((state) => state.setting.settingData);
+  const isLoadingSetting = useSelector((state) => state.setting.isLoading);
+  useEffect(()=>{
+    dispatch(getSetting())
+  },[dispatch])
+
   return (
     <>
       <NavBar />
@@ -148,6 +157,7 @@ const ContactUs = () => {
               alt=""
               style={{ maxWidth: "80%", height: "auto" }}
             />
+            
             <div className="d-flex justify-content-center align-items-center">
               <a href="https://www.instagram.com/">
                 <img style={{ padding: "10px" }} src={instagram} alt="" />

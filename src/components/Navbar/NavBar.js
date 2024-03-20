@@ -103,12 +103,13 @@ const langStorage = localStorage.getItem('lang');
   useEffect(() => {
     // Update session storage when location changes
     if (location) {
-      sessionStorage.setItem('userLocation', location);
-      sessionStorage.setItem('termLocation', countryState);
+      localStorage.setItem('userLocation', location);
+      localStorage.setItem('termLocation', countryState.toLowerCase());
 
     }
   }, [lang,location]);
-let getLocation=sessionStorage.getItem('userLocation')
+let getLocation=localStorage.getItem('userLocation')
+
   // Check if token exists in cookies
   const checkToken = () => {
     const tokenExists = Cookies.get('token') !== undefined;

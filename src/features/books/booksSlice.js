@@ -28,10 +28,14 @@ const initialState = {
   error: null,
 };
 
- const getBooks = createAsyncThunk('get/books', async (_, thunkAPI) => {
+ const getBooks = createAsyncThunk('get/books', async (token, thunkAPI) => {
   try {
     const response = await baseUrl.get(
-      'Books/Get');
+      'Books/Get',{
+        headers: {
+          Authorization: `Bearer ${token}` // Include token in the request headers
+      }
+      });
       
     return response.data;
   } catch (error) {
@@ -153,7 +157,7 @@ const getBooksPrivate = createAsyncThunk('get/booksPrivate', async (_, thunkAPI)
   try {
     const response = await baseUrl.get(
       'Books/Get-Books-Private');
-      
+      console.log(response.data);
     return response.data;
   } catch (error) {
     return error
@@ -313,11 +317,11 @@ const booksSlice = createSlice({
       })
       .addCase(getBooksPrivate.fulfilled, (state, action) => {
         state.booksDataPrivate = action.payload;
-        state.booksDataPrivate = false;
+        state.isLoading = false;
         state.error = null;
       })
       .addCase(getBooksPrivate.rejected, (state, action) => {
-        state.booksDataPrivate = false;
+        state.isLoading = false;
         state.error = action.payload;
       })
 	  

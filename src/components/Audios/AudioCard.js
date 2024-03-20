@@ -309,8 +309,12 @@ console.log(getDataOne);
     if (!isLoading && checkAddToFav && checkAddToFav.success) {
       if (checkAddToFav.message === "The Audio has been added to your favorites") {
         setIsFav(true); // Toggle favorite status
+        navigate("/favpictures")
+
       } else if (checkAddToFav.message === "The Audio has been removed from your favorites") {
         setIsFav(false); // Toggle favorite status
+        navigate("/favpictures")
+
       }
     }
   }, [isLoading, checkAddToFav]);

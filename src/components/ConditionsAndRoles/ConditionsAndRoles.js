@@ -1,19 +1,28 @@
 import React, { useEffect } from "react";
 
 import NavBar from "../Navbar/NavBar";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row,Spinner } from "react-bootstrap";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getTerms } from "../../features/termCondition/termSlice";
+import nodata from "../../images/nodata.svg";
+import { useTranslation } from "react-i18next";
 
 const ConditionsAndRoles = () => {
-  // const dispatch = useDispatch()
-  // const termsAndCondition = useSelector((state) => state.terms.termsData);
-  // const isLoading = useSelector((state) => state.terms.isLoading);
+  const { t } = useTranslation('term');
 
-  // useEffect(()=>{
-  //   getTerms()
-  // },[])
+  const langStorage = localStorage.getItem('lang');
+
+  const dispatch = useDispatch()
+  const termsAndCondition = useSelector((state) => state.terms.termsData);
+  const isLoading = useSelector((state) => state.terms.isLoading);
+
+  useEffect(()=>{
+    let termLocation=localStorage.getItem('termLocation')
+
+   dispatch( getTerms(termLocation)
+)  },[dispatch])
+console.log(termsAndCondition);
   return (
     <>
       <NavBar />
@@ -32,27 +41,44 @@ const ConditionsAndRoles = () => {
                 }}
                 className=" background-image"
               >
-                الشروط والاحكام{" "}
+               {t("term")} {" "}
               </h1>
             </div>
           </Col>
         </Row>
       </Container>
 
-      <Container>
+      <Container style={{marginBottom:'200px'}}>
         <Row>
-          <Col sm="12">
+          {
+             !isLoading ?(
+              termsAndCondition  ? (
+              <>
+                {termsAndCondition.map((item, index) => (
+                  <Col sm="12">
             <h5
               style={{
                 color: "rgba(4, 32, 48, 1)",
                 marginTop: "10px",
                 fontWeight: "700",
+                marginBottom:'50px'
               }}
             >
-              ملفات الدخول
+              {
+                langStorage === "en"? (
+                  <>
+                  {item?.text_en}
+                  </>
+                ):(
+                  <>
+                  {item?.text}
+                  </>
+                )
+              }
+              
             </h5>
 
-            <div className="d-flex justify-content-center align-items-center">
+            {/* <div className="d-flex justify-content-center align-items-center">
               <p
                 style={{
                   margin: "10px 75px 15px 75px",
@@ -69,8 +95,8 @@ const ConditionsAndRoles = () => {
                 خدمة المنصة بالشكل المناسب. كل هذه البيانات لا ترتبط بأي معلومات
                 شخصية.
               </p>
-            </div>
-            <h5
+            </div> */}
+            {/* <h5
               style={{
                 color: "rgba(4, 32, 48, 1)",
                 marginTop: "10px",
@@ -229,8 +255,21 @@ const ConditionsAndRoles = () => {
                 مما يشير إلى وجوب مراجعتك للأحكام الجديدة التي تعتبر سارية فور
                 نشر السياسة الجديدة على هذه الصفحة لمنصة هداية{" "}
               </p>
-            </div>
+            </div> */}
           </Col>
+
+         ))}
+              </>
+            ) : <div style={{height:'280px'}}><img src={nodata}                         alt=""
+            /> <br/>
+            <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+            <span>{t('nodata2')}</span></div>
+          
+            ) :     <div style={{height:'280px'}}>  <Spinner animation="border" variant="primary" /></div>
+          }
+      
+          
+          
         </Row>
       </Container>
     </>

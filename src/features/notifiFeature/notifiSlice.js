@@ -9,12 +9,17 @@ const initialState = {
   };
   
   
-  
-  const getNotifi = createAsyncThunk('get/notifi', async (_, thunkAPI) => {
+   
+  const getNotifi = createAsyncThunk('get/notifi', async (token, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          '');
-        return response.data;
+          'user/Get-Notification', {
+            headers: {
+                Authorization:` Bearer ${token}` // Include token in the request headers
+            }
+        });
+          console.log(response);
+        return response;
       } catch (error) {
         return error
       }

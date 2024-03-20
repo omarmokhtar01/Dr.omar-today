@@ -168,6 +168,7 @@ const BooksSort = () => {
     }
 
     dispatch(addToFavBook({ formData, token }))
+
     localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
     if (!favorites.includes(bookId)) {
       setFavorites([...favorites, bookId]);
@@ -192,11 +193,13 @@ const BooksSort = () => {
           if (checkAddToFavBook.message === "The Book has been added to your favorites") {
             // Notify "تم الاضافة بنجاح"
             setIsFav(true); // Toggle favorite status
-      
+            navigate("/favBook")
+
             // notify(t('addToFavoritesSuccess'), "success");
           } else if (checkAddToFavBook.message === "The Book has been removed from your favorites") {
             setIsFav(false); // Toggle favorite status
-      
+            navigate("/favBook")
+
             // Handle other statuses or errors if needed
             // notify(t('addToFavoritesError'), "error");
         }
@@ -517,7 +520,11 @@ const BooksSort = () => {
             }}
           >
             
-            <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+            <img  src={
+                // favorites.includes(item.id) ? 
+              (item.is_Favourte ? favRedIcon : favIconNot) 
+              // : favIconNot
+            }
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -595,7 +602,11 @@ const BooksSort = () => {
               }}
             >
               
-              <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+              <img  src={
+                // favorites.includes(item.id) ? 
+              (item.is_Favourte ? favRedIcon : favIconNot) 
+              // : favIconNot
+            }
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -677,7 +688,11 @@ const BooksSort = () => {
                 }}
               >
                 
-                <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+                <img  src={
+                // favorites.includes(item.id) ? 
+              (item.is_Favourte ? favRedIcon : favIconNot) 
+              // : favIconNot
+            }
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -752,7 +767,11 @@ const BooksSort = () => {
                 }}
               >
                 
-                <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+                <img  src={
+                // favorites.includes(item.id) ? 
+              (item.is_Favourte ? favRedIcon : favIconNot) 
+              // : favIconNot
+            }
                 style={{
                   color: "#878787bd",
                   fontSize: "30px",
@@ -785,6 +804,98 @@ const BooksSort = () => {
           </Col>
         </Row>
       </Container>
+
+      <Container >
+  <Row>
+    <div className="mb-2">المحتوي الخاص</div>
+{
+  !isLoadingPrivate ? (
+    getBooksDataPrivate && getBooksDataPrivate.length > 0 ? (
+      getBooksDataPrivate.map((item,index) => (
+        <>
+<Col xs={6} md={4} lg={3} key={item.id}>
+        <div className="p-2">
+          <div
+            className="card-book-sort"
+            style={{
+             
+              borderRadius: "10px",
+              width: "175px",
+              height: "300px",
+            }}
+          >
+            <Link to={`/book/${item.id}`}>
+            <div
+              className="card-book-pdf"
+              style={{
+                position: "relative",
+                cursor: "pointer",
+              }}
+              
+            >
+              <img
+                className="card-book-img"
+                src={item.image}
+                alt=""
+                height={246}
+                width={169}
+                style={{borderRadius:'10px'}}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  color: "#fff",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                Click to view book
+              </div>
+            </div></Link>
+            <div
+              style={{
+                position: "absolute",
+                marginTop: "-238px",
+                marginRight: "25px",
+                display: "flex",
+                gap: "10px",
+              }}
+            >
+              
+              <img  src={
+                // favorites.includes(item.id) ? 
+              (item.is_Favourte ? favRedIcon : favIconNot) 
+              // : favIconNot
+            }
+                style={{
+                  color: "#878787bd",
+                  fontSize: "30px",
+                  marginRight: "-30px",
+                  cursor: 'pointer'
+                }}
+              onClick={()=>handelAddtoFavBook(item.id)}
+              />
+              
+            </div>
+            <h5>{item.name}</h5>
+            {/* <p style={{ marginTop: "-5px" }}>20 صفحه</p> */}
+          </div>
+        </div>
+      </Col>
+</>
+))
+    ) : null
+  ) : null
+}
+</Row>
+</Container>
+
+
+
       <ToastContainer/>
     </>
   );

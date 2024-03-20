@@ -19,10 +19,15 @@ const initialState = {
   
   
    
-  const getAllPicuture = createAsyncThunk('get/AllPic', async (_, thunkAPI) => {
+  const getAllPicuture = createAsyncThunk('get/AllPic', async (token, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          'Images/Get');
+          'Images/Get', {
+            headers: {
+                Authorization: `Bearer ${token}` // Include token in the request headers
+            }
+        });
+          console.log(response.data);
         return response.data;
       } catch (error) {
         return error

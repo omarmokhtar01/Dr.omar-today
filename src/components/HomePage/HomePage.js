@@ -66,6 +66,7 @@ import { FreeMode } from "swiper/modules";
 
 import "swiper/css/free-mode";
 import { getSetting } from "../../features/settingFeatures/settingSlice";
+import { accessPrivateContent } from "../../features/auth/authSlice";
 const Adhan = require("adhan");
 
 const HomePage = () => {
@@ -505,12 +506,17 @@ const [favorites, setFavorites] = useState([]);
   };
 
 
-  const getSettingData = useSelector((state) => state.setting.settingData);
-  const isLoadingSetting = useSelector((state) => state.setting.isLoading);
-console.log(checkAddToFav);
-  useEffect(()=>{
-    dispatch(getSetting())
-  },[dispatch])
+
+
+  const [privateCodeState,setPrivateCodeState]=useState(null)
+
+  const checkPrivat = useSelector((state) => state.auth.userPrivate);
+  const isLoadingPrivate = useSelector((state) => state.auth.isLoadingUserPrivate);
+  const handleCheckPrivate =()=>{
+    if(!token) return "please login fist"
+dispatch(accessPrivateContent({privateCodeState,token}))
+  }
+  console.log(checkPrivat.message);
   return (
     <>
       <NavBar />
@@ -622,8 +628,10 @@ console.log(checkAddToFav);
                       padding: "15px",
                     }}
                    maxLength={6}
+                   onChange={(e)=>setPrivateCodeState(e.target.value)}
                   />
                 </Form.Group>
+                <Button onClick={()=>handleCheckPrivate()}>دخول</Button>
         </Modal.Body>
       </Modal>
           <Col sm="2" className="d-flex align-items-center ">

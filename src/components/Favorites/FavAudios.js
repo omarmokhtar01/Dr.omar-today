@@ -213,6 +213,7 @@ console.log(getData);
 
     // Assuming you dispatch an action to add to favorites
     dispatch(favOneAudio({ formData, token }))
+    window.location.reload();
     if (!favorites.includes(audioId)) {
       setFavorites([...favorites, audioId]);
     }

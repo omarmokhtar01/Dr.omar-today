@@ -77,6 +77,8 @@ const FavBook = () => {
     }
 
     dispatch(addToFavBook({ formData, token }))
+    window.location.reload();
+
     localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
     if (!favorites.includes(bookId)) {
       setFavorites([...favorites, bookId]);

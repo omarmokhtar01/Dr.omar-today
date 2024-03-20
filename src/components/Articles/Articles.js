@@ -118,7 +118,7 @@ const isLoadingPrivate = useSelector((state) => state.articles.isLoadingPrivate)
 useEffect(()=>{
   dispatch(getArticlesPrivate())
 },[dispatch])
-
+console.log(getArticleDataPrivate);
   return (
     <>
       <NavBar />
@@ -341,7 +341,9 @@ useEffect(()=>{
         </Link>
       </Col>
       ))
-      : <div style={{ height: "140px" }}></div>
+      : <div style={{height:'280px'}}><img src={nodata}/> <br/>
+      <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+      <span>{t('nodata2')}</span></div>
     ) : (
       <div style={{ height: "140px" }}>
         <Spinner animation="border" variant="primary" />
@@ -409,10 +411,47 @@ useEffect(()=>{
       <Spinner animation="border" variant="primary" />
     </div>
   )}
+
+
+
+  
 </Row>
-
-
-
+{/* <Container >
+  <Row>
+    <div className="mb-2">المحتوي الخاص</div>
+{
+  !isLoadingPrivate ? (
+    getArticleDataPrivate && getArticleDataPrivate.length > 0 ? (
+      getArticleDataPrivate.map((item) => (
+        <>
+        
+        <Col key={item.id} >
+          <Link to={`/articleCard/${item.id}`} style={{ textDecoration: "none" }}>
+            <Card style={{ width: "100%", borderRadius: "15px" }}>
+              <Card.Img variant="top" src={item.image} width={100} height={300} />
+              <Card.Body>
+                <Card.Title style={{ display: "flex" }}>{item.title}</Card.Title>
+                <Card.Text style={{ display: "flex", justifyContent: "space-between" }}>
+                  <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                    <img src={clockIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "17px" }} />
+                    {item.created_at} 
+                  </p>
+                  <p style={{ color: "rgba(130, 130, 130, 1)", fontSize: "14px" }}>
+                    <img src={eyeIcon} style={{ marginLeft: "8px", color: "rgb(209, 155, 111)", fontSize: "20px" }} />
+                    {item.visit_count} {t('view')}
+                  </p>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>
+        </>
+      ))
+    ) : null
+  ) : null
+}
+</Row>
+</Container> */}
 
 </Container>
 <ToastContainer/>

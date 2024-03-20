@@ -132,7 +132,7 @@ const handleDownload = (picId) => {
 console.log(getAllImgData);
 
   useEffect(() => {
-      dispatch(getAllPicuture());
+      dispatch(getAllPicuture(token));
       dispatch(getAllImgCategory());
   }, [dispatch]);
   
@@ -181,10 +181,11 @@ console.log(getAllImgData);
           if (checkAddToFavPic.message === "The image has been added to your favorites") {
             // Notify "تم الاضافة بنجاح"
             setIsFav(true); // Toggle favorite status
-
+navigate("/favpictures")
             // notify(t('addToFavoritesSuccess'), "success");
           } else if (checkAddToFavPic.message === "The image has been removed from your favorites") {
             setIsFav(false); // Toggle favorite status
+            navigate("/favpictures")
 
             // Handle other statuses or errors if needed
             // notify(t('addToFavoritesError'), "error");
@@ -342,7 +343,12 @@ console.log(getAllImgData);
         <Col key={index} xl={6} lg={6} md={12} sm={12} xs={12} onClick={()=>setSavedId(image.id)}>
           {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '40px', right: '-80px', zIndex: '1' }}>
-            <img src={favorites.includes(image.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+            {console.log(image)}
+            <img src={
+                // favorites.includes(item.id) ? 
+              (image.is_Favourite ? favRedIcon : favIconNot) 
+              // : favIconNot
+            } onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
           {image && image.image && (
             <img
@@ -375,7 +381,11 @@ console.log(getAllImgData);
 
           {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '40px', right: '-70px', zIndex: '1' }}>
-            <img src={favorites.includes(image.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot} onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+            <img src={
+                // favorites.includes(item.id) ? 
+              (image.is_Favourite ? favRedIcon : favIconNot) 
+              // : favIconNot
+            } onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
           </div>
           {image && (
             <img
@@ -425,9 +435,53 @@ console.log(getAllImgData);
 </Modal>
 
 
-  <ToastContainer/>
-</Container>
 
+
+<Container >
+  <Row>
+    <div className="mb-2">المحتوي الخاص</div>
+{
+  !isLoadingPrivate ? (
+    getAPictureDataPrivate && getAPictureDataPrivate.length > 0 ? (
+      getAPictureDataPrivate.map((image,index) => (
+        <>
+        <Col key={image.id} xl={6} lg={6} md={12} sm={12} xs={12} onClick={()=>setSavedId(image.id)}>
+
+{/* Placeholder for heartImg */}
+<div style={{ position: 'relative', top: '40px', right: '-70px', zIndex: '1' }}>
+  <img src={
+                // favorites.includes(item.id) ? 
+              (image.is_Favourite ? favRedIcon : favIconNot) 
+              // : favIconNot
+            } onClick={()=>handelAddtoFavPic(image.id)} style={{ color: '#878787bd', fontSize: '30px', cursor: 'pointer' }} />
+</div>
+{image && (
+  <img
+    src={image.image}
+    alt={`pic${index + 1}`}
+    style={{
+      marginBottom: '35px',
+      borderRadius: '15px',
+      cursor: 'pointer',
+      maxHeight: '350px',
+      maxWidth: '450px'
+    }}
+    onClick={() => handleShow(image.image)}
+    id='img-responsive-pic'
+  />
+)}
+</Col>
+</>
+))
+    ) : null
+  ) : null
+}
+</Row>
+</Container>
+        
+
+        <ToastContainer/>
+</Container>
 
     </>;
 }

@@ -70,6 +70,7 @@ const FavScientists = () => {
     }
     dispatch(favOneElder({ formData, token }))
     localStorage.setItem("elderfav","تم حفظ  العالم بنجاح")
+    window.location.reload();
 
     // setTimeout(() => {
     //   navigate("/favScientists")

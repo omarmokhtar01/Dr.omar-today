@@ -81,6 +81,8 @@ const FavPics = () => {
 
 
     dispatch(favOnePic({ formData, token }))
+    window.location.reload();
+
                 // notify(t('addToFavoritesSuccess'), "success");
                 if (!favorites.includes(picId)) {
                   setFavorites([...favorites, picId]);

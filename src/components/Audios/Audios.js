@@ -246,11 +246,14 @@ console.log(elderDown);
           if (isLoadingFavElder === false) {
             if(checkAddToFavElder && checkAddToFavElder.success) {
           if (checkAddToFavElder.message === "The elder has been added to your favorites") {
+            navigate("/favScientists")
+
             // Notify "تم الاضافة بنجاح"
             // notify(t('addToFavoritesSuccess'), "success");
             setIsFavElder(true);
           } else if (checkAddToFavElder.message === "The elder has been removed from your favorites") {
             setIsFavElder(false); // Toggle favorite status
+            navigate("/favScientists")
 
             // Handle other statuses or errors if needed
             // notify(t('addToFavoritesError'), "error");
@@ -580,7 +583,11 @@ console.log(elderDown);
           >
             {" "}
             <img 
-                     src={favorites.includes(item.id) ? (isFavElder ? favRedIcon : favIconNot) : favIconNot}
+                     src={
+                      // favorites.includes(item.id) ? 
+                    (item.is_Favourte ? favRedIcon : favIconNot) 
+                    // : favIconNot
+                  }
                      style={{
                 color: "#878787bd",
                 fontSize: "40px",
@@ -663,7 +670,11 @@ console.log(elderDown);
                 id="sounds-icons"
               >
                 {" "}
-                <img                      src={favorites.includes(item.id) ? (isFavElder ? favRedIcon : favIconNot) : favIconNot}
+                <img                     src={
+                // favorites.includes(item.id) ? 
+              (item.is_Favourte ? favRedIcon : favIconNot) 
+              // : favIconNot
+            }
 
                   style={{
                     color: "#878787bd",
@@ -752,14 +763,20 @@ console.log(elderDown);
               id="sounds-icons"
             >
               {" "}
-              <IoHeartCircleSharp
-                style={{
-                  color: "#878787bd",
-                  fontSize: "40px",
-                  cursor: "pointer",
-                }}
-                onClick={()=>handelAddtoFavElder(item.id)}
-              />
+              <img                     src={
+                // favorites.includes(item.id) ? 
+              (item.is_Favourte ? favRedIcon : favIconNot) 
+              // : favIconNot
+            }
+
+                  style={{
+                    color: "#878787bd",
+                    fontSize: "40px",
+                    cursor: "pointer",
+                  }}
+                  onClick={()=>handelAddtoFavElder(item.id)}
+                  className="icon-mob"
+                />
               <img src={downGroundIcon}
                 onClick={()=>downloadAudiosAsZip(item.id,item.id)}
                 style={{
@@ -833,7 +850,11 @@ console.log(elderDown);
                 id="sounds-icons"
               >
                 {" "}
-                <img                      src={favorites.includes(item.id) ? (isFavElder ? favRedIcon : favIconNot) : favIconNot}
+                <img                     src={
+                // favorites.includes(item.id) ? 
+              (item.is_Favourte ? favRedIcon : favIconNot) 
+              // : favIconNot
+            }
 
                   style={{
                     color: "#878787bd",

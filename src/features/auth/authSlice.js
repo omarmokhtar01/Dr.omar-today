@@ -6,10 +6,14 @@ const initialState = {
   userLogin:{},
   userDel:{},
   userData:{},
+  userPrivate:{},
+
   userRegister:{},
   changeUserPassword:{},
   updateUserProfile:{},
   isLoading: false,
+  isLoadingUserPrivate: false,
+
   error: null,
 }; 
 
@@ -124,6 +128,26 @@ const register = createAsyncThunk('auth/register', async (formData, thunkAPI) =>
   );
 
 
+  const accessPrivateContent = createAsyncThunk(
+    'private/profile',
+    async ({code,token}, thunkAPI) => {
+      try {
+        const response = await baseUrl.post(
+          `user/Access-private-content?code=${code}`
+          ,
+        { headers: { Authorization: `Bearer ${token}` } }
+          
+        );
+        console.log(response);
+        return response;
+      } catch (error) {
+        // You might want to handle errors more appropriately here
+        return thunkAPI.rejectWithValue(error.message);
+      }
+    }
+  );
+
+
 
 const authSlice = createSlice({
   name: 'authSlice',
@@ -221,9 +245,24 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+
+      .addCase(accessPrivateContent.pending, (state) => {
+        state.isLoadingUserPrivate = true;
+        state.error = null;
+      })
+      .addCase(accessPrivateContent.fulfilled, (state, action) => {
+        state.userPrivate = action.payload;
+        state.isLoadingUserPrivate = false;
+        state.error = null;
+      })
+      .addCase(accessPrivateContent.rejected, (state, action) => {
+        state.isLoadingUserPrivate = false;
+        state.error = action.payload;
+      })
 	  
 	  }}
       );
-export { createLoginUser , register,delAcc,getProfile , changePasswordUser , updateProfileUser};
+export { createLoginUser , register,delAcc,getProfile , changePasswordUser , updateProfileUser,accessPrivateContent};
 
 export default authSlice.reducer;
