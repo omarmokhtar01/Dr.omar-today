@@ -168,8 +168,8 @@ const BooksSort = () => {
     }
 
     dispatch(addToFavBook({ formData, token }))
+    navigate("/favBook")
 
-    localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
     if (!favorites.includes(bookId)) {
       setFavorites([...favorites, bookId]);
     }
@@ -193,12 +193,10 @@ const BooksSort = () => {
           if (checkAddToFavBook.message === "The Book has been added to your favorites") {
             // Notify "تم الاضافة بنجاح"
             setIsFav(true); // Toggle favorite status
-            navigate("/favBook")
 
             // notify(t('addToFavoritesSuccess'), "success");
           } else if (checkAddToFavBook.message === "The Book has been removed from your favorites") {
             setIsFav(false); // Toggle favorite status
-            navigate("/favBook")
 
             // Handle other statuses or errors if needed
             // notify(t('addToFavoritesError'), "error");

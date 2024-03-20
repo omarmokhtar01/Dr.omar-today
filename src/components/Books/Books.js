@@ -12,6 +12,8 @@ import {
   Spinner,
 
 } from "react-bootstrap";
+import { saveAs } from 'file-saver';
+
 import nodata from "../../images/nodata.svg";
 import fav2Icon from "../../images/fav2.svg";
 import favrediconwith from "../../images/favredWith.svg";
@@ -183,7 +185,7 @@ console.log(getAll);
     }
 
     dispatch(addToFavBook({ formData, token }))
-    localStorage.setItem("bookfav","تم حفظ  الكتاب بنجاح")
+    navigate("/favBook")
 
     if (!favorites.includes(bookId)) {
       setFavorites([...favorites, bookId]);
@@ -208,12 +210,10 @@ console.log(getAll);
           if (checkAddToFavBook.message === "The Book has been added to your favorites") {
             // Notify "تم الاضافة بنجاح"
             setIsFav(true); // Toggle favorite status
-            navigate("/favBook")
 
             // notify(t('addToFavoritesSuccess'), "success");
           } else if (checkAddToFavBook.message === "The Book has been removed from your favorites") {
             setIsFav(false); // Toggle favorite status
-            navigate("/favBook")
 
             // Handle other statuses or errors if needed
             // notify(t('addToFavoritesError'), "error");
@@ -248,7 +248,15 @@ console.log(getAll);
           return notify(t('loginRequired'), "error");
         }
     
+
+
+
+      
+
+
+
         dispatch(downBook({ formData, token }))
+        
             }
             const checkDownBook = useSelector((state) => state.books.downBook);
 console.log(checkDownBook);
@@ -262,6 +270,21 @@ const isLoadingPrivate = useSelector((state) => state.books.isLoadingPrivate);
 useEffect(()=>{
   dispatch(getBooksPrivate())
 },[dispatch])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <>
       <NavBar />
@@ -600,7 +623,7 @@ required
         paddingLeft: "5px",
         cursor: "pointer",
       }}
-      onClick={() => handelDownBook(item.id)}
+      onClick={() => handelDownBook(item.id,item.Book)}
     />
   </a>
 ) : (
@@ -611,7 +634,7 @@ required
         paddingLeft: "5px",
         cursor: "pointer",
       }}
-      onClick={() => handelDownBook(item.id)}
+      onClick={() => handelDownBook(item.id,item.Book)}
     />
 )}
           </div>
@@ -723,7 +746,7 @@ required
         paddingLeft: "5px",
         cursor: "pointer",
       }}
-      onClick={() => handelDownBook(item.id)}
+      onClick={() => handelDownBook(item.id,item.Book)}
     />
   </a>
 ) : (
@@ -734,7 +757,7 @@ required
         paddingLeft: "5px",
         cursor: "pointer",
       }}
-      onClick={() => handelDownBook(item.id)}
+      onClick={() => handelDownBook(item.id,item.Book)}
     />
 )}
             </div>
@@ -837,7 +860,7 @@ required
         paddingLeft: "5px",
         cursor: "pointer",
       }}
-      onClick={() => handelDownBook(item.id)}
+      onClick={() => handelDownBook(item.id,item.Book)}
     />
   </a>
 ) : (
@@ -848,7 +871,7 @@ required
         paddingLeft: "5px",
         cursor: "pointer",
       }}
-      onClick={() => handelDownBook(item.id)}
+      onClick={() => handelDownBook(item.id,item.Book)}
     />
 )}
             </div>
@@ -945,7 +968,7 @@ required
         paddingLeft: "5px",
         cursor: "pointer",
       }}
-      onClick={() => handelDownBook(item.id)}
+      onClick={() => handelDownBook(item.id,item.Book)}
     />
   </a>
 ) : (
@@ -956,7 +979,7 @@ required
         paddingLeft: "5px",
         cursor: "pointer",
       }}
-      onClick={() => handelDownBook(item.id)}
+      onClick={() => handelDownBook(item.id,item.Book)}
     />
 )}
               </div>
@@ -1076,7 +1099,7 @@ required
         paddingLeft: "5px",
         cursor: "pointer",
       }}
-      onClick={() => handelDownBook(item.id)}
+      onClick={() => handelDownBook(item.id,item.Book)}
     />
   </a>
 ) : (
@@ -1087,7 +1110,7 @@ required
         paddingLeft: "5px",
         cursor: "pointer",
       }}
-      onClick={() => handelDownBook(item.id)}
+      onClick={() => handelDownBook(item.id,item.Book)}
     />
 )}
             </div>

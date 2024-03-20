@@ -230,7 +230,8 @@ console.log(elderDown);
       return notify(t('loginRequired'), "error");
     }
     dispatch(favOneElder({ formData, token }))
-    localStorage.setItem("elderfav","تم حفظ  العالم بنجاح")
+    navigate("/favScientists")
+
     if (!favorites.includes(elderId)) {
       setFavorites([...favorites, elderId]);
     }
@@ -246,14 +247,12 @@ console.log(elderDown);
           if (isLoadingFavElder === false) {
             if(checkAddToFavElder && checkAddToFavElder.success) {
           if (checkAddToFavElder.message === "The elder has been added to your favorites") {
-            navigate("/favScientists")
 
             // Notify "تم الاضافة بنجاح"
             // notify(t('addToFavoritesSuccess'), "success");
             setIsFavElder(true);
           } else if (checkAddToFavElder.message === "The elder has been removed from your favorites") {
             setIsFavElder(false); // Toggle favorite status
-            navigate("/favScientists")
 
             // Handle other statuses or errors if needed
             // notify(t('addToFavoritesError'), "error");

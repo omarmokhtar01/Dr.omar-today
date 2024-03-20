@@ -161,10 +161,11 @@ console.log(getAllImgData);
       // Add your download logic here
      return notify(t('loginRequired'), "error");
     }
-    localStorage.setItem("photofav","تم اضافة  الصورة بنجاح")
 
 
     dispatch(favOnePic({ formData, token }))
+    navigate("/favpictures")
+
                 // notify(t('addToFavoritesSuccess'), "success");
                 if (!favorites.includes(picId)) {
                   setFavorites([...favorites, picId]);
@@ -181,11 +182,9 @@ console.log(getAllImgData);
           if (checkAddToFavPic.message === "The image has been added to your favorites") {
             // Notify "تم الاضافة بنجاح"
             setIsFav(true); // Toggle favorite status
-navigate("/favpictures")
             // notify(t('addToFavoritesSuccess'), "success");
           } else if (checkAddToFavPic.message === "The image has been removed from your favorites") {
             setIsFav(false); // Toggle favorite status
-            navigate("/favpictures")
 
             // Handle other statuses or errors if needed
             // notify(t('addToFavoritesError'), "error");

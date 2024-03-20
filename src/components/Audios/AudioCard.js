@@ -300,6 +300,8 @@ console.log(getDataOne);
     }
 
     dispatch(favOneAudio({ formData, token }));
+    navigate("/favpictures")
+
     if (!favorites.includes(id)) {
       setFavorites([...favorites, id]);
     }
@@ -309,11 +311,9 @@ console.log(getDataOne);
     if (!isLoading && checkAddToFav && checkAddToFav.success) {
       if (checkAddToFav.message === "The Audio has been added to your favorites") {
         setIsFav(true); // Toggle favorite status
-        navigate("/favpictures")
 
       } else if (checkAddToFav.message === "The Audio has been removed from your favorites") {
         setIsFav(false); // Toggle favorite status
-        navigate("/favpictures")
 
       }
     }
@@ -339,7 +339,6 @@ console.log(getDataOne);
             // Add your download logic here
             return notify(t('loginRequired'), "error");
           }
-          localStorage.setItem("audiodown","تم تحميل صوت بنجاح")
 
           dispatch(downloadOneAudio({ formData, token }))
                  
@@ -440,122 +439,118 @@ console.log(getDataOne);
       <Container>
       {!isLoading ? (
   getDataOne ? (
-    getDataOne.data ? (
-      <Row>
-        <Col>
-          <div style={{ position: "relative", marginTop: "-35px" }}>
-            <div
-              style={{
-                color: "rgba(255, 255, 255, 1)",
-                fontWeight: "500",
-                paddingBottom: "25px",
-                paddingTop: "15px",
-                borderRadius: "25px",
-              }}
-              className=" background-image-card"
+  
+    <Row>
+    <Col>
+      <div style={{ position: "relative", marginTop: "-35px" }}>
+        <div
+          style={{
+            color: "rgba(255, 255, 255, 1)",
+            fontWeight: "500",
+            paddingBottom: "25px",
+            paddingTop: "15px",
+            borderRadius: "25px",
+          }}
+          className="background-image-card"
+        >
+          <Row>
+            <Col
+              sm="6"
+              xs="6"
+              className="d-flex img-res-audio"
+              style={{ marginTop: "-35px" }}
             >
-              <Row>
-                <Col
-                  sm="6"
-                  xs="6"
-                  className=" d-flex img-res-audio"
-                  style={{ marginTop: "-35px" }}
-                >
-                  <img
-                    src={getDataOne.data.image}
-                    width={200}
-                    height={180}
-                    alt=""
-                    style={{ marginTop: "20px", borderRadius: "0px 15px 15px 0px" }}
-                  />
-                </Col>
+              <img
+                src={getDataOne.image}
+                width={200}
+                height={180}
+                alt=""
+                style={{ marginTop: "20px", borderRadius: "0px 15px 15px 0px" }}
+              />
+            </Col>
 
-                <Col
-                  sm="3"
-                  xs="6"
+            <Col
+              sm="3"
+              xs="6"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              className="text-info-card"
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginRight: "-40px",
+                  marginTop: "-20px",
+                }}
+                className="res-h5-name"
+              >
+                <h5
                   style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    color: "rgba(5, 20, 39, 1)",
+                    fontWeight: "bold",
                   }}
-                  className="text-info-card"
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      marginRight: "-40px",
-                      marginTop: "-20px",
-                    }}
-                    className="res-h5-name"
-                  >
-                    <h5
-                      style={{
-                        color: "rgba(5, 20, 39, 1)",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {" "}
-                      {getDataOne.data.name}
-                    </h5>
-                    <p> <img src={audioWhiteIcon} /> {getDataOne.data.count_audios}  {t('audio')}</p>
-                  </div>
-                </Col>
+                  {getDataOne.name}
+                </h5>
+                <p>
+                  <img src={audioWhiteIcon} alt="audio icon" />{" "}
+                  {getDataOne.count_audios} {t('audio')}
+                </p>
+              </div>
+            </Col>
 
-                <Col sm="3" xs="6" className="icons">
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "10px",
-                      marginTop: "50px",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    className="icons-div"
-                  >
-                    {/* Add the download functionality here */}
-                    <img src={downIcon}
-                      style={{
-                       
-                        cursor: "pointer",
-                      }}
-                      className="icon-audio-card"
-                      onClick={() => downloadAudiosAsZip(getDataOne.data.Audio,getDataOne.data.id)}
-
-                    />
-                    {/* End of download functionality */}
-                    <img 
-                     src={isFavElder ? favRedIcon : fav2Icon}
-                      style={{
-                      
-                        cursor: "pointer",
-                      }}
-                      className="icon-audio-card"
-                      onClick={() => handelAddtoFavElder(getDataOne.data.id)}
-                    />
-                    <img src={shareIcon}
-                      style={{
-                     
-                        cursor: "pointer",
-                      }}
-                      className="icon-audio-card"
-                    />
-                  </div>
-                </Col>
-              </Row>
-            </div>
-          </div>
-        </Col>
-      </Row>
-    ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
-    <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
-    <span>{t('nodata2')}</span></div>
+            <Col sm="3" xs="6" className="icons">
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  marginTop: "50px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className="icons-div"
+              >
+                <img
+                  src={downIcon}
+                  alt="download icon"
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  className="icon-audio-card"
+                  onClick={() => downloadAudiosAsZip(getDataOne.Audio, getDataOne.id)}
+                />
+                <img
+                  src={isFavElder ? favRedIcon : fav2Icon}
+                  alt="favorite icon"
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  className="icon-audio-card"
+                  onClick={() => handelAddtoFavElder(getDataOne.id)}
+                />
+                <img
+                  src={shareIcon}
+                  alt="share icon"
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  className="icon-audio-card"
+                />
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </div>
+    </Col>
+  </Row>
   ) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
   <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
   <span>{t('nodata2')}</span></div>
-) : <div style={{height:'280px'}}><img src={nodata}/> <br/>
-<span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
-<span>{t('nodata2')}</span></div>}
+) : <div style={{height:'280px'}}><Spinner/></div>}
 
       </Container>
 
@@ -627,9 +622,9 @@ console.log(getDataOne);
       <Container>
       {!isLoading ? (
   getDataOne ? (
-    getDataOne.data ? (
-      getDataOne.data.Audio ? (
-        [...getDataOne.data.Audio].sort(sortFunction).map((item, index) => {
+    getDataOne ? (
+      getDataOne.Audio ? (
+        [...getDataOne.Audio].sort(sortFunction).map((item, index) => {
           return (
             <React.Fragment key={index}>
               <Row className="me-auto" md={4}>
