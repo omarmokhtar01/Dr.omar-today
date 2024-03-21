@@ -522,7 +522,7 @@ const [favorites, setFavorites] = useState([]);
       if (checkPrivat) {
 
         if (checkPrivat.status ===200) {
-          notify("تم الدخول  للوضع الخاص", "success");
+          // notify("تم الدخول  للوضع الخاص", "success");
 localStorage.setItem("private",true)
 setTimeout(() => {
   window.location.href="/audios"
@@ -530,12 +530,12 @@ setTimeout(() => {
 }, 1000);
         }
         if (checkPrivat.status === 401) {
-          notify("من فضلك قم بتسجيل الدخول  اولا", "error");
+          // notify("من فضلك قم بتسجيل الدخول  اولا", "error");
  
 
         }
         else  {
-          notify(t('رمز الدخول غير صحيح' ), "error");
+          // notify(t('رمز الدخول غير صحيح' ), "error");
 
 
         }
