@@ -123,7 +123,6 @@ const ContactUs = () => {
   useEffect(()=>{
     dispatch(getSetting())
   },[dispatch])
-
   return (
     <>
       <NavBar />
@@ -157,21 +156,32 @@ const ContactUs = () => {
               alt=""
               style={{ maxWidth: "80%", height: "auto" }}
             />
-            
-            <div className="d-flex justify-content-center align-items-center">
-              <a href="https://www.instagram.com/">
-                <img style={{ padding: "10px" }} src={instagram} alt="" />
-              </a>
-              <a href="https://www.messenger.com/">
-                <img style={{ padding: "10px" }} src={messgener} alt="" />
-              </a>
-              <a href=" https://web.whatsapp.com/">
-                <img style={{ padding: "10px" }} src={whats} alt="" />
-              </a>
-              <a href="https://www.facebook.com/">
-                <img style={{ padding: "10px" }} src={facebook} alt="" />
-              </a>
-            </div>
+                     {
+  !isLoadingSetting ? (
+    getSettingData ? (
+      
+        <div  className="d-flex justify-content-center align-items-center">
+          <a href={getSettingData?.instagram}>
+            <img style={{ padding: "10px" }} src={instagram} alt="Instagram" />
+          </a>
+          <a href={getSettingData?.messenger}>
+            <img style={{ padding: "10px" }} src={messgener} alt="Messenger" />
+          </a>
+          <a href={getSettingData?.whatsapp}>
+            <img style={{ padding: "10px" }} src={whats} alt="WhatsApp" />
+          </a>
+          <a href={getSettingData?.facebook}>
+            <img style={{ padding: "10px" }} src={facebook} alt="Facebook" />
+          </a>
+        </div>
+     
+    ) : (
+      <div style={{ height: "280px" }}>
+        <Spinner animation="border" variant="primary" />
+      </div>
+    )
+  ) : null
+}
           </Col>
 
           <Col sm="6" xs="12">

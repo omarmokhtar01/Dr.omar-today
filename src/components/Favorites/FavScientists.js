@@ -70,8 +70,11 @@ const FavScientists = () => {
     }
     dispatch(favOneElder({ formData, token }))
     localStorage.setItem("elderfav","تم حفظ  العالم بنجاح")
-    window.location.reload();
-
+  //   setTimeout(() => {
+      
+   
+  //   window.location.reload();
+  // }, 1500);
     // setTimeout(() => {
     //   navigate("/favScientists")
     // }, 1000);
@@ -322,7 +325,7 @@ const FavScientists = () => {
               {getData.map((item, index) => (
                 <div class="col">
             <div >
-              <Link to="/audioCardfav" style={{ textDecoration: "none" }}>
+              <Link to={`/audioCard/${item.id}`} style={{ textDecoration: "none" }}>
                 <img className="img-card-scien" src={item.image} alt=""  style={{width:'230px', height:'180px', borderRadius:'8px'}}/>
               </Link>
               <div

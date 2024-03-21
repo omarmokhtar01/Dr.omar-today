@@ -72,7 +72,7 @@ const initialState = {
     const removeOneAudiosDownload = createAsyncThunk('del/OneAudiosDownload', async ({token,id}, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          `download/deleteDownloadAudio?audio_id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
           );
           console.log(response.data);
         return response.data;
@@ -85,7 +85,7 @@ const initialState = {
     const removeOneElderDownload = createAsyncThunk('del/OneElderDownload', async ({token,id}, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          `download/deletedownloadElder?elder_id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
           );
           console.log(response.data);
         return response.data;
@@ -97,7 +97,7 @@ const initialState = {
     const removeOneBookDownload = createAsyncThunk('del/OneBookDownload', async ({token,id}, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          `download/deleteDownloadBook?book_id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
           );
           console.log(response.data);
         return response.data;
@@ -109,7 +109,7 @@ const initialState = {
     const removeOneImgDownload = createAsyncThunk('del/OneImgDownload', async ({token,id}, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          `download/deleteDownloadImage?image_id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
           );
           console.log(response.data);
         return response.data;

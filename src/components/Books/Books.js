@@ -82,6 +82,7 @@ const Books = () => {
   const [id,setId]=useState(null)
 
 
+  let privateCheck = localStorage.getItem('private');
 
 
 
@@ -1005,8 +1006,11 @@ required
 </Col>
 </Row>
       </Container>
+      {
+  privateCheck ? (
 
-      {/* <Container >
+
+       <Container >
   <Row>
     <div className="mb-2">المحتوي الخاص</div>
 {
@@ -1122,7 +1126,10 @@ required
   ) : null
 }
 </Row>
-</Container> */}
+</Container> 
+    ):null
+
+  }
       <ToastContainer/>
     </>
   );

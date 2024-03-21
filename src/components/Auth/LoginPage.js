@@ -77,7 +77,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (isLoading === false) {
       if (res) {
-        console.log(res);
+        console.log(res.status);
 
         if (res.data && res.data.token) {
           const expirationTime = 30; // in days
@@ -94,7 +94,7 @@ const LoginPage = () => {
             navigate("/personaLinformation");
           }, 1500);
         }
-        if (res.error === "unauthorised") {
+        if (res.message === "Request failed with status code 401") {
           notify(t('loginFail'), "error");
         }
       }

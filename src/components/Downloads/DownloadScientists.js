@@ -55,6 +55,8 @@ const DownloadScientists = () => {
 
   const removeDataById=(id)=>{
     removeOneElderDownload({token,id})
+    window.location.reload();
+
   }
 
 
@@ -269,7 +271,7 @@ const DownloadScientists = () => {
      getData && getData.length > 0 ? (
             <>
               {getData.map((item, index) => (
-                 <div class="col">
+                 <div class="col" key={item.id}>
             <div>
               {/* <Link to="/audioCardDownload"> */}
                 <img src={item.image} alt="" className="img-card-download"  style={{width:'245px', height:'180px', borderRadius:'8px'}}/>
@@ -289,7 +291,7 @@ const DownloadScientists = () => {
                                onClick={()=>removeDataById(item.id)}
 
                   style={{
-                    paddingLeft: "10px",
+                    paddingLeft: "10px",cursor: "pointer"
               
                    
                   }}

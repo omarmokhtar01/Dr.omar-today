@@ -61,6 +61,7 @@ const DownloadPictures = () => {
 
   const removeDataById=(id)=>{
     removeOneImgDownload({token,id})
+    window.location.reload();
   }
 
 
@@ -261,7 +262,7 @@ const DownloadPictures = () => {
                 padding: "5px",
                 position: "absolute",
                 zIndex: "2",
-                margin: "15px",
+                margin: "15px",cursor:'pointer'
                
               }}
             />

@@ -78,6 +78,7 @@ const BooksSort = () => {
   const getSubCategory = useSelector(
     (state) => state.books.booksMainSubCategory
   );
+  let privateCheck = localStorage.getItem('private');
 
 
   const getDataBooksCategory = useSelector((state) => state.books.allBooksCategory);
@@ -803,6 +804,9 @@ const BooksSort = () => {
         </Row>
       </Container>
 
+      {
+  privateCheck ? (
+
       <Container >
   <Row>
     <div className="mb-2">المحتوي الخاص</div>
@@ -891,7 +895,9 @@ const BooksSort = () => {
 }
 </Row>
 </Container>
+    ):null
 
+  }
 
 
       <ToastContainer/>

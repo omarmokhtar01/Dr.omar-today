@@ -55,6 +55,7 @@ const DownloadBooks = () => {
 
   const removeDataById=(id)=>{
     removeOneBookDownload({token,id})
+    window.location.reload();
   }
 
 
@@ -267,14 +268,14 @@ const DownloadBooks = () => {
                                onClick={()=>removeDataById(item.id)}
 
                   style={{
-                    paddingLeft: "10px",
+                    paddingLeft: "10px",cursor:'pointer',
                    
                     
                   }}
                 />
               </div>
-              <h5 style={{fontWeight:'700'}}>{item.title}</h5>
-              {/* <h5> {item.name} </h5> */}
+              {/* <h5 style={{fontWeight:'700'}}>{item.title}</h5> */}
+              <h5> {item.name} </h5>
               {/* <p style={{ marginTop: "-5px" , color:'#828282'}}>20 صفحه </p> */}
             </div>
           </div>

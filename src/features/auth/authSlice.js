@@ -130,23 +130,30 @@ const register = createAsyncThunk('auth/register', async (formData, thunkAPI) =>
 
   const accessPrivateContent = createAsyncThunk(
     'private/profile',
-    async ({code,token}, thunkAPI) => {
+    async ({ code, token }, thunkAPI) => {
       try {
+        // Construct form data
+        const formData = new FormData();
+        formData.append('code', code);
+  
         const response = await baseUrl.post(
-          `user/Access-private-content?code=${code}`
-          ,
-        { headers: { Authorization: `Bearer ${token}` } }
-          
+          'user/Access-private-content',
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'multipart/form-data', // Ensure correct content type
+            },
+          }
         );
         console.log(response);
-        return response;
+        return response; // Assuming response contains data field
       } catch (error) {
         // You might want to handle errors more appropriately here
         return thunkAPI.rejectWithValue(error.message);
       }
     }
   );
-
 
 
 const authSlice = createSlice({

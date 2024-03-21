@@ -36,6 +36,7 @@ const Articles = () => {
   const { t } = useTranslation('articles');
 
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
+  let privateCheck = localStorage.getItem('private');
 
   // Event handler for sorting by latest addition
   const handleSortByLatest = () => {
@@ -416,7 +417,9 @@ console.log(getArticleDataPrivate);
 
   
 </Row>
-{/* <Container >
+{
+  privateCheck ? (
+    <Container >
   <Row>
     <div className="mb-2">المحتوي الخاص</div>
 {
@@ -451,7 +454,11 @@ console.log(getArticleDataPrivate);
   ) : null
 }
 </Row>
-</Container> */}
+</Container>
+  ):null
+
+}
+
 
 </Container>
 <ToastContainer/>

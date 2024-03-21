@@ -43,6 +43,8 @@ const Pictures = () => {
     }
 };
   const [id,setId]=useState(null)
+  let privateCheck = localStorage.getItem('private');
+
 //to make modal
 const [show, setShow] = useState(false);
 const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image
@@ -434,7 +436,8 @@ console.log(getAllImgData);
 </Modal>
 
 
-
+{
+  privateCheck ? (
 
 <Container >
   <Row>
@@ -477,7 +480,9 @@ console.log(getAllImgData);
 }
 </Row>
 </Container>
-        
+        ):null
+
+      } 
 
         <ToastContainer/>
 </Container>

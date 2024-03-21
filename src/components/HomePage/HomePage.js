@@ -512,11 +512,46 @@ const [favorites, setFavorites] = useState([]);
 
   const checkPrivat = useSelector((state) => state.auth.userPrivate);
   const isLoadingPrivate = useSelector((state) => state.auth.isLoadingUserPrivate);
-  const handleCheckPrivate =()=>{
-    if(!token) return "please login fist"
-dispatch(accessPrivateContent({privateCodeState,token}))
-  }
-  console.log(checkPrivat.message);
+  const handleCheckPrivate = () => {
+    if (!token) return "please login first";
+    dispatch(accessPrivateContent({ code: privateCodeState, token }));
+  };
+ 
+  useEffect(() => {
+    if (isLoadingPrivate === false) {
+      if (checkPrivat) {
+
+        if (checkPrivat.status ===200) {
+          notify("تم الدخول  للوضع الخاص", "success");
+localStorage.setItem("private",true)
+setTimeout(() => {
+  window.location.href="/audios"
+
+}, 1000);
+        }
+        if (checkPrivat.status === 401) {
+          notify("من فضلك قم بتسجيل الدخول  اولا", "error");
+ 
+
+        }
+        else  {
+          notify(t('رمز الدخول غير صحيح' ), "error");
+
+
+        }
+      }
+    }
+  }, [isLoadingPrivate,checkPrivat]);
+
+
+  
+  const getSettingData = useSelector((state) => state.setting.settingData);
+  const isLoadingSetting = useSelector((state) => state.setting.isLoading);
+
+ 
+  useEffect(()=>{
+    dispatch(getSetting())
+  },[dispatch])
   return (
     <>
       <NavBar />
@@ -565,18 +600,34 @@ dispatch(accessPrivateContent({privateCodeState,token}))
       >
         {t('fullName')}
       </span>
-              <span
-                style={{
-                  color: "#7A808A",
-                  marginTop: "10px",
-                  fontSize: "25.55px",
-                }}
-              >
-                        {t('nextPrayer')}{" "}
-                <span style={{ color: "#FFFFFF" }}>
-                {lang == "ar" ? (arabicNextPrayer ? arabicNextPrayer : "الفجر") : (nextPrayer ? nextPrayer : "Fajr")}
-                </span>
-              </span> 
+      {
+  !isLoadingSetting ? (
+    getSettingData ? (
+      <>
+        {getSettingData.prayer_timings ? (
+          <span
+            style={{
+              color: "#7A808A",
+              marginTop: "10px",
+              fontSize: "25.55px",
+            }}
+          >
+            {t('nextPrayer')}{" "}
+            <span style={{ color: "#FFFFFF" }}>
+              {lang == "ar" ? (arabicNextPrayer ? arabicNextPrayer : "الفجر") : (nextPrayer ? nextPrayer : "Fajr")}
+            </span>
+          </span>
+        ) : null}
+      </>
+    ) : null
+  ) : null
+}
+
+{
+  !isLoadingSetting ? (
+    getSettingData ? (
+      <>
+        {getSettingData.prayer_timings ? (
               <span
                 style={{
                   color: "#FFFFFF",
@@ -587,7 +638,11 @@ dispatch(accessPrivateContent({privateCodeState,token}))
                 {" "}
                 {t('nextAppointment')}: {formattedTime} {t('hour')}
               </span>
-
+        ) : null}
+        </>
+      ) : null
+    ) : null
+  }
               <div
                 className="d-flex align-items-center justify-content-center   "
                 style={{ marginBottom: "-60px", marginLeft: "-220px" }}
@@ -1297,8 +1352,16 @@ dispatch(accessPrivateContent({privateCodeState,token}))
                   justifyContent: "center",
                 }}
               >
-                <img src={googlePlay} alt="" style={{cursor:'pointer'}} className="google-img" />
-                <img src={googleApp} alt="" style={{cursor:'pointer'}} className="google-img" />
+          {
+  !isLoadingSetting ? (
+    getSettingData  ? (
+      <>
+              <a href={`${getSettingData.play_store}`}> <img src={googlePlay} alt="" style={{cursor:'pointer'}} className="google-img" /></a> 
+              <a href={`${getSettingData.app_store}`}> <img src={googleApp} alt="" style={{cursor:'pointer'}} className="google-img" /></a>
+                </>
+                ) : null
+                ) : null
+              }
               </div>
             </div>
           </Col>

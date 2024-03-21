@@ -300,7 +300,7 @@ console.log(getDataOne);
     }
 
     dispatch(favOneAudio({ formData, token }));
-    navigate("/favpictures")
+    navigate("/favAudios")
 
     if (!favorites.includes(id)) {
       setFavorites([...favorites, id]);
@@ -384,8 +384,7 @@ console.log(getDataOne);
             return notify(t('loginRequired'), "error");
           }
           dispatch(favOneElder({ formData, token }))
-          localStorage.setItem("elderfav","تم حفظ  العالم بنجاح")
-
+navigate("/favScientists")
           // setTimeout(() => {
           //   navigate("/favScientists")
           // }, 1000);
@@ -623,7 +622,7 @@ console.log(getDataOne);
       {!isLoading ? (
   getDataOne ? (
     getDataOne ? (
-      getDataOne.Audio ? (
+      getDataOne.Audio&&getDataOne.Audio.length>0 ? (
         [...getDataOne.Audio].sort(sortFunction).map((item, index) => {
           return (
             <React.Fragment key={index}>

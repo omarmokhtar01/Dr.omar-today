@@ -125,8 +125,8 @@ setIsPlayingNew((prev) => {
 
   const removeDataById=(id)=>{
     removeOneAudiosDownload({token,id})
+    window.location.reload();
   }
-
 
   return (
     <>
@@ -364,7 +364,7 @@ setIsPlayingNew((prev) => {
                   gap: "5px",
                 }}
               >
-                <img src={trashIcon} style={{ marginLeft:'10px' }}                onClick={()=>removeDataById(item.id)}
+                <img src={trashIcon} style={{ marginLeft:'10px',cursor:'pointer' }}                onClick={()=>removeDataById(item.id)}
 />
 
                 <img src={favIcon}
