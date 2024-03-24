@@ -525,7 +525,7 @@ const [favorites, setFavorites] = useState([]);
           // notify("تم الدخول  للوضع الخاص", "success");
 localStorage.setItem("private",true)
 setTimeout(() => {
-  window.location.href="/audios"
+  window.location.href="/articles"
 
 }, 1000);
         }
