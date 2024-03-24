@@ -100,7 +100,6 @@ const Books = () => {
   const getAll = useSelector((state) => state.books.booksData);
   const isLoading = useSelector((state) => state.books.isLoading);
   const error = useSelector((state) => state.books.error);
-console.log(getAll);
   const getMainCategory = useSelector((state) => state.books.booksMainCategory);
 
   const getSubCategory = useSelector(
@@ -280,15 +279,28 @@ useEffect(()=>{
 
 const [dataSubcategory,setDataSubcategory]=useState([])
 
+
+const [selectedIds, setSelectedIds] = useState([]);
+
+const handleCheckboxChange = (event, id) => {
+  const isChecked = event.target.checked;
+  if (isChecked) {
+    // Add ID to selectedIds if checkbox is checked
+    setSelectedIds([...selectedIds, id]);
+  } else {
+    // Remove ID from selectedIds if checkbox is unchecked
+    setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id));
+  }
+};
 const  booksMainSubCategory= useSelector((state) => state.books.booksMainSubCategory);
 
 useEffect(() => {
-  if (id !== null) {
-    dispatch(getBookSubCategory(id));
-    setDataSubcategory([booksMainSubCategory])
-  }
-}, [dispatch, id]);
-console.log(dataSubcategory);
+  
+    dispatch(getBookSubCategory(selectedIds));
+  
+}, [dispatch, id,selectedIds]);
+const combinedArray = booksMainSubCategory.flat(1);
+console.log(combinedArray);
 
 
   return (
@@ -445,14 +457,8 @@ console.log(dataSubcategory);
                                    <input
     style={{ margin: "5px" }}
     type="checkbox"
-    checked={id === data.id} // Optional: if you want the checkbox to reflect the current selection
-    onChange={(event) => {
-        if (event.target.checked) {
-            setId(data.id);
-        } else {
-            setId(null);
-        }
-    }}
+    checked={selectedIds.includes(data.id)} // Check if ID is in selectedIds array
+              onChange={(event) => handleCheckboxChange(event, data.id)}
 />
 
                                     {data.title}

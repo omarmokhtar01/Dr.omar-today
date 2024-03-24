@@ -55,14 +55,22 @@ const getBookMainCategory = createAsyncThunk('get/books/main', async (_, thunkAP
   }
 });
 
-const getBookSubCategory = createAsyncThunk('get/books/sub', async (id, thunkAPI) => {
+const getBookSubCategory = createAsyncThunk('get/books/subCategories', async (idsArray, thunkAPI) => {
   try {
-    const response = await baseUrl.get(
-      `Categories-Books/Get?category_id=${id}`);
-      
-    return response.data;
+    // Flatten the array of arrays into a single array
+    const flattenedIdsArray = idsArray.flat();
+
+    const subcategoriesData = [];
+    // Iterate through the flattened array of IDs and make individual API calls for each ID
+    for (const id of flattenedIdsArray) {
+      const response = await baseUrl.get(`Categories-Books/Get?category_id=${id}`);
+      console.log(response);
+      subcategoriesData.push(response.data);
+    }
+    console.log(subcategoriesData);
+    return subcategoriesData;
   } catch (error) {
-    return error
+    throw error; // Throw the error to be handled by the rejected action
   }
 });
 
