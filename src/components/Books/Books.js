@@ -111,7 +111,6 @@ console.log(getAll);
   const errorAllBooksCategory = useSelector((state) => state.books.error);
 
 
-  const  booksMainSubCategory= useSelector((state) => state.books.booksMainSubCategory);
 
   useEffect(() => {
     dispatch(getAllBooksCategory());
@@ -126,11 +125,6 @@ console.log(getAll);
     dispatch(getBookMainCategory());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (id !== null) {
-      dispatch(getBookSubCategory(id));
-    }
-  }, [dispatch, id]);
 
   //to change icon
   const [isClicked, setIsClicked] = useState(false);
@@ -284,6 +278,17 @@ useEffect(()=>{
 
 
 
+const [dataSubcategory,setDataSubcategory]=useState([])
+
+const  booksMainSubCategory= useSelector((state) => state.books.booksMainSubCategory);
+
+useEffect(() => {
+  if (id !== null) {
+    dispatch(getBookSubCategory(id));
+    setDataSubcategory([booksMainSubCategory])
+  }
+}, [dispatch, id]);
+console.log(dataSubcategory);
 
 
   return (
