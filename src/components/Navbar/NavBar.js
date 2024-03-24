@@ -104,7 +104,7 @@ const langStorage = localStorage.getItem('lang');
     // Update session storage when location changes
     if (location) {
       localStorage.setItem('userLocation', location);
-      localStorage.setItem('termLocation', countryState.toLowerCase());
+      localStorage.setItem('termLocation', countryState);
 
     }
   }, [lang,location]);

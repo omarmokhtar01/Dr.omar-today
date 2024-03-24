@@ -366,13 +366,14 @@ setIsPlayingNew((prev) => {
               >
                 <img src={trashIcon} style={{ marginLeft:'10px',cursor:'pointer' }}                onClick={()=>removeDataById(item.id)}
 />
-
+{/* 
                 <img src={favIcon}
                   style={{
                    
                     cursor: "pointer",
                   }}
                 />
+*/}
                 <button
                               onClick={() => handlePlay(index)}
                               style={{ border: "none", background: "#FFFFFF" }}

@@ -15,6 +15,7 @@ import notifiReducer from "../features/notifiFeature/notifiSlice";
 import settingReducer from "../features/settingFeatures/settingSlice";
 
 const store = configureStore({
+  devTools:true,
   reducer: {
     
     elders: eldersReducer,
