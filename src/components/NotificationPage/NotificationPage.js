@@ -28,21 +28,6 @@ const NotificationPage = () => {
     dispatch(getNotifi(token));
   }, [dispatch]);
 
-  const [notifications, setNotifications] = useState({
-    photofav: localStorage.getItem("photofav"),
-    elderdown: localStorage.getItem("elderdown"),
-    audiofav: localStorage.getItem("audiofav"),
-    elderfav: localStorage.getItem("elderfav"),
-    audiodown: localStorage.getItem("audiodown"),
-  });
-
-  const handleDelete = (key) => {
-    localStorage.removeItem(key);
-    setNotifications(prevNotifications => ({
-      ...prevNotifications,
-      [key]: null, // Update the specific notification to null after deletion
-    }));
-  };
 
  
   return (
@@ -114,10 +99,10 @@ const NotificationPage = () => {
 
         {
           !isLoading?(
-            getDatNotifi.data ? (
+            getDatNotifi ? (
             <>
-              {getDatNotifi.data && (getDatNotifi.data).map((item, index) => (
-                <Col sm='12' className='d-flex justify-content-center align-items-center' >
+              {getDatNotifi.length > 0 && (getDatNotifi).map((item, index) => (
+                <Col sm='12' className='d-flex justify-content-center align-items-center' key={index}>
                 <div style={{background:'rgba(255, 255, 255, 1)' , width:'65%' , boxShadow:'0px 0px 42px 0px rgba(3, 20, 37, 0.05)'
                 , border:"2px solid rgba(238, 238, 238, 1)" , borderRadius:'8px' , marginTop:'20px' , marginBottom:'20px'}}>
 

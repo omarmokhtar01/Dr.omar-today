@@ -54,9 +54,11 @@ const DownloadScientists = () => {
   const removeData = useSelector((state) => state.download.delElder);
 
   const removeDataById=(id)=>{
-    removeOneElderDownload({token,id})
-    window.location.reload();
-
+    dispatch(removeOneElderDownload({token,id}))
+    setTimeout(() => {
+      window.location.reload();
+  
+     }, 500);
   }
 
 

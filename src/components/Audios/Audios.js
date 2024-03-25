@@ -89,7 +89,7 @@ const navigate = useNavigate()
   const getAll = useSelector((state) => state.audio.audios);
   const isLoading = useSelector((state) => state.audio.isLoading);
   const error = useSelector((state) => state.audio.error);
-
+console.log(getAll);
   const audioCategory = useSelector((state) => state.audio.audioCategory);
   const audioCategoryLoading = useSelector((state) => state.audio.isLoading);
 
@@ -170,7 +170,7 @@ console.log(elderDown);
   
 
   useEffect(() => {
-    dispatch(getAudios());
+    dispatch(getAudios(token));
     dispatch(getAudioCategory());
   }, [dispatch]);
 
@@ -230,7 +230,7 @@ console.log(elderDown);
       return notify(t('loginRequired'), "error");
     }
     dispatch(favOneElder({ formData, token }))
-    navigate("/favScientists")
+    // navigate("/favScientists")
 
     if (!favorites.includes(elderId)) {
       setFavorites([...favorites, elderId]);
@@ -618,6 +618,7 @@ console.log(elderDown);
       ([...getAll].sort(sortFunction).map((item) => {
         return (
           <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>
+            {console.log(item.is_Favourte)}
             <div
               style={{
                 display: "flex",

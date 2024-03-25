@@ -105,7 +105,7 @@ const HomePage = () => {
   );
 
   useEffect(() => {
-    dispatch(mostListened());
+    dispatch(mostListened(token));
   }, [dispatch]);
   const [smShowImg, setSmShowImg] = useState(false);
   console.log(mostListenedData);
@@ -382,6 +382,9 @@ const [favorites, setFavorites] = useState([]);
     if (!favorites.includes(audioId)) {
       setFavorites([...favorites, audioId]);
     }
+    setTimeout(() => {
+      navigate("/favAudios")
+    }, 1000);
     // setTimeout(() => {
     //   navigate("/favAudios");
     // }, 1500);
@@ -1040,11 +1043,11 @@ setTimeout(() => {
               </span>
             </div>
                     </Col>
-
+{console.log(item)}
                     <Col sm="4" className="responsive-sounds">
                       <div className="d-flex justify-content-center align-items-center  ">
                         <img
-                     src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+                     src={(item.is_Favourte ? favRedIcon : favIconNot) }
                      style={{ marginLeft: "10px", cursor: "pointer" }}
                           onClick={() => handelAddtoFav(item.id)}
                           alt="" />

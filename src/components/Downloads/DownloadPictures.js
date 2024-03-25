@@ -60,9 +60,11 @@ const DownloadPictures = () => {
   const removeData = useSelector((state) => state.download.delImg);
 
   const removeDataById=(id)=>{
-    removeOneImgDownload({token,id})
-    window.location.reload();
-  }
+   dispatch( removeOneImgDownload({token,id}))
+    setTimeout(() => {
+      window.location.reload();
+  
+     }, 500);  }
 
 
   return (
@@ -246,7 +248,7 @@ const DownloadPictures = () => {
           getData && getData.length >0 ? (
             <>
               {getData.map((item, index) => (
-                <Col  xl={6} lg={12} md={12} sm={12} xs={12} >
+                <Col  xl={6} lg={12} md={12} sm={12} xs={12} key={item.id}>
             {/* <div style={{position:'absolute' , marginRight:'40px' , display:'flex' , gap:'10px',
                       border:'1px solid #FFFFFF', background:'red', borderRadius:'25px' , marginTop:'10px'}} className='icon-delt' >
                       <RiDeleteBin5Line style={{ fontSize:'35px', color:'red', padding:'5px',position:'absolute' , zIndex:'2' , margin:'15px'}}/>

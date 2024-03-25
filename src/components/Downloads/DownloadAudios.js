@@ -124,8 +124,11 @@ setIsPlayingNew((prev) => {
   const removeData = useSelector((state) => state.download.delAudio);
 
   const removeDataById=(id)=>{
-    removeOneAudiosDownload({token,id})
+   dispatch( removeOneAudiosDownload({token,id}))
+   setTimeout(() => {
     window.location.reload();
+
+   }, 500);
   }
 
   return (

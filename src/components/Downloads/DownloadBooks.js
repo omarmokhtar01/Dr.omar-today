@@ -52,10 +52,13 @@ const DownloadBooks = () => {
   }, [isLoading]);
 
   const removeData = useSelector((state) => state.download.delBook);
-
+console.log(removeData);
   const removeDataById=(id)=>{
-    removeOneBookDownload({token,id})
+   dispatch( removeOneBookDownload({token,id}))
+   setTimeout(() => {
     window.location.reload();
+
+   }, 500);
   }
 
 

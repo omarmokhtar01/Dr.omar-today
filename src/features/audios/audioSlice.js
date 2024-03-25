@@ -24,10 +24,19 @@ const initialState = {
 
 
   // to get all audios
-    const getAudios = createAsyncThunk('get/audio', async (_, thunkAPI) => {
+    const getAudios = createAsyncThunk('get/audio', async (token, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          `Audios/Get`);
+          `Audios/Get`,
+          {headers: {
+            Authorization: `Bearer ${token}`,
+            "X-Requested-With": 'XMLHttpRequest',
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Cache-Control': 'no-cache, private'
+          }}
+          );
           console.log(response.data);
         return response.data;
       } catch (error) {
@@ -113,11 +122,18 @@ const initialState = {
           });
           
 
-          const mostListened = createAsyncThunk('most/listen', async (_, thunkAPI) => {
+          const mostListened = createAsyncThunk('most/listen', async (token, thunkAPI) => {
             try {
                 const response = await baseUrl.get(
                     `Audios/MostListened`,
-                   
+                   { headers: {
+                      Authorization: `Bearer ${token}`,
+                      "X-Requested-With": 'XMLHttpRequest',
+                      Accept: 'application/json',
+                      'Content-Type': 'application/json',
+                      'Access-Control-Allow-Origin': '*',
+                      'Cache-Control': 'no-cache, private'
+                    }}
                 );
                 console.log(response.data);
                 return response.data;
