@@ -115,7 +115,12 @@ const FavBook = () => {
       
       }
         }, [isLoadingFavBook,checkAddToFavBook]);
-
+        const handleDelFav=async(id)=>{
+          await dispatch(removeOneBookFav({token,id}))
+          setTimeout(() => {
+           window.location.reload()
+          }, 1000);
+           }
   return (
     <>
       <NavBar />
@@ -343,7 +348,7 @@ const FavBook = () => {
                 }}
               >
                 <img src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favRedIcon}
-                              onClick={()=>handelAddtoFavBook(item.id)}
+                              onClick={()=>handleDelFav(item.id)}
 
 alt=""
                   style={{

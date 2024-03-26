@@ -218,7 +218,7 @@ console.log(elderDown);
   const [favorites, setFavorites] = useState([]);
   const checkAddToFavElder = useSelector((state) => state.elders.favElder);
   const isLoadingFavElder = useSelector((state) => state.elders.isLoadingFavElder);
-
+console.log(checkAddToFavElder);
   const handelAddtoFavElder = (elderId) => {
     const formData = {
       elder_id: elderId, // Replace 'your_audio_id_here' with the actual audio ID value

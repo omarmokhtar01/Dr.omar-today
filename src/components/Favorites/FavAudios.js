@@ -248,6 +248,15 @@ console.log(getData);
 
       }
         }, [isLoadingFav,checkAddToFav]);
+
+
+// const [idFavRemove,setIdFavRemove]=useState(null)
+        const handleDelFav=async(id)=>{
+       await dispatch(removeOneAudiosFav({token,id}))
+       setTimeout(() => {
+        window.location.reload()
+       }, 1000);
+        }
   return (
     <>
       <NavBar />
@@ -540,7 +549,7 @@ console.log(getData);
                     
                     cursor: "pointer",
                   }}
-onClick={()=>handleAddtoFav(item.id)}
+onClick={()=>handleDelFav(item.id)}
                   alt=""
                 />
            <button

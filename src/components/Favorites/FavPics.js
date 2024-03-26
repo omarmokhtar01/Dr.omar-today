@@ -111,7 +111,12 @@ const FavPics = () => {
 
       }
         }, [isLoadingFavPic,checkAddToFavPic]);
-
+        const handleDelFav=async(id)=>{
+          await dispatch(removeOneImgFav({token,id}))
+          setTimeout(() => {
+           window.location.reload()
+          }, 1000);
+           }
   return (
     <>
       <NavBar />
@@ -328,7 +333,7 @@ const FavPics = () => {
               {getData.map((item, index) => (
                 <Col xl={6} lg={12} md={12} sm={12} xs={12} >
                 <img  src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favRedIcon}
-                onClick={()=>handelAddtoFavPic(item.id)}
+                onClick={()=>handleDelFav(item.id)}
 alt=""
                   style={{
                    position:'absolute',

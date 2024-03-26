@@ -108,7 +108,6 @@ const HomePage = () => {
     dispatch(mostListened(token));
   }, [dispatch]);
   const [smShowImg, setSmShowImg] = useState(false);
-  console.log(mostListenedData);
   const [isPressed, setIsPressed] = useState(false);
   let timeoutId;
 
@@ -423,7 +422,7 @@ const [favorites, setFavorites] = useState([]);
   const [indexMobileStateMost, setIndexMobileStateMost] = useState(0);
 
   const handleNext = () => {
-    if (indexMobileState < mostListenedData.length - 1) {
+    if (indexMobileState < mostListenedData.data.length - 1) {
       setIndexMobileState(indexMobileState + 1);
     } else {
       // Handle boundary condition, for example, do nothing or loop back to the beginning
@@ -1005,8 +1004,8 @@ setTimeout(() => {
             </div>
 
             {!isLoadingMostListen ? (
-              mostListenedData && mostListenedData.length > 0 ? (
-                mostListenedData.map((item, index) => (
+              mostListenedData &&mostListenedData.data && mostListenedData.data.length > 0 ? (
+                mostListenedData.data.map((item, index) => (
                   <Row
                     className="d-flex justify-content-between align-items-center mt-3 "
                     style={{ margin: "10px" }}
@@ -1105,7 +1104,7 @@ setTimeout(() => {
                {t('listenToAudio')}
               </h2>
               {!isLoadingMostListen ? (
-                mostListenedData && mostListenedData.length > 0 ? (
+                mostListenedData&&mostListenedData.data  ? (
                   <Col
                     md={12}
                     sm={12}
@@ -1122,7 +1121,7 @@ setTimeout(() => {
                     >
                       <img
                         src={
-                          mostListenedData[indexMobileState]?.image ||
+                          mostListenedData.data[indexMobileState]?.image ||
                           "https://i1.sndcdn.com/artworks-jA2OFYdUrideAlyu-AeHsrA-t500x500.jpg"
                         }
                         alt="pic"
@@ -1137,7 +1136,7 @@ setTimeout(() => {
                       />
                       <Col className="mt-4">
                         <h4>
-                          {mostListenedData[indexMobileState]?.title ||
+                          {mostListenedData.data[indexMobileState]?.title ||
                             "Default Title"}
                         </h4>
                         {/* <span style={{ color: "gray" }}>محمد صالح المنجد</span> */}
@@ -1218,7 +1217,7 @@ setTimeout(() => {
 
 <AudioPlayer
     src={
-      mostListenedData[indexMobileStateMost]?.audio ||
+      mostListenedData.data[indexMobileStateMost]?.audio ||
       null
     }
     key={indexMobileStateMost}

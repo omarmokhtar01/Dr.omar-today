@@ -153,6 +153,7 @@ console.log(getAllImgData);
   const checkAddToFavPic = useSelector((state) => state.pictures.favPic);
   const isLoadingFavPic = useSelector((state) => state.pictures.isLoadingFavPic);
   const [favorites, setFavorites] = useState([]);
+  console.log(checkAddToFavPic);
   const handelAddtoFavPic = (picId) => {
     const formData = {
       image_id: picId, // Replace 'your_audio_id_here' with the actual audio ID value
@@ -166,7 +167,10 @@ console.log(getAllImgData);
 
 
     dispatch(favOnePic({ formData, token }))
-    navigate("/favpictures")
+    setTimeout(() => {
+      navigate("/favpictures")
+
+    }, 1000);
 
                 // notify(t('addToFavoritesSuccess'), "success");
                 if (!favorites.includes(picId)) {

@@ -101,7 +101,12 @@ const FavScientists = () => {
 
       }
         }, [isLoadingFavElder,checkAddToFavElder]);
-
+        const handleDelFav=async(id)=>{
+          await dispatch(removeOneElderFav({token,id}))
+          setTimeout(() => {
+           window.location.reload()
+          }, 1000);
+           }
   return (
     <>
       <NavBar />
@@ -349,7 +354,7 @@ alt=""
                   
                     ,padding:'5px'
                   }} 
-                  onClick={()=>handelAddtoFavElder(item.id)}
+                  onClick={()=>handleDelFav(item.id)}
                   />
               </div>
 

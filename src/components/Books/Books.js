@@ -109,6 +109,7 @@ const Books = () => {
   const isLoadingAllBooksCategory = useSelector((state) => state.books.isLoading);
   const errorAllBooksCategory = useSelector((state) => state.books.error);
 
+  let token = Cookies.get("token");
 
 
   useEffect(() => {
@@ -119,7 +120,7 @@ const Books = () => {
 
   useEffect(() => {
     dispatch(getBooks(token));
-  }, [dispatch]);
+  }, [dispatch,token]);
   useEffect(() => {
     dispatch(getBookMainCategory());
   }, [dispatch]);
@@ -132,7 +133,7 @@ const Books = () => {
     setIsClicked(!isClicked);
   };
   const handleCheckLogin = () => {
-    const token = Cookies.get("token");
+    let token = Cookies.get("token");
 
     if (token) {
       // Token exists, perform the download action
@@ -161,7 +162,6 @@ const Books = () => {
     setSearchResults(searchListen);
   }, [searchListen]);
 
-  let token = Cookies.get("token");
 
 
   const checkAddToFavBook = useSelector((state) => state.books.favBook);
@@ -253,7 +253,6 @@ const Books = () => {
         
             }
             const checkDownBook = useSelector((state) => state.books.downBook);
-console.log(checkDownBook);
 
 
 
@@ -264,7 +263,6 @@ const isLoadingPrivate = useSelector((state) => state.books.isLoadingPrivate);
 useEffect(()=>{
   dispatch(getBooksPrivate())
 },[dispatch])
-
 
 
 
@@ -299,8 +297,7 @@ useEffect(() => {
     dispatch(getBookSubCategory(selectedIds));
   
 }, [dispatch, id,selectedIds]);
-const combinedArray = booksMainSubCategory.flat(1);
-console.log(combinedArray);
+// const combinedArray = booksMainSubCategory.flat(1);
 
 
   return (
@@ -657,10 +654,10 @@ required
     <div style={{height:'280px'}}><img src={nodata}/> <br/>
           <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
           <span>{t('nodata2')}</span></div>
-  ) : id == null ? (
+  ) : id === null ? (
     !isLoading ? (
-      getAll && getAll.length > 0 ? 
-      [...getAll].sort(sortFunction).map((item) => (
+      getAll &&getAll.data&& getAll.data.length > 1 ? 
+      [...getAll.data].sort(sortFunction).map((item) => (
         <Col
           xs="12"
           md="12"
@@ -784,7 +781,137 @@ required
       <Spinner animation="border" variant="primary" />
     </div>
     )
-  ) : !isLoading ? (
+  )
+  
+//    : id === null ? (
+//     !isLoading ? (
+//       combinedArray &&combinedArray.data&& combinedArray.data.length > 1 ? 
+//       [...combinedArray.data].sort(sortFunction).map((item) => (
+//         <Col
+//           xs="12"
+//           md="12"
+//           lg="6"
+//           className="mb-3"
+//           key={item.id}
+//         >
+//           <div
+//             style={{
+//               display: "flex",
+//               justifyContent: "space-between",
+//               border: "2px solid rgba(236, 236, 236, 1)",
+//               borderRadius: "15px",
+//               width: "auto",
+//             }}
+//           >
+//             <div
+//               style={{
+//                 display: "flex",
+//                 justifyContent: "center",
+//               }}
+//             >
+//               <Link to={`/book/${item.id}`}>
+//                 <div
+//                   style={{
+//                     position: "relative",
+//                     cursor: "pointer",
+//                   }}
+//                 >
+//                   <img
+//                     src={item.image}
+//                     alt=""
+//                     height={164}
+//                     width={134} style={{borderRadius:'0px 12.32px 12.32px 0px'}}
+//                   />
+//                   <div
+//                     style={{
+//                       position: "absolute",
+//                       top: "50%",
+//                       left: "50%",
+//                       transform: "translate(-50%, -50%)",
+//                       backgroundColor: "rgba(0, 0, 0, 0.5)",
+//                       color: "#fff",
+//                       padding: "10px",
+//                       borderRadius: "5px",
+//                     }}
+//                   >
+//                     Click to view book
+//                   </div>
+//                 </div>
+//               </Link>
+//               <div
+//                 style={{
+//                   display: "flex",
+//                   justifyContent: "center",
+//                   flexDirection: "column",
+//                   padding: "20px",
+//                 }}
+//               >
+//                 <h5 style={{ color: "black" }}>{item.name}</h5>
+//               </div>
+//             </div>
+//             <div
+//               style={{
+//                 display: "flex",
+//                 flexDirection: "column",
+//                 justifyContent: "center",
+//                 marginLeft: "60px",
+//                 gap: "20px",
+//               }}
+//             >
+//               <img  src={
+//                 // favorites.includes(item.id) ? 
+//               (item.is_Favourte ? favRedIcon : favIconNot) 
+//               // : favIconNot
+//             }
+//                 style={{
+//                   color: "#878787bd",
+//                   fontSize: "30px",
+//                   // marginRight: "-30px",
+//                   cursor: 'pointer'
+//                 }}
+//                 alt=""
+//               onClick={()=>handelAddtoFavBook(item.id)}
+//               />
+//             {token ? (
+//   <a
+//     href={`${item.Book}`} // Provide the correct download link here
+//     download={`${item.name}.pdf`} // Specify the desired filename for the downloaded PDF
+//   >
+//     <MdDownloadForOffline
+//       style={{
+//         color: "rgb(219, 176, 134)",
+//         fontSize: "42px",
+//         paddingLeft: "5px",
+//         cursor: "pointer",
+//       }}
+//       onClick={() => handelDownBook(item.id,item.Book)}
+//     />
+//   </a>
+// ) : (
+//   <MdDownloadForOffline
+//       style={{
+//         color: "rgb(219, 176, 134)",
+//         fontSize: "42px",
+//         paddingLeft: "5px",
+//         cursor: "pointer",
+//       }}
+//       onClick={() => handelDownBook(item.id,item.Book)}
+//     />
+// )}
+//             </div>
+//           </div>
+//         </Col>
+//       ))
+//       : <div style={{height:'280px'}}><img src={nodata}/> <br/>
+//       <span style={{fontWeight:'700'}}>{t('nodata1')}</span><br/>
+//       <span>{t('nodata2')}</span></div>
+//     ) : (
+//       <div style={{ height: "280px" }}>
+//       <Spinner animation="border" variant="primary" />
+//     </div>
+//     )
+//   ) 
+  : !isLoading ? (
     searchState !== '' && searchResults.length > 0 ? (
       searchResults.map((item) => (
         <Col xs="12" md="12" lg="6" className="mb-3" key={item.id}>

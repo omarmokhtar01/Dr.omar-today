@@ -10,7 +10,7 @@ import nodata from "../../images/nodata.svg";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getNotifi } from "../../features/notifiFeature/notifiSlice";
+import { getNotifi,delNotifi } from "../../features/notifiFeature/notifiSlice";
 
 import Cookies from "js-cookie";
 
@@ -26,9 +26,15 @@ const NotificationPage = () => {
 
   useEffect(() => {
     dispatch(getNotifi(token));
-  }, [dispatch]);
+  }, [dispatch,token]);
 
 
+const delNotification =(id)=>{
+ dispatch(delNotifi({token,id}))
+setTimeout(() => {
+  window.location.reload()
+}, 1000);
+}
  
   return (
     <>
@@ -99,24 +105,24 @@ const NotificationPage = () => {
 
         {
           !isLoading?(
-            getDatNotifi ? (
+            getDatNotifi && getDatNotifi.length > 0 ? (
             <>
-              {getDatNotifi.length > 0 && (getDatNotifi).map((item, index) => (
+              { (getDatNotifi).map((item, index) => (
                 <Col sm='12' className='d-flex justify-content-center align-items-center' key={index}>
                 <div style={{background:'rgba(255, 255, 255, 1)' , width:'65%' , boxShadow:'0px 0px 42px 0px rgba(3, 20, 37, 0.05)'
                 , border:"2px solid rgba(238, 238, 238, 1)" , borderRadius:'8px' , marginTop:'20px' , marginBottom:'20px'}}>
 
                   <div className='d-flex justify-content-between align-items-center m-2'>
                     <h5>  <img src={bellIcon} alt='' style={{marginLeft:'5px'}} />
-                    {item.Title} {item.Code && " كود المحتوي الخاص" + item.Code}
+                    {item.data.Title} {item.data.Code && " كود المحتوي الخاص" + item.data.Code}
                     </h5>
-                    <img src={delIcon} alt='' style={{paddingLeft:'10px'}}  />
+                    <img src={delIcon} alt='' style={{paddingLeft:'10px',cursor:'pointer'}}  onClick={()=>delNotification(item.UUID)}/>
                   </div>
                   
                   <Col sm='8' style={{ textAlign:'start'}} >
                   <div style={{margin:'5px 15px 15px 15px'}}>
-                   <h6 style={{color:'rgba(4, 32, 48, 1)' , display:'flex',lineHeight:'25px'}}>{item.message}    </h6>
-                    <p style={{color:'rgba(122, 128, 138, 1)'  , display:'flex' , fontSize:'15px'}}>30/11/2023-09:30PM</p>
+                   <h6 style={{color:'rgba(4, 32, 48, 1)' , display:'flex',lineHeight:'25px'}}>{item.data.message}    </h6>
+                    {/* <p style={{color:'rgba(122, 128, 138, 1)'  , display:'flex' , fontSize:'15px'}}>30/11/2023-09:30PM</p> */}
                    </div>
                   </Col>
 

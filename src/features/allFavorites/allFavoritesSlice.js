@@ -71,7 +71,7 @@ const initialState = {
     const removeOneAudiosFav = createAsyncThunk('del/OneAudiosFav', async ({token,id}, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          `Favorite/deleteFavoriteSong?audio_id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
           );
           console.log(response.data);
         return response.data;
@@ -84,7 +84,7 @@ const initialState = {
     const removeOneElderFav = createAsyncThunk('del/OneElderFav', async ({token,id}, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          `Favorite/deleteFavoriteElder?elder_id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
           );
           console.log(response.data);
         return response.data;
@@ -96,7 +96,7 @@ const initialState = {
     const removeOneBookFav = createAsyncThunk('del/OneBookFav', async ({token,id}, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          `Favorite/deleteFavoriteBook?book_id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
           );
           console.log(response.data);
         return response.data;
@@ -108,7 +108,7 @@ const initialState = {
     const removeOneImgFav = createAsyncThunk('del/OneImgFav', async ({token,id}, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          `remove/getAudioData?id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
+          `Favorite/deleteFavoriteImage?image_id=${id}`,        { headers: { Authorization: `Bearer ${token}` } } // Sending token in request headers
           );
           console.log(response.data);
         return response.data;

@@ -36,10 +36,10 @@ const initialState = {
           Authorization: `Bearer ${token}` // Include token in the request headers
       }
       });
-      
+      console.log(response);
     return response.data;
   } catch (error) {
-    return error
+    return thunkAPI.rejectWithValue(error.message); // Use rejectWithValue to pass error data
   }
 });
 
@@ -55,24 +55,34 @@ const getBookMainCategory = createAsyncThunk('get/books/main', async (_, thunkAP
   }
 });
 
-const getBookSubCategory = createAsyncThunk('get/books/subCategories', async (idsArray, thunkAPI) => {
-  try {
-    // Flatten the array of arrays into a single array
-    const flattenedIdsArray = idsArray.flat();
+// const getBookSubCategoryManyData = createAsyncThunk('get/books/subCategoriesMany', async (idsArray, thunkAPI) => {
+//   try {
+//     // Flatten the array of arrays into a single array
+//     const flattenedIdsArray = idsArray.flat();
 
-    const subcategoriesData = [];
-    // Iterate through the flattened array of IDs and make individual API calls for each ID
-    for (const id of flattenedIdsArray) {
-      const response = await baseUrl.get(`Categories-Books/Get?category_id=${id}`);
-      console.log(response);
-      subcategoriesData.push(response.data);
-    }
-    console.log(subcategoriesData);
-    return subcategoriesData;
+//     const subcategoriesData = [];
+//     // Iterate through the flattened array of IDs and make individual API calls for each ID
+//     for (const id of flattenedIdsArray) {
+//       const response = await baseUrl.get(`Categories-Books/Get?category_id=${id}`);
+//       console.log(response);
+//       subcategoriesData.push(response.data);
+//     }
+//     console.log(subcategoriesData);
+//     return subcategoriesData;
+//   } catch (error) {
+//     throw error; // Throw the error to be handled by the rejected action
+//   }
+// });
+
+const getBookSubCategory = createAsyncThunk('get/books/subCategories', async (id, thunkAPI) => {
+  try {
+    const response = await baseUrl.get(`Categories-Books/Get?category_id=${id}`);
+    return response.data.subcategoriesData; // Assuming subcategoriesData is part of the response data
   } catch (error) {
     throw error; // Throw the error to be handled by the rejected action
   }
 });
+
 
 
 
@@ -211,6 +221,22 @@ const booksSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+
+
+      // .addCase(getBookSubCategoryManyData.pending, (state) => {
+      //   state.isLoading = true;
+      //   state.error = null;
+      // })
+      // .addCase(getBookSubCategoryManyData.fulfilled, (state, action) => {
+      //   state.booksMainCategory = action.payload;
+      //   state.isLoading = false;
+      //   state.error = null;
+      // })
+      // .addCase(getBookSubCategoryManyData.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.error = action.payload;
+      // })
 
 
       .addCase(getBookSubCategory.pending, (state) => {
