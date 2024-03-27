@@ -137,7 +137,7 @@ const register = createAsyncThunk('auth/register', async (formData, thunkAPI) =>
         formData.append('code', code);
   
         const response = await baseUrl.post(
-          'user/Access-private-content',
+          'Auth/Access-private-content',
           formData,
           {
             headers: {

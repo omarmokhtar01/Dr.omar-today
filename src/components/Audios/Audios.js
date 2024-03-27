@@ -230,7 +230,10 @@ console.log(checkAddToFavElder);
       return notify(t('loginRequired'), "error");
     }
     dispatch(favOneElder({ formData, token }))
-    // navigate("/favScientists")
+    setTimeout(() => {
+      navigate("/favScientists")
+
+    }, 1000);
 
     if (!favorites.includes(elderId)) {
       setFavorites([...favorites, elderId]);
@@ -584,8 +587,8 @@ console.log(checkAddToFavElder);
             <img 
                      src={
                       // favorites.includes(item.id) ? 
-                    (item.is_Favourte ? favRedIcon : favIconNot) 
-                    // : favIconNot
+                      (item.is_Favourte ? favRedIcon : favIconNot) 
+                      // : favIconNot
                   }
                      style={{
                 color: "#878787bd",
@@ -765,8 +768,8 @@ console.log(checkAddToFavElder);
               {" "}
               <img                     src={
                 // favorites.includes(item.id) ? 
-              (item.is_Favourte ? favRedIcon : favIconNot) 
-              // : favIconNot
+                (item.is_Favourte ? favRedIcon : favIconNot) 
+                // : favIconNot
             }
 
                   style={{
@@ -852,8 +855,8 @@ console.log(checkAddToFavElder);
                 {" "}
                 <img                     src={
                 // favorites.includes(item.id) ? 
-              (item.is_Favourte ? favRedIcon : favIconNot) 
-              // : favIconNot
+                (item.is_Favourte ? favRedIcon : favIconNot) 
+                // : favIconNot
             }
 
                   style={{

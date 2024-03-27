@@ -127,11 +127,12 @@ const handleDownload = (picId) => {
     (state) => state.imgCategory.isLoading
   );
 
+console.log(getOneData);
+
   const getAllImgData = useSelector(state => state.imgCategory.allImgsData);
   const isLoadingAllImgCategory = useSelector(state => state.imgCategory.isLoading);
   const errorAllImgCategory = useSelector(state => state.imgCategory.error);
   
-console.log(getAllImgData);
 
   useEffect(() => {
       dispatch(getAllPicuture(token));
@@ -380,10 +381,9 @@ console.log(getAllImgData);
   )
 ) : (
   !isLoadingOneImgCategory ? (
-    getOneData && getOneData.length > 0 ? (
-      getOneData[0]?.image?.map((image, index) => (
+    getOneData && getOneData.data && getOneData.data.image.length > 0 ? (
+      getOneData.data.image.map((image, index) => (
         <Col key={image.id} xl={6} lg={6} md={12} sm={12} xs={12} onClick={()=>setSavedId(image.id)}>
-
           {/* Placeholder for heartImg */}
           <div style={{ position: 'relative', top: '40px', right: '-70px', zIndex: '1' }}>
             <img src={
