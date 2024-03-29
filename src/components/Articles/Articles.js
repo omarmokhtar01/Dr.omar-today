@@ -90,9 +90,19 @@ const Articles = () => {
     dispatch(getArticleCategory());
   }, [dispatch]);
 
+  const [visibility, setVisibility] = useState('public');
   useEffect(() => {
-    dispatch(getArticleCategoryById(id));
-  }, [dispatch, id]);
+    let privateCheck = localStorage.getItem('private');
+  
+    if (id !== null) {
+      if (privateCheck) {
+        setVisibility("private");
+        dispatch(getArticleCategoryById({ id, status: visibility })); // Pass status as visibility
+      } else {
+        dispatch(getArticleCategoryById({ id, status: visibility })); // Pass status as visibility
+      }
+    }
+  }, [dispatch, id, visibility]);
 
 
 

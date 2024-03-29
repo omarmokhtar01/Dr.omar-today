@@ -139,9 +139,20 @@ console.log(getOneData);
       dispatch(getAllImgCategory());
   }, [dispatch]);
   
+
+  const [visibility, setVisibility] = useState('public');
   useEffect(() => {
-    dispatch(getOneImgCategory(id));
-  }, [dispatch, id]);
+    let privateCheck = localStorage.getItem('private');
+  if (id !== null) {
+    if (privateCheck) {
+      setVisibility("private");
+      dispatch(getOneImgCategory({ id, status: visibility })); // Pass status as visibility
+    } else {
+      dispatch(getOneImgCategory({ id, status: visibility })); // Pass status as visibility
+    }
+  }
+}, [dispatch, id, visibility]);
+
 
   const favIconNot = fav2Icon; // Path to the normal icon
   const favRedIcon = favrediconwith; // Path to the red/favorite icon

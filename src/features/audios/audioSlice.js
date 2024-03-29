@@ -59,17 +59,20 @@ const initialState = {
 
 
 //to get all category audios data byid ==> اما ادوس علي كل كاتجري هتطلعلي الصوتيات الخاصه بيها
-    const getAudioCategoryById = createAsyncThunk('get/audio-category-id', async (id, thunkAPI) => {
-      try {
-        const response = await baseUrl.post(
-          `Audios-Categories/Get_audios_with_category?category_id=${id}`);
-          console.log(response.data);
-        return response.data;
-      } catch (error) {
-        return error
-      }
-    });
-
+const getAudioCategoryById = createAsyncThunk(
+  'get/audio-category-id',
+  async ({ id, status }, thunkAPI) => {
+    try {
+      const response = await baseUrl.post(
+        `Audios-Categories/Get_audios_with_category?category_id=${id}&status=${status}`
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      throw error; // Throw the error instead of returning it
+    }
+  }
+);
 
 
   // to get audio details

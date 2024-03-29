@@ -26,10 +26,10 @@ const initialState = {
 
 
   
-    const getOneImgCategory = createAsyncThunk('get/OneImgCategory', async (id, thunkAPI) => {
+    const getOneImgCategory = createAsyncThunk('get/OneImgCategory', async ({id,status}, thunkAPI) => {
       try {
         const response = await baseUrl.post(
-          `ImagesCategories/Get-images-from-category?id=${id}`);
+          `ImagesCategories/Get-images-from-category?id=${id}&status=${status}`);
           console.log(response.data);
         return response.data;
       } catch (error) {

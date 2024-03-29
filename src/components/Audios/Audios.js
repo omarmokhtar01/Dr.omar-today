@@ -168,6 +168,7 @@ console.log(elderDown);
   
   
   
+  const [visibility, setVisibility] = useState('public');
 
   useEffect(() => {
     dispatch(getAudios(token));
@@ -175,10 +176,17 @@ console.log(elderDown);
   }, [dispatch]);
 
   useEffect(() => {
+    let privateCheck = localStorage.getItem('private');
+  
     if (id !== null) {
-      dispatch(getAudioCategoryById(id));
+      if (privateCheck) {
+        setVisibility("private");
+        dispatch(getAudioCategoryById({ id, status: visibility })); // Pass status as visibility
+      } else {
+        dispatch(getAudioCategoryById({ id, status: visibility })); // Pass status as visibility
+      }
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, visibility]);
 
   const handleCheckLogin = () => {
     const token = Cookies.get("token");

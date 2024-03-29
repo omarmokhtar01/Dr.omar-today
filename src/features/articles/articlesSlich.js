@@ -45,10 +45,10 @@ const initialState = {
     });
 
 
-    const getArticleCategoryById = createAsyncThunk('get/category-id', async (id, thunkAPI) => {
+    const getArticleCategoryById = createAsyncThunk('get/category-id', async ({id,status}, thunkAPI) => {
       try {
         const response = await baseUrl.post(
-          `Articles-Categories/Get-Articles-From-Category?id=${id}`);
+          `Articles-Categories/Get-Articles-From-Category?id=${id}&status=${status}`);
           console.log(response.data);
         return response.data;
       } catch (error) {
