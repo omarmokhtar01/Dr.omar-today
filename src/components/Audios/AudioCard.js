@@ -263,17 +263,15 @@ setIsPlayingNew((prev) => {
   };
   
 
-
   const getDataOne = useSelector((state) => state.elders.elderAudioOne);
 
   const isLoading = useSelector((state) => state.elders.isLoading);
   const error = useSelector((state) => state.elders.error);
 
-console.log(getDataOne);
 
   useEffect(() => {
-    dispatch(getEldersByIdAudios(id));
-  }, [dispatch, id]);
+    dispatch(getEldersByIdAudios({id,token}));
+  }, [dispatch, id,token]);
 
   const checkAddToFav = useSelector((state) => state.audio.favAudio);
   const isLoadingFav = useSelector((state) => state.audio.isLoadingFav);
@@ -307,17 +305,17 @@ console.log(getDataOne);
     }
   };
 
-  useEffect(() => {
-    if (!isLoading && checkAddToFav && checkAddToFav.success) {
-      if (checkAddToFav.message === "The Audio has been added to your favorites") {
-        setIsFav(true); // Toggle favorite status
+  // useEffect(() => {
+  //   if (!isLoading && checkAddToFav && checkAddToFav.success) {
+  //     if (checkAddToFav.message === "The Audio has been added to your favorites") {
+  //       setIsFav(true); // Toggle favorite status
 
-      } else if (checkAddToFav.message === "The Audio has been removed from your favorites") {
-        setIsFav(false); // Toggle favorite status
+  //     } else if (checkAddToFav.message === "The Audio has been removed from your favorites") {
+  //       setIsFav(false); // Toggle favorite status
 
-      }
-    }
-  }, [isLoading, checkAddToFav]);
+  //     }
+  //   }
+  // }, [isLoading, checkAddToFav]);
 
 
 
@@ -384,10 +382,10 @@ console.log(getDataOne);
             return notify(t('loginRequired'), "error");
           }
           dispatch(favOneElder({ formData, token }))
-navigate("/favScientists")
-          // setTimeout(() => {
-          //   navigate("/favScientists")
-          // }, 1000);
+// navigate("/favScientists")
+          setTimeout(() => {
+            navigate("/favScientists")
+          }, 1000);
                  
               }
 
@@ -523,7 +521,7 @@ navigate("/favScientists")
                   onClick={() => downloadAudiosAsZip(getDataOne.Audio, getDataOne.id)}
                 />
                 <img
-                  src={isFavElder ? favRedIcon : fav2Icon}
+                  src={getDataOne.is_Favourite ? favRedIcon : fav2Icon}
                   alt="favorite icon"
                   style={{
                     cursor: "pointer",
@@ -719,7 +717,7 @@ navigate("/favScientists")
                     )}
 
 <img
-                src={favorites.includes(item.id) ? (isFav ? favRedIcon : favIconNot) : favIconNot}
+                src={ item.is_Favourite ? favRedIcon : favIconNot}
                 alt="Favorite Icon"
                 style={{
                   color: '#878787bd',

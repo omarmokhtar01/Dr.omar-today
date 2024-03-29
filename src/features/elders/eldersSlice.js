@@ -39,18 +39,31 @@ const getEldersById = createAsyncThunk('post/elders/id', async (id, thunkAPI) =>
 });
 
 
-const getEldersByIdAudios = createAsyncThunk('post/elders/id/audio', async (id, thunkAPI) => {
-  try {
+const getEldersByIdAudios = createAsyncThunk(
+  'post/elders/id/audio',
+  async ({ id, token }, thunkAPI) => {
+    try {
+      console.log('Token:', token); // Log token before making the request
+      console.log('ID:', id); // Log ID before making the request
 
-    const response = await baseUrl.post(
-      `Elders/Get_Audio_Id_Elder?id=${id}`);
-      console.log(response.data);
-    return response.data;
-  } catch (error) {
-    return error
+      const response = await baseUrl.post(
+        `Elders/Get_Audio_Id_Elder?id=${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}` // Include token in the request headers
+          }
+        }
+      );
+
+      console.log('Response data:', response.data); // Log response data
+      return response.data;
+    } catch (error) {
+      console.error('Error:', error); // Log any errors
+      throw error; // Re-throw the error to be handled by Redux Toolkit
+    }
   }
-});
-
+);
 
             // to get audio details
             const favOneElder = createAsyncThunk('fav/add-elder', async ({ formData, token }, thunkAPI) => {
