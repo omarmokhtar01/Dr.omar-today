@@ -606,7 +606,7 @@ console.log(checkAddToFavElder);
               className="icon-mob"
               onClick={()=>handelAddtoFavElder(item.id)}
             />
-            <MdDownloadForOffline
+            {/* <MdDownloadForOffline
               style={{
                 color: "rgb(219 176 134)",
                 fontSize: "42px",
@@ -614,7 +614,7 @@ console.log(checkAddToFavElder);
                 cursor: "pointer",
               }}
               onClick={() => downloadAudiosAsZip(item.id)}
-            />
+            /> */}
           </div>
         </div>
       </Col>
@@ -695,7 +695,7 @@ console.log(checkAddToFavElder);
                   onClick={()=>handelAddtoFavElder(item.id)}
                   className="icon-mob"
                 />
-                <img src={downGroundIcon}
+                {/* <img src={downGroundIcon}
                   style={{
                     color: "rgb(219 176 134)",
                     fontSize: "42px",
@@ -704,7 +704,7 @@ console.log(checkAddToFavElder);
                   }}
                   className="icon-mob"
                   onClick={() => downloadAudiosAsZip(item.id)}
-                />
+                /> */}
               </div>
             </div>
           </Col>

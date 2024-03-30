@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import baseUrl from "../../Api/baseURL";
-
+const langStorage = localStorage.getItem('lang');
+ 
 const initialState = {
     termsData: {},
     isLoading: false,
@@ -13,7 +14,11 @@ const initialState = {
   const getTerms = createAsyncThunk('get/terms', async (country, thunkAPI) => {
       try {
         const response = await baseUrl.get(
-          `TermsConditions/Get-Term?country=${country}`);
+          `TermsConditions/Get-Term?country=${country}`,{
+            headers:{
+              'Accept-Language': langStorage
+            }
+          });
         return response.data;
       } catch (error) {
         return error

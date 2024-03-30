@@ -74,7 +74,7 @@ const langStorage = localStorage.getItem('lang');
           const { latitude, longitude } = position.coords;
           try {
             // Fetch address using reverse geocoding with language set to Arabic
-            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=${langStorage}`);
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=ar`);
             const data = await response.json();
             console.log(data);
             // Extract city and country from the address
