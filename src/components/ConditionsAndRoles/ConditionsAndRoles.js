@@ -67,11 +67,12 @@ return (
                { 
                  langState === "en"? ( 
                   <>
-                   {termsAndCondition?.text_en} 
+                   {termsAndCondition[0]?.text_en} 
+                   
                   </>
                  ):( 
                   <>
-                  {termsAndCondition?.text}
+                  {termsAndCondition[0]?.text}
                   </>
                  ) 
                } 

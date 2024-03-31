@@ -19,6 +19,7 @@ const initialState = {
               'Accept-Language': langStorage
             }
           });
+          console.log(response.data);
         return response.data;
       } catch (error) {
         return error
