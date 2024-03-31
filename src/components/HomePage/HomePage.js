@@ -93,6 +93,8 @@ const HomePage = () => {
     (state) => state.books.isLoadingLastVersion
   );
 
+  const [publicState, setPublicState] = useState("public");
+
   useEffect(() => {
     dispatch(lastVersion());
   }, [dispatch]);

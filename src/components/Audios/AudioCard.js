@@ -511,7 +511,7 @@ setIsPlayingNew((prev) => {
                 }}
                 className="icons-div"
               >
-                <img
+                {/* <img
                   src={downIcon}
                   alt="download icon"
                   style={{
@@ -519,7 +519,7 @@ setIsPlayingNew((prev) => {
                   }}
                   className="icon-audio-card"
                   onClick={() => downloadAudiosAsZip(getDataOne.Audio, getDataOne.id)}
-                />
+                /> */}
                 <img
                   src={getDataOne.is_Favourite ? favRedIcon : fav2Icon}
                   alt="favorite icon"
@@ -692,7 +692,7 @@ setIsPlayingNew((prev) => {
                       gap: "15px",
                     }}
                   >
-                    {token ? (
+                    {/* {token ? (
                       <a href={`${item.audio}?download=true`} target="_blank">
                         <img src={downloadIcon}
                           style={{
@@ -714,7 +714,7 @@ setIsPlayingNew((prev) => {
                         onClick={handleCheckLogin}
                         download="audio_file"
                       />
-                    )}
+                    )} */}
 
 <img
                 src={ item.is_Favourite ? favRedIcon : favIconNot}

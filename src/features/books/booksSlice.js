@@ -115,7 +115,7 @@ const showBook = createAsyncThunk('show/book', async (id, thunkAPI) => {
 const lastVersion = createAsyncThunk('last/book', async (_, thunkAPI) => {
   try {
     const response = await baseUrl.get(
-      `Books/LatestVersionBooks`);
+      `Books/LatestVersionBooks?status=public`);
       console.log(response.data);
     return response.data;
   } catch (error) {
