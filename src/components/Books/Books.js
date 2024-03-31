@@ -30,7 +30,7 @@ import arrowsIcon from "../../images/twoArr.svg";
 import { IoHeartCircleSharp, IoSearch } from "react-icons/io5";
 import { LuArrowUpDown } from "react-icons/lu";
 import { useSelector, useDispatch } from "react-redux";
-import { addToFavBook, downBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBooks, getBooksPrivate, searchBooks } from "../../features/books/booksSlice";
+import { addToFavBook, downBook, getAllBooksCategory, getBookMainCategory, getBookSubCategory, getBookSubCategoryManyData, getBooks, getBooksPrivate, searchBooks } from "../../features/books/booksSlice";
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
 import { useTranslation } from 'react-i18next';
@@ -290,16 +290,36 @@ const handleCheckboxChange = (event, id) => {
     setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id));
   }
 };
+const [publicState, setPublicState] = useState("public");
 const  booksMainSubCategory= useSelector((state) => state.books.booksMainSubCategory);
+const  booksMainCategoryMany= useSelector((state) => state.books.booksMainCategoryMany);
 
 useEffect(() => {
-  
-    dispatch(getBookSubCategory(selectedIds));
-  
-}, [dispatch, id,selectedIds]);
-// const combinedArray = booksMainSubCategory.flat(1);
+  if (id !== null) {
+    if (privateCheck) {
+      dispatch(getBookSubCategory({ id, status: privateCheck }));
+    } else {
+      dispatch(getBookSubCategory({ id, status: publicState }));
+    }
+  }
+}, [dispatch, id, publicState, privateCheck]);
 
 
+useEffect(() => {
+  if (id !== null) {
+    if (privateCheck) {
+      dispatch(getBookSubCategoryManyData({ id, status: privateCheck }));
+    } else {
+      dispatch(getBookSubCategoryManyData({ id, status: publicState }));
+    }
+  }
+}, [dispatch, id, publicState, privateCheck]);
+
+const combinedArray = booksMainCategoryMany.flat(5);
+console.log(combinedArray);
+
+
+console.log(combinedArray);
   return (
     <>
       <NavBar />
