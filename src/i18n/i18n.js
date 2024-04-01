@@ -133,7 +133,7 @@ term:arterm
 // Add other sections here
       },
     },
-    lng: localStorage.getItem('i18nextLng') || 'ar', // Use language from localStorage or default to 'ar'
+    lng:  'ar', // Use language from localStorage or default to 'ar'
     fallbackLng: 'en',
     debug: true,
     interpolation: {

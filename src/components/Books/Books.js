@@ -316,10 +316,7 @@ useEffect(() => {
 }, [dispatch, id, publicState, privateCheck]);
 
 const combinedArray = booksMainCategoryMany.flat(5);
-console.log(combinedArray);
 
-
-console.log(combinedArray);
   return (
     <>
       <NavBar />

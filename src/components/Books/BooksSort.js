@@ -34,6 +34,8 @@ import { useTranslation } from "react-i18next";
 import fav2Icon from "../../images/fav2.svg";
 import favrediconwith from "../../images/favredWith.svg";
 const BooksSort = () => {
+  const token = Cookies.get("token");
+
   const [sortBy, setSortBy] = useState(null); // State to keep track of sorting option
 
   // Event handler for sorting by latest addition
@@ -96,20 +98,25 @@ const BooksSort = () => {
   // You can use this dummy data array to map over and generate your JSX elements dynamically
 
   useEffect(() => {
-    dispatch(getBooks());
-  }, [dispatch]);
+    dispatch(getBooks(token));
+  }, [dispatch,token]);
   useEffect(() => {
     dispatch(getBookMainCategory());
   }, [dispatch]);
 
+  const [publicState, setPublicState] = useState("public");
+
   useEffect(() => {
     if (id !== null) {
-      dispatch(getBookSubCategory(id));
+      if (privateCheck) {
+        dispatch(getBookSubCategory({ id, status: privateCheck }));
+      } else {
+        dispatch(getBookSubCategory({ id, status: publicState }));
+      }
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, publicState, privateCheck]);
 
   const handleCheckLogin = () => {
-    const token = Cookies.get("token");
 
     if (token) {
       // Token exists, perform the download action
@@ -144,7 +151,6 @@ const BooksSort = () => {
 
 
 
-  let token = Cookies.get("token");
 
   const favIconNot = fav2Icon; // Path to the normal icon
   const favRedIcon = favrediconwith; // Path to the red/favorite icon
@@ -546,8 +552,8 @@ const BooksSort = () => {
           <span>{t('nodata2')}</span></div>
   ) : id == null ? (
     !isLoading ? (
-      getAll && getAll.length > 0 ? 
-      [...getAll].sort(sortFunction).map((item) => (
+      getAll &&getAll.data&& getAll.data.length > 1 ? 
+      [...getAll.data].sort(sortFunction).map((item) => (
         <Col xs={6} md={4} lg={3} key={item.id}>
         <div className="p-2">
           <div

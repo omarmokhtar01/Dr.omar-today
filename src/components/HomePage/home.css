@@ -285,3 +285,16 @@ margin-left: 0px !important;
   .rhap_progress-section{
     margin-right: 20px !important;
   }
+
+  @media (max-width: 768px) {
+    .profile-pic{
+      margin-right: 12px;
+    }
+  }
+ 
+  @media (max-width: 576px) { 
+    .profile-pic{
+      margin-right: 12px;
+      
+    }
+   }

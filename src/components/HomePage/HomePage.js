@@ -220,6 +220,7 @@ const HomePage = () => {
     asr: "العصر",
     sunset: "المغرب",
     isha: "العشاء",
+    sunrise:"شروق الشمس"
   };
 
   // Get the Arabic name of the next prayer
@@ -358,6 +359,9 @@ const HomePage = () => {
 
 
   let lang = localStorage.getItem('lang');
+useEffect(()=>{
+  localStorage.setItem('lang','ar')
+})
 
   let token = Cookies.get("token");
 
@@ -377,7 +381,7 @@ const [favorites, setFavorites] = useState([]);
       // Add your download logic here
       return notify(`${t('loginRequired')}`, "error");
     }
-//     notify(`${t('addedToFavorites')}`, "success");
+//     notify(${t('addedToFavorites')}, "success");
 // localStorage.setItem("audiofav","تمت اضافة صوت بنجاح")
     dispatch(favOneAudio({ formData, token }));
     if (!favorites.includes(audioId)) {
@@ -618,7 +622,7 @@ setTimeout(() => {
           >
             {t('nextPrayer')}{" "}
             <span style={{ color: "#FFFFFF" }}>
-              {lang == "ar" ? (arabicNextPrayer ? arabicNextPrayer : "الفجر") : (nextPrayer ? nextPrayer : "Fajr")}
+            {lang === "ar" ? (arabicNextPrayer ? arabicNextPrayer : "الفجر") : (nextPrayer ? nextPrayer : "Fajr")}
             </span>
           </span>
         ) : null}
@@ -699,7 +703,7 @@ setTimeout(() => {
 
           <Col
             sm="6"
-            className=" d-flex align-items-center justify-content-end  "
+            className=" d-flex align-items-center justify-content-end  profile-pic"
             style={{ marginLeft: "-12px" }}
           >
             <img src={profile} alt="" style={{ marginTop: "20px" }} />
@@ -1024,7 +1028,7 @@ setTimeout(() => {
                           style={{ borderRadius: "5.81px" }}
                         />
 
-<h5 style={{ width: "100%" , marginRight:'7px'}}> {item.title} </h5>
+<h5 style={{ width: "100%" , marginRight:'7px'}}> {item.title} </h5>
                       </div>
                     </Col>
 
@@ -1354,6 +1358,7 @@ setTimeout(() => {
                   marginTop: "15px",
                   display: "flex",
                   justifyContent: "center",
+                  gap:'15px'
                 }}
               >
           {
@@ -1361,7 +1366,7 @@ setTimeout(() => {
     getSettingData  ? (
       <>
               <a href={`${getSettingData.play_store}`}> <img src={googlePlay} alt="" style={{cursor:'pointer'}} className="google-img" /></a> 
-              <a href={`${getSettingData.app_store}`}> <img src={googleApp} alt="" style={{cursor:'pointer'}} className="google-img" /></a>
+              <a href={`${getSettingData.app_store}`}> <img src={googleApp} alt="" style={{cursor:'pointer'}} className="google-img" /></a>
                 </>
                 ) : null
                 ) : null
@@ -1382,7 +1387,7 @@ setTimeout(() => {
               }}
               className="responsive-image  responsive-image-ground "
             />
-          </div>
+          </div>
         </Row>
         <ToastContainer />
       </Container>

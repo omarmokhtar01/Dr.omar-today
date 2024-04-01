@@ -27,9 +27,9 @@ const Footer = () => {
       <div className="all-footer  d-flex ">
           <div className="footer-1 mt-3 mb-3" >
                 <a href="/">{t('home')}</a> 
-                <a href="/audios">{t('audios')}</a>
-                <a href="/Books">{t('books')}</a> 
-                <a href="/articles">{t('articles')}</a>
+                <a href="/audios"> {t('audios')} </a>
+                <a href="/Books"> {t('books')} </a> 
+                <a href="/articles"> {t('articles')} </a>
                 </div>
                 
                 <div className="footer-2 mt-3 mb-3">
