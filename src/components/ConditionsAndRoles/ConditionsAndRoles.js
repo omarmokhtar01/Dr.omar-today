@@ -12,16 +12,18 @@ const ConditionsAndRoles = () => {
   const { t } = useTranslation('term');
 
   const langStorage = localStorage.getItem('lang');
-  const [langState, setLangState] = useState(langStorage || 'en');
+  // const [langState, setLangState] = useState(langStorage || 'en');
+  // useEffect(()=>{
+  //   localStorage.setItem('lang','ar')
+  // })
   const dispatch = useDispatch()
   const termsAndCondition = useSelector((state) => state.terms.termsData);
   const isLoading = useSelector((state) => state.terms.isLoading);
 
-  useEffect(()=>{
-    let termLocation=localStorage.getItem('termLocation')
-
-   dispatch( getTerms(termLocation)
-)  },[dispatch,langStorage])
+  useEffect(() => {
+    let termLocation = localStorage.getItem('termLocation');
+    dispatch(getTerms({ termLocation, langStorage }));
+  }, [dispatch, langStorage]);
 
 return (
     <>
@@ -52,10 +54,11 @@ return (
         <Row>
           {
              !isLoading ?(
-              termsAndCondition  ? (
+              termsAndCondition && termsAndCondition.length > 0  ? (
               <>
-                {/* {termsAndCondition.map((item, index) => ( */}
-                  <Col sm="12">
+                {termsAndCondition.map((item, index) => (
+                  <Col sm="12" key={index}>
+                    
             <h5
               style={{
                 color: "rgba(4, 32, 48, 1)",
@@ -65,14 +68,14 @@ return (
               }}
             >
                { 
-                 langState === "en"? ( 
+                 langStorage === "en"? ( 
                   <>
-                   {termsAndCondition[0]?.text_en} 
+                   {item?.text_en} 
                    
                   </>
                  ):( 
                   <>
-                  {termsAndCondition[0]?.text}
+                  {item?.text}
                   </>
                  ) 
                } 
@@ -259,7 +262,7 @@ return (
             </div> */}
           </Col>
 
-         {/* ))} */}
+          ))} 
               </>
             ) : <div style={{height:'280px'}}><img src={nodata}                         alt=""
             /> <br/>
