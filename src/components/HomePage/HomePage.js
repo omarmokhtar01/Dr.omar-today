@@ -612,7 +612,7 @@ setTimeout(() => {
   !isLoadingSetting ? (
     getSettingData ? (
       <>
-        {getSettingData.prayer_timings ? (
+        {getSettingData.prayer_timings === true ? (
           <span
             style={{
               color: "#7A808A",
@@ -620,6 +620,7 @@ setTimeout(() => {
               fontSize: "25.55px",
             }}
           >
+          {console.log(getSettingData.prayer_timings)}
             {t('nextPrayer')}{" "}
             <span style={{ color: "#FFFFFF" }}>
             {lang === "ar" ? (arabicNextPrayer ? arabicNextPrayer : "الفجر") : (nextPrayer ? nextPrayer : "Fajr")}
@@ -635,7 +636,7 @@ setTimeout(() => {
   !isLoadingSetting ? (
     getSettingData ? (
       <>
-        {getSettingData.prayer_timings ? (
+        {getSettingData.prayer_timings === true ? (
               <span
                 style={{
                   color: "#FFFFFF",
@@ -647,7 +648,7 @@ setTimeout(() => {
                 {t('nextAppointment')}: {formattedTime} {t('hour')}
               </span>
         ) : null}
-        </>
+        </>   
       ) : null
     ) : null
   }
